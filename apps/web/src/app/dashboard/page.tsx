@@ -61,6 +61,13 @@ interface NudgeStatus {
   hasActiveNudge: boolean
 }
 
+interface DailyPromptData {
+  id: string
+  prompt: string
+  response: string | null
+  date: string
+}
+
 const LIFE_PHASE_TAGS = [
   'New relationship',
   'Career transition',
@@ -277,6 +284,13 @@ export default function DashboardPage() {
   const [nudgeStatus, setNudgeStatus] = useState<NudgeStatus | null>(null)
   const [nudgeDismissed, setNudgeDismissed] = useState(false)
 
+  // Daily prompt state
+  const [dailyPrompt, setDailyPrompt] = useState<DailyPromptData | null>(null)
+  const [dailyPromptDismissed, setDailyPromptDismissed] = useState(false)
+  const [dailyPromptResponse, setDailyPromptResponse] = useState('')
+  const [dailyPromptSubmitting, setDailyPromptSubmitting] = useState(false)
+  const [dailyPromptSubmitted, setDailyPromptSubmitted] = useState(false)
+
   // Growth recommendations state
   const [recommendations, setRecommendations] = useState<GrowthRecommendation[] | null>(null)
   const [recommendationsLoading, setRecommendationsLoading] = useState(false)
@@ -298,11 +312,16 @@ export default function DashboardPage() {
       api.get<{ sessions: SessionSummary[] }>('/api/users/me/sessions', token),
       api.get<{ entries: JournalEntry[] }>('/api/users/me/journal', token).catch(() => ({ entries: [] as JournalEntry[] })),
       api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
+      api.get<DailyPromptData>('/api/users/me/daily-prompt', token).catch(() => null),
     ])
-      .then(([sessionData, journalData, nudgeData]) => {
+      .then(([sessionData, journalData, nudgeData, promptData]) => {
         setSessions(sessionData.sessions)
         setJournalEntries(journalData.entries)
         if (nudgeData) setNudgeStatus(nudgeData)
+        if (promptData) {
+          setDailyPrompt(promptData)
+          if (promptData.response) setDailyPromptSubmitted(true)
+        }
         // Seed local tags state from fetched sessions
         const tagsMap: Record<string, string[]> = {}
         for (const s of sessionData.sessions) {
@@ -377,6 +396,25 @@ export default function DashboardPage() {
     }
   }
 
+  const handleDailyPromptSubmit = async () => {
+    if (!dailyPrompt || !dailyPromptResponse.trim()) return
+    const token = getToken()
+    if (!token) return
+    setDailyPromptSubmitting(true)
+    try {
+      await api.post('/api/users/me/daily-prompt/respond', {
+        promptId: dailyPrompt.id,
+        response: dailyPromptResponse.trim(),
+      }, token)
+      setDailyPromptSubmitted(true)
+      setDailyPrompt((prev) => prev ? { ...prev, response: dailyPromptResponse.trim() } : prev)
+    } catch {
+      // silently fail
+    } finally {
+      setDailyPromptSubmitting(false)
+    }
+  }
+
   const latestProfile = sessions.find((s) => s.profile)?.profile ?? null
 
   // Build per-template chart data (sessions oldest-first)
@@ -420,6 +458,82 @@ export default function DashboardPage() {
           New assessment
         </Link>
       </div>
+
+      {/* Daily reflection prompt */}
+      {dailyPrompt && !dailyPromptDismissed && (
+        <div className="mb-6 rounded-2xl border border-stone-700 bg-stone-900/60 p-5">
+          <div className="mb-3 flex items-start justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <span className="text-lg text-amber-400 leading-none">✦</span>
+              <p className="text-xs font-medium uppercase tracking-wide text-stone-500">Today&apos;s reflection</p>
+            </div>
+            <button
+              onClick={() => setDailyPromptDismissed(true)}
+              aria-label="Dismiss"
+              className="shrink-0 text-stone-600 transition-colors hover:text-stone-400"
+            >
+              ✕
+            </button>
+          </div>
+          <p className="mb-4 text-sm font-medium text-stone-200 leading-relaxed italic">
+            &ldquo;{dailyPrompt.prompt}&rdquo;
+          </p>
+          {dailyPromptSubmitted ? (
+            <div className="rounded-xl border border-emerald-800/30 bg-emerald-950/20 px-4 py-3">
+              <p className="text-sm text-emerald-400">
+                ✓ Response saved to your journal.
+              </p>
+              {dailyPrompt.response && (
+                <p className="mt-1 text-xs text-stone-400 italic leading-relaxed line-clamp-2">{dailyPrompt.response}</p>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <textarea
+                value={dailyPromptResponse}
+                onChange={(e) => setDailyPromptResponse(e.target.value)}
+                placeholder="Write your reflection…"
+                rows={3}
+                className="w-full resize-none rounded-xl border border-stone-700 bg-stone-800/50 px-4 py-3 text-sm text-stone-200 placeholder-stone-600 outline-none transition-colors focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/20"
+              />
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  onClick={() => setDailyPromptDismissed(true)}
+                  className="text-xs text-stone-600 hover:text-stone-400"
+                >
+                  Skip for today
+                </button>
+                <button
+                  onClick={handleDailyPromptSubmit}
+                  disabled={!dailyPromptResponse.trim() || dailyPromptSubmitting}
+                  className="rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {dailyPromptSubmitting ? 'Saving…' : 'Save reflection'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Coach CTA */}
+      {latestProfile && (
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-2xl border border-stone-800 bg-stone-900/50 px-5 py-4">
+          <div className="flex items-center gap-3">
+            <span className="text-lg text-amber-400 leading-none">◎</span>
+            <div>
+              <p className="text-sm font-semibold text-stone-200">Talk to your AI coach</p>
+              <p className="text-xs text-stone-500">Personalized guidance grounded in your profile</p>
+            </div>
+          </div>
+          <Link
+            href="/coach"
+            className="shrink-0 rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Open coach →
+          </Link>
+        </div>
+      )}
 
       {/* Reassessment nudge banner */}
       {nudgeStatus?.hasActiveNudge && !nudgeDismissed && (() => {
@@ -485,6 +599,29 @@ export default function DashboardPage() {
           </Link>
         </div>
       )}
+
+      {/* AI Coach CTA */}
+      <div className="mb-8 rounded-2xl border border-amber-500/25 bg-gradient-to-r from-amber-500/5 to-stone-900/30 p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/10 text-xl">
+              ◎
+            </div>
+            <div>
+              <h2 className="font-serif text-lg text-stone-100">Talk to your coach</h2>
+              <p className="mt-0.5 text-sm text-stone-400">
+                Your AI coach knows your full psychological profile. Ask anything.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/coach"
+            className="shrink-0 rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Start a conversation
+          </Link>
+        </div>
+      </div>
 
       {/* Growth recommendations */}
       {(recommendations || recommendationsLoading) && sessions.length > 0 && (() => {

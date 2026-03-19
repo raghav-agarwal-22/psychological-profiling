@@ -307,6 +307,127 @@ Generate a compatibility analysis for this pairing.`
   return extractJson<CompatibilityNarrative>(text)
 }
 
+export async function generateDailyReflectionPrompt(
+  profile: {
+    summary: string
+    dimensions: Record<string, { normalized: number }>
+    archetypes: string[]
+    values: string[]
+    blindSpots: string[]
+    strengths: string[]
+    synthesis?: string | null
+  } | null,
+): Promise<string> {
+  if (!profile) {
+    const genericPrompts = [
+      'What is one area of your life where you feel most alive, and what does that tell you about what you truly value?',
+      'Think of a recent moment when you felt genuinely proud of yourself. What qualities did that reveal?',
+      'What pattern in your life do you keep returning to, even when you tell yourself you want to change?',
+      'Who in your life do you find yourself most relaxed around, and what does that say about what you need?',
+      'If you could only keep three values from how you currently live, which would they be and why?',
+    ]
+    return genericPrompts[Math.floor(Math.random() * genericPrompts.length)]
+  }
+
+  const topDims = Object.entries(profile.dimensions)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+    .slice(0, 3)
+    .map(([k, v]) => `${k}: ${v.normalized}/100`)
+    .join(', ')
+
+  const bottomDims = Object.entries(profile.dimensions)
+    .sort(([, a], [, b]) => a.normalized - b.normalized)
+    .slice(0, 2)
+    .map(([k, v]) => `${k}: ${v.normalized}/100`)
+    .join(', ')
+
+  const profileContext = [
+    `Archetype: ${profile.archetypes[0] ?? 'unknown'}`,
+    `Core values: ${profile.values.slice(0, 3).join(', ')}`,
+    `Top strengths: ${profile.strengths.slice(0, 2).join(', ')}`,
+    `Growth edges: ${profile.blindSpots.slice(0, 2).join(', ')}`,
+    `Highest dimensions: ${topDims}`,
+    `Lower dimensions: ${bottomDims}`,
+    profile.synthesis ? `Synthesis excerpt: ${profile.synthesis.slice(0, 300)}…` : '',
+  ].filter(Boolean).join('\n')
+
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 150,
+    system: `You are a thoughtful psychological guide. Generate exactly ONE deeply personal daily reflection question for this person, grounded in their actual psychological profile. The question should:
+- Reference something specific from their profile (a value, archetype, dimension, or pattern)
+- Be rooted in a real experience, relationship, or decision — not abstract
+- Be open-ended and invite genuine introspection
+- Be warm, curious, and non-judgmental
+- Be a single sentence ending with a question mark
+
+Respond with ONLY the question. No preamble, no explanation.`,
+    messages: [
+      {
+        role: 'user',
+        content: `Here is this person's psychological profile:\n${profileContext}\n\nGenerate today's reflection question.`,
+      },
+    ],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text.trim() : ''
+  return text || 'What is one belief about yourself that you know is holding you back — and where did it come from?'
+}
+
+export async function generateCoachResponse(
+  profileContext: string,
+  conversationHistory: Array<{ role: 'user' | 'assistant'; content: string }>,
+  userMessage: string,
+  onChunk?: (chunk: string) => void,
+): Promise<string> {
+  const systemPrompt = `You are a deeply insightful, warm, and psychologically-grounded life coach. You have full access to this person's psychological profile and can reference it naturally in your responses.
+
+Your approach:
+- Speak directly and personally, using "you" — never clinical or detached
+- Ground your reflections in their actual profile data when relevant, but don't reduce them to their scores
+- Ask one follow-up question at the end of each response to deepen the exploration
+- Be warm but honest — not flattering, not generic
+- Draw on psychology (CBT, attachment theory, Jungian frameworks, positive psychology) where natural
+- Keep responses conversational — 2–4 paragraphs unless a longer reflection is needed
+- Never give generic life advice — always tie back to what you know about this specific person
+
+This person's psychological profile:
+${profileContext}`
+
+  const messages = [
+    ...conversationHistory,
+    { role: 'user' as const, content: userMessage },
+  ]
+
+  if (onChunk) {
+    let fullText = ''
+    const stream = await client.messages.stream({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 800,
+      system: systemPrompt,
+      messages,
+    })
+
+    for await (const chunk of stream) {
+      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+        onChunk(chunk.delta.text)
+        fullText += chunk.delta.text
+      }
+    }
+    return fullText
+  } else {
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 800,
+      system: systemPrompt,
+      messages,
+    })
+    const block = response.content[0]
+    return block?.type === 'text' ? block.text : ''
+  }
+}
+
 function extractJson<T>(text: string): T {
   const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
   const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text

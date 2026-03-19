@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateCrossFrameworkSynthesis, generateGrowthRecommendations } from '../lib/profile-generator.js'
+import { generateCrossFrameworkSynthesis, generateGrowthRecommendations, generateDailyReflectionPrompt } from '../lib/profile-generator.js'
 
 const createJournalEntrySchema = z.object({
   body: z.string().min(1).max(10000),
@@ -411,6 +411,120 @@ export async function userRoutes(server: FastifyInstance) {
 
     return reply.send({ recommendations: output, generatedAt: new Date() })
   })
+
+  // ─── Daily Prompt ────────────────────────────────────────────────────────
+
+  // GET /api/users/me/daily-prompt — get today's prompt (generate if missing)
+  server.get('/me/daily-prompt', async (req, reply) => {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { timezone: true },
+    })
+    const tz = user?.timezone ?? 'UTC'
+
+    // Compute today's date string in the user's timezone
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: tz }) // YYYY-MM-DD
+
+    // Check for existing prompt today
+    const existing = await prisma.dailyPrompt.findUnique({
+      where: { userId_date: { userId: req.user.userId, date: today } },
+    })
+
+    if (existing) {
+      return reply.send({
+        prompt: existing.prompt,
+        response: existing.response,
+        date: existing.date,
+        id: existing.id,
+      })
+    }
+
+    // Fetch latest profile for context
+    const latestProfile = await prisma.profile.findFirst({
+      where: { userId: req.user.userId, isLatest: true },
+      select: {
+        summary: true,
+        dimensions: true,
+        archetypes: true,
+        values: true,
+        blindSpots: true,
+        strengths: true,
+      },
+    })
+
+    // Also fetch synthesis
+    const userWithSynthesis = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { synthesis: true },
+    })
+
+    const profileForGen = latestProfile
+      ? {
+          summary: latestProfile.summary,
+          dimensions: latestProfile.dimensions as Record<string, { normalized: number }>,
+          archetypes: latestProfile.archetypes as string[],
+          values: latestProfile.values as string[],
+          blindSpots: latestProfile.blindSpots as string[],
+          strengths: latestProfile.strengths as string[],
+          synthesis: userWithSynthesis?.synthesis,
+        }
+      : null
+
+    const promptText = await generateDailyReflectionPrompt(profileForGen)
+
+    const created = await prisma.dailyPrompt.create({
+      data: {
+        userId: req.user.userId,
+        date: today,
+        prompt: promptText,
+      },
+    })
+
+    return reply.send({
+      prompt: created.prompt,
+      response: created.response,
+      date: created.date,
+      id: created.id,
+    })
+  })
+
+  // POST /api/users/me/daily-prompt/respond — save response as journal entry
+  server.post<{ Body: { promptId: string; response: string } }>(
+    '/me/daily-prompt/respond',
+    async (req, reply) => {
+      const { promptId, response: responseText } = req.body as { promptId?: string; response?: string }
+
+      if (!promptId || !responseText || typeof responseText !== 'string' || responseText.trim().length === 0) {
+        return reply.status(400).send({ error: 'promptId and response are required' })
+      }
+
+      const dailyPrompt = await prisma.dailyPrompt.findFirst({
+        where: { id: promptId, userId: req.user.userId },
+      })
+      if (!dailyPrompt) {
+        return reply.status(404).send({ error: 'Daily prompt not found' })
+      }
+
+      // Update the daily prompt response
+      await prisma.dailyPrompt.update({
+        where: { id: promptId },
+        data: { response: responseText.trim() },
+      })
+
+      // Save as journal entry
+      const entry = await prisma.journalEntry.create({
+        data: {
+          userId: req.user.userId,
+          prompt: dailyPrompt.prompt,
+          body: responseText.trim(),
+          tags: ['daily-reflection'],
+        },
+        select: { id: true, prompt: true, body: true, createdAt: true },
+      })
+
+      return reply.status(201).send({ ok: true, journalEntry: entry })
+    },
+  )
 
   // GET /api/users/me/reassessment-status — check if user is due for reassessment
   server.get('/me/reassessment-status', async (req, reply) => {

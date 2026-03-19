@@ -34,11 +34,13 @@ model User {
   magicLinkTokens MagicLinkToken[]
 
   // Core relationships
-  sessions    Session[]
-  profiles    Profile[]
-  assessments Assessment[]
-  insights    Insight[]
-  journalEntries JournalEntry[]
+  sessions           Session[]
+  profiles           Profile[]
+  assessments        Assessment[]
+  insights           Insight[]
+  journalEntries     JournalEntry[]
+  coachConversations CoachConversation[]
+  dailyPrompts       DailyPrompt[]
 
   @@map("users")
 }
@@ -266,6 +268,58 @@ enum LifeDomain {
   FINANCES
   FAMILY
   PERSONAL_GROWTH
+}
+
+// ─── CoachConversation ───────────────────────────────────────────────────────
+// A saved conversation thread with the AI coach.
+
+model CoachConversation {
+  id        String         @id @default(cuid())
+  userId    String         @map("user_id")
+  title     String?        // Auto-generated from first message
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages CoachMessage[]
+
+  @@index([userId])
+  @@map("coach_conversations")
+}
+
+// ─── CoachMessage ─────────────────────────────────────────────────────────────
+// A single message in a coach conversation.
+
+model CoachMessage {
+  id             String   @id @default(cuid())
+  conversationId String   @map("conversation_id")
+  role           String   // "user" | "assistant"
+  content        String
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation CoachConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("coach_messages")
+}
+
+// ─── DailyPrompt ─────────────────────────────────────────────────────────────
+// A personalized daily reflection prompt for a user.
+
+model DailyPrompt {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  date      String    // YYYY-MM-DD in user's timezone
+  prompt    String
+  response  String?   // User's journal response, if any
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@map("daily_prompts")
 }
 
 // ─── JournalEntry ────────────────────────────────────────────────────────────
