@@ -12,15 +12,20 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
+    "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
     "migrate:deploy": "prisma migrate deploy",
     "studio": "prisma studio",
     "typecheck": "tsc --noEmit"
+  },
+  "prisma": {
+    "seed": "npm run db:seed"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0"
   },
   "devDependencies": {
     "prisma": "^5.17.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "@types/node": "^20.14.11"
   }
