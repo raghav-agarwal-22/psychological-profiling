@@ -761,6 +761,13 @@ export default function ProfilePage() {
           {sharing ? 'Generating link…' : 'Share Profile'}
         </button>
         <button
+          onClick={handleOpenCompare}
+          disabled={comparingShare}
+          className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
+        >
+          {comparingShare ? 'Preparing…' : 'Compare with someone'}
+        </button>
+        <button
           onClick={handleDownloadPDF}
           disabled={downloadingPDF}
           className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
@@ -807,6 +814,69 @@ export default function ProfilePage() {
               className="w-full rounded-xl border border-rose-800/50 bg-rose-950/30 px-4 py-2.5 text-sm text-rose-400 transition-colors hover:bg-rose-950/50 hover:text-rose-300"
             >
               Revoke sharing
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Compare modal */}
+      {showCompareModal && compareShareToken && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-900 p-6 shadow-2xl">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <h3 className="font-serif text-xl text-stone-100">Compare with someone</h3>
+                <p className="mt-1 text-sm text-stone-400">
+                  Share your profile link, then enter theirs.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowCompareModal(false)}
+                className="text-stone-500 transition-colors hover:text-stone-300"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <p className="mb-1.5 text-xs text-stone-500">Your profile link</p>
+              <div className="flex items-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-3 py-2">
+                <span className="flex-1 truncate text-sm text-stone-300">
+                  {compareShareUrl ?? `${typeof window !== 'undefined' ? window.location.origin : ''}/p/${compareShareToken}`}
+                </span>
+                <button
+                  onClick={async () => {
+                    const url = compareShareUrl ?? `${window.location.origin}/p/${compareShareToken}`
+                    await navigator.clipboard.writeText(url)
+                    setCompareCopied(true)
+                    setTimeout(() => setCompareCopied(false), 2000)
+                  }}
+                  className="shrink-0 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+                >
+                  {compareCopied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <p className="mb-1.5 text-xs text-stone-500">Their profile link or share token</p>
+              <input
+                type="text"
+                value={compareTokenInput}
+                onChange={(e) => setCompareTokenInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleCompareGo()}
+                placeholder="Paste their link or token…"
+                className="w-full rounded-xl border border-stone-700 bg-stone-800 px-3 py-2 text-sm text-stone-200 placeholder-stone-600 outline-none focus:border-amber-500/50"
+              />
+            </div>
+
+            <button
+              onClick={handleCompareGo}
+              disabled={!compareTokenInput.trim()}
+              className="w-full rounded-xl bg-amber-500 px-4 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-40"
+            >
+              View compatibility map →
             </button>
           </div>
         </div>

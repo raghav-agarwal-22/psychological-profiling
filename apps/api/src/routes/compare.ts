@@ -107,8 +107,8 @@ export async function compareRoutes(server: FastifyInstance) {
       return reply.status(404).send({ error: 'Profile B not found or not public' })
     }
 
-    const dimsA = profileA.dimensions as Record<string, DimensionScore>
-    const dimsB = profileB.dimensions as Record<string, DimensionScore>
+    const dimsA = profileA.dimensions as unknown as Record<string, DimensionScore>
+    const dimsB = profileB.dimensions as unknown as Record<string, DimensionScore>
     const overlapScores = computeOverlapScores(dimsA, dimsB)
     const compatibilityScore = overallCompatibility(overlapScores)
 

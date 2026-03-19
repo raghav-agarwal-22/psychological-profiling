@@ -486,6 +486,12 @@ export default function DashboardPage() {
                       >
                         {downloadingPDF === session.profile.id ? 'Generating…' : '↓ PDF'}
                       </button>
+                      <Link
+                        href={`/profile/${session.profile.id}#compare`}
+                        className="text-xs text-stone-500 hover:text-stone-300"
+                      >
+                        ⇌ Compare
+                      </Link>
                     </div>
                   )}
                 </div>
