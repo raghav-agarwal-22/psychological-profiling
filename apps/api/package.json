@@ -27,6 +27,7 @@
     "@innermind/db": "workspace:*",
     "@innermind/types": "workspace:*",
     "fastify": "^4.28.1",
+    "resend": "^6.9.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {

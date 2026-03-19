@@ -3,6 +3,7 @@ import { z } from 'zod'
 import crypto from 'node:crypto'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { sendMagicLink } from '../services/email.js'
 
 const requestMagicLinkSchema = z.object({
   email: z.string().email(),
@@ -38,11 +39,12 @@ export async function authRoutes(server: FastifyInstance) {
       data: { token, userId: user.id, expiresAt },
     })
 
-    // TODO: In production, send email. For now, return token directly (dev only).
     const isDev = process.env.NODE_ENV !== 'production'
     const magicLinkUrl = `${process.env.WEB_URL ?? 'http://localhost:3000'}/auth/verify?token=${token}`
 
     server.log.info({ email, token: isDev ? token : '[redacted]' }, 'Magic link generated')
+
+    await sendMagicLink(email, magicLinkUrl)
 
     return reply.send({
       message: 'Magic link sent',
