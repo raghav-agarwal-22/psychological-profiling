@@ -1,6 +1,6 @@
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6">
+    <div className="flex flex-col items-center justify-center px-6 py-24">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <span className="text-3xl">◎</span>
@@ -36,6 +36,6 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6 py-24">
+    <div className="flex flex-col items-center justify-center px-6 py-24">
       <div className="max-w-2xl text-center">
         {/* Logo mark */}
         <div className="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 ring-1 ring-amber-500/20">
@@ -48,7 +48,7 @@ export default function HomePage() {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   )
 }
 
