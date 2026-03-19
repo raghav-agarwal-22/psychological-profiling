@@ -10,6 +10,7 @@ import { assessmentRoutes } from './routes/assessments.js'
 import { profileRoutes } from './routes/profiles.js'
 import { insightRoutes } from './routes/insights.js'
 import { templateRoutes } from './routes/templates.js'
+import { userRoutes } from './routes/users.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -54,6 +55,7 @@ await server.register(assessmentRoutes, { prefix: '/api/assessments' })
 await server.register(profileRoutes, { prefix: '/api/profiles' })
 await server.register(insightRoutes, { prefix: '/api/insights' })
 await server.register(templateRoutes, { prefix: '/api/templates' })
+await server.register(userRoutes, { prefix: '/api/users' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

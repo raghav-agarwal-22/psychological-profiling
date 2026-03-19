@@ -70,6 +70,7 @@ model Session {
   assessments Assessment[]
 
   @@index([userId])
+  @@index([userId, completedAt])
   @@map("sessions")
 }
 
