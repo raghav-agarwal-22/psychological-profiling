@@ -12,6 +12,15 @@ interface DimensionScore {
   responseCount?: number
 }
 
+interface JournalEntry {
+  id: string
+  body: string
+  prompt: string | null
+  profileId: string | null
+  tags: string[]
+  createdAt: string
+}
+
 interface SessionSummary {
   id: string
   title: string | null
@@ -197,6 +206,7 @@ function ChartLegend({ dimensions }: { dimensions: string[] }) {
 export default function DashboardPage() {
   const router = useRouter()
   const [sessions, setSessions] = useState<SessionSummary[]>([])
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -206,9 +216,14 @@ export default function DashboardPage() {
       return
     }
 
-    api
-      .get<{ sessions: SessionSummary[] }>('/api/users/me/sessions', token)
-      .then((data) => setSessions(data.sessions))
+    Promise.all([
+      api.get<{ sessions: SessionSummary[] }>('/api/users/me/sessions', token),
+      api.get<{ entries: JournalEntry[] }>('/api/users/me/journal', token).catch(() => ({ entries: [] as JournalEntry[] })),
+    ])
+      .then(([sessionData, journalData]) => {
+        setSessions(sessionData.sessions)
+        setJournalEntries(journalData.entries)
+      })
       .catch(() => router.push('/auth/login'))
       .finally(() => setLoading(false))
   }, [router])
@@ -311,6 +326,44 @@ export default function DashboardPage() {
               </div>
             )
           })}
+        </div>
+      )}
+
+      {/* Journal entries */}
+      {journalEntries.length > 0 && (
+        <div className="mb-8">
+          <h2 className="mb-4 font-serif text-xl text-stone-200">Your reflections</h2>
+          <div className="space-y-3">
+            {journalEntries.slice(0, 5).map((entry) => {
+              const linkedSession = entry.profileId
+                ? sessions.find((s) => s.profile?.id === entry.profileId)
+                : null
+              return (
+                <div
+                  key={entry.id}
+                  className="rounded-xl border border-stone-800 bg-stone-900/50 px-5 py-4"
+                >
+                  {entry.prompt && (
+                    <p className="mb-1.5 text-xs text-amber-400/70 italic">&ldquo;{entry.prompt}&rdquo;</p>
+                  )}
+                  <p className="text-sm text-stone-300 leading-relaxed line-clamp-3">{entry.body}</p>
+                  <div className="mt-2 flex items-center justify-between gap-4">
+                    <p className="text-xs text-stone-600">
+                      {new Date(entry.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {linkedSession && (
+                        <span className="ml-2 text-stone-700">· {linkedSession.templateTitle ?? 'Assessment'}</span>
+                      )}
+                    </p>
+                    {entry.profileId && (
+                      <Link href={`/profile/${entry.profileId}`} className="text-xs text-stone-500 hover:text-stone-300">
+                        View profile →
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       )}
 

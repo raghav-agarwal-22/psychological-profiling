@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateDeltaObservation } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -217,6 +217,16 @@ export async function sessionRoutes(server: FastifyInstance) {
       strengths = narrative?.strengths ?? []
     }
 
+    // Generate reflection prompts in parallel with profile creation
+    let reflectionPrompts: string[] = []
+    if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
+      try {
+        reflectionPrompts = await generateReflectionPrompts(dimensionScores, templateType)
+      } catch (err) {
+        server.log.warn({ err }, 'Reflection prompt generation failed — skipping')
+      }
+    }
+
     const profile = await prisma.profile.create({
       data: {
         userId: req.user.userId,
@@ -233,6 +243,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           scores: dimensionScores,
           templateType,
           narrative: narrative ?? valuesNarrative ?? attachmentNarrative,
+          reflectionPrompts,
         } as object,
       },
     })

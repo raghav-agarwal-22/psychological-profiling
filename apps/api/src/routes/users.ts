@@ -1,7 +1,16 @@
 import type { FastifyInstance } from 'fastify'
+import { z } from 'zod'
 import { prisma, SessionStatus } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { generateCrossFrameworkSynthesis } from '../lib/profile-generator.js'
+
+const createJournalEntrySchema = z.object({
+  body: z.string().min(1).max(10000),
+  title: z.string().max(200).optional(),
+  profileId: z.string().cuid().optional(),
+  prompt: z.string().max(500).optional(),
+  tags: z.array(z.string().max(50)).max(10).optional(),
+})
 
 interface DimensionScore {
   normalized: number
@@ -253,5 +262,81 @@ export async function userRoutes(server: FastifyInstance) {
         synthesisGeneratedAt: new Date(),
       },
     })
+  })
+
+  // ─── Journal ─────────────────────────────────────────────────────────────
+
+  // GET /api/users/me/journal — list journal entries (newest first)
+  server.get('/me/journal', async (req, reply) => {
+    const entries = await prisma.journalEntry.findMany({
+      where: { userId: req.user.userId },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        body: true,
+        prompt: true,
+        profileId: true,
+        tags: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+    return reply.send({ entries })
+  })
+
+  // POST /api/users/me/journal — create a journal entry
+  server.post('/me/journal', async (req, reply) => {
+    const parsed = createJournalEntrySchema.safeParse(req.body)
+    if (!parsed.success) {
+      return reply.status(400).send({ error: 'Invalid request', issues: parsed.error.issues })
+    }
+
+    // Verify profileId belongs to this user if provided
+    if (parsed.data.profileId) {
+      const profile = await prisma.profile.findFirst({
+        where: { id: parsed.data.profileId, userId: req.user.userId },
+        select: { id: true },
+      })
+      if (!profile) {
+        return reply.status(404).send({ error: 'Profile not found' })
+      }
+    }
+
+    const entry = await prisma.journalEntry.create({
+      data: {
+        userId: req.user.userId,
+        body: parsed.data.body,
+        title: parsed.data.title,
+        profileId: parsed.data.profileId,
+        prompt: parsed.data.prompt,
+        tags: parsed.data.tags ?? [],
+      },
+      select: {
+        id: true,
+        title: true,
+        body: true,
+        prompt: true,
+        profileId: true,
+        tags: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+
+    return reply.status(201).send({ entry })
+  })
+
+  // DELETE /api/users/me/journal/:entryId — delete a journal entry
+  server.delete<{ Params: { entryId: string } }>('/me/journal/:entryId', async (req, reply) => {
+    const entry = await prisma.journalEntry.findFirst({
+      where: { id: req.params.entryId, userId: req.user.userId },
+    })
+    if (!entry) {
+      return reply.status(404).send({ error: 'Entry not found' })
+    }
+
+    await prisma.journalEntry.delete({ where: { id: entry.id } })
+    return reply.send({ ok: true })
   })
 }

@@ -201,8 +201,9 @@ model Profile {
   isPublic    Boolean   @default(false) @map("is_public")
   shareToken  String?   @unique @map("share_token")
 
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  insights Insight[]
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  insights       Insight[]
+  journalEntries JournalEntry[]
 
   @@index([userId])
   @@index([userId, isLatest])
@@ -268,7 +269,9 @@ enum LifeDomain {
 model JournalEntry {
   id        String    @id @default(cuid())
   userId    String    @map("user_id")
+  profileId String?   @map("profile_id")
   insightId String?   @map("insight_id")
+  prompt    String?   // The reflection prompt this entry responded to
   title     String?
   body      String
   mood      Int?      // 1-10 mood score at time of writing
@@ -276,8 +279,10 @@ model JournalEntry {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile Profile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
 
   @@index([userId])
+  @@index([profileId])
   @@map("journal_entries")
 }

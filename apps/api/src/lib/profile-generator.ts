@@ -122,6 +122,57 @@ Determine anxietyLevel/avoidanceLevel:
 - score 35–65 → "moderate"
 - score > 65 → "high"`
 
+export async function generateReflectionPrompts(
+  scores: AssessmentScores,
+  templateType: string,
+): Promise<string[]> {
+  const sorted = Object.entries(scores)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+
+  const top = sorted.slice(0, 2).map(([k, v]) => `${k}: ${v.normalized}/100`).join(', ')
+  const bottom = sorted.slice(-1).map(([k, v]) => `${k}: ${v.normalized}/100`).join(', ')
+
+  const frameworkName =
+    templateType === 'VALUES_INVENTORY' ? 'Schwartz Values Inventory' :
+    templateType === 'ATTACHMENT_STYLE' ? 'Attachment Style' :
+    'Big Five Personality'
+
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 300,
+    system: `You are a thoughtful guide helping people reflect on their psychological assessment results. Generate exactly 3 reflection questions that help this person connect their results to real lived experiences. Questions should be:
+- Personal and specific to their actual scores (not generic)
+- Grounded in a specific memory, relationship, or decision
+- Open-ended and introspective
+- Warm and non-judgmental
+
+Respond with a JSON array of exactly 3 strings: ["Question 1?", "Question 2?", "Question 3?"]
+No other text.`,
+    messages: [
+      {
+        role: 'user',
+        content: `Framework: ${frameworkName}\nHighest dimensions: ${top}\nLowest dimension: ${bottom}\n\nGenerate 3 reflection questions.`,
+      },
+    ],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text.trim() : '[]'
+  try {
+    const parsed = JSON.parse(text) as unknown[]
+    if (Array.isArray(parsed) && parsed.every((x) => typeof x === 'string')) {
+      return parsed as string[]
+    }
+  } catch {
+    // fall through to default
+  }
+  return [
+    'What moment in your life most clearly reflects this result?',
+    'How has this pattern shaped a significant decision you\'ve made?',
+    'Where do you most want to grow based on what you\'ve learned?',
+  ]
+}
+
 export interface FrameworkContext {
   type: string
   title: string
