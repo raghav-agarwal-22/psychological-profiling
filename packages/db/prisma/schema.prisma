@@ -79,6 +79,30 @@ enum SessionStatus {
   ABANDONED
 }
 
+// ─── AssessmentTemplate ───────────────────────────────────────────────────────
+// A reusable blueprint for an assessment instrument.
+// Stores the canonical question bank and scoring config for a given type/version.
+
+model AssessmentTemplate {
+  id            String         @id @default(cuid())
+  type          AssessmentType
+  version       String         @default("1.0")
+  title         String
+  description   String?
+  questionBank  Json           @map("question_bank")
+  // Array of: { id, text, dimension, reverse_scored }
+  scoringConfig Json           @map("scoring_config")
+  // Per-dimension: { questionIds, reverseIds, formula ("average"), normalize }
+  isActive      Boolean        @default(true) @map("is_active")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  assessments Assessment[]
+
+  @@unique([type, version])
+  @@map("assessment_templates")
+}
+
 // ─── Assessment ──────────────────────────────────────────────────────────────
 // A single assessment instrument within a session.
 // Could be a personality test, values inventory, shadow work prompt, etc.
@@ -87,6 +111,7 @@ model Assessment {
   id           String           @id @default(cuid())
   userId       String           @map("user_id")
   sessionId    String           @map("session_id")
+  templateId   String?          @map("template_id")
   type         AssessmentType
   title        String
   description  String?
@@ -100,13 +125,34 @@ model Assessment {
   createdAt    DateTime         @default(now()) @map("created_at")
   updatedAt    DateTime         @updatedAt @map("updated_at")
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  session  Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  insights Insight[]
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session   Session             @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  template  AssessmentTemplate? @relation(fields: [templateId], references: [id])
+  insights  Insight[]
+  responses AssessmentResponse[]
 
   @@index([userId])
   @@index([sessionId])
+  @@index([templateId])
   @@map("assessments")
+}
+
+// ─── AssessmentResponse ───────────────────────────────────────────────────────
+// Individual question-level response for a structured assessment.
+// Supports Likert-scale (1-5) responses with reverse scoring applied at scoring time.
+
+model AssessmentResponse {
+  id           String     @id @default(cuid())
+  assessmentId String     @map("assessment_id")
+  questionId   String     @map("question_id")
+  value        Int        // Likert 1-5 (raw; reverse scoring applied during score computation)
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, questionId])
+  @@index([assessmentId])
+  @@map("assessment_responses")
 }
 
 enum AssessmentType {

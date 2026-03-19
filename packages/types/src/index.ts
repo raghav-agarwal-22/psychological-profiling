@@ -147,6 +147,53 @@ export interface Insight {
   updatedAt: string
 }
 
+// ─── Assessment Template ───────────────────────────────────────────────────────
+
+export interface QuestionBankItem {
+  id: string
+  text: string
+  dimension: string
+  reverse_scored: boolean
+}
+
+export interface DimensionScoringConfig {
+  questionIds: string[]
+  reverseIds: string[]
+  formula: 'average'
+  normalize: boolean
+}
+
+export type ScoringConfig = Record<string, DimensionScoringConfig>
+
+export interface AssessmentTemplate {
+  id: string
+  type: AssessmentType
+  version: string
+  title: string
+  description: string | null
+  questionBank: QuestionBankItem[]
+  scoringConfig: ScoringConfig
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface AssessmentResponse {
+  id: string
+  assessmentId: string
+  questionId: string
+  value: number
+  createdAt: string
+}
+
+export interface DimensionScore {
+  raw: number
+  normalized: number
+  responseCount: number
+}
+
+export type AssessmentScores = Record<string, DimensionScore>
+
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
 export interface AuthTokens {
