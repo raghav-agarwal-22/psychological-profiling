@@ -17,6 +17,12 @@ interface Assessment {
   id: string
 }
 
+interface TemplateInfo {
+  title: string
+  description: string | null
+  type: string
+}
+
 const LIKERT_LABELS = [
   { value: 1, label: 'Strongly\nDisagree' },
   { value: 2, label: 'Disagree' },
@@ -24,6 +30,21 @@ const LIKERT_LABELS = [
   { value: 4, label: 'Agree' },
   { value: 5, label: 'Strongly\nAgree' },
 ]
+
+const TYPE_DURATION: Record<string, string> = {
+  BIG_FIVE: '10–15 minutes',
+  VALUES_INVENTORY: '5–8 minutes',
+}
+
+const TYPE_OUTCOME: Record<string, string> = {
+  BIG_FIVE: 'Your personality archetype, dimension scores across the Big Five, personal strengths, and growth areas.',
+  VALUES_INVENTORY: 'Your ranked value profile, core values, and the value tensions that shape your decisions.',
+}
+
+const TYPE_ICONS: Record<string, string> = {
+  BIG_FIVE: '◎',
+  VALUES_INVENTORY: '◈',
+}
 
 function AssessmentFlow() {
   const params = useParams()
@@ -34,11 +55,13 @@ function AssessmentFlow() {
   const templateId = searchParams.get('templateId')
 
   const [questions, setQuestions] = useState<Question[]>([])
+  const [templateInfo, setTemplateInfo] = useState<TemplateInfo | null>(null)
   const [assessment, setAssessment] = useState<Assessment | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [responses, setResponses] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false)
+  const [showIntro, setShowIntro] = useState(false)
 
   useEffect(() => {
     const token = getToken()
@@ -52,23 +75,37 @@ function AssessmentFlow() {
       return
     }
 
-    // Load template questions + find the assessment for this session
     Promise.all([
-      api.get<{ template: { questionBank: Question[] } }>(`/api/templates/${templateId}`),
+      api.get<{ template: { title: string; description: string | null; type: string; questionBank: Question[] } }>(`/api/templates/${templateId}`),
       api.get<{ assessments: Assessment[] }>(`/api/assessments`, token),
     ])
       .then(([templateData, assessmentsData]) => {
-        setQuestions(templateData.template.questionBank)
-        // Take the most recent assessment (just created for this session)
+        const tpl = templateData.template
+        setQuestions(tpl.questionBank)
+        setTemplateInfo({ title: tpl.title, description: tpl.description, type: tpl.type })
+
         const found = assessmentsData.assessments[0]
         if (found) setAssessment(found)
+
+        // Show intro only if user hasn't seen it for this template
+        const seenKey = `seenIntro_${templateId}`
+        if (!localStorage.getItem(seenKey)) {
+          setShowIntro(true)
+        }
       })
       .catch(() => router.push('/assessment'))
       .finally(() => setLoading(false))
   }, [sessionId, templateId, router])
 
+  const handleBegin = useCallback(() => {
+    if (templateId) {
+      localStorage.setItem(`seenIntro_${templateId}`, '1')
+    }
+    setShowIntro(false)
+  }, [templateId])
+
   const currentQuestion = questions[currentIndex]
-  const progress = questions.length > 0 ? ((currentIndex) / questions.length) * 100 : 0
+  const progress = questions.length > 0 ? (currentIndex / questions.length) * 100 : 0
   const currentAnswer = currentQuestion ? responses[currentQuestion.id] : undefined
 
   const handleAnswer = useCallback(
@@ -85,12 +122,11 @@ function AssessmentFlow() {
       return
     }
 
-    // Final question — submit all responses then complete
     if (!assessment) return
     const token = getToken()
     if (!token) return router.push('/auth/login')
 
-    setSubmitting(true)
+    setAnalyzing(true)
     try {
       const responseArray = Object.entries(responses).map(([questionId, value]) => ({
         questionId,
@@ -110,7 +146,7 @@ function AssessmentFlow() {
 
       router.push(`/profile/${profile.id}`)
     } catch {
-      setSubmitting(false)
+      setAnalyzing(false)
     }
   }, [currentIndex, questions.length, assessment, responses, sessionId, router])
 
@@ -122,6 +158,90 @@ function AssessmentFlow() {
     return (
       <div className="flex items-center justify-center py-24">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
+      </div>
+    )
+  }
+
+  // Intro screen
+  if (showIntro && templateInfo) {
+    const icon = TYPE_ICONS[templateInfo.type] ?? '◯'
+    const duration = TYPE_DURATION[templateInfo.type] ?? '5–15 min'
+    const outcome = TYPE_OUTCOME[templateInfo.type] ?? 'A detailed psychological profile.'
+
+    return (
+      <div className="mx-auto max-w-xl px-6 py-20">
+        <div className="text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 ring-1 ring-amber-500/20">
+            <span className="text-3xl">{icon}</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">{templateInfo.title}</h1>
+          {templateInfo.description && (
+            <p className="mt-3 text-stone-400 leading-relaxed">{templateInfo.description}</p>
+          )}
+        </div>
+
+        <div className="mt-10 space-y-3">
+          <div className="flex items-start gap-3 rounded-xl border border-stone-800 bg-stone-900/50 px-5 py-4">
+            <span className="mt-0.5 text-amber-500">⏱</span>
+            <div>
+              <p className="text-sm font-medium text-stone-200">Estimated time</p>
+              <p className="text-sm text-stone-500">{duration}</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 rounded-xl border border-stone-800 bg-stone-900/50 px-5 py-4">
+            <span className="mt-0.5 text-amber-500">✦</span>
+            <div>
+              <p className="text-sm font-medium text-stone-200">What you&apos;ll receive</p>
+              <p className="text-sm text-stone-500">{outcome}</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 rounded-xl border border-stone-800 bg-stone-900/50 px-5 py-4">
+            <span className="mt-0.5 text-amber-500">🧠</span>
+            <div>
+              <p className="text-sm font-medium text-stone-200">How it works</p>
+              <p className="text-sm text-stone-500">
+                Rate each statement on a 1–5 scale. Answer honestly — there are no right or wrong answers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 text-center">
+          <button
+            onClick={handleBegin}
+            className="rounded-xl bg-amber-500 px-10 py-3.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Begin
+          </button>
+          <p className="mt-3 text-xs text-stone-600">{questions.length} questions total</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Analyzing / celebration screen
+  if (analyzing) {
+    return (
+      <div className="flex flex-col items-center justify-center px-6 py-32 text-center">
+        <div className="relative mb-8">
+          <div className="h-20 w-20 animate-spin rounded-full border-2 border-stone-800 border-t-amber-500" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-2xl">◎</span>
+          </div>
+        </div>
+        <h2 className="font-serif text-3xl text-stone-100">Analyzing your responses…</h2>
+        <p className="mt-3 max-w-sm text-stone-500 leading-relaxed">
+          We&apos;re generating your personalized psychological profile. This takes just a moment.
+        </p>
+        <div className="mt-8 flex gap-1">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="h-1.5 w-1.5 animate-bounce rounded-full bg-amber-500/60"
+              style={{ animationDelay: `${i * 0.2}s` }}
+            />
+          ))}
+        </div>
       </div>
     )
   }
@@ -199,10 +319,10 @@ function AssessmentFlow() {
         </button>
         <button
           onClick={handleNext}
-          disabled={currentAnswer === undefined || submitting}
+          disabled={currentAnswer === undefined}
           className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-40"
         >
-          {submitting ? 'Generating profile…' : isLast ? 'Submit' : 'Next'}
+          {isLast ? 'Submit' : 'Next'}
         </button>
       </div>
     </div>
