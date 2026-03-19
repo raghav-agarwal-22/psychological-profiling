@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
@@ -203,11 +203,42 @@ function ChartLegend({ dimensions }: { dimensions: string[] }) {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function downloadProfilePDF(profileId: string, token: string, archetypes: string[]) {
+  const [{ pdf }, { ProfileDocument }, { api }] = await Promise.all([
+    import('@react-pdf/renderer'),
+    import('@/components/ProfilePDF'),
+    import('@/lib/api'),
+  ])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [profileData, journalData, synthesisData] = await Promise.all([
+    api.get<{ profile: Record<string, unknown> }>(`/api/profiles/${profileId}`, token),
+    api.get<{ entries: Array<{ id: string; body: string; prompt: string | null; profileId: string | null; createdAt: string }> }>('/api/users/me/journal', token).catch(() => ({ entries: [] as Array<{ id: string; body: string; prompt: string | null; profileId: string | null; createdAt: string }> })),
+    api.get<{ synthesis: string; generatedAt: string }>('/api/users/me/synthesis', token).catch(() => null),
+  ])
+
+  const profileEntries = journalData.entries.filter((e) => e.profileId === profileId)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const profile = profileData.profile as any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const doc = (ProfileDocument as any)({ profile, synthesis: synthesisData?.synthesis ?? null, journalEntries: profileEntries })
+  const blob = await pdf(doc as React.ReactElement).toBlob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  const slug = archetypes[0] ? archetypes[0].toLowerCase().replace(/\s+/g, '-') : 'profile'
+  a.download = `innermind-${slug}.pdf`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 export default function DashboardPage() {
   const router = useRouter()
   const [sessions, setSessions] = useState<SessionSummary[]>([])
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
   const [loading, setLoading] = useState(true)
+  const [downloadingPDF, setDownloadingPDF] = useState<string | null>(null)
 
   useEffect(() => {
     const token = getToken()
@@ -432,12 +463,30 @@ export default function DashboardPage() {
                     )}
                   </div>
                   {session.profile && (
-                    <Link
-                      href={`/profile/${session.profile.id}`}
-                      className="shrink-0 text-xs text-stone-400 hover:text-stone-200"
-                    >
-                      View results →
-                    </Link>
+                    <div className="flex shrink-0 flex-col items-end gap-2">
+                      <Link
+                        href={`/profile/${session.profile.id}`}
+                        className="text-xs text-stone-400 hover:text-stone-200"
+                      >
+                        View results →
+                      </Link>
+                      <button
+                        onClick={async () => {
+                          const token = getToken()
+                          if (!token || !session.profile) return
+                          setDownloadingPDF(session.profile.id)
+                          try {
+                            await downloadProfilePDF(session.profile.id, token, session.profile.archetypes ?? [])
+                          } finally {
+                            setDownloadingPDF(null)
+                          }
+                        }}
+                        disabled={downloadingPDF === session.profile.id}
+                        className="text-xs text-stone-500 hover:text-stone-300 disabled:opacity-40"
+                      >
+                        {downloadingPDF === session.profile.id ? 'Generating…' : '↓ PDF'}
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

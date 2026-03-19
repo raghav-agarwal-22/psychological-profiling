@@ -129,6 +129,7 @@ export default function ProfilePage() {
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [showShareModal, setShowShareModal] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [downloadingPDF, setDownloadingPDF] = useState(false)
 
   const [synthesis, setSynthesis] = useState<string | null>(null)
   const [synthesisGeneratedAt, setSynthesisGeneratedAt] = useState<string | null>(null)
@@ -261,6 +262,34 @@ export default function ProfilePage() {
     await navigator.clipboard.writeText(shareUrl)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const handleDownloadPDF = async () => {
+    if (!profile) return
+    setDownloadingPDF(true)
+    try {
+      const [{ pdf }, { ProfileDocument }] = await Promise.all([
+        import('@react-pdf/renderer'),
+        import('@/components/ProfilePDF'),
+      ])
+      // Filter journal entries for this profile
+      const profileEntries = savedEntries.filter(
+        (e) => (e as unknown as { profileId?: string }).profileId === profile.id
+      )
+      const doc = <ProfileDocument profile={profile} synthesis={synthesis} journalEntries={profileEntries} />
+      const blob = await pdf(doc).toBlob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      const slug = profile.archetypes[0]
+        ? profile.archetypes[0].toLowerCase().replace(/\s+/g, '-')
+        : 'profile'
+      a.download = `innermind-${slug}.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    } finally {
+      setDownloadingPDF(false)
+    }
   }
 
   const handleSaveJournal = async () => {
@@ -680,6 +709,13 @@ export default function ProfilePage() {
           className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
         >
           {sharing ? 'Generating link…' : 'Share Profile'}
+        </button>
+        <button
+          onClick={handleDownloadPDF}
+          disabled={downloadingPDF}
+          className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
+        >
+          {downloadingPDF ? 'Generating PDF…' : 'Download PDF'}
         </button>
         <Link href="/dashboard" className="text-sm text-stone-400 hover:text-stone-200">
           Back to dashboard
