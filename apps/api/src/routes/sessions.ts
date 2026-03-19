@@ -1,8 +1,8 @@
 import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
-import { prisma, SessionStatus, AssessmentStatus, computeScores, type ScoringConfig } from '@innermind/db'
+import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -146,9 +146,11 @@ export async function sessionRoutes(server: FastifyInstance) {
     // Score each completed assessment with a template
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dimensionScores: Record<string, any> = {}
+    let templateType: string = AssessmentType.BIG_FIVE
     for (const assessment of session.assessments) {
       if (!assessment.template) continue
 
+      templateType = assessment.template.type
       const scoringConfig = assessment.template.scoringConfig as unknown as ScoringConfig
       const responseMap: Record<string, number> = {}
       for (const r of assessment.responses) {
@@ -166,9 +168,14 @@ export async function sessionRoutes(server: FastifyInstance) {
 
     // Generate AI narrative if we have scores and ANTHROPIC_API_KEY is set
     let narrative = null
+    let valuesNarrative = null
     if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
       try {
-        narrative = await generateProfileNarrative(dimensionScores)
+        if (templateType === AssessmentType.VALUES_INVENTORY) {
+          valuesNarrative = await generateValuesNarrative(dimensionScores)
+        } else {
+          narrative = await generateProfileNarrative(dimensionScores)
+        }
       } catch (err) {
         server.log.warn({ err }, 'AI profile generation failed — storing numeric scores only')
       }
@@ -180,18 +187,44 @@ export async function sessionRoutes(server: FastifyInstance) {
       data: { isLatest: false },
     })
 
+    // Build profile fields based on template type
+    let summary: string
+    let archetypes: string[]
+    let values: string[]
+    let blindSpots: string[]
+    let strengths: string[]
+
+    if (templateType === AssessmentType.VALUES_INVENTORY && valuesNarrative) {
+      summary = valuesNarrative.summary
+      archetypes = []
+      values = valuesNarrative.coreValues
+      blindSpots = valuesNarrative.tensions.map((t) => `${t.value1} vs ${t.value2}: ${t.description}`)
+      strengths = []
+    } else {
+      summary = narrative?.summary ?? 'Profile generated from assessment responses.'
+      archetypes = narrative?.archetype ? [narrative.archetype] : []
+      values = narrative?.values ?? []
+      blindSpots = narrative?.blind_spots ?? []
+      strengths = narrative?.strengths ?? []
+    }
+
     const profile = await prisma.profile.create({
       data: {
         userId: req.user.userId,
         version: 1,
         isLatest: true,
-        summary: narrative?.summary ?? 'Profile generated from assessment responses.',
+        summary,
         dimensions: dimensionScores,
-        archetypes: narrative?.archetype ? [narrative.archetype] : [],
-        values: narrative?.values ?? [],
-        blindSpots: narrative?.blind_spots ?? [],
-        strengths: narrative?.strengths ?? [],
-        rawOutput: { sessionId: session.id, scores: dimensionScores, narrative } as object,
+        archetypes,
+        values,
+        blindSpots,
+        strengths,
+        rawOutput: {
+          sessionId: session.id,
+          scores: dimensionScores,
+          templateType,
+          narrative: narrative ?? valuesNarrative,
+        } as object,
       },
     })
 

@@ -15,7 +15,15 @@ export interface ProfileNarrative {
   blind_spots: string[]
 }
 
-const SYSTEM_PROMPT = `You are a thoughtful psychological guide trained in the Big Five personality framework, Jungian archetypes, and humanistic psychology.
+export interface ValuesNarrative {
+  summary: string
+  valueRankings: string[]   // all 9 values ordered highest to lowest score
+  coreValues: string[]      // top 3
+  narrative: string         // 2-3 paragraph philosophical narrative
+  tensions: Array<{ value1: string; value2: string; description: string }>
+}
+
+const BIG_FIVE_SYSTEM_PROMPT = `You are a thoughtful psychological guide trained in the Big Five personality framework, Jungian archetypes, and humanistic psychology.
 
 Your role is to generate a rich, narrative psychological profile based on assessment scores. Your tone should be:
 - Warm but honest — not flattering, not clinical
@@ -38,6 +46,37 @@ You must respond with valid JSON matching exactly this structure:
 
 Base your interpretation on the scores provided. Scores are normalized 0–100 where higher means stronger expression of the trait. Do not invent information not supported by the scores.`
 
+const VALUES_SYSTEM_PROMPT = `You are a philosophical guide deeply versed in Shalom Schwartz's Basic Human Values Theory and existential psychology.
+
+Your role is to illuminate someone's value landscape — the motivational goals that guide their choices and give their life meaning. Your tone should be:
+- Warm, philosophical, and reflective
+- Grounded in Schwartz's empirical values research
+- Exploratory rather than definitive — values are a lens, not a verdict
+- Attentive to the tensions between competing values as sources of growth
+
+The nine values dimensions are: achievement, benevolence, conformity, hedonism, power, security, self_direction, stimulation, universalism.
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "summary": "A 2–3 sentence overview capturing the essence of this person's value landscape",
+  "valueRankings": ["value1", "value2", "value3", "value4", "value5", "value6", "value7", "value8", "value9"],
+  "coreValues": ["top_value1", "top_value2", "top_value3"],
+  "narrative": "A 2–3 paragraph philosophical narrative exploring what these values say about the person — their motivations, what they seek, how they engage with the world. Reference Schwartz's research where relevant.",
+  "tensions": [
+    { "value1": "value_name", "value2": "other_value_name", "description": "1-2 sentences on how these values create productive tension or friction for this person" }
+  ]
+}
+
+The tensions array should contain 0–2 entries, only where genuine competing motivations appear (e.g., high self_direction vs high conformity, or high stimulation vs high security). Do not invent tensions not supported by the scores.
+
+Base the valueRankings strictly on the numeric scores (highest score = first). Do not invent information.`
+
+function extractJson<T>(text: string): T {
+  const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
+  const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text
+  return JSON.parse(jsonText) as T
+}
+
 export async function generateProfileNarrative(
   scores: AssessmentScores,
 ): Promise<ProfileNarrative> {
@@ -50,17 +89,34 @@ export async function generateProfileNarrative(
   const response = await client.messages.create({
     model: 'claude-opus-4-6',
     max_tokens: 2048,
-    system: SYSTEM_PROMPT,
+    system: BIG_FIVE_SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userMessage }],
   })
 
   const block = response.content[0]
   const text = block?.type === 'text' ? block.text : ''
+  return extractJson<ProfileNarrative>(text)
+}
 
-  // Extract JSON from response (may be wrapped in ```json blocks)
-  const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
-  const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text
+export async function generateValuesNarrative(
+  scores: AssessmentScores,
+): Promise<ValuesNarrative> {
+  // Sort dimensions by score descending for context
+  const ranked = Object.entries(scores)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100`)
+    .join('\n')
 
-  const parsed = JSON.parse(jsonText) as ProfileNarrative
-  return parsed
+  const userMessage = `Here are the Schwartz Values Inventory scores for this person (sorted highest to lowest):\n\n${ranked}\n\nGenerate a values profile narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: VALUES_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<ValuesNarrative>(text)
 }

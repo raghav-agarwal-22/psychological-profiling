@@ -120,6 +120,80 @@ const DEMO_RESPONSES: Record<string, number> = {
   N_01: 2, N_02: 2, N_03: 2, N_04: 2, N_05: 2, N_06: 4, N_07: 4, N_08: 4, N_09: 4, N_10: 2,
 }
 
+// ─── Schwartz Values Inventory (36 items, 4 per dimension) ────────────────────
+//
+// Based on Schwartz's Basic Human Values Theory (public domain research).
+// Dimensions: Achievement, Benevolence, Conformity, Hedonism, Power,
+//             Security, Self-Direction, Stimulation, Universalism
+
+const VALUES_QUESTIONS = [
+  // ── Achievement ────────────────────────────────────────────────────────────
+  { id: 'ACH_01', text: 'Being successful and showing my abilities is important to me.',           dimension: 'achievement',    reverse_scored: false },
+  { id: 'ACH_02', text: 'I want people to recognize my accomplishments.',                          dimension: 'achievement',    reverse_scored: false },
+  { id: 'ACH_03', text: 'Setting ambitious goals and achieving them drives me.',                   dimension: 'achievement',    reverse_scored: false },
+  { id: 'ACH_04', text: 'I strive to be competent and demonstrate my capabilities.',               dimension: 'achievement',    reverse_scored: false },
+
+  // ── Benevolence ────────────────────────────────────────────────────────────
+  { id: 'BEN_01', text: 'Helping the people close to me matters deeply to me.',                    dimension: 'benevolence',    reverse_scored: false },
+  { id: 'BEN_02', text: 'Being loyal to my friends and family is one of my core commitments.',     dimension: 'benevolence',    reverse_scored: false },
+  { id: 'BEN_03', text: 'I care deeply about the wellbeing of people I am close to.',              dimension: 'benevolence',    reverse_scored: false },
+  { id: 'BEN_04', text: 'I try to respond to the needs of people who are important to me.',        dimension: 'benevolence',    reverse_scored: false },
+
+  // ── Conformity ─────────────────────────────────────────────────────────────
+  { id: 'CON_01', text: 'I believe it is important to follow rules and behave properly.',          dimension: 'conformity',     reverse_scored: false },
+  { id: 'CON_02', text: 'Showing respect for traditions and customs is important to me.',          dimension: 'conformity',     reverse_scored: false },
+  { id: 'CON_03', text: 'I try to behave in ways that avoid upsetting or annoying others.',        dimension: 'conformity',     reverse_scored: false },
+  { id: 'CON_04', text: 'I believe in doing what I am supposed to do, even when no one is watching.', dimension: 'conformity', reverse_scored: false },
+
+  // ── Hedonism ───────────────────────────────────────────────────────────────
+  { id: 'HED_01', text: 'I enjoy pleasure and seek out experiences that feel good.',               dimension: 'hedonism',       reverse_scored: false },
+  { id: 'HED_02', text: 'Having fun and enjoying life is very important to me.',                   dimension: 'hedonism',       reverse_scored: false },
+  { id: 'HED_03', text: 'I indulge myself when I can.',                                           dimension: 'hedonism',       reverse_scored: false },
+  { id: 'HED_04', text: 'Satisfying my desires and enjoying sensory pleasures matters to me.',     dimension: 'hedonism',       reverse_scored: false },
+
+  // ── Power ──────────────────────────────────────────────────────────────────
+  { id: 'POW_01', text: 'Having authority and influence over others is important to me.',          dimension: 'power',          reverse_scored: false },
+  { id: 'POW_02', text: 'It matters to me to be in control and lead situations.',                  dimension: 'power',          reverse_scored: false },
+  { id: 'POW_03', text: 'I want to be wealthy and have access to resources others do not.',        dimension: 'power',          reverse_scored: false },
+  { id: 'POW_04', text: 'Social status and prestige are meaningful to me.',                        dimension: 'power',          reverse_scored: false },
+
+  // ── Security ───────────────────────────────────────────────────────────────
+  { id: 'SEC_01', text: 'Living in a safe and stable environment is very important to me.',        dimension: 'security',       reverse_scored: false },
+  { id: 'SEC_02', text: 'I value order and predictability in my daily life.',                      dimension: 'security',       reverse_scored: false },
+  { id: 'SEC_03', text: 'I prefer situations where I know what to expect.',                        dimension: 'security',       reverse_scored: false },
+  { id: 'SEC_04', text: 'Protecting my family and loved ones from harm comes first.',              dimension: 'security',       reverse_scored: false },
+
+  // ── Self-Direction ─────────────────────────────────────────────────────────
+  { id: 'SD_01',  text: 'Thinking for myself and forming my own opinions is essential to me.',     dimension: 'self_direction', reverse_scored: false },
+  { id: 'SD_02',  text: 'I value having the freedom to choose what I do and how I do it.',         dimension: 'self_direction', reverse_scored: false },
+  { id: 'SD_03',  text: 'Being creative and exploring new ideas is important to my sense of self.', dimension: 'self_direction', reverse_scored: false },
+  { id: 'SD_04',  text: 'I believe in charting my own course in life, independent of others.',     dimension: 'self_direction', reverse_scored: false },
+
+  // ── Stimulation ────────────────────────────────────────────────────────────
+  { id: 'STI_01', text: 'I seek out exciting and novel experiences that challenge me.',            dimension: 'stimulation',    reverse_scored: false },
+  { id: 'STI_02', text: 'Having an adventurous life full of variety matters to me.',               dimension: 'stimulation',    reverse_scored: false },
+  { id: 'STI_03', text: 'I feel most alive when facing risk or novelty.',                          dimension: 'stimulation',    reverse_scored: false },
+  { id: 'STI_04', text: 'I am drawn to situations that are daring and unconventional.',            dimension: 'stimulation',    reverse_scored: false },
+
+  // ── Universalism ───────────────────────────────────────────────────────────
+  { id: 'UNI_01', text: 'I care about justice and fairness for everyone, not just those close to me.', dimension: 'universalism', reverse_scored: false },
+  { id: 'UNI_02', text: 'Protecting the environment and nature is deeply important to me.',        dimension: 'universalism',   reverse_scored: false },
+  { id: 'UNI_03', text: 'I believe all people deserve equal opportunities regardless of background.', dimension: 'universalism', reverse_scored: false },
+  { id: 'UNI_04', text: 'Understanding people who are very different from me enriches my life.',   dimension: 'universalism',   reverse_scored: false },
+]
+
+const VALUES_SCORING_CONFIG: ScoringConfig = {
+  achievement:    { questionIds: ['ACH_01','ACH_02','ACH_03','ACH_04'], reverseIds: [], formula: 'average', normalize: true },
+  benevolence:    { questionIds: ['BEN_01','BEN_02','BEN_03','BEN_04'], reverseIds: [], formula: 'average', normalize: true },
+  conformity:     { questionIds: ['CON_01','CON_02','CON_03','CON_04'], reverseIds: [], formula: 'average', normalize: true },
+  hedonism:       { questionIds: ['HED_01','HED_02','HED_03','HED_04'], reverseIds: [], formula: 'average', normalize: true },
+  power:          { questionIds: ['POW_01','POW_02','POW_03','POW_04'], reverseIds: [], formula: 'average', normalize: true },
+  security:       { questionIds: ['SEC_01','SEC_02','SEC_03','SEC_04'], reverseIds: [], formula: 'average', normalize: true },
+  self_direction: { questionIds: ['SD_01', 'SD_02', 'SD_03', 'SD_04' ], reverseIds: [], formula: 'average', normalize: true },
+  stimulation:    { questionIds: ['STI_01','STI_02','STI_03','STI_04'], reverseIds: [], formula: 'average', normalize: true },
+  universalism:   { questionIds: ['UNI_01','UNI_02','UNI_03','UNI_04'], reverseIds: [], formula: 'average', normalize: true },
+}
+
 async function main() {
   console.log('🌱 Seeding database...')
 
@@ -141,6 +215,25 @@ async function main() {
     },
   })
   console.log(`✓ AssessmentTemplate: ${template.title} v${template.version} (${BIG_FIVE_QUESTIONS.length} items)`)
+
+  // ── 1b. Upsert Values Inventory template ───────────────────────────────────
+  const valuesTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.VALUES_INVENTORY, version: '1.0' } },
+    update: {
+      questionBank: VALUES_QUESTIONS,
+      scoringConfig: VALUES_SCORING_CONFIG,
+    },
+    create: {
+      type: AssessmentType.VALUES_INVENTORY,
+      version: '1.0',
+      title: 'Values Inventory',
+      description: 'Discover your core values across 9 fundamental dimensions based on Schwartz\'s Basic Human Values Theory. 36 items, Likert 1-5.',
+      questionBank: VALUES_QUESTIONS,
+      scoringConfig: VALUES_SCORING_CONFIG,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${valuesTemplate.title} v${valuesTemplate.version} (${VALUES_QUESTIONS.length} items)`)
 
   // ── 2. Upsert demo user ────────────────────────────────────────────────────
   const user = await prisma.user.upsert({

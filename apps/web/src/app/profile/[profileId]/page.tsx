@@ -12,6 +12,21 @@ interface DimensionScore {
   responseCount: number
 }
 
+interface RawOutput {
+  templateType?: string
+  narrative?: {
+    // Big Five fields
+    archetype?: string
+    values?: string[]
+    blind_spots?: string[]
+    strengths?: string[]
+    // Values fields
+    valueRankings?: string[]
+    coreValues?: string[]
+    tensions?: Array<{ value1: string; value2: string; description: string }>
+  }
+}
+
 interface Profile {
   id: string
   summary: string
@@ -24,9 +39,10 @@ interface Profile {
   generatedAt: string
   isPublic: boolean
   shareToken: string | null
+  rawOutput: RawOutput
 }
 
-const DIMENSION_LABELS: Record<string, string> = {
+const BIG_FIVE_LABELS: Record<string, string> = {
   openness: 'Openness',
   conscientiousness: 'Conscientiousness',
   extraversion: 'Extraversion',
@@ -34,12 +50,36 @@ const DIMENSION_LABELS: Record<string, string> = {
   neuroticism: 'Neuroticism',
 }
 
-const DIMENSION_COLORS: Record<string, string> = {
+const BIG_FIVE_COLORS: Record<string, string> = {
   openness: 'bg-violet-500',
   conscientiousness: 'bg-blue-500',
   extraversion: 'bg-amber-500',
   agreeableness: 'bg-emerald-500',
   neuroticism: 'bg-rose-500',
+}
+
+const VALUES_LABELS: Record<string, string> = {
+  achievement: 'Achievement',
+  benevolence: 'Benevolence',
+  conformity: 'Conformity',
+  hedonism: 'Hedonism',
+  power: 'Power',
+  security: 'Security',
+  self_direction: 'Self-Direction',
+  stimulation: 'Stimulation',
+  universalism: 'Universalism',
+}
+
+const VALUES_COLORS: Record<string, string> = {
+  achievement: 'bg-amber-500',
+  benevolence: 'bg-emerald-500',
+  conformity: 'bg-blue-400',
+  hedonism: 'bg-pink-500',
+  power: 'bg-rose-500',
+  security: 'bg-cyan-500',
+  self_direction: 'bg-violet-500',
+  stimulation: 'bg-orange-500',
+  universalism: 'bg-teal-500',
 }
 
 export default function ProfilePage() {
@@ -127,12 +167,31 @@ export default function ProfilePage() {
     )
   }
 
+  const isValuesProfile = profile.rawOutput?.templateType === 'VALUES_INVENTORY'
+  const valuesNarrative = profile.rawOutput?.narrative
   const dimensionEntries = Object.entries(profile.dimensions)
+
+  // For values profiles: sort dimensions by score descending
+  const sortedValueEntries = isValuesProfile
+    ? [...dimensionEntries].sort(([, a], [, b]) => {
+        const aScore = typeof a === 'object' ? a.normalized : Number(a)
+        const bScore = typeof b === 'object' ? b.normalized : Number(b)
+        return bScore - aScore
+      })
+    : dimensionEntries
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      {/* Archetype header */}
-      {profile.archetypes.length > 0 && (
+      {/* Header */}
+      {isValuesProfile ? (
+        <div className="mb-10 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-500/10 ring-1 ring-teal-500/20">
+            <span className="text-3xl">◈</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">Your Values</h1>
+          <p className="mt-2 text-stone-500">Schwartz Basic Human Values</p>
+        </div>
+      ) : profile.archetypes.length > 0 ? (
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 ring-1 ring-amber-500/20">
             <span className="text-3xl">◎</span>
@@ -140,22 +199,67 @@ export default function ProfilePage() {
           <h1 className="font-serif text-4xl text-stone-100">{profile.archetypes[0]}</h1>
           <p className="mt-2 text-stone-500">Your psychological archetype</p>
         </div>
-      )}
+      ) : null}
 
       {/* Summary */}
       <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
-        <h2 className="mb-3 font-serif text-xl text-stone-200">Your narrative</h2>
+        <h2 className="mb-3 font-serif text-xl text-stone-200">
+          {isValuesProfile ? 'Your value landscape' : 'Your narrative'}
+        </h2>
         <p className="text-stone-400 leading-relaxed">{profile.summary}</p>
+        {isValuesProfile && valuesNarrative?.narrative && (
+          <p className="mt-4 text-stone-400 leading-relaxed">{valuesNarrative.narrative}</p>
+        )}
       </div>
 
+      {/* Values profile: ranked list with core values highlighted */}
+      {isValuesProfile && sortedValueEntries.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-1 font-serif text-xl text-stone-200">Value rankings</h2>
+          <p className="mb-5 text-xs text-stone-500">Ranked highest to lowest expression</p>
+          <div className="space-y-4">
+            {sortedValueEntries.map(([key, score], index) => {
+              const label = VALUES_LABELS[key.toLowerCase()] ?? key
+              const color = VALUES_COLORS[key.toLowerCase()] ?? 'bg-stone-400'
+              const pct = typeof score === 'object' ? score.normalized : Number(score)
+              const isCoreValue = index < 3
+              return (
+                <div key={key}>
+                  <div className="mb-1.5 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 text-right text-xs text-stone-600">{index + 1}.</span>
+                      <span className={`text-sm ${isCoreValue ? 'font-semibold text-stone-100' : 'text-stone-300'}`}>
+                        {label}
+                      </span>
+                      {isCoreValue && (
+                        <span className="rounded-full border border-teal-700 bg-teal-950/50 px-2 py-0.5 text-[10px] font-medium text-teal-400">
+                          core
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-sm font-medium text-stone-400">{pct}</span>
+                  </div>
+                  <div className="ml-7 h-2 w-full overflow-hidden rounded-full bg-stone-800">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${color} ${isCoreValue ? 'opacity-100' : 'opacity-50'}`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Big Five scores */}
-      {dimensionEntries.length > 0 && (
+      {!isValuesProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
           <h2 className="mb-5 font-serif text-xl text-stone-200">Personality dimensions</h2>
           <div className="space-y-4">
             {dimensionEntries.map(([key, score]) => {
-              const label = DIMENSION_LABELS[key.toLowerCase()] ?? key
-              const color = DIMENSION_COLORS[key.toLowerCase()] ?? 'bg-stone-400'
+              const label = BIG_FIVE_LABELS[key.toLowerCase()] ?? key
+              const color = BIG_FIVE_COLORS[key.toLowerCase()] ?? 'bg-stone-400'
               const pct = typeof score === 'object' ? score.normalized : Number(score)
               return (
                 <div key={key}>
@@ -176,38 +280,60 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Strengths + Growth areas */}
-      <div className="mb-8 grid gap-4 sm:grid-cols-2">
-        {profile.strengths.length > 0 && (
-          <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
-            <h2 className="mb-3 font-serif text-lg text-stone-200">Strengths</h2>
-            <ul className="space-y-1.5">
-              {profile.strengths.map((s) => (
-                <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
-                  <span className="mt-0.5 text-emerald-500">✦</span>
-                  {s}
-                </li>
-              ))}
-            </ul>
+      {/* Values tensions */}
+      {isValuesProfile && valuesNarrative?.tensions && valuesNarrative.tensions.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-1 font-serif text-xl text-stone-200">Value tensions</h2>
+          <p className="mb-5 text-xs text-stone-500">Competing motivations that create growth opportunities</p>
+          <div className="space-y-4">
+            {valuesNarrative.tensions.map((tension, i) => (
+              <div key={i} className="rounded-xl border border-stone-700 bg-stone-800/50 p-4">
+                <div className="mb-2 flex items-center gap-2 text-sm font-medium text-stone-200">
+                  <span className="capitalize">{VALUES_LABELS[tension.value1] ?? tension.value1}</span>
+                  <span className="text-stone-600">⟷</span>
+                  <span className="capitalize">{VALUES_LABELS[tension.value2] ?? tension.value2}</span>
+                </div>
+                <p className="text-sm text-stone-400 leading-relaxed">{tension.description}</p>
+              </div>
+            ))}
           </div>
-        )}
-        {profile.blindSpots.length > 0 && (
-          <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
-            <h2 className="mb-3 font-serif text-lg text-stone-200">Growth areas</h2>
-            <ul className="space-y-1.5">
-              {profile.blindSpots.map((s) => (
-                <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
-                  <span className="mt-0.5 text-amber-500">→</span>
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Values */}
-      {profile.values.length > 0 && (
+      {/* Strengths + Growth areas (Big Five only) */}
+      {!isValuesProfile && (
+        <div className="mb-8 grid gap-4 sm:grid-cols-2">
+          {profile.strengths.length > 0 && (
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
+              <h2 className="mb-3 font-serif text-lg text-stone-200">Strengths</h2>
+              <ul className="space-y-1.5">
+                {profile.strengths.map((s) => (
+                  <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
+                    <span className="mt-0.5 text-emerald-500">✦</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {profile.blindSpots.length > 0 && (
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
+              <h2 className="mb-3 font-serif text-lg text-stone-200">Growth areas</h2>
+              <ul className="space-y-1.5">
+                {profile.blindSpots.map((s) => (
+                  <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
+                    <span className="mt-0.5 text-amber-500">→</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Core values (Big Five only — values profile uses the ranked list) */}
+      {!isValuesProfile && profile.values.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
           <h2 className="mb-3 font-serif text-lg text-stone-200">Core values</h2>
           <div className="flex flex-wrap gap-2">

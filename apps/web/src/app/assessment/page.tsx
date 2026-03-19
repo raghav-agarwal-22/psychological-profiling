@@ -15,6 +15,17 @@ interface Template {
 
 const typeDescriptions: Record<string, string> = {
   BIG_FIVE: 'Explore the five fundamental dimensions of your personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism.',
+  VALUES_INVENTORY: 'Discover what truly motivates you across 9 universal value dimensions — from Self-Direction and Universalism to Security and Hedonism — based on Schwartz\'s foundational values research.',
+}
+
+const typeIcons: Record<string, string> = {
+  BIG_FIVE: '◎',
+  VALUES_INVENTORY: '◈',
+}
+
+const typeDuration: Record<string, string> = {
+  BIG_FIVE: '10–15 min',
+  VALUES_INVENTORY: '5–8 min',
 }
 
 export default function AssessmentPage() {
@@ -87,11 +98,23 @@ export default function AssessmentPage() {
             className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 transition-colors hover:border-stone-700"
           >
             <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <h2 className="font-serif text-xl text-stone-100">{template.title}</h2>
-                <p className="mt-2 text-sm text-stone-400 leading-relaxed">
-                  {template.description ?? typeDescriptions[template.type] ?? ''}
-                </p>
+              <div className="flex flex-1 gap-4">
+                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-stone-800 text-lg text-stone-300">
+                  {typeIcons[template.type] ?? '◯'}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3">
+                    <h2 className="font-serif text-xl text-stone-100">{template.title}</h2>
+                    {typeDuration[template.type] && (
+                      <span className="rounded-full border border-stone-700 px-2 py-0.5 text-[10px] text-stone-500">
+                        {typeDuration[template.type]}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 text-sm text-stone-400 leading-relaxed">
+                    {template.description ?? typeDescriptions[template.type] ?? ''}
+                  </p>
+                </div>
               </div>
               <button
                 onClick={() => startAssessment(template)}
