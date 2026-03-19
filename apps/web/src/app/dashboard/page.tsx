@@ -28,6 +28,7 @@ interface SessionSummary {
   templateTitle: string | null
   completedAt: string | null
   createdAt: string
+  contextTags?: string[]
   profile: {
     id: string
     summary: string
@@ -38,6 +39,38 @@ interface SessionSummary {
   deltas: Record<string, number> | null
   deltaObservation: string | null
 }
+
+interface GrowthRecommendation {
+  title: string
+  description: string
+  category: 'relationships' | 'career' | 'emotional' | 'self-awareness' | 'wellbeing'
+  scoreBasis: string
+  actionStep: string
+}
+
+interface NudgeEntry {
+  frameworkType: string
+  frameworkTitle: string
+  daysSince: number
+  lastAssessedAt: string
+  nudgeActive: boolean
+}
+
+interface NudgeStatus {
+  nudges: NudgeEntry[]
+  hasActiveNudge: boolean
+}
+
+const LIFE_PHASE_TAGS = [
+  'New relationship',
+  'Career transition',
+  'Grief',
+  'Personal growth',
+  'Post-therapy',
+  'Life change',
+  'Stress period',
+  'Recovery',
+]
 
 const DIMENSION_LABELS: Record<string, string> = {
   openness: 'Openness',
@@ -240,6 +273,20 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [downloadingPDF, setDownloadingPDF] = useState<string | null>(null)
 
+  // Reassessment nudge state
+  const [nudgeStatus, setNudgeStatus] = useState<NudgeStatus | null>(null)
+  const [nudgeDismissed, setNudgeDismissed] = useState(false)
+
+  // Growth recommendations state
+  const [recommendations, setRecommendations] = useState<GrowthRecommendation[] | null>(null)
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false)
+  const [recommendationsError, setRecommendationsError] = useState<string | null>(null)
+
+  // Context tags state: which session has the tag picker open
+  const [tagPickerOpenFor, setTagPickerOpenFor] = useState<string | null>(null)
+  const [sessionTags, setSessionTags] = useState<Record<string, string[]>>({})
+  const [savingTagsFor, setSavingTagsFor] = useState<string | null>(null)
+
   useEffect(() => {
     const token = getToken()
     if (!token) {
@@ -250,10 +297,37 @@ export default function DashboardPage() {
     Promise.all([
       api.get<{ sessions: SessionSummary[] }>('/api/users/me/sessions', token),
       api.get<{ entries: JournalEntry[] }>('/api/users/me/journal', token).catch(() => ({ entries: [] as JournalEntry[] })),
+      api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
     ])
-      .then(([sessionData, journalData]) => {
+      .then(([sessionData, journalData, nudgeData]) => {
         setSessions(sessionData.sessions)
         setJournalEntries(journalData.entries)
+        if (nudgeData) setNudgeStatus(nudgeData)
+        // Seed local tags state from fetched sessions
+        const tagsMap: Record<string, string[]> = {}
+        for (const s of sessionData.sessions) {
+          if (s.contextTags && s.contextTags.length > 0) {
+            tagsMap[s.id] = s.contextTags
+          }
+        }
+        setSessionTags(tagsMap)
+
+        // Load cached recommendations; auto-generate on first visit
+        api.get<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>(
+          '/api/users/me/recommendations', token
+        )
+          .then((d) => setRecommendations(d.recommendations.recommendations))
+          .catch(() => {
+            if (sessionData.sessions.length > 0) {
+              setRecommendationsLoading(true)
+              api.post<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>(
+                '/api/users/me/recommendations/generate', {}, token
+              )
+                .then((d) => setRecommendations(d.recommendations.recommendations))
+                .catch((err) => setRecommendationsError(err instanceof Error ? err.message : 'Failed to generate'))
+                .finally(() => setRecommendationsLoading(false))
+            }
+          })
       })
       .catch(() => router.push('/auth/login'))
       .finally(() => setLoading(false))
@@ -265,6 +339,42 @@ export default function DashboardPage() {
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
       </div>
     )
+  }
+
+  const handleToggleTag = async (sessionId: string, tag: string) => {
+    const token = getToken()
+    if (!token) return
+    const current = sessionTags[sessionId] ?? []
+    const updated = current.includes(tag)
+      ? current.filter((t) => t !== tag)
+      : [...current, tag]
+    setSessionTags((prev) => ({ ...prev, [sessionId]: updated }))
+    setSavingTagsFor(sessionId)
+    try {
+      await api.patch(`/api/sessions/${sessionId}/tags`, { tags: updated }, token)
+    } catch {
+      // Revert on error
+      setSessionTags((prev) => ({ ...prev, [sessionId]: current }))
+    } finally {
+      setSavingTagsFor(null)
+    }
+  }
+
+  const handleRegenerateRecommendations = async () => {
+    const token = getToken()
+    if (!token) return
+    setRecommendationsLoading(true)
+    setRecommendationsError(null)
+    try {
+      const d = await api.post<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>(
+        '/api/users/me/recommendations/generate', {}, token
+      )
+      setRecommendations(d.recommendations.recommendations)
+    } catch (err) {
+      setRecommendationsError(err instanceof Error ? err.message : 'Failed to regenerate')
+    } finally {
+      setRecommendationsLoading(false)
+    }
   }
 
   const latestProfile = sessions.find((s) => s.profile)?.profile ?? null
@@ -311,6 +421,42 @@ export default function DashboardPage() {
         </Link>
       </div>
 
+      {/* Reassessment nudge banner */}
+      {nudgeStatus?.hasActiveNudge && !nudgeDismissed && (() => {
+        const activeNudge = nudgeStatus.nudges.find((n) => n.nudgeActive)
+        if (!activeNudge) return null
+        return (
+          <div className="mb-6 flex items-start justify-between gap-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 px-5 py-4">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 text-amber-400 text-lg leading-none">◎</span>
+              <div>
+                <p className="text-sm font-semibold text-stone-100">
+                  Time to revisit your {activeNudge.frameworkTitle}
+                </p>
+                <p className="mt-0.5 text-xs text-stone-400">
+                  Your last assessment was {activeNudge.daysSince} day{activeNudge.daysSince !== 1 ? 's' : ''} ago — a fresh perspective may reveal new insights.
+                </p>
+              </div>
+            </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <Link
+                href="/assessment"
+                className="rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+              >
+                Retake assessment
+              </Link>
+              <button
+                onClick={() => setNudgeDismissed(true)}
+                aria-label="Dismiss"
+                className="text-stone-500 transition-colors hover:text-stone-300"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* Latest profile card */}
       {latestProfile && (
         <div className="mb-8 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
@@ -339,6 +485,67 @@ export default function DashboardPage() {
           </Link>
         </div>
       )}
+
+      {/* Growth recommendations */}
+      {(recommendations || recommendationsLoading) && sessions.length > 0 && (() => {
+        const CATEGORY_COLORS: Record<string, string> = {
+          relationships: 'border-blue-500/20 bg-blue-500/5 text-blue-300',
+          career: 'border-emerald-500/20 bg-emerald-500/5 text-emerald-300',
+          emotional: 'border-violet-500/20 bg-violet-500/5 text-violet-300',
+          'self-awareness': 'border-amber-500/20 bg-amber-500/5 text-amber-300',
+          wellbeing: 'border-emerald-500/20 bg-emerald-500/5 text-emerald-300',
+        }
+        return (
+          <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <h2 className="font-serif text-xl text-stone-200">Growth recommendations</h2>
+              <button
+                onClick={handleRegenerateRecommendations}
+                disabled={recommendationsLoading}
+                className="shrink-0 rounded-xl border border-stone-700 bg-stone-800 px-4 py-2 text-xs font-semibold text-stone-300 transition-colors hover:border-stone-600 hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {recommendationsLoading ? 'Generating…' : 'Regenerate'}
+              </button>
+            </div>
+            {recommendationsError && (
+              <p className="mb-4 rounded-xl border border-rose-800/30 bg-rose-950/20 px-4 py-3 text-sm text-rose-400">
+                {recommendationsError}
+              </p>
+            )}
+            {recommendationsLoading && !recommendations && (
+              <div className="flex items-center gap-3 py-6 text-stone-500">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
+                <span className="text-sm">Generating personalised recommendations…</span>
+              </div>
+            )}
+            {recommendations && recommendations.length > 0 && (
+              <div className="space-y-4">
+                {recommendations.map((rec, i) => {
+                  const categoryClass = CATEGORY_COLORS[rec.category] ?? 'border-stone-500/20 bg-stone-500/5 text-stone-300'
+                  return (
+                    <div key={i} className="rounded-xl border border-stone-700 bg-stone-800/40 p-4">
+                      <div className="mb-2 flex items-start justify-between gap-3">
+                        <p className="text-sm font-semibold text-stone-100">{rec.title}</p>
+                        <span className={`shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] font-medium capitalize ${categoryClass}`}>
+                          {rec.category.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <p className="mb-2 text-sm text-stone-400 leading-relaxed">{rec.description}</p>
+                      <p className="mb-3 text-xs text-stone-600 italic">{rec.scoreBasis}</p>
+                      <div className="rounded-lg border border-amber-500/15 bg-amber-500/5 px-3 py-2">
+                        <p className="text-xs text-amber-300/90">
+                          <span className="font-semibold text-amber-400">This week: </span>
+                          {rec.actionStep}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )
+      })()}
 
       {/* Score trend charts — one per framework with 2+ sessions */}
       {chartsToShow.length > 0 && (
@@ -461,6 +668,63 @@ export default function DashboardPage() {
                         {session.deltaObservation}
                       </p>
                     )}
+
+                    {/* Life context tags */}
+                    <div className="mt-3">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {(sessionTags[session.id] ?? []).map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center gap-1 rounded-full border border-stone-700 bg-stone-800 px-2.5 py-0.5 text-[11px] text-stone-400"
+                          >
+                            {tag}
+                            <button
+                              onClick={() => handleToggleTag(session.id, tag)}
+                              disabled={savingTagsFor === session.id}
+                              aria-label={`Remove tag ${tag}`}
+                              className="ml-0.5 text-stone-600 transition-colors hover:text-stone-300 disabled:opacity-40"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ))}
+                        <button
+                          onClick={() =>
+                            setTagPickerOpenFor(
+                              tagPickerOpenFor === session.id ? null : session.id,
+                            )
+                          }
+                          className="rounded-full border border-stone-700 bg-stone-800/50 px-2.5 py-0.5 text-[11px] text-stone-500 transition-colors hover:border-stone-600 hover:text-stone-300"
+                        >
+                          + Add context
+                        </button>
+                      </div>
+
+                      {tagPickerOpenFor === session.id && (
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {LIFE_PHASE_TAGS.filter(
+                            (t) => !(sessionTags[session.id] ?? []).includes(t),
+                          ).map((tag) => (
+                            <button
+                              key={tag}
+                              onClick={() => {
+                                handleToggleTag(session.id, tag)
+                                setTagPickerOpenFor(null)
+                              }}
+                              disabled={savingTagsFor === session.id}
+                              className="rounded-full border border-stone-700 bg-stone-900 px-2.5 py-0.5 text-[11px] text-stone-400 transition-colors hover:border-amber-500/30 hover:bg-amber-500/5 hover:text-amber-300 disabled:opacity-40"
+                            >
+                              {tag}
+                            </button>
+                          ))}
+                          {LIFE_PHASE_TAGS.every((t) =>
+                            (sessionTags[session.id] ?? []).includes(t),
+                          ) && (
+                            <p className="text-[11px] text-stone-600">All tags added</p>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {session.profile && (
                     <div className="flex shrink-0 flex-col items-end gap-2">

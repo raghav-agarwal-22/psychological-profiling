@@ -52,6 +52,14 @@ interface Profile {
   rawOutput: RawOutput
 }
 
+interface GrowthRecommendation {
+  title: string
+  description: string
+  category: 'relationships' | 'career' | 'emotional' | 'self-awareness' | 'wellbeing'
+  scoreBasis: string
+  actionStep: string
+}
+
 const BIG_FIVE_LABELS: Record<string, string> = {
   openness: 'Openness',
   conscientiousness: 'Conscientiousness',
@@ -147,6 +155,12 @@ export default function ProfilePage() {
   const [synthesisError, setSynthesisError] = useState<string | null>(null)
   const synthesisRef = useRef<HTMLDivElement>(null)
 
+  // Growth recommendations state
+  const [recommendations, setRecommendations] = useState<GrowthRecommendation[] | null>(null)
+  const [recommendationsGeneratedAt, setRecommendationsGeneratedAt] = useState<string | null>(null)
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false)
+  const [recommendationsError, setRecommendationsError] = useState<string | null>(null)
+
   // Journal state
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null)
   const [journalText, setJournalText] = useState('')
@@ -192,7 +206,55 @@ export default function ProfilePage() {
         setSavedEntries(d.entries)
       })
       .catch(() => {})
+
+    // Load cached recommendations (generate if none exist)
+    api
+      .get<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>('/api/users/me/recommendations', token)
+      .then((d) => {
+        setRecommendations(d.recommendations.recommendations)
+        setRecommendationsGeneratedAt(d.generatedAt)
+      })
+      .catch(() => {
+        // No cached recommendations — auto-generate on first load
+        const tok = getToken()
+        if (!tok) return
+        setRecommendationsLoading(true)
+        api
+          .post<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>(
+            '/api/users/me/recommendations/generate',
+            {},
+            tok,
+          )
+          .then((d) => {
+            setRecommendations(d.recommendations.recommendations)
+            setRecommendationsGeneratedAt(d.generatedAt)
+          })
+          .catch((err) => {
+            setRecommendationsError(err instanceof Error ? err.message : 'Failed to generate recommendations')
+          })
+          .finally(() => setRecommendationsLoading(false))
+      })
   }, [profileId, router])
+
+  const handleRegenerateRecommendations = async () => {
+    const token = getToken()
+    if (!token) return
+    setRecommendationsLoading(true)
+    setRecommendationsError(null)
+    try {
+      const d = await api.post<{ recommendations: { recommendations: GrowthRecommendation[] }; generatedAt: string }>(
+        '/api/users/me/recommendations/generate',
+        {},
+        token,
+      )
+      setRecommendations(d.recommendations.recommendations)
+      setRecommendationsGeneratedAt(d.generatedAt)
+    } catch (err) {
+      setRecommendationsError(err instanceof Error ? err.message : 'Failed to regenerate recommendations')
+    } finally {
+      setRecommendationsLoading(false)
+    }
+  }
 
   const handleGenerateSynthesis = async () => {
     const token = getToken()
@@ -739,6 +801,77 @@ export default function ProfilePage() {
                     </p>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+        )
+      })()}
+
+      {/* Growth Recommendations */}
+      {(() => {
+        const CATEGORY_COLORS: Record<string, string> = {
+          relationships: 'border-rose-500/20 bg-rose-500/5 text-rose-300',
+          career: 'border-blue-500/20 bg-blue-500/5 text-blue-300',
+          emotional: 'border-violet-500/20 bg-violet-500/5 text-violet-300',
+          'self-awareness': 'border-amber-500/20 bg-amber-500/5 text-amber-300',
+          wellbeing: 'border-emerald-500/20 bg-emerald-500/5 text-emerald-300',
+        }
+        return (
+          <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="font-serif text-xl text-stone-200">Growth recommendations</h2>
+                {recommendationsGeneratedAt && (
+                  <p className="mt-0.5 text-xs text-stone-500">
+                    Generated {new Date(recommendationsGeneratedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={handleRegenerateRecommendations}
+                disabled={recommendationsLoading}
+                className="shrink-0 rounded-xl border border-stone-700 bg-stone-800 px-4 py-2 text-xs font-semibold text-stone-300 transition-colors hover:border-stone-600 hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {recommendationsLoading ? 'Generating…' : 'Regenerate'}
+              </button>
+            </div>
+
+            {recommendationsError && (
+              <p className="mb-4 rounded-xl border border-rose-800/30 bg-rose-950/20 px-4 py-3 text-sm text-rose-400">
+                {recommendationsError}
+              </p>
+            )}
+
+            {recommendationsLoading && !recommendations && (
+              <div className="flex items-center gap-3 py-6 text-stone-500">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
+                <span className="text-sm">Generating personalised recommendations…</span>
+              </div>
+            )}
+
+            {recommendations && recommendations.length > 0 && (
+              <div className="space-y-4">
+                {recommendations.map((rec, i) => {
+                  const categoryClass = CATEGORY_COLORS[rec.category] ?? 'border-stone-500/20 bg-stone-500/5 text-stone-300'
+                  return (
+                    <div key={i} className="rounded-xl border border-stone-700 bg-stone-800/40 p-4">
+                      <div className="mb-2 flex items-start justify-between gap-3">
+                        <p className="text-sm font-semibold text-stone-100">{rec.title}</p>
+                        <span className={`shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] font-medium capitalize ${categoryClass}`}>
+                          {rec.category.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <p className="mb-2 text-sm text-stone-400 leading-relaxed">{rec.description}</p>
+                      <p className="mb-3 text-xs text-stone-600 italic">{rec.scoreBasis}</p>
+                      <div className="rounded-lg border border-amber-500/15 bg-amber-500/5 px-3 py-2">
+                        <p className="text-xs text-amber-300/90">
+                          <span className="font-semibold text-amber-400">This week: </span>
+                          {rec.actionStep}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>

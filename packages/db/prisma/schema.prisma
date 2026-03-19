@@ -26,6 +26,10 @@ model User {
   synthesis            String?   @map("synthesis")
   synthesisGeneratedAt DateTime? @map("synthesis_generated_at")
 
+  // AI growth recommendations
+  growthRecommendations          Json?     @map("growth_recommendations")
+  recommendationsGeneratedAt     DateTime? @map("recommendations_generated_at")
+
   // Auth
   magicLinkTokens MagicLinkToken[]
 
@@ -65,6 +69,7 @@ model Session {
   userId      String        @map("user_id")
   title       String?
   status      SessionStatus @default(IN_PROGRESS)
+  contextTags String[]      @default([]) @map("context_tags")
   startedAt   DateTime      @default(now()) @map("started_at")
   completedAt DateTime?     @map("completed_at")
   createdAt   DateTime      @default(now()) @map("created_at")

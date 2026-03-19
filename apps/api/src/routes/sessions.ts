@@ -328,4 +328,33 @@ export async function sessionRoutes(server: FastifyInstance) {
 
     return reply.send({ profile })
   })
+
+  // PATCH /api/sessions/:id/tags — set context tags for a session
+  server.patch<{ Params: { id: string }; Body: { tags: string[] } }>(
+    '/:id/tags',
+    async (req, reply) => {
+      const { tags } = req.body as { tags?: string[] }
+      if (!Array.isArray(tags)) {
+        return reply.status(400).send({ error: 'tags must be an array of strings' })
+      }
+      const cleaned = tags
+        .map((t: string) => String(t).trim().slice(0, 50))
+        .filter(Boolean)
+        .slice(0, 10)
+
+      const session = await prisma.session.findFirst({
+        where: { id: req.params.id, userId: req.user.userId },
+      })
+      if (!session) {
+        return reply.status(404).send({ error: 'Session not found' })
+      }
+
+      const updated = await prisma.session.update({
+        where: { id: session.id },
+        data: { contextTags: cleaned },
+        select: { id: true, contextTags: true },
+      })
+      return reply.send({ session: updated })
+    },
+  )
 }

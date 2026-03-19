@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateCrossFrameworkSynthesis } from '../lib/profile-generator.js'
+import { generateCrossFrameworkSynthesis, generateGrowthRecommendations } from '../lib/profile-generator.js'
 
 const createJournalEntrySchema = z.object({
   body: z.string().min(1).max(10000),
@@ -338,5 +338,121 @@ export async function userRoutes(server: FastifyInstance) {
 
     await prisma.journalEntry.delete({ where: { id: entry.id } })
     return reply.send({ ok: true })
+  })
+
+  // ─── Growth Recommendations ──────────────────────────────────────────────
+
+  // GET /api/users/me/recommendations — get cached growth recommendations
+  server.get('/me/recommendations', async (req, reply) => {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { growthRecommendations: true, recommendationsGeneratedAt: true },
+    })
+    if (!user?.growthRecommendations) {
+      return reply.status(404).send({ error: 'No recommendations yet. Complete at least one assessment.' })
+    }
+    return reply.send({
+      recommendations: user.growthRecommendations,
+      generatedAt: user.recommendationsGeneratedAt,
+    })
+  })
+
+  // POST /api/users/me/recommendations/generate — (re)generate recommendations
+  server.post('/me/recommendations/generate', async (req, reply) => {
+    // Rate limit: at most once per 6 hours
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { recommendationsGeneratedAt: true },
+    })
+    if (user?.recommendationsGeneratedAt) {
+      const elapsed = Date.now() - user.recommendationsGeneratedAt.getTime()
+      const SIX_HOURS = 6 * 60 * 60 * 1000
+      if (elapsed < SIX_HOURS) {
+        const remainingHours = Math.ceil((SIX_HOURS - elapsed) / 3600000)
+        return reply.status(429).send({
+          error: `Recommendations can be regenerated every 6 hours. Try again in ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}.`,
+        })
+      }
+    }
+
+    const profiles = await prisma.profile.findMany({
+      where: { userId: req.user.userId },
+      orderBy: { generatedAt: 'asc' },
+      select: { summary: true, dimensions: true, rawOutput: true },
+    })
+
+    if (profiles.length === 0) {
+      return reply.status(400).send({ error: 'Complete at least one assessment before generating recommendations.' })
+    }
+
+    const frameworks = profiles.map((p) => {
+      const raw = p.rawOutput as Record<string, unknown>
+      const templateType = (raw.templateType as string | undefined) ?? 'BIG_FIVE'
+      const title =
+        templateType === 'VALUES_INVENTORY'
+          ? 'Schwartz Values Inventory'
+          : templateType === 'ATTACHMENT_STYLE'
+            ? 'Attachment Style Inventory'
+            : 'Big Five Personality'
+      const dims = p.dimensions as Record<string, { normalized: number }>
+      return { type: templateType, title, scores: dims, summary: p.summary }
+    })
+
+    const output = await generateGrowthRecommendations(frameworks)
+
+    await prisma.user.update({
+      where: { id: req.user.userId },
+      data: {
+        growthRecommendations: output as unknown as import('@prisma/client').Prisma.InputJsonValue,
+        recommendationsGeneratedAt: new Date(),
+      },
+    })
+
+    return reply.send({ recommendations: output, generatedAt: new Date() })
+  })
+
+  // GET /api/users/me/reassessment-status — check if user is due for reassessment
+  server.get('/me/reassessment-status', async (req, reply) => {
+    // Find the most recent completed session per assessment framework
+    const sessions = await prisma.session.findMany({
+      where: { userId: req.user.userId, status: 'COMPLETED' },
+      orderBy: { completedAt: 'desc' },
+      select: {
+        id: true,
+        completedAt: true,
+        assessments: {
+          select: { template: { select: { type: true, title: true } } },
+          take: 1,
+        },
+      },
+    })
+
+    const NUDGE_THRESHOLD_DAYS = 90
+    const now = Date.now()
+
+    // Group by template type, keep most recent per type
+    const latestByType = new Map<string, { completedAt: Date; title: string }>()
+    for (const s of sessions) {
+      const templateType = s.assessments[0]?.template?.type
+      const title = s.assessments[0]?.template?.title
+      if (templateType && s.completedAt && !latestByType.has(templateType)) {
+        latestByType.set(templateType, { completedAt: s.completedAt, title: title ?? templateType })
+      }
+    }
+
+    const nudges = Array.from(latestByType.entries()).map(([type, { completedAt, title }]) => {
+      const daysSince = Math.floor((now - completedAt.getTime()) / 86400000)
+      return {
+        frameworkType: type,
+        frameworkTitle: title,
+        daysSince,
+        lastAssessedAt: completedAt,
+        nudgeActive: daysSince >= NUDGE_THRESHOLD_DAYS,
+      }
+    })
+
+    const hasActiveNudge = nudges.some((n) => n.nudgeActive)
+
+    return reply.send({ nudges, hasActiveNudge })
   })
 }

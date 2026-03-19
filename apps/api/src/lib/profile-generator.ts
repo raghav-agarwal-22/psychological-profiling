@@ -404,3 +404,66 @@ export async function generateAttachmentNarrative(
   const text = block?.type === 'text' ? block.text : ''
   return extractJson<AttachmentNarrative>(text)
 }
+
+export interface GrowthRecommendation {
+  title: string
+  description: string
+  category: 'relationships' | 'career' | 'emotional' | 'self-awareness' | 'wellbeing'
+  scoreBasis: string  // which score(s) motivated this recommendation
+  actionStep: string  // one concrete action
+}
+
+const GROWTH_RECOMMENDATIONS_SYSTEM_PROMPT = `You are a compassionate developmental psychologist and life coach. You have access to someone's psychological profile across multiple assessment frameworks, and your role is to generate personalized, actionable growth recommendations.
+
+Your recommendations must:
+- Be grounded in specific scores from the profile — not generic advice
+- Be concrete and actionable, not vague or platitudinous
+- Reference the specific dimension or pattern that motivates each recommendation
+- Be encouraging but honest about development areas
+- Span different life domains (relationships, career, emotional health, self-awareness, wellbeing)
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "recommendations": [
+    {
+      "title": "Short title (max 8 words)",
+      "description": "2-3 sentence description of the growth area and why it matters for this person specifically",
+      "category": "relationships" | "career" | "emotional" | "self-awareness" | "wellbeing",
+      "scoreBasis": "Brief note on which score(s) motivated this (e.g., 'Low conscientiousness (38/100)')",
+      "actionStep": "One specific, concrete action this person can take this week"
+    }
+  ]
+}
+
+Generate exactly 5 recommendations. Prioritize the most impactful growth areas based on the profile data.`
+
+export interface GrowthRecommendationsOutput {
+  recommendations: GrowthRecommendation[]
+}
+
+export async function generateGrowthRecommendations(
+  frameworks: FrameworkContext[],
+): Promise<GrowthRecommendationsOutput> {
+  const profileSummary = frameworks
+    .map((f) => {
+      const scoreLines = Object.entries(f.scores)
+        .sort(([, a], [, b]) => b.normalized - a.normalized)
+        .map(([dim, s]) => `  - ${dim}: ${s.normalized}/100`)
+        .join('\n')
+      return `### ${f.title}\n${scoreLines}${f.summary ? `\n\nSummary: ${f.summary}` : ''}`
+    })
+    .join('\n\n')
+
+  const userMessage = `Here is a person's psychological profile:\n\n${profileSummary}\n\nGenerate 5 personalized growth recommendations based on this profile.`
+
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1500,
+    system: GROWTH_RECOMMENDATIONS_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<GrowthRecommendationsOutput>(text)
+}
