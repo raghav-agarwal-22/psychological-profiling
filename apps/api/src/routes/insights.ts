@@ -89,7 +89,7 @@ export async function insightRoutes(server: FastifyInstance) {
       data: {
         ...(body.data.isRead !== undefined ? { isRead: body.data.isRead } : {}),
         ...(body.data.isSaved !== undefined ? { isSaved: body.data.isSaved } : {}),
-        ...(body.data.reactions ? { reactions: body.data.reactions } : {}),
+        ...(body.data.reactions ? { reactions: body.data.reactions as object } : {}),
       },
     })
 

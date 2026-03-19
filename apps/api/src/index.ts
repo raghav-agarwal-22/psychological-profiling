@@ -5,6 +5,7 @@ import rateLimit from '@fastify/rate-limit'
 
 import { healthRoutes } from './routes/health.js'
 import { authRoutes } from './routes/auth.js'
+import { sessionRoutes } from './routes/sessions.js'
 import { assessmentRoutes } from './routes/assessments.js'
 import { profileRoutes } from './routes/profiles.js'
 import { insightRoutes } from './routes/insights.js'
@@ -47,6 +48,7 @@ await server.register(jwt, {
 
 await server.register(healthRoutes, { prefix: '/api' })
 await server.register(authRoutes, { prefix: '/api/auth' })
+await server.register(sessionRoutes, { prefix: '/api/sessions' })
 await server.register(assessmentRoutes, { prefix: '/api/assessments' })
 await server.register(profileRoutes, { prefix: '/api/profiles' })
 await server.register(insightRoutes, { prefix: '/api/insights' })
