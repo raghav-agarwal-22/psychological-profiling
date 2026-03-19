@@ -403,7 +403,8 @@ export async function userRoutes(server: FastifyInstance) {
     await prisma.user.update({
       where: { id: req.user.userId },
       data: {
-        growthRecommendations: output as unknown as import('@prisma/client').Prisma.InputJsonValue,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        growthRecommendations: output as any,
         recommendationsGeneratedAt: new Date(),
       },
     })
