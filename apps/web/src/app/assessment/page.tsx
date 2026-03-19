@@ -16,16 +16,19 @@ interface Template {
 const typeDescriptions: Record<string, string> = {
   BIG_FIVE: 'Explore the five fundamental dimensions of your personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism.',
   VALUES_INVENTORY: 'Discover what truly motivates you across 9 universal value dimensions — from Self-Direction and Universalism to Security and Hedonism — based on Schwartz\'s foundational values research.',
+  ATTACHMENT_STYLE: 'Understand your relational blueprint — how you connect, trust, and seek closeness in relationships. Based on Bowlby and Ainsworth\'s attachment theory.',
 }
 
 const typeIcons: Record<string, string> = {
   BIG_FIVE: '◎',
   VALUES_INVENTORY: '◈',
+  ATTACHMENT_STYLE: '◉',
 }
 
 const typeDuration: Record<string, string> = {
   BIG_FIVE: '10–15 min',
   VALUES_INVENTORY: '5–8 min',
+  ATTACHMENT_STYLE: '3–5 min',
 }
 
 export default function AssessmentPage() {

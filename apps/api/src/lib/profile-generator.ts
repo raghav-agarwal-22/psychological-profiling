@@ -23,6 +23,16 @@ export interface ValuesNarrative {
   tensions: Array<{ value1: string; value2: string; description: string }>
 }
 
+export interface AttachmentNarrative {
+  summary: string
+  attachmentStyle: 'secure' | 'anxious' | 'avoidant' | 'fearful'
+  narrative: string
+  relationshipStrengths: string[]
+  growthEdges: string[]
+  anxietyLevel: 'low' | 'moderate' | 'high'
+  avoidanceLevel: 'low' | 'moderate' | 'high'
+}
+
 const BIG_FIVE_SYSTEM_PROMPT = `You are a thoughtful psychological guide trained in the Big Five personality framework, Jungian archetypes, and humanistic psychology.
 
 Your role is to generate a rich, narrative psychological profile based on assessment scores. Your tone should be:
@@ -70,6 +80,47 @@ You must respond with valid JSON matching exactly this structure:
 The tensions array should contain 0–2 entries, only where genuine competing motivations appear (e.g., high self_direction vs high conformity, or high stimulation vs high security). Do not invent tensions not supported by the scores.
 
 Base the valueRankings strictly on the numeric scores (highest score = first). Do not invent information.`
+
+const ATTACHMENT_SYSTEM_PROMPT = `You are a compassionate guide versed in attachment theory (Bowlby, Ainsworth, and contemporary research).
+
+Your role is to help someone understand their relational blueprint — the patterns that shape how they seek closeness, handle vulnerability, and navigate trust in relationships.
+
+The assessment measures two dimensions:
+- Anxiety: fear of abandonment and preoccupation with relationship security (0–100)
+- Avoidance: discomfort with emotional closeness and preference for self-reliance (0–100)
+
+These dimensions produce four attachment patterns:
+- Secure (low anxiety, low avoidance): comfortable with intimacy and independence
+- Anxious/Preoccupied (high anxiety, low avoidance): craves closeness but fears abandonment
+- Dismissive-Avoidant (low anxiety, high avoidance): values independence, tends to minimize intimacy
+- Fearful-Avoidant (high anxiety, high avoidance): desires closeness but fears it simultaneously
+
+Your tone should be:
+- Compassionate and non-pathologizing — attachment patterns are adaptive responses, not disorders
+- Grounded in research — reference Bowlby or Ainsworth where natural
+- Empowering — frame patterns as learnable and growable
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "summary": "A 1–2 sentence overview naming the attachment style and what it means",
+  "attachmentStyle": "secure" | "anxious" | "avoidant" | "fearful",
+  "narrative": "A 2–3 paragraph narrative exploring this person's relational world — how they seek connection, what challenges arise, what gifts their pattern holds",
+  "relationshipStrengths": ["strength 1", "strength 2", "strength 3"],
+  "growthEdges": ["growth edge 1", "growth edge 2"],
+  "anxietyLevel": "low" | "moderate" | "high",
+  "avoidanceLevel": "low" | "moderate" | "high"
+}
+
+Determine attachmentStyle based on the anxiety and avoidance scores:
+- anxiety < 45 AND avoidance < 45 → "secure"
+- anxiety >= 45 AND avoidance < 45 → "anxious"
+- anxiety < 45 AND avoidance >= 45 → "avoidant"
+- anxiety >= 45 AND avoidance >= 45 → "fearful"
+
+Determine anxietyLevel/avoidanceLevel:
+- score < 35 → "low"
+- score 35–65 → "moderate"
+- score > 65 → "high"`
 
 export interface FrameworkContext {
   type: string
@@ -212,4 +263,25 @@ export async function generateValuesNarrative(
   const block = response.content[0]
   const text = block?.type === 'text' ? block.text : ''
   return extractJson<ValuesNarrative>(text)
+}
+
+export async function generateAttachmentNarrative(
+  scores: AssessmentScores,
+): Promise<AttachmentNarrative> {
+  const scoreLines = Object.entries(scores)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100`)
+    .join('\n')
+
+  const userMessage = `Here are the Attachment Style Inventory scores for this person:\n\n${scoreLines}\n\nGenerate an attachment profile narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: ATTACHMENT_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<AttachmentNarrative>(text)
 }

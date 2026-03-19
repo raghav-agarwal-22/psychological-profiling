@@ -182,6 +182,39 @@ const VALUES_QUESTIONS = [
   { id: 'UNI_04', text: 'Understanding people who are very different from me enriches my life.',   dimension: 'universalism',   reverse_scored: false },
 ]
 
+// ─── Attachment Style Inventory (18 items, ECR-inspired) ─────────────────────
+//
+// Dimensions: anxiety (fear of abandonment), avoidance (discomfort with closeness)
+
+const ATTACHMENT_QUESTIONS = [
+  // ── Anxiety ────────────────────────────────────────────────────────────────
+  { id: 'ANX_01', text: 'I worry that people I care about will leave me.',                     dimension: 'anxiety',   reverse_scored: false },
+  { id: 'ANX_02', text: 'I need frequent reassurance that I am loved.',                        dimension: 'anxiety',   reverse_scored: false },
+  { id: 'ANX_03', text: 'I often worry about whether my close relationships are secure.',      dimension: 'anxiety',   reverse_scored: false },
+  { id: 'ANX_04', text: 'When I\'m apart from people I care about, I feel anxious.',           dimension: 'anxiety',   reverse_scored: false },
+  { id: 'ANX_05', text: 'I find myself becoming upset when I feel ignored by close others.',   dimension: 'anxiety',   reverse_scored: false },
+  { id: 'ANX_06', text: 'I rarely worry about being abandoned by those close to me.',          dimension: 'anxiety',   reverse_scored: true  },
+  { id: 'ANX_07', text: 'I feel confident that my close relationships are stable.',            dimension: 'anxiety',   reverse_scored: true  },
+  { id: 'ANX_08', text: 'I find it easy to let others get close to me emotionally without fear.', dimension: 'anxiety', reverse_scored: true },
+  { id: 'ANX_09', text: 'I don\'t often feel preoccupied with my close relationships.',        dimension: 'anxiety',   reverse_scored: true  },
+
+  // ── Avoidance ──────────────────────────────────────────────────────────────
+  { id: 'AVO_01', text: 'I prefer not to share my feelings with others.',                      dimension: 'avoidance', reverse_scored: false },
+  { id: 'AVO_02', text: 'I find it difficult to depend on other people.',                      dimension: 'avoidance', reverse_scored: false },
+  { id: 'AVO_03', text: 'I am uncomfortable when people get too emotionally close to me.',     dimension: 'avoidance', reverse_scored: false },
+  { id: 'AVO_04', text: 'I prefer to handle problems without involving others.',               dimension: 'avoidance', reverse_scored: false },
+  { id: 'AVO_05', text: 'I feel uncomfortable opening up to others about personal matters.',   dimension: 'avoidance', reverse_scored: false },
+  { id: 'AVO_06', text: 'I find it relatively easy to let people close to me.',                dimension: 'avoidance', reverse_scored: true  },
+  { id: 'AVO_07', text: 'I am comfortable depending on others when I need support.',           dimension: 'avoidance', reverse_scored: true  },
+  { id: 'AVO_08', text: 'I enjoy being emotionally close to people.',                          dimension: 'avoidance', reverse_scored: true  },
+  { id: 'AVO_09', text: 'I find it easy to trust others with my feelings.',                    dimension: 'avoidance', reverse_scored: true  },
+]
+
+const ATTACHMENT_SCORING_CONFIG: ScoringConfig = {
+  anxiety:   { questionIds: ['ANX_01','ANX_02','ANX_03','ANX_04','ANX_05','ANX_06','ANX_07','ANX_08','ANX_09'], reverseIds: ['ANX_06','ANX_07','ANX_08','ANX_09'], formula: 'average', normalize: true },
+  avoidance: { questionIds: ['AVO_01','AVO_02','AVO_03','AVO_04','AVO_05','AVO_06','AVO_07','AVO_08','AVO_09'], reverseIds: ['AVO_06','AVO_07','AVO_08','AVO_09'], formula: 'average', normalize: true },
+}
+
 const VALUES_SCORING_CONFIG: ScoringConfig = {
   achievement:    { questionIds: ['ACH_01','ACH_02','ACH_03','ACH_04'], reverseIds: [], formula: 'average', normalize: true },
   benevolence:    { questionIds: ['BEN_01','BEN_02','BEN_03','BEN_04'], reverseIds: [], formula: 'average', normalize: true },
@@ -201,16 +234,16 @@ async function main() {
   const template = await prisma.assessmentTemplate.upsert({
     where: { type_version: { type: AssessmentType.BIG_FIVE, version: '1.0' } },
     update: {
-      questionBank: BIG_FIVE_QUESTIONS,
-      scoringConfig: BIG_FIVE_SCORING_CONFIG,
+      questionBank: BIG_FIVE_QUESTIONS as object[],
+      scoringConfig: BIG_FIVE_SCORING_CONFIG as object,
     },
     create: {
       type: AssessmentType.BIG_FIVE,
       version: '1.0',
       title: 'Big Five Personality Assessment',
       description: 'Measures the OCEAN dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. 50 items, Likert 1-5.',
-      questionBank: BIG_FIVE_QUESTIONS,
-      scoringConfig: BIG_FIVE_SCORING_CONFIG,
+      questionBank: BIG_FIVE_QUESTIONS as object[],
+      scoringConfig: BIG_FIVE_SCORING_CONFIG as object,
       isActive: true,
     },
   })
@@ -220,20 +253,39 @@ async function main() {
   const valuesTemplate = await prisma.assessmentTemplate.upsert({
     where: { type_version: { type: AssessmentType.VALUES_INVENTORY, version: '1.0' } },
     update: {
-      questionBank: VALUES_QUESTIONS,
-      scoringConfig: VALUES_SCORING_CONFIG,
+      questionBank: VALUES_QUESTIONS as object[],
+      scoringConfig: VALUES_SCORING_CONFIG as object,
     },
     create: {
       type: AssessmentType.VALUES_INVENTORY,
       version: '1.0',
       title: 'Values Inventory',
       description: 'Discover your core values across 9 fundamental dimensions based on Schwartz\'s Basic Human Values Theory. 36 items, Likert 1-5.',
-      questionBank: VALUES_QUESTIONS,
-      scoringConfig: VALUES_SCORING_CONFIG,
+      questionBank: VALUES_QUESTIONS as object[],
+      scoringConfig: VALUES_SCORING_CONFIG as object,
       isActive: true,
     },
   })
   console.log(`✓ AssessmentTemplate: ${valuesTemplate.title} v${valuesTemplate.version} (${VALUES_QUESTIONS.length} items)`)
+
+  // ── 1c. Upsert Attachment Style template ───────────────────────────────────
+  const attachmentTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.ATTACHMENT_STYLE, version: '1.0' } },
+    update: {
+      questionBank: ATTACHMENT_QUESTIONS as object[],
+      scoringConfig: ATTACHMENT_SCORING_CONFIG as object,
+    },
+    create: {
+      type: AssessmentType.ATTACHMENT_STYLE,
+      version: '1.0',
+      title: 'Attachment Style Inventory',
+      description: 'Understand your relational blueprint — how you connect, trust, and seek closeness. Measures anxiety and avoidance dimensions to reveal your attachment pattern. 18 items, Likert 1-5.',
+      questionBank: ATTACHMENT_QUESTIONS as object[],
+      scoringConfig: ATTACHMENT_SCORING_CONFIG as object,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${attachmentTemplate.title} v${attachmentTemplate.version} (${ATTACHMENT_QUESTIONS.length} items)`)
 
   // ── 2. Upsert demo user ────────────────────────────────────────────────────
   const user = await prisma.user.upsert({

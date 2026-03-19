@@ -27,6 +27,12 @@ interface RawOutput {
     valueRankings?: string[]
     coreValues?: string[]
     tensions?: Array<{ value1: string; value2: string; description: string }>
+    // Attachment fields
+    attachmentStyle?: string
+    relationshipStrengths?: string[]
+    growthEdges?: string[]
+    anxietyLevel?: string
+    avoidanceLevel?: string
   }
 }
 
@@ -83,6 +89,30 @@ const VALUES_COLORS: Record<string, string> = {
   self_direction: 'bg-violet-500',
   stimulation: 'bg-orange-500',
   universalism: 'bg-teal-500',
+}
+
+const ATTACHMENT_LABELS: Record<string, string> = {
+  anxiety: 'Attachment Anxiety',
+  avoidance: 'Attachment Avoidance',
+}
+
+const ATTACHMENT_COLORS: Record<string, string> = {
+  anxiety: 'bg-rose-500',
+  avoidance: 'bg-indigo-500',
+}
+
+const ATTACHMENT_STYLE_LABELS: Record<string, string> = {
+  secure: 'Secure',
+  anxious: 'Anxious / Preoccupied',
+  avoidant: 'Dismissive-Avoidant',
+  fearful: 'Fearful-Avoidant',
+}
+
+const ATTACHMENT_STYLE_COLORS: Record<string, string> = {
+  secure: 'bg-emerald-500/10 ring-emerald-500/20 text-emerald-400',
+  anxious: 'bg-amber-500/10 ring-amber-500/20 text-amber-400',
+  avoidant: 'bg-indigo-500/10 ring-indigo-500/20 text-indigo-400',
+  fearful: 'bg-rose-500/10 ring-rose-500/20 text-rose-400',
 }
 
 export default function ProfilePage() {
@@ -236,7 +266,10 @@ export default function ProfilePage() {
   }
 
   const isValuesProfile = profile.rawOutput?.templateType === 'VALUES_INVENTORY'
+  const isAttachmentProfile = profile.rawOutput?.templateType === 'ATTACHMENT_STYLE'
   const valuesNarrative = profile.rawOutput?.narrative
+  const attachmentStyle = isAttachmentProfile ? (profile.archetypes[0] ?? null) : null
+  const attachmentNarrative = isAttachmentProfile ? profile.rawOutput?.narrative : null
   const dimensionEntries = Object.entries(profile.dimensions)
 
   // For values profiles: sort dimensions by score descending
@@ -251,7 +284,17 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Header */}
-      {isValuesProfile ? (
+      {isAttachmentProfile ? (
+        <div className="mb-10 text-center">
+          <div className={`mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl ring-1 ${attachmentStyle ? ATTACHMENT_STYLE_COLORS[attachmentStyle] : 'bg-stone-800/10 ring-stone-700/20'}`}>
+            <span className="text-3xl">◉</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">
+            {attachmentStyle ? ATTACHMENT_STYLE_LABELS[attachmentStyle] ?? attachmentStyle : 'Attachment Style'}
+          </h1>
+          <p className="mt-2 text-stone-500">Your relational blueprint</p>
+        </div>
+      ) : isValuesProfile ? (
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-500/10 ring-1 ring-teal-500/20">
             <span className="text-3xl">◈</span>
@@ -272,11 +315,14 @@ export default function ProfilePage() {
       {/* Summary */}
       <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
         <h2 className="mb-3 font-serif text-xl text-stone-200">
-          {isValuesProfile ? 'Your value landscape' : 'Your narrative'}
+          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : 'Your narrative'}
         </h2>
         <p className="text-stone-400 leading-relaxed">{profile.summary}</p>
         {isValuesProfile && valuesNarrative?.narrative && (
           <p className="mt-4 text-stone-400 leading-relaxed">{valuesNarrative.narrative}</p>
+        )}
+        {isAttachmentProfile && attachmentNarrative?.narrative && (
+          <p className="mt-4 text-stone-400 leading-relaxed">{attachmentNarrative.narrative}</p>
         )}
       </div>
 
@@ -320,8 +366,34 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Attachment dimensions */}
+      {isAttachmentProfile && dimensionEntries.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-1 font-serif text-xl text-stone-200">Attachment dimensions</h2>
+          <p className="mb-5 text-xs text-stone-500">Higher scores indicate stronger expression of each pattern</p>
+          <div className="space-y-4">
+            {dimensionEntries.map(([key, score]) => {
+              const label = ATTACHMENT_LABELS[key.toLowerCase()] ?? key
+              const color = ATTACHMENT_COLORS[key.toLowerCase()] ?? 'bg-stone-400'
+              const pct = typeof score === 'object' ? score.normalized : Number(score)
+              return (
+                <div key={key}>
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span className="text-sm text-stone-300">{label}</span>
+                    <span className="text-sm font-medium text-stone-400">{pct}</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-stone-800">
+                    <div className={`h-full rounded-full transition-all duration-500 ${color}`} style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Big Five scores */}
-      {!isValuesProfile && dimensionEntries.length > 0 && (
+      {!isValuesProfile && !isAttachmentProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
           <h2 className="mb-5 font-serif text-xl text-stone-200">Personality dimensions</h2>
           <div className="space-y-4">
@@ -368,12 +440,14 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Strengths + Growth areas (Big Five only) */}
+      {/* Strengths + Growth areas (Big Five and Attachment) */}
       {!isValuesProfile && (
         <div className="mb-8 grid gap-4 sm:grid-cols-2">
           {profile.strengths.length > 0 && (
             <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
-              <h2 className="mb-3 font-serif text-lg text-stone-200">Strengths</h2>
+              <h2 className="mb-3 font-serif text-lg text-stone-200">
+                {isAttachmentProfile ? 'Relationship strengths' : 'Strengths'}
+              </h2>
               <ul className="space-y-1.5">
                 {profile.strengths.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
@@ -386,7 +460,9 @@ export default function ProfilePage() {
           )}
           {profile.blindSpots.length > 0 && (
             <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
-              <h2 className="mb-3 font-serif text-lg text-stone-200">Growth areas</h2>
+              <h2 className="mb-3 font-serif text-lg text-stone-200">
+                {isAttachmentProfile ? 'Growth edges' : 'Growth areas'}
+              </h2>
               <ul className="space-y-1.5">
                 {profile.blindSpots.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-sm text-stone-400">
@@ -400,8 +476,8 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Core values (Big Five only — values profile uses the ranked list) */}
-      {!isValuesProfile && profile.values.length > 0 && (
+      {/* Core values (Big Five only — values profile uses ranked list, attachment uses strengths) */}
+      {!isValuesProfile && !isAttachmentProfile && profile.values.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
           <h2 className="mb-3 font-serif text-lg text-stone-200">Core values</h2>
           <div className="flex flex-wrap gap-2">
@@ -443,7 +519,7 @@ export default function ProfilePage() {
 
         {!synthesis && !synthesisLoading && !synthesisError && (
           <p className="text-sm text-stone-500">
-            Generate a unified narrative that weaves together all your assessment results — Big Five personality, values, and any other frameworks you&apos;ve completed — into one coherent self-portrait.
+            Generate a unified narrative that weaves together all your assessment results — Big Five personality, values, attachment style, and any other frameworks you&apos;ve completed — into one coherent self-portrait.
           </p>
         )}
 

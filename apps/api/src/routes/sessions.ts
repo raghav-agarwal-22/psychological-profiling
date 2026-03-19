@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateDeltaObservation } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateDeltaObservation } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -169,9 +169,12 @@ export async function sessionRoutes(server: FastifyInstance) {
     // Generate AI narrative if we have scores and ANTHROPIC_API_KEY is set
     let narrative = null
     let valuesNarrative = null
+    let attachmentNarrative = null
     if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
       try {
-        if (templateType === AssessmentType.VALUES_INVENTORY) {
+        if (templateType === AssessmentType.ATTACHMENT_STYLE) {
+          attachmentNarrative = await generateAttachmentNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.VALUES_INVENTORY) {
           valuesNarrative = await generateValuesNarrative(dimensionScores)
         } else {
           narrative = await generateProfileNarrative(dimensionScores)
@@ -194,7 +197,13 @@ export async function sessionRoutes(server: FastifyInstance) {
     let blindSpots: string[]
     let strengths: string[]
 
-    if (templateType === AssessmentType.VALUES_INVENTORY && valuesNarrative) {
+    if (templateType === AssessmentType.ATTACHMENT_STYLE && attachmentNarrative) {
+      summary = attachmentNarrative.summary
+      archetypes = [attachmentNarrative.attachmentStyle]
+      values = attachmentNarrative.relationshipStrengths
+      blindSpots = attachmentNarrative.growthEdges
+      strengths = attachmentNarrative.relationshipStrengths
+    } else if (templateType === AssessmentType.VALUES_INVENTORY && valuesNarrative) {
       summary = valuesNarrative.summary
       archetypes = []
       values = valuesNarrative.coreValues
@@ -223,7 +232,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           sessionId: session.id,
           scores: dimensionScores,
           templateType,
-          narrative: narrative ?? valuesNarrative,
+          narrative: narrative ?? valuesNarrative ?? attachmentNarrative,
         } as object,
       },
     })
@@ -257,9 +266,9 @@ export async function sessionRoutes(server: FastifyInstance) {
           const hasSignificant = Object.values(deltas).some((v) => Math.abs(v) > 10)
           if (hasSignificant) {
             const frameworkTitle =
-              templateType === AssessmentType.VALUES_INVENTORY
-                ? 'Schwartz Values Inventory'
-                : 'Big Five Personality'
+              templateType === AssessmentType.VALUES_INVENTORY ? 'Schwartz Values Inventory' :
+              templateType === AssessmentType.ATTACHMENT_STYLE ? 'Attachment Style Inventory' :
+              'Big Five Personality'
             const observation = await generateDeltaObservation(frameworkTitle, deltas)
             await prisma.profile.update({
               where: { id: profile.id },
