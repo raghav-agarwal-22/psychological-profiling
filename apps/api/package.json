@@ -25,12 +25,16 @@
     "@fastify/swagger": "^8.14.0",
     "@fastify/swagger-ui": "^4.0.1",
     "@innermind/db": "workspace:*",
+    "@innermind/types": "workspace:*",
     "fastify": "^4.28.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.14.11",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "@vitest/coverage-v8": "^2.0.5",
+    "eslint": "^8.57.0",
     "tsx": "^4.16.2",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
