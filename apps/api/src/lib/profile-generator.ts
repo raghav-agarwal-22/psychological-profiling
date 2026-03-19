@@ -239,6 +239,74 @@ export async function generateCrossFrameworkSynthesis(
   }
 }
 
+export interface CompatibilityNarrative {
+  overallNarrative: string
+  whatWorks: string[]
+  watchFor: string[]
+  complementaryStrengths: string
+  growthOpportunities: string
+}
+
+const COMPATIBILITY_SYSTEM_PROMPT = `You are a wise relationship psychologist with deep expertise in interpersonal compatibility. You have been given the psychological profiles of two people across one or more assessment frameworks, and your task is to generate an insightful compatibility analysis.
+
+Your analysis should:
+- Identify genuine areas of psychological alignment and complementary traits
+- Note meaningful differences that may create friction or require conscious navigation
+- Be grounded in actual scores — not generic advice or platitudes
+- Be warm, nuanced, and non-deterministic — compatibility is dynamic, not fixed
+- Speak about "Person A" and "Person B" to distinguish the two
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "overallNarrative": "2–3 paragraph flowing narrative about this pairing's compatibility landscape",
+  "whatWorks": ["strength 1 of this pairing", "strength 2", "strength 3"],
+  "watchFor": ["potential friction point 1", "potential friction point 2"],
+  "complementaryStrengths": "1–2 sentences about what each person uniquely contributes to the other",
+  "growthOpportunities": "1–2 sentences about what each could learn or develop through this relationship"
+}`
+
+export interface ProfileSnapshot {
+  label: string
+  frameworks: FrameworkContext[]
+}
+
+export async function generateCompatibilityNarrative(
+  profileA: ProfileSnapshot,
+  profileB: ProfileSnapshot,
+): Promise<CompatibilityNarrative> {
+  const formatProfile = (p: ProfileSnapshot) =>
+    p.frameworks
+      .map((f) => {
+        const scoreLines = Object.entries(f.scores)
+          .sort(([, a], [, b]) => b.normalized - a.normalized)
+          .map(([dim, s]) => `  - ${dim}: ${s.normalized}/100`)
+          .join('\n')
+        return `### ${f.title}\n${scoreLines}${f.summary ? `\n\nSummary: ${f.summary}` : ''}`
+      })
+      .join('\n\n')
+
+  const userMessage = `Here are the psychological profiles of two people:
+
+## Person A
+${formatProfile(profileA)}
+
+## Person B
+${formatProfile(profileB)}
+
+Generate a compatibility analysis for this pairing.`
+
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 1500,
+    system: COMPATIBILITY_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<CompatibilityNarrative>(text)
+}
+
 function extractJson<T>(text: string): T {
   const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
   const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text

@@ -127,9 +127,18 @@ export default function ProfilePage() {
 
   const [sharing, setSharing] = useState(false)
   const [shareUrl, setShareUrl] = useState<string | null>(null)
+  const [shareToken, setShareToken] = useState<string | null>(null)
   const [showShareModal, setShowShareModal] = useState(false)
   const [copied, setCopied] = useState(false)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
+
+  // Compare modal
+  const [showCompareModal, setShowCompareModal] = useState(false)
+  const [comparingShare, setComparingShare] = useState(false)
+  const [compareTokenInput, setCompareTokenInput] = useState('')
+  const [compareShareUrl, setCompareShareUrl] = useState<string | null>(null)
+  const [compareShareToken, setCompareShareToken] = useState<string | null>(null)
+  const [compareCopied, setCompareCopied] = useState(false)
 
   const [synthesis, setSynthesis] = useState<string | null>(null)
   const [synthesisGeneratedAt, setSynthesisGeneratedAt] = useState<string | null>(null)
@@ -232,6 +241,27 @@ export default function ProfilePage() {
     }
   }
 
+  const ensureShared = async (): Promise<{ shareToken: string; shareUrl: string } | null> => {
+    const token = getToken()
+    if (!token || !profile) return null
+    // Already shared
+    if (compareShareToken && compareShareUrl) return { shareToken: compareShareToken, shareUrl: compareShareUrl }
+    if (profile.isPublic && profile.shareToken) {
+      const url = `${window.location.origin}/p/${profile.shareToken}`
+      setCompareShareToken(profile.shareToken)
+      setCompareShareUrl(url)
+      return { shareToken: profile.shareToken, shareUrl: url }
+    }
+    const data = await api.patch<{ profile: { isPublic: boolean; shareToken: string; shareUrl: string } }>(
+      `/api/profiles/${profile.id}/share`,
+      {},
+      token,
+    )
+    setCompareShareToken(data.profile.shareToken)
+    setCompareShareUrl(data.profile.shareUrl)
+    return { shareToken: data.profile.shareToken, shareUrl: data.profile.shareUrl }
+  }
+
   const handleShare = async () => {
     const token = getToken()
     if (!token || !profile) return
@@ -243,10 +273,30 @@ export default function ProfilePage() {
         token,
       )
       setShareUrl(data.profile.shareUrl)
+      setShareToken(data.profile.shareToken)
       setShowShareModal(true)
     } finally {
       setSharing(false)
     }
+  }
+
+  const handleOpenCompare = async () => {
+    setComparingShare(true)
+    try {
+      await ensureShared()
+      setShowCompareModal(true)
+    } finally {
+      setComparingShare(false)
+    }
+  }
+
+  const handleCompareGo = () => {
+    if (!compareTokenInput.trim() || !compareShareToken) return
+    // Accept either a full URL or a bare token
+    const raw = compareTokenInput.trim()
+    const tokenMatch = raw.match(/\/p\/([^/?#]+)/) ?? raw.match(/([a-f0-9-]{32,})/)
+    const theirToken = tokenMatch ? tokenMatch[1] : raw
+    window.location.href = `/compare?a=${encodeURIComponent(compareShareToken)}&b=${encodeURIComponent(theirToken ?? raw)}`
   }
 
   const handleRevokeShare = async () => {
