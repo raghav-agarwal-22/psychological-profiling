@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { generateProfileNarrative } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -163,6 +164,16 @@ export async function sessionRoutes(server: FastifyInstance) {
       })
     }
 
+    // Generate AI narrative if we have scores and ANTHROPIC_API_KEY is set
+    let narrative = null
+    if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
+      try {
+        narrative = await generateProfileNarrative(dimensionScores)
+      } catch (err) {
+        server.log.warn({ err }, 'AI profile generation failed — storing numeric scores only')
+      }
+    }
+
     // Unmark previous latest profile
     await prisma.profile.updateMany({
       where: { userId: req.user.userId, isLatest: true },
@@ -174,9 +185,13 @@ export async function sessionRoutes(server: FastifyInstance) {
         userId: req.user.userId,
         version: 1,
         isLatest: true,
-        summary: 'Profile generated from assessment responses.',
+        summary: narrative?.summary ?? 'Profile generated from assessment responses.',
         dimensions: dimensionScores,
-        rawOutput: { sessionId: session.id, scores: dimensionScores },
+        archetypes: narrative?.archetype ? [narrative.archetype] : [],
+        values: narrative?.values ?? [],
+        blindSpots: narrative?.blind_spots ?? [],
+        strengths: narrative?.strengths ?? [],
+        rawOutput: { sessionId: session.id, scores: dimensionScores, narrative } as object,
       },
     })
 
