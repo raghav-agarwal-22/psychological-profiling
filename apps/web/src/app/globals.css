@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-serif: 'Lora', Georgia, serif;
+  }
+
+  * {
+    @apply border-stone-800;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans;
+  }
+
+  ::selection {
+    @apply bg-amber-500/30 text-amber-100;
+  }
+}
+
+@layer components {
+  .prose-innermind {
+    @apply prose prose-invert prose-stone prose-lg max-w-2xl;
+    @apply prose-headings:font-serif prose-headings:text-stone-100;
+    @apply prose-p:text-stone-300 prose-p:leading-relaxed;
+    @apply prose-a:text-amber-400 prose-a:no-underline hover:prose-a:underline;
+  }
+}

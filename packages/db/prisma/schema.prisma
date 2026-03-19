@@ -1,0 +1,228 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatarUrl String?  @map("avatar_url")
+  timezone  String   @default("UTC")
+  locale    String   @default("en")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Auth
+  magicLinkTokens MagicLinkToken[]
+
+  // Core relationships
+  sessions    Session[]
+  profiles    Profile[]
+  assessments Assessment[]
+  insights    Insight[]
+  journalEntries JournalEntry[]
+
+  @@map("users")
+}
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+
+model MagicLinkToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@map("magic_link_tokens")
+}
+
+// ─── Session ─────────────────────────────────────────────────────────────────
+// An assessment session — a single sitting of answering questions.
+// A user may have multiple sessions over time (longitudinal tracking).
+
+model Session {
+  id          String        @id @default(cuid())
+  userId      String        @map("user_id")
+  title       String?
+  status      SessionStatus @default(IN_PROGRESS)
+  startedAt   DateTime      @default(now()) @map("started_at")
+  completedAt DateTime?     @map("completed_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assessments Assessment[]
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+// ─── Assessment ──────────────────────────────────────────────────────────────
+// A single assessment instrument within a session.
+// Could be a personality test, values inventory, shadow work prompt, etc.
+
+model Assessment {
+  id           String           @id @default(cuid())
+  userId       String           @map("user_id")
+  sessionId    String           @map("session_id")
+  type         AssessmentType
+  title        String
+  description  String?
+  status       AssessmentStatus @default(NOT_STARTED)
+  currentStep  Int              @default(0) @map("current_step")
+  totalSteps   Int?             @map("total_steps")
+  rawResponses Json             @default("{}") @map("raw_responses")
+  metadata     Json             @default("{}")
+  startedAt    DateTime?        @map("started_at")
+  completedAt  DateTime?        @map("completed_at")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session  Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  insights Insight[]
+
+  @@index([userId])
+  @@index([sessionId])
+  @@map("assessments")
+}
+
+enum AssessmentType {
+  BIG_FIVE              // Big Five personality traits
+  JUNGIAN_ARCHETYPES    // Jungian archetypes / MBTI-adjacent
+  VALUES_INVENTORY      // Personal values elicitation
+  SHADOW_WORK           // Shadow / blind spot exploration
+  LIFE_SATISFACTION     // Life domain satisfaction mapping
+  STRENGTHS             // Strengths-based assessment
+  ATTACHMENT_STYLE      // Attachment style
+  CUSTOM                // AI-generated adaptive assessment
+}
+
+enum AssessmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  SKIPPED
+}
+
+// ─── Profile ─────────────────────────────────────────────────────────────────
+// A synthesized psychological profile derived from one or more assessments.
+// Profiles are versioned — each new assessment can produce a new profile revision.
+
+model Profile {
+  id          String      @id @default(cuid())
+  userId      String      @map("user_id")
+  version     Int         @default(1)
+  isLatest    Boolean     @default(true) @map("is_latest")
+  summary     String      // Plain-language summary of the profile
+  dimensions  Json        // Scored dimensions (e.g., {openness: 0.82, conscientiousness: 0.65})
+  archetypes  Json        @default("[]") // Dominant Jungian archetypes
+  values      Json        @default("[]") // Core identified values
+  blindSpots  Json        @default("[]") @map("blind_spots") // Shadow / blind spots
+  strengths   Json        @default("[]")
+  rawOutput   Json        @map("raw_output") // Full Claude output before structuring
+  generatedAt DateTime    @default(now()) @map("generated_at")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  insights Insight[]
+
+  @@index([userId])
+  @@index([userId, isLatest])
+  @@map("profiles")
+}
+
+// ─── Insight ─────────────────────────────────────────────────────────────────
+// A specific, actionable insight surfaced from the profile or assessment.
+// Insights are the primary unit of value delivered to the user.
+
+model Insight {
+  id           String      @id @default(cuid())
+  userId       String      @map("user_id")
+  profileId    String?     @map("profile_id")
+  assessmentId String?     @map("assessment_id")
+  type         InsightType
+  title        String
+  body         String      // The insight content (markdown)
+  symbol       String?     // Optional symbolic/archetypal reference
+  domain       LifeDomain?
+  isRead       Boolean     @default(false) @map("is_read")
+  isSaved      Boolean     @default(false) @map("is_saved")
+  reactions    Json        @default("{}") // User reactions / ratings
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile    Profile?    @relation(fields: [profileId], references: [id], onDelete: SetNull)
+  assessment Assessment? @relation(fields: [assessmentId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([userId, type])
+  @@index([userId, domain])
+  @@map("insights")
+}
+
+enum InsightType {
+  PATTERN          // Recurring behavioral/emotional pattern
+  STRENGTH         // Identified strength or gift
+  BLIND_SPOT       // Shadow / unconscious pattern
+  VALUE_ALIGNMENT  // Where actions align with values
+  VALUE_CONFLICT   // Where actions conflict with values
+  ARCHETYPE        // Dominant archetype manifestation
+  GROWTH_EDGE      // Area for conscious development
+  REFLECTION       // Open-ended reflection prompt
+}
+
+enum LifeDomain {
+  WORK
+  RELATIONSHIPS
+  HEALTH
+  CREATIVITY
+  MEANING
+  FINANCES
+  FAMILY
+  PERSONAL_GROWTH
+}
+
+// ─── JournalEntry ────────────────────────────────────────────────────────────
+// Free-form reflections tied to insights or standalone.
+
+model JournalEntry {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  insightId String?   @map("insight_id")
+  title     String?
+  body      String
+  mood      Int?      // 1-10 mood score at time of writing
+  tags      String[]  @default([])
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("journal_entries")
+}
