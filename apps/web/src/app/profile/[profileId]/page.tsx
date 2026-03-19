@@ -22,6 +22,8 @@ interface Profile {
   strengths: string[]
   version: number
   generatedAt: string
+  isPublic: boolean
+  shareToken: string | null
 }
 
 const DIMENSION_LABELS: Record<string, string> = {
@@ -49,6 +51,11 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const [sharing, setSharing] = useState(false)
+  const [shareUrl, setShareUrl] = useState<string | null>(null)
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [copied, setCopied] = useState(false)
+
   useEffect(() => {
     const token = getToken()
     if (!token) {
@@ -67,6 +74,38 @@ export default function ProfilePage() {
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load profile'))
       .finally(() => setLoading(false))
   }, [profileId, router])
+
+  const handleShare = async () => {
+    const token = getToken()
+    if (!token || !profile) return
+    setSharing(true)
+    try {
+      const data = await api.patch<{ profile: { isPublic: boolean; shareToken: string; shareUrl: string } }>(
+        `/api/profiles/${profile.id}/share`,
+        {},
+        token,
+      )
+      setShareUrl(data.profile.shareUrl)
+      setShowShareModal(true)
+    } finally {
+      setSharing(false)
+    }
+  }
+
+  const handleRevokeShare = async () => {
+    const token = getToken()
+    if (!token || !profile) return
+    await api.patch(`/api/profiles/${profile.id}/share`, { isPublic: false }, token)
+    setShareUrl(null)
+    setShowShareModal(false)
+  }
+
+  const handleCopy = async () => {
+    if (!shareUrl) return
+    await navigator.clipboard.writeText(shareUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   if (loading) {
     return (
@@ -185,17 +224,64 @@ export default function ProfilePage() {
       )}
 
       {/* CTA */}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-4">
         <Link
           href="/assessment"
           className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
         >
           Retake assessment
         </Link>
+        <button
+          onClick={handleShare}
+          disabled={sharing}
+          className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
+        >
+          {sharing ? 'Generating link…' : 'Share Profile'}
+        </button>
         <Link href="/dashboard" className="text-sm text-stone-400 hover:text-stone-200">
           Back to dashboard
         </Link>
       </div>
+
+      {/* Share modal */}
+      {showShareModal && shareUrl && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-900 p-6 shadow-2xl">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <h3 className="font-serif text-xl text-stone-100">Share your profile</h3>
+                <p className="mt-1 text-sm text-stone-400">
+                  Anyone with this link can view your profile.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="text-stone-500 transition-colors hover:text-stone-300"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-3 py-2">
+              <span className="flex-1 truncate text-sm text-stone-300">{shareUrl}</span>
+              <button
+                onClick={handleCopy}
+                className="shrink-0 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+
+            <button
+              onClick={handleRevokeShare}
+              className="w-full rounded-xl border border-rose-800/50 bg-rose-950/30 px-4 py-2.5 text-sm text-rose-400 transition-colors hover:bg-rose-950/50 hover:text-rose-300"
+            >
+              Revoke sharing
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

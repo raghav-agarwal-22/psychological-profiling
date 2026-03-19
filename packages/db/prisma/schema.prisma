@@ -194,11 +194,15 @@ model Profile {
   createdAt   DateTime    @default(now()) @map("created_at")
   updatedAt   DateTime    @updatedAt @map("updated_at")
 
+  isPublic    Boolean   @default(false) @map("is_public")
+  shareToken  String?   @unique @map("share_token")
+
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   insights Insight[]
 
   @@index([userId])
   @@index([userId, isLatest])
+  @@index([shareToken])
   @@map("profiles")
 }
 

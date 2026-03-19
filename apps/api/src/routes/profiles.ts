@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { randomUUID } from 'crypto'
 
 export async function profileRoutes(server: FastifyInstance) {
   server.addHook('preHandler', requireAuth)
@@ -43,4 +44,42 @@ export async function profileRoutes(server: FastifyInstance) {
     }
     return reply.send({ profile })
   })
+
+  // PATCH /api/profiles/:id/share — toggle public sharing for a profile
+  server.patch<{ Params: { id: string }; Body: { isPublic?: boolean } }>(
+    '/:id/share',
+    async (req, reply) => {
+      const existing = await prisma.profile.findFirst({
+        where: { id: req.params.id, userId: req.user.userId },
+      })
+      if (!existing) {
+        return reply.status(404).send({ error: 'Profile not found' })
+      }
+
+      const makePublic = req.body?.isPublic !== false
+      const shareToken =
+        makePublic ? (existing.shareToken ?? randomUUID()) : existing.shareToken
+
+      const updated = await prisma.profile.update({
+        where: { id: req.params.id },
+        data: {
+          isPublic: makePublic,
+          shareToken: makePublic ? shareToken : existing.shareToken,
+        },
+        select: { id: true, isPublic: true, shareToken: true },
+      })
+
+      const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
+      const shareUrl = updated.shareToken ? `${webUrl}/p/${updated.shareToken}` : null
+
+      return reply.send({
+        profile: {
+          id: updated.id,
+          isPublic: updated.isPublic,
+          shareToken: updated.shareToken,
+          shareUrl,
+        },
+      })
+    },
+  )
 }
