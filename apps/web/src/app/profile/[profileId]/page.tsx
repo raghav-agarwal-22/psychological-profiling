@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
 interface DimensionScore {
   normalized: number
@@ -21,6 +23,7 @@ interface RawOutput {
     blind_spots?: string[]
     strengths?: string[]
     // Values fields
+    narrative?: string
     valueRankings?: string[]
     coreValues?: string[]
     tensions?: Array<{ value1: string; value2: string; description: string }>
@@ -96,6 +99,13 @@ export default function ProfilePage() {
   const [showShareModal, setShowShareModal] = useState(false)
   const [copied, setCopied] = useState(false)
 
+  const [synthesis, setSynthesis] = useState<string | null>(null)
+  const [synthesisGeneratedAt, setSynthesisGeneratedAt] = useState<string | null>(null)
+  const [synthesisLoading, setSynthesisLoading] = useState(false)
+  const [synthesisStreaming, setSynthesisStreaming] = useState(false)
+  const [synthesisError, setSynthesisError] = useState<string | null>(null)
+  const synthesisRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const token = getToken()
     if (!token) {
@@ -113,7 +123,65 @@ export default function ProfilePage() {
       .then((d) => setProfile(d.profile))
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load profile'))
       .finally(() => setLoading(false))
+
+    // Load cached synthesis
+    api
+      .get<{ synthesis: string; generatedAt: string }>('/api/users/me/synthesis', token)
+      .then((d) => {
+        setSynthesis(d.synthesis)
+        setSynthesisGeneratedAt(d.generatedAt)
+      })
+      .catch(() => {
+        // No synthesis yet — that's fine, we'll show a generate button
+      })
   }, [profileId, router])
+
+  const handleGenerateSynthesis = async () => {
+    const token = getToken()
+    if (!token) return
+    setSynthesisLoading(true)
+    setSynthesisError(null)
+    setSynthesis('')
+    setSynthesisStreaming(true)
+
+    try {
+      const res = await fetch(`${API_URL}/api/users/me/synthesis/generate`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({ error: 'Failed to generate synthesis' }))
+        setSynthesisError(body.error ?? 'Failed to generate synthesis')
+        setSynthesis(null)
+        return
+      }
+
+      const reader = res.body?.getReader()
+      const decoder = new TextDecoder()
+      if (!reader) return
+
+      let text = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        text += chunk
+        setSynthesis(text)
+        synthesisRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+
+      setSynthesisGeneratedAt(new Date().toISOString())
+    } catch (err) {
+      setSynthesisError(err instanceof Error ? err.message : 'Failed to generate synthesis')
+    } finally {
+      setSynthesisLoading(false)
+      setSynthesisStreaming(false)
+    }
+  }
 
   const handleShare = async () => {
     const token = getToken()
@@ -348,6 +416,49 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
+
+      {/* AI Synthesis */}
+      <div ref={synthesisRef} className="mb-8 rounded-2xl border border-stone-700 bg-gradient-to-br from-stone-900 to-stone-900/50 p-6">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <div>
+            <h2 className="font-serif text-xl text-stone-200">Your synthesis</h2>
+            <p className="mt-0.5 text-xs text-stone-500">
+              {synthesisGeneratedAt
+                ? `Generated ${new Date(synthesisGeneratedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                : 'Cross-framework narrative powered by AI'}
+            </p>
+          </div>
+          <button
+            onClick={handleGenerateSynthesis}
+            disabled={synthesisLoading}
+            className="shrink-0 rounded-xl border border-stone-700 bg-stone-800 px-4 py-2 text-xs font-semibold text-stone-300 transition-colors hover:border-stone-600 hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {synthesisLoading ? 'Generating…' : synthesis ? 'Regenerate' : 'Generate'}
+          </button>
+        </div>
+
+        {synthesisError && (
+          <p className="text-sm text-rose-400">{synthesisError}</p>
+        )}
+
+        {!synthesis && !synthesisLoading && !synthesisError && (
+          <p className="text-sm text-stone-500">
+            Generate a unified narrative that weaves together all your assessment results — Big Five personality, values, and any other frameworks you&apos;ve completed — into one coherent self-portrait.
+          </p>
+        )}
+
+        {synthesis && (
+          <div className="space-y-3">
+            {synthesis.split('\n\n').filter(Boolean).map((para, i) => (
+              <p key={i} className={`leading-relaxed text-stone-300 ${synthesisStreaming && i === synthesis.split('\n\n').filter(Boolean).length - 1 ? 'after:animate-pulse after:content-["▋"] after:text-amber-400 after:ml-0.5' : ''}`}>
+                {para}
+              </p>
+            ))}
+          </div>
+        )}
+
+        <p className="mt-4 text-[10px] text-stone-600">Generated by AI based on your assessments · Regeneration limited to once per hour</p>
+      </div>
 
       {/* CTA */}
       <div className="flex flex-wrap items-center justify-center gap-4">

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { prisma, SessionStatus } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { generateCrossFrameworkSynthesis } from '../lib/profile-generator.js'
 
 interface DimensionScore {
   normalized: number
@@ -165,4 +166,86 @@ export async function userRoutes(server: FastifyInstance) {
       return reply.send({ deltas, sessionA: a, sessionB: b })
     },
   )
+
+  // GET /api/users/me/synthesis — get cached synthesis
+  server.get('/me/synthesis', async (req, reply) => {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { synthesis: true, synthesisGeneratedAt: true },
+    })
+    if (!user?.synthesis) {
+      return reply.status(404).send({ error: 'No synthesis yet. Complete at least one assessment.' })
+    }
+    return reply.send({
+      synthesis: user.synthesis,
+      generatedAt: user.synthesisGeneratedAt,
+    })
+  })
+
+  // POST /api/users/me/synthesis/generate — (re)generate synthesis, streams response
+  server.post('/me/synthesis/generate', async (req, reply) => {
+    // Rate limit: at most once per hour
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { synthesisGeneratedAt: true },
+    })
+    if (user?.synthesisGeneratedAt) {
+      const elapsed = Date.now() - user.synthesisGeneratedAt.getTime()
+      const ONE_HOUR = 60 * 60 * 1000
+      if (elapsed < ONE_HOUR) {
+        const remainingMinutes = Math.ceil((ONE_HOUR - elapsed) / 60000)
+        return reply.status(429).send({
+          error: `Synthesis can be regenerated once per hour. Try again in ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}.`,
+        })
+      }
+    }
+
+    // Gather all completed profiles for this user
+    const profiles = await prisma.profile.findMany({
+      where: { userId: req.user.userId },
+      orderBy: { generatedAt: 'asc' },
+      select: { summary: true, dimensions: true, rawOutput: true },
+    })
+
+    if (profiles.length === 0) {
+      return reply.status(400).send({ error: 'Complete at least one assessment before generating a synthesis.' })
+    }
+
+    // Build framework contexts
+    const frameworks = profiles.map((p) => {
+      const raw = p.rawOutput as Record<string, unknown>
+      const templateType = (raw.templateType as string | undefined) ?? 'BIG_FIVE'
+      const title = templateType === 'VALUES_INVENTORY' ? 'Schwartz Values Inventory' : 'Big Five Personality'
+      const dims = p.dimensions as Record<string, { normalized: number }>
+      return { type: templateType, title, scores: dims, summary: p.summary }
+    })
+
+    // Hijack reply so Fastify doesn't interfere with raw streaming
+    reply.hijack()
+    const origin = req.headers.origin ?? '*'
+    reply.raw.setHeader('Content-Type', 'text/plain; charset=utf-8')
+    reply.raw.setHeader('Transfer-Encoding', 'chunked')
+    reply.raw.setHeader('Cache-Control', 'no-cache')
+    reply.raw.setHeader('Access-Control-Allow-Origin', origin)
+    reply.raw.setHeader('Access-Control-Allow-Credentials', 'true')
+    reply.raw.writeHead(200)
+
+    let fullText = ''
+    try {
+      fullText = await generateCrossFrameworkSynthesis(frameworks, (chunk) => {
+        reply.raw.write(chunk)
+      })
+    } finally {
+      reply.raw.end()
+    }
+
+    // Persist synthesis to user record (fire-and-forget after streaming)
+    await prisma.user.update({
+      where: { id: req.user.userId },
+      data: {
+        synthesis: fullText,
+        synthesisGeneratedAt: new Date(),
+      },
+    })
+  })
 }

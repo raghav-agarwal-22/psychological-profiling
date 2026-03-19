@@ -71,6 +71,72 @@ The tensions array should contain 0–2 entries, only where genuine competing mo
 
 Base the valueRankings strictly on the numeric scores (highest score = first). Do not invent information.`
 
+export interface FrameworkContext {
+  type: string
+  title: string
+  scores: Record<string, { normalized: number }>
+  summary?: string
+}
+
+const SYNTHESIS_SYSTEM_PROMPT = `You are a wise psychological counselor with deep knowledge of personality science, values theory, and humanistic psychology. You have access to a person's results across multiple psychological frameworks and your task is to weave them into a single, coherent self-portrait.
+
+Your synthesis should:
+- Read like a letter from a wise counselor who knows this person well — warm, honest, and insightful
+- Reveal the deeper patterns that emerge when multiple frameworks are considered together
+- Notice where frameworks reinforce each other and where they create interesting tensions
+- Be nuanced and non-judgmental — avoid labels, diagnoses, or deterministic statements
+- Not be a horoscope — ground everything in the actual data
+- Be 3–5 paragraphs, flowing prose (not bullet points or headers)
+
+The tone should feel like genuine self-understanding, not a personality quiz result. Speak directly to the person using "you" — make it personal and resonant.`
+
+export async function generateCrossFrameworkSynthesis(
+  frameworks: FrameworkContext[],
+  onChunk?: (chunk: string) => void,
+): Promise<string> {
+  const sections = frameworks.map((f) => {
+    const scoreLines = Object.entries(f.scores)
+      .sort(([, a], [, b]) => b.normalized - a.normalized)
+      .map(([dim, s]) => `  - ${dim}: ${s.normalized}/100`)
+      .join('\n')
+    return `## ${f.title}\n${scoreLines}${f.summary ? `\n\nSummary: ${f.summary}` : ''}`
+  })
+
+  const userMessage = `Here are the psychological assessment results for this person across ${frameworks.length} framework${frameworks.length > 1 ? 's' : ''}:\n\n${sections.join('\n\n')}\n\nWrite a cross-framework synthesis — a single, flowing narrative that integrates all of these frameworks into one coherent self-portrait for this person.`
+
+  if (onChunk) {
+    // Streaming mode
+    let fullText = ''
+    const stream = await client.messages.stream({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1500,
+      system: SYNTHESIS_SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userMessage }],
+    })
+
+    for await (const chunk of stream) {
+      if (
+        chunk.type === 'content_block_delta' &&
+        chunk.delta.type === 'text_delta'
+      ) {
+        onChunk(chunk.delta.text)
+        fullText += chunk.delta.text
+      }
+    }
+    return fullText
+  } else {
+    // Non-streaming mode
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1500,
+      system: SYNTHESIS_SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userMessage }],
+    })
+    const block = response.content[0]
+    return block?.type === 'text' ? block.text : ''
+  }
+}
+
 function extractJson<T>(text: string): T {
   const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
   const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text

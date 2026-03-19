@@ -22,6 +22,10 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  // AI synthesis (cross-framework narrative)
+  synthesis            String?   @map("synthesis")
+  synthesisGeneratedAt DateTime? @map("synthesis_generated_at")
+
   // Auth
   magicLinkTokens MagicLinkToken[]
 
