@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateDeltaObservation } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -227,6 +227,55 @@ export async function sessionRoutes(server: FastifyInstance) {
         } as object,
       },
     })
+
+    // Generate delta observation if user has a prior profile for the same template
+    if (process.env.ANTHROPIC_API_KEY && Object.keys(dimensionScores).length > 0) {
+      try {
+        const prevProfile = await prisma.profile.findFirst({
+          where: {
+            userId: req.user.userId,
+            id: { not: profile.id },
+            rawOutput: { path: ['templateType'], equals: templateType },
+          },
+          orderBy: { generatedAt: 'desc' },
+          select: { dimensions: true },
+        })
+
+        if (prevProfile) {
+          type DimScore = { normalized: number }
+          const prev = prevProfile.dimensions as Record<string, DimScore>
+          const curr = dimensionScores as Record<string, DimScore>
+          const deltas: Record<string, number> = {}
+          for (const key of Object.keys(curr)) {
+            const p = prev[key]?.normalized ?? null
+            const c = curr[key]?.normalized ?? null
+            if (p !== null && c !== null) {
+              const d = Math.round((c - p) * 100)
+              if (d !== 0) deltas[key] = d
+            }
+          }
+          const hasSignificant = Object.values(deltas).some((v) => Math.abs(v) > 10)
+          if (hasSignificant) {
+            const frameworkTitle =
+              templateType === AssessmentType.VALUES_INVENTORY
+                ? 'Schwartz Values Inventory'
+                : 'Big Five Personality'
+            const observation = await generateDeltaObservation(frameworkTitle, deltas)
+            await prisma.profile.update({
+              where: { id: profile.id },
+              data: {
+                rawOutput: {
+                  ...(profile.rawOutput as object),
+                  deltaObservation: observation,
+                },
+              },
+            })
+          }
+        }
+      } catch (err) {
+        server.log.warn({ err }, 'Delta observation generation failed — skipping')
+      }
+    }
 
     const updated = await prisma.session.update({
       where: { id: session.id },

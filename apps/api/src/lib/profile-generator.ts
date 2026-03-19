@@ -164,6 +164,33 @@ export async function generateProfileNarrative(
   return extractJson<ProfileNarrative>(text)
 }
 
+export async function generateDeltaObservation(
+  frameworkTitle: string,
+  deltas: Record<string, number>,
+): Promise<string> {
+  const lines = Object.entries(deltas)
+    .filter(([, v]) => Math.abs(v) > 10)
+    .sort(([, a], [, b]) => Math.abs(b) - Math.abs(a))
+    .map(([dim, v]) => `${dim}: ${v > 0 ? '+' : ''}${v} pts`)
+    .join(', ')
+
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 120,
+    system:
+      'You are a brief, insightful psychological guide. Given score changes from a retaken personality assessment, write exactly 1–2 sentences reflecting what the shift might mean. Be warm, specific, non-judgmental. Do not start with "I". No clichés.',
+    messages: [
+      {
+        role: 'user',
+        content: `Framework: ${frameworkTitle}\nChanges: ${lines}\n\nWrite a 1–2 sentence observation about what these changes might reflect.`,
+      },
+    ],
+  })
+
+  const block = response.content[0]
+  return block?.type === 'text' ? block.text.trim() : ''
+}
+
 export async function generateValuesNarrative(
   scores: AssessmentScores,
 ): Promise<ValuesNarrative> {

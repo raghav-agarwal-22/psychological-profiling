@@ -6,6 +6,12 @@ import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 
+interface DimensionScore {
+  normalized: number
+  raw?: number
+  responseCount?: number
+}
+
 interface SessionSummary {
   id: string
   title: string | null
@@ -17,9 +23,11 @@ interface SessionSummary {
     id: string
     summary: string
     archetypes: string[]
+    dimensions: Record<string, DimensionScore>
     generatedAt: string
   } | null
   deltas: Record<string, number> | null
+  deltaObservation: string | null
 }
 
 const DIMENSION_LABELS: Record<string, string> = {
@@ -28,7 +36,29 @@ const DIMENSION_LABELS: Record<string, string> = {
   extraversion: 'Extraversion',
   agreeableness: 'Agreeableness',
   neuroticism: 'Neuroticism',
+  achievement: 'Achievement',
+  benevolence: 'Benevolence',
+  conformity: 'Conformity',
+  hedonism: 'Hedonism',
+  power: 'Power',
+  security: 'Security',
+  self_direction: 'Self-Direction',
+  stimulation: 'Stimulation',
+  universalism: 'Universalism',
 }
+
+// Distinct colors for chart lines
+const DIM_COLORS = [
+  '#f59e0b', // amber
+  '#60a5fa', // blue
+  '#34d399', // emerald
+  '#f87171', // red
+  '#a78bfa', // violet
+  '#fb923c', // orange
+  '#38bdf8', // sky
+  '#4ade80', // green
+  '#e879f9', // fuchsia
+]
 
 function DeltaBadge({ dim, value }: { dim: string; value: number }) {
   const label = DIMENSION_LABELS[dim.toLowerCase()] ?? dim
@@ -41,8 +71,126 @@ function DeltaBadge({ dim, value }: { dim: string; value: number }) {
           : 'bg-rose-500/10 text-rose-400'
       }`}
     >
-      {positive ? '↑' : '↓'} {label.slice(0, 3)} {positive ? '+' : ''}{value}
+      {positive ? '↑' : '↓'} {label.slice(0, 4)} {positive ? '+' : ''}{value}
     </span>
+  )
+}
+
+interface ChartSession {
+  label: string
+  scores: Record<string, number>
+}
+
+function ScoreTrendChart({ sessions }: { sessions: ChartSession[] }) {
+  if (sessions.length < 2) return null
+
+  const dims = Object.keys(sessions[0].scores)
+  const W = 480
+  const H = 180
+  const PAD_LEFT = 36
+  const PAD_RIGHT = 16
+  const PAD_TOP = 12
+  const PAD_BOTTOM = 28
+  const plotW = W - PAD_LEFT - PAD_RIGHT
+  const plotH = H - PAD_TOP - PAD_BOTTOM
+
+  const xPos = (i: number) =>
+    PAD_LEFT + (i / (sessions.length - 1)) * plotW
+
+  const yPos = (score: number) =>
+    PAD_TOP + (1 - score / 100) * plotH
+
+  const yTicks = [0, 25, 50, 75, 100]
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className="w-full"
+      style={{ maxHeight: 180 }}
+      aria-label="Score trend chart"
+    >
+      {/* Grid lines */}
+      {yTicks.map((v) => (
+        <g key={v}>
+          <line
+            x1={PAD_LEFT}
+            x2={W - PAD_RIGHT}
+            y1={yPos(v)}
+            y2={yPos(v)}
+            stroke="#292524"
+            strokeWidth={1}
+          />
+          <text
+            x={PAD_LEFT - 5}
+            y={yPos(v) + 4}
+            textAnchor="end"
+            fontSize={9}
+            fill="#78716c"
+          >
+            {v}
+          </text>
+        </g>
+      ))}
+
+      {/* X-axis labels */}
+      {sessions.map((s, i) => (
+        <text
+          key={i}
+          x={xPos(i)}
+          y={H - 6}
+          textAnchor="middle"
+          fontSize={9}
+          fill="#78716c"
+        >
+          {s.label}
+        </text>
+      ))}
+
+      {/* Dimension lines */}
+      {dims.map((dim, di) => {
+        const color = DIM_COLORS[di % DIM_COLORS.length]
+        const points = sessions.map((s, i) => `${xPos(i)},${yPos(s.scores[dim] ?? 0)}`).join(' ')
+        return (
+          <g key={dim}>
+            <polyline
+              points={points}
+              fill="none"
+              stroke={color}
+              strokeWidth={2}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              opacity={0.85}
+            />
+            {sessions.map((s, i) => (
+              <circle
+                key={i}
+                cx={xPos(i)}
+                cy={yPos(s.scores[dim] ?? 0)}
+                r={3}
+                fill={color}
+                opacity={0.9}
+              />
+            ))}
+          </g>
+        )
+      })}
+    </svg>
+  )
+}
+
+function ChartLegend({ dimensions }: { dimensions: string[] }) {
+  return (
+    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+      {dimensions.map((dim, i) => (
+        <span key={dim} className="flex items-center gap-1.5 text-xs text-stone-400">
+          <span
+            className="inline-block h-2 w-4 rounded-full"
+            style={{ backgroundColor: DIM_COLORS[i % DIM_COLORS.length] }}
+          />
+          {DIMENSION_LABELS[dim.toLowerCase()] ?? dim}
+        </span>
+      ))}
+    </div>
   )
 }
 
@@ -74,6 +222,36 @@ export default function DashboardPage() {
   }
 
   const latestProfile = sessions.find((s) => s.profile)?.profile ?? null
+
+  // Build per-template chart data (sessions oldest-first)
+  const chartsByTemplate = new Map<string, ChartSession[]>()
+  for (const session of [...sessions].reverse()) {
+    if (!session.profile?.dimensions) continue
+    const key = session.templateType
+    if (!chartsByTemplate.has(key)) chartsByTemplate.set(key, [])
+    const dateLabel = session.completedAt
+      ? new Date(session.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      : '?'
+    const scores: Record<string, number> = {}
+    for (const [dim, val] of Object.entries(session.profile.dimensions)) {
+      scores[dim] = Math.round(val.normalized * 100) / 100
+    }
+    chartsByTemplate.get(key)!.push({ label: dateLabel, scores })
+  }
+
+  // Templates that have 2+ sessions (can show chart)
+  const chartsToShow: Array<{ templateType: string; templateTitle: string; chartSessions: ChartSession[] }> = []
+  for (const session of sessions) {
+    const key = session.templateType
+    const chartSessions = chartsByTemplate.get(key)
+    if (chartSessions && chartSessions.length >= 2 && !chartsToShow.find((c) => c.templateType === key)) {
+      chartsToShow.push({
+        templateType: key,
+        templateTitle: session.templateTitle ?? key,
+        chartSessions,
+      })
+    }
+  }
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
@@ -113,6 +291,26 @@ export default function DashboardPage() {
           >
             View full profile →
           </Link>
+        </div>
+      )}
+
+      {/* Score trend charts — one per framework with 2+ sessions */}
+      {chartsToShow.length > 0 && (
+        <div className="mb-8 space-y-6">
+          <h2 className="font-serif text-xl text-stone-200">Score trends</h2>
+          {chartsToShow.map(({ templateType, templateTitle, chartSessions }) => {
+            const dims = Object.keys(chartSessions[0].scores)
+            return (
+              <div
+                key={templateType}
+                className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5"
+              >
+                <p className="mb-3 text-sm font-medium text-stone-300">{templateTitle}</p>
+                <ScoreTrendChart sessions={chartSessions} />
+                <ChartLegend dimensions={dims} />
+              </div>
+            )
+          })}
         </div>
       )}
 
@@ -172,6 +370,12 @@ export default function DashboardPage() {
                           <DeltaBadge key={dim} dim={dim} value={delta} />
                         ))}
                       </div>
+                    )}
+                    {/* Claude-generated delta observation */}
+                    {session.deltaObservation && (
+                      <p className="mt-2 text-xs text-stone-400 italic leading-relaxed">
+                        {session.deltaObservation}
+                      </p>
                     )}
                   </div>
                   {session.profile && (

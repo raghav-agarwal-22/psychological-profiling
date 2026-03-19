@@ -105,6 +105,10 @@ export async function userRoutes(server: FastifyInstance) {
         }
       }
 
+      const raw = profile?.rawOutput as Record<string, unknown> | null
+      const deltaObservation =
+        raw && typeof raw.deltaObservation === 'string' ? raw.deltaObservation : null
+
       return {
         id: session.id,
         title: session.title,
@@ -117,10 +121,12 @@ export async function userRoutes(server: FastifyInstance) {
               id: profile.id,
               summary: profile.summary,
               archetypes: profile.archetypes,
+              dimensions: profile.dimensions,
               generatedAt: profile.generatedAt,
             }
           : null,
         deltas,
+        deltaObservation,
       }
     })
 
