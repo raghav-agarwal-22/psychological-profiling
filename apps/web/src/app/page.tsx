@@ -27,7 +27,7 @@ export default function HomePage() {
             Begin your journey
           </Link>
           <Link
-            href="/about"
+            href="/assessment"
             className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-8 py-3 text-sm font-medium text-stone-300 transition-colors hover:border-stone-500 hover:text-stone-100"
           >
             Learn more
