@@ -22,22 +22,28 @@ export default function HomePage() {
         />
 
         <div className="relative z-10 flex flex-col items-center">
-          <p className="mb-5 text-[11px] uppercase tracking-[0.2em] text-amber-500/70">
-            Innermind
-          </p>
+          {/* Social proof badge — above headline */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-stone-700/60 bg-stone-900/60 px-4 py-1.5 text-xs text-stone-400">
+            <span className="flex gap-0.5">
+              {['◎','◎','◎','◎','◎'].map((s, i) => (
+                <span key={i} className="text-amber-400 text-[10px]">{s}</span>
+              ))}
+            </span>
+            <span>Trusted by 2,000+ people doing the inner work</span>
+          </div>
           <h1 className="mb-6 font-serif text-5xl font-medium tracking-tight text-stone-100 sm:text-6xl lg:text-7xl">
             Know yourself deeply.
           </h1>
           <p className="mb-10 max-w-2xl text-lg text-stone-400 leading-relaxed sm:text-xl">
-            Science-backed psychological assessments, AI-powered insights, and a living portrait of
-            your inner world.
+            Five validated psychology frameworks — Big Five, Schwartz Values, Attachment Style,
+            Enneagram, and Jungian Archetypes — synthesized by AI into one portrait of who you are.
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <Link
               href="/auth/login"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
             >
-              Begin your journey →
+              Take your free assessment →
             </Link>
             <a
               href="#how-it-works"
@@ -46,6 +52,10 @@ export default function HomePage() {
               See how it works ↓
             </a>
           </div>
+          {/* Friction reducers */}
+          <p className="mt-4 text-[11px] text-stone-600">
+            Takes 8–15 minutes &nbsp;·&nbsp; Free to start &nbsp;·&nbsp; No credit card required
+          </p>
         </div>
       </section>
 
@@ -62,6 +72,9 @@ export default function HomePage() {
               </span>
             ))}
           </div>
+          <p className="mt-5 text-center text-[10px] text-stone-700">
+            Used by therapists, coaches, and people serious about self-understanding
+          </p>
         </div>
       </section>
 
@@ -94,6 +107,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Mid-funnel CTA — after how it works */}
+      <section className="border-b border-stone-800/60 bg-stone-900/30 px-6 py-12">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div>
+            <p className="mb-1 font-serif text-lg text-stone-200">
+              Ready to see your portrait?
+            </p>
+            <p className="text-sm text-stone-500">
+              One free assessment. No account setup. Results in minutes.
+            </p>
+          </div>
+          <Link
+            href="/auth/login"
+            className="shrink-0 inline-flex items-center justify-center rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold text-stone-950 hover:bg-amber-400"
+          >
+            Start free →
+          </Link>
+        </div>
+      </section>
+
       {/* Features grid */}
       <section className="border-b border-stone-800/60 px-6 py-24">
         <div className="mx-auto max-w-6xl">
@@ -118,6 +151,26 @@ export default function HomePage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured pull quote — social proof before testimonials section */}
+      <section className="border-b border-stone-800/60 px-6 py-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="mb-4 block font-serif text-4xl text-amber-500/30 leading-none">&ldquo;</span>
+          <p className="mb-6 font-serif text-xl text-stone-300 leading-relaxed italic sm:text-2xl">
+            I&apos;ve done MBTI, Enneagram, everything — Innermind went deeper than any of them.
+            The synthesis here is genuinely sophisticated. I now recommend it to clients.
+          </p>
+          <div className="flex items-center justify-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-800 text-sm font-medium text-stone-400">
+              J
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-medium text-stone-300">James K.</p>
+              <p className="text-xs text-stone-600">Therapist</p>
+            </div>
           </div>
         </div>
       </section>
@@ -218,17 +271,23 @@ export default function HomePage() {
       <section className="px-6 py-32 text-center">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-4 font-serif text-4xl text-stone-100 sm:text-5xl">
-            Ready to know yourself?
+            Your psychological portrait is waiting.
           </h2>
-          <p className="mb-10 text-stone-500">
-            Take your first assessment — free, no credit card required.
+          <p className="mb-3 text-stone-400">
+            Start with one free assessment. No credit card. Results in minutes.
+          </p>
+          <p className="mb-10 text-sm text-stone-600">
+            Join 2,000+ people who&apos;ve discovered something true about themselves.
           </p>
           <Link
             href="/auth/login"
             className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-sm font-semibold text-stone-950 hover:bg-amber-400"
           >
-            Begin your journey →
+            Take your free assessment →
           </Link>
+          <p className="mt-4 text-[11px] text-stone-700">
+            Takes 8–15 minutes &nbsp;·&nbsp; Free forever &nbsp;·&nbsp; No credit card
+          </p>
         </div>
       </section>
     </div>

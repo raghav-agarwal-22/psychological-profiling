@@ -41,7 +41,7 @@ export function Header() {
             Sign in
           </Link>
           <Button asChild size="sm">
-            <Link href="/auth/login">Begin journey</Link>
+            <Link href="/auth/login">Start free →</Link>
           </Button>
         </nav>
 
@@ -90,7 +90,7 @@ export function Header() {
                 className="mt-2 block rounded-xl bg-amber-500 px-4 py-2.5 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
                 onClick={() => setMobileOpen(false)}
               >
-                Begin journey →
+                Start free →
               </Link>
             </div>
           </nav>
