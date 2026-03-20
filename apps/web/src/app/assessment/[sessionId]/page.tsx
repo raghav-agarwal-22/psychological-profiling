@@ -5,6 +5,7 @@ import { useParams, useSearchParams, useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { Suspense } from 'react'
+import { posthog } from '@/lib/posthog'
 
 interface Question {
   id: string
@@ -87,6 +88,9 @@ function AssessmentFlow() {
         const found = assessmentsData.assessments[0]
         if (found) setAssessment(found)
 
+        // Track assessment started
+        posthog.capture('assessment_started', { framework: tpl.type })
+
         // Show intro only if user hasn't seen it for this template
         const seenKey = `seenIntro_${templateId}`
         if (!localStorage.getItem(seenKey)) {
@@ -144,6 +148,7 @@ function AssessmentFlow() {
         token,
       )
 
+      posthog.capture('assessment_completed', { framework: templateInfo?.type })
       router.push(`/profile/${profile.id}`)
     } catch {
       setAnalyzing(false)

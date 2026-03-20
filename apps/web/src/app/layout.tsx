@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import './globals.css'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { PWAInit } from '@/components/pwa/PWAInit'
+import { PostHogProvider } from '@/components/PostHogProvider'
 
 export const viewport: Viewport = {
   themeColor: '#0c0a09',
@@ -82,9 +84,13 @@ export default function RootLayout({
           }}
         />
         <PWAInit />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <Suspense>
+          <PostHogProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </PostHogProvider>
+        </Suspense>
       </body>
     </html>
   )

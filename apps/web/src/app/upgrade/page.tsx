@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { posthog } from '@/lib/posthog'
 
 const FREE_FEATURES = [
   'Big Five personality assessment',
@@ -32,6 +33,10 @@ function UpgradeContent() {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    posthog.capture('upgrade_page_viewed')
+  }, [])
 
   useEffect(() => {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')

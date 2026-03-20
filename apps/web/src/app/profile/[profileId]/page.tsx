@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { archetypeNameToSlug } from '@/lib/archetypes'
+import { posthog } from '@/lib/posthog'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -223,7 +224,10 @@ export default function ProfilePage() {
 
     api
       .get<{ profile: Profile }>(endpoint, token)
-      .then((d) => setProfile(d.profile))
+      .then((d) => {
+        setProfile(d.profile)
+        posthog.capture('profile_viewed', { profileId: d.profile?.id })
+      })
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load profile'))
       .finally(() => setLoading(false))
 

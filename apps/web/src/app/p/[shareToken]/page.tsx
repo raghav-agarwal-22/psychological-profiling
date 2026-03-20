@@ -69,19 +69,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const archetype = profile.archetypes[0] ?? 'Psychological Profile'
   const firstSentence = profile.summary.split(/[.!?]/)[0]?.trim() ?? profile.summary
 
+  const ogImageUrl = `/p/${params.shareToken}/opengraph-image`
+
   return {
     title: `${archetype} — Psychological Profile`,
     description: firstSentence,
     openGraph: {
       title: `${archetype} — Psychological Profile`,
       description: firstSentence,
-      images: [{ url: '/og-default.png' }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${archetype} — Psychological Profile` }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${archetype} — Psychological Profile`,
       description: firstSentence,
-      images: ['/og-default.png'],
+      images: [ogImageUrl],
     },
   }
 }
