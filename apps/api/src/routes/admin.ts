@@ -1,6 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import Stripe from 'stripe'
 import { prisma } from '@innermind/db'
+import {
+  sendDay1ArchetypeEmail,
+  sendDay3InsightTeaserEmail,
+  sendDay5SocialProofEmail,
+  sendDay7ProOfferEmail,
+} from '../services/email.js'
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
 
@@ -408,5 +414,112 @@ export async function adminRoutes(server: FastifyInstance) {
       })),
       stripeDataAvailable,
     })
+  })
+
+  // POST /api/admin/drip/run — send Day1/3/5/7 onboarding drip emails
+  // Designed to be called daily by Railway cron: 0 9 * * *
+  server.post('/drip/run', async (_req, reply) => {
+    const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
+    const UPGRADE_URL = `${WEB_URL}/billing`
+
+    const now = new Date()
+    const dayMs = 24 * 60 * 60 * 1000
+
+    // Each drip window: users created between [minDays, maxDays) ago
+    const dripWindows = [
+      { emailType: 'day1_archetype',    minDays: 1, maxDays: 2 },
+      { emailType: 'day3_insight_teaser', minDays: 3, maxDays: 4 },
+      { emailType: 'day5_social_proof',  minDays: 5, maxDays: 6 },
+      { emailType: 'day7_pro_offer',     minDays: 7, maxDays: 8 },
+    ] as const
+
+    const results: { emailType: string; sent: number; skipped: number }[] = []
+
+    for (const window of dripWindows) {
+      const createdBefore = new Date(now.getTime() - window.minDays * dayMs)
+      const createdAfter  = new Date(now.getTime() - window.maxDays * dayMs)
+
+      // Find users in the window who haven't received this email yet
+      const alreadySent = await prisma.onboardingEmail.findMany({
+        where: { emailType: window.emailType },
+        select: { userId: true },
+      })
+      const alreadySentIds = new Set(alreadySent.map((r) => r.userId))
+
+      const users = await prisma.user.findMany({
+        where: {
+          createdAt: { gte: createdAfter, lt: createdBefore },
+          emailDigestOptIn: true,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          createdAt: true,
+          profiles: {
+            where: { isLatest: true },
+            take: 1,
+            select: { id: true, archetypes: true, dimensions: true },
+          },
+          _count: {
+            select: { assessments: { where: { status: 'COMPLETED' } } },
+          },
+        },
+      })
+
+      let sent = 0
+      let skipped = 0
+
+      for (const user of users) {
+        if (alreadySentIds.has(user.id)) { skipped++; continue }
+
+        const profile = user.profiles[0]
+        const archetypeName = (profile?.archetypes as string[] | undefined)?.[0] ?? 'The Explorer'
+        const dimensions = (profile?.dimensions ?? {}) as Record<string, number>
+        const topTrait = Object.entries(dimensions).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'Openness'
+        const profileUrl = profile ? `${WEB_URL}/profile/${profile.id}` : `${WEB_URL}/assessments`
+        const completedFrameworks = user._count.assessments
+
+        try {
+          if (window.emailType === 'day1_archetype') {
+            await sendDay1ArchetypeEmail(
+              user.email,
+              user.name,
+              archetypeName,
+              'The archetype that shapes your deepest patterns',
+              `As the ${archetypeName}, you bring a distinct lens to everything you do — how you lead, how you connect, and where your growth edge lies.`,
+              topTrait,
+              profileUrl,
+            )
+          } else if (window.emailType === 'day3_insight_teaser') {
+            await sendDay3InsightTeaserEmail(user.email, user.name, archetypeName, topTrait, UPGRADE_URL)
+          } else if (window.emailType === 'day5_social_proof') {
+            await sendDay5SocialProofEmail(user.email, user.name, archetypeName, profileUrl, UPGRADE_URL)
+          } else if (window.emailType === 'day7_pro_offer') {
+            await sendDay7ProOfferEmail(
+              user.email,
+              user.name,
+              archetypeName,
+              topTrait,
+              completedFrameworks,
+              UPGRADE_URL,
+              `${WEB_URL}/dashboard`,
+            )
+          }
+
+          await prisma.onboardingEmail.create({
+            data: { userId: user.id, emailType: window.emailType },
+          })
+          sent++
+        } catch (err) {
+          server.log.warn({ err, userId: user.id, emailType: window.emailType }, 'Drip email send failed')
+          skipped++
+        }
+      }
+
+      results.push({ emailType: window.emailType, sent, skipped })
+    }
+
+    return reply.send({ ok: true, results })
   })
 }

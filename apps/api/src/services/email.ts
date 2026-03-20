@@ -9,6 +9,10 @@ import { DeepDiveNudgeEmail } from '../emails/DeepDiveNudgeEmail.js'
 import { ProUpgradeEmail } from '../emails/ProUpgradeEmail.js'
 import { TrialEndingSoonEmail } from '../emails/TrialEndingSoonEmail.js'
 import { ReferralInviteEmail } from '../emails/ReferralInviteEmail.js'
+import { Day1ArchetypeEmail } from '../emails/Day1ArchetypeEmail.js'
+import { Day3InsightTeaserEmail } from '../emails/Day3InsightTeaserEmail.js'
+import { Day5SocialProofEmail } from '../emails/Day5SocialProofEmail.js'
+import { Day7ProOfferEmail } from '../emails/Day7ProOfferEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -311,6 +315,136 @@ export async function sendTrialEndingSoonEmail(
     subject: `Your ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYour ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}. After that, you'll be charged $9/month.\n\nManage your plan: ${WEB_URL}/dashboard/billing\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Drip Sequence (Day 1 / 3 / 5 / 7) ──────────────────────────────────────
+
+export async function sendDay1ArchetypeEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  archetypeTagline: string,
+  archetypeDescription: string,
+  topTrait: string,
+  profileUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — day1 archetype for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(Day1ArchetypeEmail, {
+      userName,
+      archetypeName,
+      archetypeTagline,
+      archetypeDescription,
+      topTrait,
+      profileUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `You are the ${archetypeName} — here's what that really means`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour dominant Jungian archetype is ${archetypeName} — ${archetypeTagline}.\n\nExplore your full portrait: ${profileUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendDay3InsightTeaserEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  topTrait: string,
+  upgradeUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — day3 insight teaser for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(Day3InsightTeaserEmail, {
+      userName,
+      archetypeName,
+      topTrait,
+      upgradeUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `What your ${archetypeName} archetype reveals about your relationships`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour ${archetypeName} archetype shapes how you connect with others. Here's a deeper look.\n\nSee Pro insights: ${upgradeUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendDay5SocialProofEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  profileUrl: string,
+  upgradeUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — day5 social proof for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(Day5SocialProofEmail, {
+      userName,
+      archetypeName,
+      profileUrl,
+      upgradeUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Others with the ${archetypeName} archetype are discovering this`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nPeople like you are using ${PRODUCT_NAME} to understand their blind spots and grow intentionally.\n\nView your profile: ${profileUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendDay7ProOfferEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  topTrait: string,
+  completedFrameworks: number,
+  upgradeUrl: string,
+  dashboardUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — day7 pro offer for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(Day7ProOfferEmail, {
+      userName,
+      archetypeName,
+      topTrait,
+      completedFrameworks,
+      upgradeUrl,
+      dashboardUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `One week in — unlock the full ${PRODUCT_NAME} experience`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been on ${PRODUCT_NAME} for a week. Ready to go deeper?\n\nUpgrade to Pro: ${upgradeUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 
