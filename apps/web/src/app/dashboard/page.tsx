@@ -1062,6 +1062,24 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Email preferences */}
+      <div className="mt-6 rounded-xl border border-stone-800 bg-stone-900/50 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm text-stone-300">Weekly email digest</p>
+            <p className="text-xs text-stone-500">A personalized summary every Monday morning</p>
+          </div>
+          <button
+            onClick={handleToggleDigest}
+            disabled={digestToggling}
+            aria-label={digestOptIn ? 'Disable weekly digest' : 'Enable weekly digest'}
+            className={`relative h-5 w-9 rounded-full transition-colors disabled:opacity-50 ${digestOptIn ? 'bg-amber-500' : 'bg-stone-700'}`}
+          >
+            <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${digestOptIn ? 'translate-x-4' : 'translate-x-0.5'}`} />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
