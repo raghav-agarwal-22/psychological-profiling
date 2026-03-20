@@ -55,6 +55,26 @@ function AnonProfileContent() {
       .finally(() => setLoading(false))
   }, [anonId, router])
 
+  // Track gate viewed + abandoned
+  useEffect(() => {
+    if (!data || loading) return
+    posthog.capture('profile_email_gate_viewed', {
+      framework: data.templateType,
+      archetypeName: data.archetypeName,
+      hasSummaryTeaser: !!data.summaryTeaser,
+    })
+    const handleUnload = () => {
+      posthog.capture('profile_email_gate_abandoned', {
+        framework: data.templateType,
+        archetypeName: data.archetypeName,
+        emailStarted: email.length > 0,
+      })
+    }
+    window.addEventListener('beforeunload', handleUnload)
+    return () => window.removeEventListener('beforeunload', handleUnload)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, loading])
+
   async function handleClaim(e: React.FormEvent) {
     e.preventDefault()
     if (!guestToken || !data) return
@@ -118,18 +138,20 @@ function AnonProfileContent() {
             : 'Your psychological portrait has been generated.'}
         </p>
 
-        {/* Blurred/teased section */}
+        {/* Blurred preview — real content, frosted glass effect */}
         <div className="relative mt-6 overflow-hidden rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-left">
-          <div className="space-y-3 blur-sm select-none" aria-hidden="true">
-            <div className="h-4 w-3/4 rounded bg-stone-700" />
-            <div className="h-4 w-full rounded bg-stone-700" />
-            <div className="h-4 w-5/6 rounded bg-stone-700" />
-            <div className="h-4 w-2/3 rounded bg-stone-700" />
-            <div className="h-4 w-4/5 rounded bg-stone-700" />
-          </div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-stone-950/60 backdrop-blur-[2px]">
-            <span className="text-lg">🔒</span>
-            <p className="text-sm font-medium text-stone-300">Enter your email to unlock your full portrait</p>
+          <p
+            className="select-none text-sm leading-relaxed text-stone-300 blur-[3px]"
+            aria-hidden="true"
+          >
+            {data.summaryTeaser
+              ? `${data.summaryTeaser} Your full portrait explores how these patterns shape the way you relate to others, what drives your decisions, and where your deepest tensions lie. Understanding these layers is the first step toward intentional change.`
+              : 'Your full portrait synthesizes all five frameworks into a coherent narrative — tracing the patterns, tensions, and blind spots that define how you think, relate, and grow. This is the analysis that most personality tools never attempt.'}
+          </p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-stone-950/50 backdrop-blur-[1px]">
+            <span className="text-xl">🔒</span>
+            <p className="text-sm font-medium text-stone-200">Unlock your full portrait</p>
+            <p className="text-xs text-stone-500">Free — takes 10 seconds</p>
           </div>
         </div>
       </div>

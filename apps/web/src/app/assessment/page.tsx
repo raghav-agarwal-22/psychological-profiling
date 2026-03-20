@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
+import { posthog } from '@/lib/posthog'
 
 interface Template {
   id: string
@@ -104,6 +105,10 @@ export default function AssessmentPage() {
   }
 
   function handleBegin(template: Template) {
+    posthog.capture('assessment_selected', {
+      framework: template.type,
+      isAnon,
+    })
     if (isAnon) {
       startAnonymousAssessment(template)
     } else {
