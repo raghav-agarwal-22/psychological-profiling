@@ -11,18 +11,45 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'),
   title: {
     default: 'Innermind — Know Yourself Deeply',
     template: '%s | Innermind',
   },
   description:
-    'The most thoughtful platform for self-understanding — combining psychology, reflection, and symbolic wisdom to help you navigate life with clarity, meaning, and agency.',
-  keywords: ['psychology', 'self-understanding', 'personality', 'reflection', 'growth'],
+    "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights — combining the Big Five, Schwartz Values, and more to help you navigate life with clarity and meaning.",
+  keywords: [
+    'psychology',
+    'self-understanding',
+    'personality assessment',
+    'Big Five personality',
+    'Schwartz values',
+    'psychological profiling',
+    'AI insights',
+    'self-reflection',
+    'personal growth',
+    'mental wellness',
+  ],
   manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Innermind',
+  },
+  openGraph: {
+    siteName: 'Innermind',
+    type: 'website',
+    locale: 'en_US',
+    title: 'Innermind — Know Yourself Deeply',
+    description:
+      "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights.",
+    url: process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Innermind — Know Yourself Deeply',
+    description:
+      "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights.",
   },
 }
 
@@ -34,6 +61,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-stone-950 text-stone-100 antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebApplication',
+              name: 'Innermind',
+              description:
+                "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights.",
+              url: 'https://innermind.app',
+              applicationCategory: 'LifestyleApplication',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+                description: 'Free tier available',
+              },
+            }),
+          }}
+        />
         <PWAInit />
         <Header />
         <main className="flex-1">{children}</main>

@@ -1,10 +1,26 @@
 import type { FastifyRequest, FastifyReply } from 'fastify'
+import { prisma } from '@innermind/db'
 
 export async function requireAuth(req: FastifyRequest, reply: FastifyReply) {
   try {
     await req.jwtVerify()
   } catch {
     return reply.status(401).send({ error: 'Unauthorized' })
+  }
+}
+
+export async function requirePro(req: FastifyRequest, reply: FastifyReply) {
+  try {
+    await req.jwtVerify()
+  } catch {
+    return reply.status(401).send({ error: 'Unauthorized' })
+  }
+  const user = await prisma.user.findUnique({
+    where: { id: req.user.userId },
+    select: { subscriptionTier: true },
+  })
+  if (user?.subscriptionTier !== 'pro') {
+    return reply.status(403).send({ error: 'Pro subscription required', upgradeUrl: '/upgrade' })
   }
 }
 

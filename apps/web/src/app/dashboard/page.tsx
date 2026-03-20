@@ -300,6 +300,9 @@ export default function DashboardPage() {
   const [digestOptIn, setDigestOptIn] = useState<boolean>(true)
   const [digestToggling, setDigestToggling] = useState(false)
 
+  // Subscription state
+  const [isPro, setIsPro] = useState(false)
+
   // Onboarding welcome modal
   const [showWelcome, setShowWelcome] = useState(false)
 
@@ -331,8 +334,9 @@ export default function DashboardPage() {
       api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
       api.get<DailyPromptData>('/api/users/me/daily-prompt', token).catch(() => null),
       api.get<{ emailDigestOptIn: boolean }>('/api/users/me/digest-preferences', token).catch(() => null),
+      api.get<{ tier: string; isPro: boolean; expiresAt: string | null }>('/api/billing/status', token).catch(() => null),
     ])
-      .then(([sessionData, journalData, nudgeData, promptData, digestPrefs]) => {
+      .then(([sessionData, journalData, nudgeData, promptData, digestPrefs, billingStatus]) => {
         setSessions(sessionData.sessions)
         setJournalEntries(journalData.entries)
         if (nudgeData) setNudgeStatus(nudgeData)
@@ -341,6 +345,9 @@ export default function DashboardPage() {
           if (promptData.response) setDailyPromptSubmitted(true)
         }
         if (digestPrefs) setDigestOptIn(digestPrefs.emailDigestOptIn)
+        if (billingStatus) {
+          setIsPro(billingStatus.isPro)
+        }
         // Seed local tags state from fetched sessions
         const tagsMap: Record<string, string[]> = {}
         for (const s of sessionData.sessions) {
@@ -585,7 +592,14 @@ export default function DashboardPage() {
       )}
 
       <div className="mb-10 flex items-center justify-between">
-        <h1 className="font-serif text-3xl text-stone-100">Your journey</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="font-serif text-3xl text-stone-100">Your journey</h1>
+          {isPro && (
+            <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-0.5 text-xs font-semibold text-amber-400">
+              Pro
+            </span>
+          )}
+        </div>
         <Link
           href="/assessment"
           className="rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
@@ -651,22 +665,49 @@ export default function DashboardPage() {
         </div>
       )}
 
+      {/* Upgrade banner — shown to free users only */}
+      {!isPro && (
+        <div className="mb-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-stone-200">Upgrade to Innermind Pro</p>
+              <p className="text-xs text-stone-400 mt-0.5">Unlock all 5 frameworks, AI coach, and more — $9/month</p>
+            </div>
+            <Link href="/upgrade" className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 hover:bg-amber-400">
+              Upgrade →
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Coach CTA */}
       {latestProfile && (
-        <div className="mb-6 flex items-center justify-between gap-4 rounded-2xl border border-stone-800 bg-stone-900/50 px-5 py-4">
+        <div className={`mb-6 flex items-center justify-between gap-4 rounded-2xl border px-5 py-4 ${isPro ? 'border-stone-800 bg-stone-900/50' : 'border-stone-800/50 bg-stone-900/30'}`}>
           <div className="flex items-center gap-3">
-            <span className="text-lg text-amber-400 leading-none">◎</span>
+            <span className={`text-lg leading-none ${isPro ? 'text-amber-400' : 'text-stone-600'}`}>◎</span>
             <div>
-              <p className="text-sm font-semibold text-stone-200">Talk to your AI coach</p>
+              <div className="flex items-center gap-2">
+                <p className={`text-sm font-semibold ${isPro ? 'text-stone-200' : 'text-stone-500'}`}>Talk to your AI coach</p>
+                {!isPro && <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-semibold text-amber-400">Pro</span>}
+              </div>
               <p className="text-xs text-stone-500">Personalized guidance grounded in your profile</p>
             </div>
           </div>
-          <Link
-            href="/coach"
-            className="shrink-0 rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
-          >
-            Open coach →
-          </Link>
+          {isPro ? (
+            <Link
+              href="/coach"
+              className="shrink-0 rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+            >
+              Open coach →
+            </Link>
+          ) : (
+            <Link
+              href="/upgrade"
+              className="shrink-0 rounded-xl border border-amber-500/30 px-4 py-2 text-xs font-semibold text-amber-400 transition-colors hover:bg-amber-500/10"
+            >
+              Upgrade →
+            </Link>
+          )}
         </div>
       )}
 

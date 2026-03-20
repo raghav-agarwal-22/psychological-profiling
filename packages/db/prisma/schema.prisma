@@ -34,6 +34,12 @@ model User {
   emailDigestOptIn     Boolean   @default(true) @map("email_digest_opt_in")
   lastDigestSentAt     DateTime? @map("last_digest_sent_at")
 
+  // Subscription
+  subscriptionTier      String    @default("free") @map("subscription_tier")
+  stripeCustomerId      String?   @unique @map("stripe_customer_id")
+  stripeSubscriptionId  String?   @map("stripe_subscription_id")
+  subscriptionExpiresAt DateTime? @map("subscription_expires_at")
+
   // Auth
   magicLinkTokens MagicLinkToken[]
 

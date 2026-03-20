@@ -346,8 +346,11 @@ export async function userRoutes(server: FastifyInstance) {
   server.get('/me/recommendations', async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { growthRecommendations: true, recommendationsGeneratedAt: true },
+      select: { growthRecommendations: true, recommendationsGeneratedAt: true, subscriptionTier: true },
     })
+    if (user?.subscriptionTier !== 'pro') {
+      return reply.status(403).send({ error: 'Pro subscription required', upgradeUrl: '/upgrade' })
+    }
     if (!user?.growthRecommendations) {
       return reply.status(404).send({ error: 'No recommendations yet. Complete at least one assessment.' })
     }
@@ -362,8 +365,11 @@ export async function userRoutes(server: FastifyInstance) {
     // Rate limit: at most once per 6 hours
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { recommendationsGeneratedAt: true },
+      select: { recommendationsGeneratedAt: true, subscriptionTier: true },
     })
+    if (user?.subscriptionTier !== 'pro') {
+      return reply.status(403).send({ error: 'Pro subscription required', upgradeUrl: '/upgrade' })
+    }
     if (user?.recommendationsGeneratedAt) {
       const elapsed = Date.now() - user.recommendationsGeneratedAt.getTime()
       const SIX_HOURS = 6 * 60 * 60 * 1000
@@ -418,8 +424,11 @@ export async function userRoutes(server: FastifyInstance) {
   server.get('/me/daily-prompt', async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { timezone: true },
+      select: { timezone: true, subscriptionTier: true },
     })
+    if (user?.subscriptionTier !== 'pro') {
+      return reply.status(403).send({ error: 'Pro subscription required', upgradeUrl: '/upgrade' })
+    }
     const tz = user?.timezone ?? 'UTC'
 
     // Compute today's date string in the user's timezone

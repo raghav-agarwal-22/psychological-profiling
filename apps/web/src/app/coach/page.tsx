@@ -264,6 +264,7 @@ export default function CoachPage() {
   const [streamingContent, setStreamingContent] = useState<string | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [requiresUpgrade, setRequiresUpgrade] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -287,7 +288,14 @@ export default function CoachPage() {
     api
       .get<{ conversations: ConversationListItem[] }>('/api/coach/conversations', token)
       .then((data) => setConversations(data.conversations))
-      .catch(() => router.push('/auth/login'))
+      .catch((err) => {
+        const msg = err instanceof Error ? err.message : ''
+        if (msg.includes('403') || msg.toLowerCase().includes('pro subscription')) {
+          setRequiresUpgrade(true)
+        } else {
+          router.push('/auth/login')
+        }
+      })
       .finally(() => setLoadingConversations(false))
   }, [router])
 
@@ -551,6 +559,30 @@ export default function CoachPage() {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
+      </div>
+    )
+  }
+
+  if (requiresUpgrade) {
+    return (
+      <div className="mx-auto flex max-w-lg flex-col items-center px-6 py-24 text-center">
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10">
+          <span className="text-3xl text-amber-400">◎</span>
+        </div>
+        <h1 className="mb-3 font-serif text-3xl text-stone-100">AI Coach is a Pro feature</h1>
+        <p className="mb-8 text-sm text-stone-400 leading-relaxed">
+          Your AI coach gives you personalised guidance grounded in your full psychological profile.
+          Upgrade to Pro to unlock unlimited coaching conversations.
+        </p>
+        <Link
+          href="/upgrade"
+          className="rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+        >
+          Upgrade to Pro →
+        </Link>
+        <Link href="/dashboard" className="mt-4 text-xs text-stone-500 hover:text-stone-400">
+          Back to dashboard
+        </Link>
       </div>
     )
   }

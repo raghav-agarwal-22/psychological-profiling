@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import Anthropic from '@anthropic-ai/sdk'
 import { prisma } from '@innermind/db'
-import { requireAuth } from '../lib/auth.js'
+import { requirePro } from '../lib/auth.js'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
@@ -65,7 +65,7 @@ Speak as if you know this person and have been following their journey.`
 }
 
 export async function coachRoutes(server: FastifyInstance) {
-  server.addHook('preHandler', requireAuth)
+  server.addHook('preHandler', requirePro)
 
   // GET /api/coach/conversations — list all conversations
   server.get('/conversations', async (req, reply) => {
