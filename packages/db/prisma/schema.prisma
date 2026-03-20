@@ -52,6 +52,10 @@ model User {
   coachConversations CoachConversation[]
   dailyPrompts       DailyPrompt[]
 
+  // Teams
+  ownedTeams      Team[]       @relation("TeamOwner")
+  teamMemberships TeamMember[]
+
   @@map("users")
 }
 
@@ -356,4 +360,41 @@ model JournalEntry {
   @@index([userId])
   @@index([profileId])
   @@map("journal_entries")
+}
+
+// ─── Team ─────────────────────────────────────────────────────────────────────
+// A workspace for a group of users to share profiles and view compatibility.
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  ownerId     String   @map("owner_id")
+  owner       User     @relation("TeamOwner", fields: [ownerId], references: [id])
+  members     TeamMember[]
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Stripe subscription for teams
+  stripeCustomerId     String?  @unique @map("stripe_customer_id")
+  stripeSubscriptionId String?  @unique @map("stripe_subscription_id")
+  subscriptionStatus   String   @default("inactive") @map("subscription_status")
+
+  @@map("teams")
+}
+
+// ─── TeamMember ───────────────────────────────────────────────────────────────
+
+model TeamMember {
+  id       String   @id @default(cuid())
+  teamId   String   @map("team_id")
+  userId   String   @map("user_id")
+  role     String   @default("member") // "owner" | "admin" | "member"
+  joinedAt DateTime @default(now()) @map("joined_at")
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@map("team_members")
 }

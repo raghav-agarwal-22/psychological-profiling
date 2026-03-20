@@ -17,6 +17,7 @@ import { coachRoutes } from './routes/coach.js'
 import { digestRoutes } from './routes/digest.js'
 import { adminRoutes } from './routes/admin.js'
 import { billingRoutes } from './routes/billing.js'
+import { teamRoutes } from './routes/teams.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -81,6 +82,7 @@ await server.register(coachRoutes, { prefix: '/api/coach' })
 await server.register(digestRoutes, { prefix: '/api/digest' })
 await server.register(adminRoutes, { prefix: '/api/admin' })
 await server.register(billingRoutes, { prefix: '/api/billing' })
+await server.register(teamRoutes, { prefix: '/api/teams' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

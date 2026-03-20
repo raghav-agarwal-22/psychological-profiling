@@ -20,6 +20,12 @@ export function Header() {
             About
           </Link>
           <Link
+            href="/teams"
+            className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+          >
+            Teams
+          </Link>
+          <Link
             href="/auth/login"
             className="text-sm text-stone-400 transition-colors hover:text-stone-100"
           >
