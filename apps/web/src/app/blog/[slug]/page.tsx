@@ -119,6 +119,41 @@ const relatedAssessments: Record<string, RelatedAssessment> = {
     href: '/assessment',
     icon: '◑',
   },
+  'dark-triad-personality-traits': {
+    label: 'Take your free assessment',
+    title: 'Understand your full personality profile',
+    description: 'Get your Big Five scores (including Agreeableness facets) alongside values, attachment style, and Jungian archetypes — synthesized by AI.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'introvert-vs-extrovert': {
+    label: 'Take your free assessment',
+    title: 'Get your full Extraversion profile',
+    description: 'Discover where you fall on all six Extraversion facets — alongside four other validated frameworks.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'shadow-work-jung': {
+    label: 'Discover your archetypes',
+    title: 'Explore your Jungian archetype profile',
+    description: 'Your psychological portrait includes Jungian archetypes alongside Big Five, values, attachment style, and Enneagram — pointing toward the patterns most worth examining.',
+    href: '/assessment',
+    icon: '◈',
+  },
+  'personality-and-career': {
+    label: 'Take your free assessment',
+    title: 'Map your personality to your career strengths',
+    description: 'Get your Big Five traits, Schwartz values, and attachment style — with an AI synthesis that identifies your natural career orientations.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'neuroscience-of-personality': {
+    label: 'Take your free assessment',
+    title: 'Discover your biological personality substrate',
+    description: 'Five validated frameworks synthesized into one portrait — your starting point for understanding who you are.',
+    href: '/assessment',
+    icon: '◎',
+  },
 }
 
 function formatDate(iso: string) {
