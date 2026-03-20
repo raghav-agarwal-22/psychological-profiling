@@ -34,6 +34,34 @@ export async function profileRoutes(server: FastifyInstance) {
     return reply.send({ profiles })
   })
 
+  // GET /api/profiles/history/by-type?type=BIG_FIVE — all profiles for a given framework, newest first
+  server.get<{ Querystring: { type?: string } }>('/history/by-type', async (req, reply) => {
+    const { type } = req.query as { type?: string }
+    if (!type) {
+      return reply.status(400).send({ error: 'Query param type is required' })
+    }
+
+    const profiles = await prisma.profile.findMany({
+      where: {
+        userId: req.user.userId,
+        rawOutput: { path: ['templateType'], equals: type },
+      },
+      orderBy: { generatedAt: 'desc' },
+      select: {
+        id: true,
+        version: true,
+        isLatest: true,
+        summary: true,
+        dimensions: true,
+        archetypes: true,
+        generatedAt: true,
+        rawOutput: true,
+      },
+    })
+
+    return reply.send({ profiles })
+  })
+
   // GET /api/profiles/:id — get a specific profile version
   server.get<{ Params: { id: string } }>('/:id', async (req, reply) => {
     const profile = await prisma.profile.findFirst({

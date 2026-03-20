@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
+import ProfileCompletenessWidget from '@/components/ProfileCompletenessWidget'
+import ReferralWidget from '@/components/ReferralWidget'
 
 interface DimensionScore {
   normalized: number
@@ -1103,6 +1105,12 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Profile Completeness Widget */}
+      <ProfileCompletenessWidget completedTypes={completedTypes} />
+
+      {/* Referral Widget */}
+      <ReferralWidget />
 
       {/* Email preferences */}
       <div className="mt-6 rounded-xl border border-stone-800 bg-stone-900/50 p-4">

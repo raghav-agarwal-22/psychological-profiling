@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
+import { applyReferral } from './referrals.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -331,6 +332,25 @@ export async function sessionRoutes(server: FastifyInstance) {
       where: { id: session.id },
       data: { status: SessionStatus.COMPLETED, completedAt: new Date() },
     })
+
+    // Apply referral on first-ever assessment completion (fire-and-forget)
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: req.user.userId },
+        select: { referredByCode: true },
+      })
+      if (user?.referredByCode) {
+        const completedCount = await prisma.session.count({
+          where: { userId: req.user.userId, status: SessionStatus.COMPLETED },
+        })
+        // Only apply on the very first completed session
+        if (completedCount === 1) {
+          await applyReferral(req.user.userId, user.referredByCode, (msg) => server.log.info(msg))
+        }
+      }
+    } catch (err) {
+      server.log.warn({ err }, 'Referral apply failed — skipping')
+    }
 
     return reply.send({ session: updated, profile })
   })

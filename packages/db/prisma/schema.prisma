@@ -56,6 +56,12 @@ model User {
   ownedTeams      Team[]       @relation("TeamOwner")
   teamMemberships TeamMember[]
 
+  // Referrals
+  referralsSent    Referral[] @relation("ReferralsSent")
+  referralReceived Referral?  @relation("ReferralReceived")
+  referralCode     String?    @unique @map("referral_code")
+  referredByCode   String?    @map("referred_by_code")
+
   @@map("users")
 }
 
@@ -397,4 +403,22 @@ model TeamMember {
 
   @@unique([teamId, userId])
   @@map("team_members")
+}
+
+// ─── Referral ─────────────────────────────────────────────────────────────────
+
+model Referral {
+  id              String    @id @default(cuid())
+  referrerId      String    @map("referrer_id")
+  referrer        User      @relation("ReferralsSent", fields: [referrerId], references: [id])
+  referredEmail   String?   @map("referred_email")
+  referredUserId  String?   @unique @map("referred_user_id")
+  referredUser    User?     @relation("ReferralReceived", fields: [referredUserId], references: [id])
+  status          String    @default("pending") // pending | completed | rewarded
+  rewardGranted   Boolean   @default(false) @map("reward_granted")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  completedAt     DateTime? @map("completed_at")
+
+  @@index([referrerId])
+  @@map("referrals")
 }

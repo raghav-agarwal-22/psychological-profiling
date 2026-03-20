@@ -12,6 +12,7 @@ const requestMagicLinkSchema = z.object({
 
 const verifyMagicLinkSchema = z.object({
   token: z.string().min(1),
+  ref: z.string().max(100).optional(),
 })
 
 export async function authRoutes(server: FastifyInstance) {
@@ -59,7 +60,7 @@ export async function authRoutes(server: FastifyInstance) {
       return reply.status(400).send({ error: 'Invalid request' })
     }
 
-    const { token } = body.data
+    const { token, ref } = body.data
 
     const magicLink = await prisma.magicLinkToken.findUnique({
       where: { token },
@@ -75,6 +76,14 @@ export async function authRoutes(server: FastifyInstance) {
       where: { id: magicLink.id },
       data: { usedAt: new Date() },
     })
+
+    // Store referral code if provided and user hasn't been referred yet
+    if (ref && !magicLink.user.referredByCode) {
+      await prisma.user.update({
+        where: { id: magicLink.user.id },
+        data: { referredByCode: ref },
+      })
+    }
 
     // Sign JWT
     const jwt = await reply.jwtSign({

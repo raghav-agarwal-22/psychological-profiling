@@ -569,6 +569,36 @@ export async function userRoutes(server: FastifyInstance) {
     })
   })
 
+  // GET /api/users/me/completeness — return which frameworks have been completed
+  server.get('/me/completeness', async (req, reply) => {
+    const TRACKED_FRAMEWORKS = ['BIG_FIVE', 'VALUES_INVENTORY', 'ATTACHMENT_STYLE', 'ENNEAGRAM', 'LIGHT_DARK_TRIAD']
+
+    const profiles = await prisma.profile.findMany({
+      where: { userId: req.user.userId },
+      select: { rawOutput: true },
+    })
+
+    const completedSet = new Set<string>()
+    for (const p of profiles) {
+      const raw = p.rawOutput as Record<string, unknown>
+      const templateType = raw.templateType as string | undefined
+      if (templateType && TRACKED_FRAMEWORKS.includes(templateType)) {
+        completedSet.add(templateType)
+      }
+    }
+
+    const completed = TRACKED_FRAMEWORKS.filter((t) => completedSet.has(t))
+    const missing = TRACKED_FRAMEWORKS.filter((t) => !completedSet.has(t))
+    const score = Math.round((completed.length / TRACKED_FRAMEWORKS.length) * 100)
+
+    return reply.send({
+      completed,
+      missing,
+      score,
+      total: TRACKED_FRAMEWORKS.length,
+    })
+  })
+
   // GET /api/users/me/reassessment-status — check if user is due for reassessment
   server.get('/me/reassessment-status', async (req, reply) => {
     // Find the most recent completed session per assessment framework
