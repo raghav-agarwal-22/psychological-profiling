@@ -17,6 +17,25 @@ function getSubPeriodEnd(sub: Stripe.Subscription): number {
 const PRO_PRICE_ID = process.env.STRIPE_PRO_PRICE_ID ?? 'price_placeholder'
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
+const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
+const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com'
+
+async function capturePosthogEvent(
+  distinctId: string,
+  event: string,
+  properties?: Record<string, unknown>,
+) {
+  if (!POSTHOG_API_KEY || POSTHOG_API_KEY.includes('phc_placeholder')) return
+  try {
+    await fetch(`${POSTHOG_HOST}/capture/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: POSTHOG_API_KEY, distinct_id: distinctId, event, properties }),
+    })
+  } catch {
+    // non-critical: don't block billing logic
+  }
+}
 
 export async function billingRoutes(server: FastifyInstance) {
   // POST /api/billing/checkout — create Stripe Checkout session (auth required)
@@ -114,6 +133,16 @@ export async function billingRoutes(server: FastifyInstance) {
             trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
           },
         })
+        if (isTrialing) {
+          await capturePosthogEvent(userId, 'trial_started', {
+            trial_end_at: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
+            subscription_id: sub.id,
+          })
+        } else {
+          await capturePosthogEvent(userId, 'pro_subscription_started', {
+            subscription_id: sub.id,
+          })
+        }
       }
     }
 
@@ -135,6 +164,12 @@ export async function billingRoutes(server: FastifyInstance) {
       const active = sub.status === 'active' || sub.status === 'trialing'
       const isTrialing = sub.status === 'trialing'
       const trialEnd = (sub as unknown as Record<string, number | null>)['trial_end']
+      const previousAttributes = (event.data as unknown as Record<string, unknown>)['previous_attributes'] as Record<string, unknown> | undefined
+      const wasTrialing = (previousAttributes as Record<string, unknown> | undefined)?.['status'] === 'trialing'
+      const updatedUsers = await prisma.user.findMany({
+        where: { stripeSubscriptionId: sub.id },
+        select: { id: true },
+      })
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: {
@@ -143,6 +178,14 @@ export async function billingRoutes(server: FastifyInstance) {
           trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
         },
       })
+      // Fire trial_converted when transitioning from trialing → active
+      if (wasTrialing && sub.status === 'active') {
+        for (const user of updatedUsers) {
+          await capturePosthogEvent(user.id, 'trial_converted', {
+            subscription_id: sub.id,
+          })
+        }
+      }
     }
 
     return reply.send({ received: true })
@@ -169,13 +212,28 @@ export async function billingRoutes(server: FastifyInstance) {
       select: { id: true, email: true, name: true, trialEndsAt: true },
     })
 
+    // Fetch which users already received the trial_reminder email
+    const alreadySent = new Set(
+      (
+        await prisma.onboardingEmail.findMany({
+          where: { userId: { in: users.map((u) => u.id) }, emailType: 'trial_reminder' },
+          select: { userId: true },
+        })
+      ).map((r) => r.userId),
+    )
+
     let sent = 0
     for (const user of users) {
+      if (alreadySent.has(user.id)) continue
       const daysRemaining = Math.ceil(
         (user.trialEndsAt!.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
       )
       try {
         await sendTrialEndingSoonEmail(user.email, user.name, daysRemaining)
+        await prisma.onboardingEmail.create({
+          data: { userId: user.id, emailType: 'trial_reminder' },
+        })
+        await capturePosthogEvent(user.id, 'trial_reminder_sent', { days_remaining: daysRemaining })
         sent++
       } catch (err) {
         console.error(`[billing] Failed to send trial reminder to ${user.email}:`, err)

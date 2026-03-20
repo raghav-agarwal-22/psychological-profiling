@@ -682,11 +682,16 @@ export default function DashboardPage() {
                   : `${trialDaysRemaining} days left in your free trial`}
               </p>
               <p className="text-xs text-stone-400 mt-0.5">
-                You won't be charged until your trial ends. Cancel any time before then.
+                {trialDaysRemaining <= 2
+                  ? 'Keep Pro access — your card won\'t be charged until the trial ends.'
+                  : 'You won\'t be charged until your trial ends. Cancel any time before then.'}
               </p>
             </div>
-            <Link href="/dashboard/billing" className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${trialDaysRemaining <= 2 ? 'bg-rose-500 text-white hover:bg-rose-400' : 'bg-amber-500 text-stone-950 hover:bg-amber-400'}`}>
-              Manage plan
+            <Link
+              href={trialDaysRemaining <= 2 ? '/upgrade' : '/dashboard/billing'}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${trialDaysRemaining <= 2 ? 'bg-rose-500 text-white hover:bg-rose-400' : 'bg-amber-500 text-stone-950 hover:bg-amber-400'}`}
+            >
+              {trialDaysRemaining <= 2 ? 'Keep Pro access' : 'Manage plan'}
             </Link>
           </div>
         </div>

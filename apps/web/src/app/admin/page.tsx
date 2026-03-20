@@ -45,6 +45,7 @@ interface FunnelStep {
 interface FunnelMetrics {
   steps: FunnelStep[]
   overallConversion: number
+  currentlyTrialing: number
 }
 
 interface RevenueMetrics {
@@ -457,6 +458,49 @@ export default async function AdminPage() {
           </div>
         </div>
       )}
+
+      {/* Trial Funnel Summary */}
+      {funnel && (() => {
+        const trialStep = funnel.steps.find((s) => s.label === 'Started trial')
+        const convertedStep = funnel.steps.find((s) => s.label === 'Converted to paid')
+        const trialConversionRate = trialStep && convertedStep && trialStep.count > 0
+          ? Math.round((convertedStep.count / trialStep.count) * 1000) / 10
+          : 0
+        const trialConversionTarget = 30
+        return (
+          <div className="mb-12">
+            <div className="mb-4 flex items-center gap-3">
+              <h2 className="font-serif text-xl text-stone-200">Trial Funnel</h2>
+              <span className={`rounded-full border px-2.5 py-0.5 text-[10px] uppercase tracking-wider ${trialConversionRate >= trialConversionTarget ? 'border-emerald-800/40 bg-emerald-950/30 text-emerald-500/80' : trialConversionRate >= 15 ? 'border-amber-800/40 bg-amber-950/30 text-amber-500/80' : 'border-red-800/40 bg-red-950/30 text-red-500/80'}`}>
+                Target: {trialConversionTarget}% trial→paid
+              </span>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-4">
+              <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+                <p className="text-3xl font-light text-stone-100">{trialStep?.count ?? 0}</p>
+                <p className="mt-1 text-sm text-stone-500">Trials started (all time)</p>
+              </div>
+              <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+                <p className="text-3xl font-light text-amber-400">{funnel.currentlyTrialing}</p>
+                <p className="mt-1 text-sm text-stone-500">Currently trialing</p>
+              </div>
+              <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+                <p className="text-3xl font-light text-emerald-400">{convertedStep?.count ?? 0}</p>
+                <p className="mt-1 text-sm text-stone-500">Converted to paid</p>
+              </div>
+              <div className={`rounded-2xl border p-6 text-center ${trialConversionRate >= trialConversionTarget ? 'border-emerald-800/40 bg-emerald-950/10' : trialConversionRate >= 15 ? 'border-amber-800/40 bg-amber-950/10' : 'border-red-800/40 bg-red-950/10'}`}>
+                <p className={`text-3xl font-light ${trialConversionRate >= trialConversionTarget ? 'text-emerald-400' : trialConversionRate >= 15 ? 'text-amber-400' : 'text-red-400'}`}>
+                  {trialConversionRate}%
+                </p>
+                <p className="mt-1 text-sm text-stone-500">Trial→paid conversion</p>
+                {trialConversionRate < 15 && (
+                  <p className="mt-2 text-xs text-red-400/70">Below 15% threshold — escalate</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Metric cards */}
       <div className="mb-4">
