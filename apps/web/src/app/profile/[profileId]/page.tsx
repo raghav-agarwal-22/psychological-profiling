@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { archetypeNameToSlug } from '@/lib/archetypes'
 import { posthog } from '@/lib/posthog'
+import { GrowthChart } from '@/components/GrowthChart'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -184,6 +185,7 @@ export default function ProfilePage() {
   // History / retake state
   interface HistoryProfile {
     id: string
+    version: number
     summary: string
     dimensions: Record<string, DimensionScore>
     generatedAt: string
@@ -1159,6 +1161,21 @@ export default function ProfilePage() {
           </div>
         )
       })()}
+
+      {/* Growth Chart */}
+      {historyProfiles.length >= 2 && (
+        <div className="mb-8">
+          <GrowthChart
+            profiles={historyProfiles}
+            frameType={profile.rawOutput?.templateType}
+          />
+          <div className="mt-3 text-right">
+            <Link href="/insights" className="text-xs text-amber-400 hover:text-amber-300">
+              View full growth insights →
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* CTA */}
       <div className="flex flex-wrap items-center justify-center gap-4">

@@ -32,6 +32,12 @@ export function Header() {
             Journal
           </Link>
           <Link
+            href="/insights"
+            className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+          >
+            Insights
+          </Link>
+          <Link
             href="/auth/login"
             className="text-sm text-stone-400 transition-colors hover:text-stone-100"
           >
