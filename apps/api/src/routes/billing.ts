@@ -4,6 +4,22 @@ import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { sendTrialEndingSoonEmail } from '../services/email.js'
 
+// ─── Revenue notifications ───────────────────────────────────────────────────
+
+async function notifyRevenue(message: string): Promise<void> {
+  const slackUrl = process.env.SLACK_WEBHOOK_URL
+  if (!slackUrl) return
+  try {
+    await fetch(slackUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: message }),
+    })
+  } catch {
+    // Non-critical — don't surface to caller
+  }
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
   apiVersion: '2026-02-25.clover',
 })
@@ -109,7 +125,7 @@ export async function billingRoutes(server: FastifyInstance) {
         const sub = await stripe.subscriptions.retrieve(session.subscription as string)
         const isTrialing = sub.status === 'trialing'
         const trialEnd = getTrialEnd(sub)
-        await prisma.user.update({
+        const user = await prisma.user.update({
           where: { id: userId },
           data: {
             subscriptionTier: 'pro',
@@ -117,12 +133,20 @@ export async function billingRoutes(server: FastifyInstance) {
             subscriptionExpiresAt: new Date(getSubPeriodEnd(sub) * 1000),
             trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
           },
+          select: { email: true },
         })
+        const billingInterval = session.metadata?.billingInterval ?? 'monthly'
+        const trialMsg = isTrialing ? ' (on trial)' : ''
+        await notifyRevenue(`💰 New subscriber${trialMsg}: ${user.email} — ${billingInterval}`)
       }
     }
 
     if (event.type === 'customer.subscription.deleted') {
       const sub = event.data.object as Stripe.Subscription
+      const affectedUser = await prisma.user.findFirst({
+        where: { stripeSubscriptionId: sub.id },
+        select: { email: true },
+      })
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: {
@@ -132,6 +156,9 @@ export async function billingRoutes(server: FastifyInstance) {
           trialEndsAt: null,
         },
       })
+      if (affectedUser) {
+        await notifyRevenue(`📉 Cancellation: ${affectedUser.email}`)
+      }
     }
 
     if (event.type === 'customer.subscription.updated') {

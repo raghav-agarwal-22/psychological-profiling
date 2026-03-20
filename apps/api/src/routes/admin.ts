@@ -210,8 +210,8 @@ export async function adminRoutes(server: FastifyInstance) {
     }
 
     // Fallback: DB-based estimates (pre-revenue / dev mode)
-    // Use $19/month as placeholder price assumption
-    const PRO_PRICE_MONTHLY = 19
+    // Use $9/month as the current price point
+    const PRO_PRICE_MONTHLY = 9
     if (!stripeDataAvailable) {
       mrr = proUsers * PRO_PRICE_MONTHLY
     }
