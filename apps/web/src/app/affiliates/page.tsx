@@ -39,7 +39,7 @@ const BENEFITS = [
   {
     icon: '◈',
     title: '20% recurring commission',
-    body: 'Not a one-time fee — you earn every renewal. A user on annual Pro ($99/yr) earns you $19.80/yr in perpetuity.',
+    body: 'Not a one-time fee — you earn every renewal. A user on annual Pro ($149/yr) earns you $29.80/yr in perpetuity.',
   },
   {
     icon: '◎',
@@ -75,7 +75,7 @@ const FAQ = [
   },
   {
     q: 'How much does Pro cost, and what do I earn?',
-    a: 'Innermind Pro is $12/month or $99/year. You earn 20% per payment — that\'s $2.40/month or $19.80/year per active subscriber you referred.',
+    a: 'Innermind Pro is $19/month or $149/year. You earn 20% per payment — that\'s $3.80/month or $29.80/year per active subscriber you referred.',
   },
   {
     q: 'When does the commission start?',
@@ -221,27 +221,27 @@ export default function AffiliatePage() {
                 What could you earn?
               </h2>
               <p className="mt-3 text-stone-400">
-                Based on 20% commission on Innermind Pro ($99/yr or $12/mo).
+                Based on 20% commission on Innermind Pro ($149/yr or $19/mo).
               </p>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
               {[
                 {
                   referrals: '10 subscribers',
-                  annual: '$198/yr',
-                  monthly: '$24/mo',
+                  annual: '$298/yr',
+                  monthly: '$38/mo',
                   label: 'Micro audience',
                 },
                 {
                   referrals: '50 subscribers',
-                  annual: '$990/yr',
-                  monthly: '$120/mo',
+                  annual: '$1,490/yr',
+                  monthly: '$190/mo',
                   label: 'Active newsletter',
                 },
                 {
                   referrals: '200 subscribers',
-                  annual: '$3,960/yr',
-                  monthly: '$480/mo',
+                  annual: '$5,960/yr',
+                  monthly: '$760/mo',
                   label: 'Large community',
                 },
               ].map((tier) => (
@@ -257,7 +257,7 @@ export default function AffiliatePage() {
               ))}
             </div>
             <p className="mt-6 text-center text-xs text-stone-600">
-              Estimates based on annual Pro plan at $99/yr. Actual earnings depend on your conversion rate.
+              Estimates based on annual Pro plan at $149/yr. Actual earnings depend on your conversion rate.
             </p>
           </div>
         </div>

@@ -17,17 +17,15 @@ function getSubPeriodEnd(sub: Stripe.Subscription): number {
 }
 
 const PRICE_IDS = {
-  essential_monthly: process.env.STRIPE_ESSENTIAL_MONTHLY_PRICE_ID ?? 'price_essential_monthly_placeholder',
-  essential_annual: process.env.STRIPE_ESSENTIAL_ANNUAL_PRICE_ID ?? 'price_essential_annual_placeholder',
   pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID ?? (process.env.STRIPE_PRO_PRICE_ID ?? 'price_pro_monthly_placeholder'),
   pro_annual: process.env.STRIPE_PRO_ANNUAL_PRICE_ID ?? 'price_pro_annual_placeholder',
 } as const
 
 // Reverse-lookup: price ID → { tier, interval }
-function tierFromPriceId(priceId: string): { tier: 'essential' | 'pro'; interval: 'monthly' | 'annual' } | null {
+function tierFromPriceId(priceId: string): { tier: 'pro'; interval: 'monthly' | 'annual' } | null {
   for (const [key, id] of Object.entries(PRICE_IDS)) {
     if (id === priceId) {
-      const [tier, interval] = key.split('_') as ['essential' | 'pro', 'monthly' | 'annual']
+      const [tier, interval] = key.split('_') as ['pro', 'monthly' | 'annual']
       return { tier, interval }
     }
   }
@@ -82,7 +80,7 @@ export async function billingRoutes(server: FastifyInstance) {
   // POST /api/billing/checkout — create Stripe Checkout session (auth required)
   server.post('/checkout', { preHandler: requireAuth }, async (req, reply) => {
     const body = req.body as { tier?: string; interval?: string }
-    const tier = (body.tier === 'essential' || body.tier === 'pro') ? body.tier : 'pro'
+    const tier = 'pro'
     const interval = (body.interval === 'annual') ? 'annual' : 'monthly'
     const priceKey = `${tier}_${interval}` as keyof typeof PRICE_IDS
     const priceId = PRICE_IDS[priceKey]

@@ -12,43 +12,31 @@ const FREE_FEATURES = [
   'Public profile share link',
 ]
 
-const ESSENTIAL_FEATURES = [
-  'Everything in Free',
+const PRO_FEATURES = [
+  'All 6 assessment frameworks',
+  'Full AI-synthesised psychological portrait',
   'Values Inventory assessment',
   'Attachment Style assessment',
   'Enneagram assessment',
   'Light & Dark Triad assessment',
   'Full archetype breakdown',
-  'Growth chart over time',
-  'PDF export of your report',
-  'Weekly digest email',
-  'Journal (up to 30 entries)',
-]
-
-const PRO_FEATURES = [
-  'Everything in Essential',
   'AI coach chat (unlimited)',
   'AI growth recommendations',
-  'Personalized daily prompts',
+  'Personalised daily prompts',
   'Adaptive deep-dive assessment',
   'Compatibility mapping',
   'Journal (unlimited)',
+  'PDF export of your report',
+  'Weekly digest email',
 ]
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
-type Tier = 'essential' | 'pro'
 type Interval = 'monthly' | 'annual'
 
-const PRICES: Record<Tier, Record<Interval, { display: string; monthly: string; save?: string }>> = {
-  essential: {
-    monthly: { display: '$9', monthly: '$9/mo' },
-    annual: { display: '$79', monthly: '$6.58/mo', save: 'Save 27%' },
-  },
-  pro: {
-    monthly: { display: '$19', monthly: '$19/mo' },
-    annual: { display: '$149', monthly: '$12.42/mo', save: 'Save 34%' },
-  },
+const PRICES: Record<Interval, { display: string; monthly: string; save?: string }> = {
+  monthly: { display: '$19', monthly: '$19/mo' },
+  annual: { display: '$149', monthly: '$12.42/mo', save: 'Save 34%' },
 }
 
 function UpgradeContent() {
@@ -57,22 +45,14 @@ function UpgradeContent() {
   const cancelled = searchParams.get('cancelled') === '1'
 
   const [interval, setInterval] = useState<Interval>('monthly')
-  const [loadingTier, setLoadingTier] = useState<Tier | null>(null)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hasTrial, setHasTrial] = useState(true)
-  const [abCtaCopy, setAbCtaCopy] = useState<string>('control')
-  const [abEssentialEmphasis, setAbEssentialEmphasis] = useState<string>('control')
 
   useEffect(() => {
     const ctaVariant = posthog.getFeatureFlag('upgrade-cta-copy')
-    const emphasisVariant = posthog.getFeatureFlag('essential-tier-emphasis')
-    const resolvedCta = typeof ctaVariant === 'string' ? ctaVariant : 'control'
-    const resolvedEmphasis = typeof emphasisVariant === 'string' ? emphasisVariant : 'control'
-    setAbCtaCopy(resolvedCta)
-    setAbEssentialEmphasis(resolvedEmphasis)
     posthog.capture('upgrade_page_viewed', {
-      ab_upgrade_cta_copy: resolvedCta,
-      ab_essential_emphasis: resolvedEmphasis,
+      ab_upgrade_cta_copy: typeof ctaVariant === 'string' ? ctaVariant : 'control',
     })
     const token = localStorage.getItem('innermind_token')
     if (token) {
@@ -91,14 +71,10 @@ function UpgradeContent() {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')
   }, [cancelled])
 
-  async function handleUpgrade(tier: Tier) {
-    setLoadingTier(tier)
+  async function handleUpgrade() {
+    setLoading(true)
     setError(null)
-    posthog.capture('upgrade_cta_clicked', {
-      tier,
-      interval,
-      ab_upgrade_cta_copy: abCtaCopy,
-    })
+    posthog.capture('upgrade_cta_clicked', { tier: 'pro', interval })
     try {
       const token = localStorage.getItem('innermind_token')
       if (!token) {
@@ -112,7 +88,7 @@ function UpgradeContent() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ tier, interval }),
+        body: JSON.stringify({ tier: 'pro', interval }),
       })
 
       if (!res.ok) {
@@ -126,12 +102,12 @@ function UpgradeContent() {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
-      setLoadingTier(null)
+      setLoading(false)
     }
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
+    <div className="mx-auto max-w-4xl px-6 py-16">
       {/* Header */}
       <div className="mb-10 text-center">
         <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10">
@@ -142,12 +118,12 @@ function UpgradeContent() {
         </h1>
         {hasTrial && (
           <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5">
-            <span className="text-amber-400 text-sm font-semibold">7-day free trial on Pro</span>
+            <span className="text-amber-400 text-sm font-semibold">7-day free trial</span>
             <span className="text-stone-500 text-xs">· No charge until day 8</span>
           </div>
         )}
         <p className="mx-auto max-w-xl text-base text-stone-400 leading-relaxed">
-          Go deeper with all five assessment frameworks, AI-powered coaching, and personalised
+          Go deeper with all six assessment frameworks, AI-powered coaching, and personalised
           growth tools.
         </p>
       </div>
@@ -196,7 +172,7 @@ function UpgradeContent() {
       )}
 
       {/* Pricing cards */}
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2">
         {/* Free tier */}
         <div className="flex flex-col rounded-2xl border border-stone-700 bg-stone-900/60 p-6">
           <div className="mb-5">
@@ -227,54 +203,6 @@ function UpgradeContent() {
           </Link>
         </div>
 
-        {/* Essential tier */}
-        <div className={`relative flex flex-col rounded-2xl ${abEssentialEmphasis === 'treatment' ? 'border border-stone-400' : 'border border-stone-600'} bg-stone-900/60 p-6`}>
-          {abEssentialEmphasis === 'treatment' && (
-            <div className="absolute -top-3 left-6">
-              <span className="rounded-full border border-stone-500/60 bg-stone-700 px-3 py-0.5 text-xs font-semibold text-stone-200">
-                Best value to start
-              </span>
-            </div>
-          )}
-          <div className="mb-5">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-300">
-              Essential
-            </p>
-            <div className="flex items-end gap-1.5">
-              <span className="font-serif text-4xl text-stone-100">
-                {PRICES.essential[interval].display}
-              </span>
-              <span className="mb-1 text-sm text-stone-500">
-                {interval === 'annual' ? '/ year' : '/ month'}
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-stone-500">
-              {interval === 'annual'
-                ? `${PRICES.essential.annual.monthly} · ${PRICES.essential.annual.save}`
-                : abEssentialEmphasis === 'treatment'
-                ? 'Most popular for first-time users.'
-                : 'Cancel anytime.'}
-            </p>
-          </div>
-
-          <ul className="mb-7 flex-1 space-y-2.5">
-            {ESSENTIAL_FEATURES.map((feat) => (
-              <li key={feat} className="flex items-start gap-2.5 text-sm text-stone-300">
-                <span className="mt-0.5 shrink-0 text-stone-400">✓</span>
-                {feat}
-              </li>
-            ))}
-          </ul>
-
-          <button
-            onClick={() => handleUpgrade('essential')}
-            disabled={loadingTier !== null}
-            className="block w-full rounded-xl border border-stone-500 py-2.5 text-center text-sm font-semibold text-stone-200 transition-colors hover:border-stone-400 hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loadingTier === 'essential' ? 'Redirecting…' : abCtaCopy === 'treatment' ? 'Start free →' : 'Get Essential →'}
-          </button>
-        </div>
-
         {/* Pro tier */}
         <div className="relative flex flex-col rounded-2xl border border-amber-500/40 bg-amber-500/5 p-6 shadow-lg shadow-amber-500/5">
           {/* Popular badge */}
@@ -290,7 +218,7 @@ function UpgradeContent() {
             </p>
             <div className="flex items-end gap-1.5">
               <span className="font-serif text-4xl text-stone-100">
-                {PRICES.pro[interval].display}
+                {PRICES[interval].display}
               </span>
               <span className="mb-1 text-sm text-stone-500">
                 {interval === 'annual' ? '/ year' : '/ month'}
@@ -298,7 +226,7 @@ function UpgradeContent() {
             </div>
             <p className="mt-1 text-xs text-stone-500">
               {interval === 'annual'
-                ? `${PRICES.pro.annual.monthly} · ${PRICES.pro.annual.save}`
+                ? `${PRICES.annual.monthly} · ${PRICES.annual.save}`
                 : hasTrial
                 ? '7-day free trial, then $19/mo.'
                 : 'Cancel anytime.'}
@@ -315,14 +243,14 @@ function UpgradeContent() {
           </ul>
 
           <button
-            onClick={() => handleUpgrade('pro')}
-            disabled={loadingTier !== null}
+            onClick={handleUpgrade}
+            disabled={loading}
             className="block w-full rounded-xl bg-amber-500 py-3 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loadingTier === 'pro'
+            {loading
               ? 'Redirecting…'
               : hasTrial && interval === 'monthly'
-              ? (abCtaCopy === 'treatment' ? 'Try free for 7 days →' : 'Start 7-day free trial →')
+              ? 'Start 7-day free trial →'
               : 'Upgrade to Pro →'}
           </button>
 

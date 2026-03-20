@@ -6,6 +6,9 @@ import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { PWAInit } from '@/components/pwa/PWAInit'
 import { PostHogProvider } from '@/components/PostHogProvider'
+import { GoogleTagManagerHead, GoogleTagManagerBody } from '@/components/GoogleTagManager'
+import { MetaPixelScript } from '@/components/MetaPixel'
+import { ConversionTracking } from '@/components/ConversionTracking'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -75,7 +78,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
+      <head>
+        <GoogleTagManagerHead />
+        <MetaPixelScript />
+      </head>
       <body className="flex min-h-screen flex-col bg-stone-950 text-stone-100 antialiased">
+        <GoogleTagManagerBody />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -98,6 +106,7 @@ export default function RootLayout({
         />
         <PWAInit />
         <Suspense>
+          <ConversionTracking />
           <PostHogProvider>
             <Header />
             <main className="flex-1">{children}</main>

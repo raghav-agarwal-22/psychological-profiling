@@ -43,8 +43,8 @@ export default function TermsPage() {
             Innermind is a psychological profiling and self-understanding platform. The Service
             provides access to science-backed psychological assessments (including Big Five
             personality, values inventories, attachment style, Enneagram, and others), AI-powered
-            profile synthesis, personalised insights, a reflection journal, an AI coaching
-            interface, and team compatibility tools.
+            profile synthesis, personalised insights, a reflection journal, and an AI coaching
+            interface.
           </p>
           <p className="mt-4 leading-relaxed">
             Innermind is a tool for self-reflection and personal growth. It is <strong className="text-stone-300">not</strong> a
@@ -102,15 +102,9 @@ export default function TermsPage() {
               },
               {
                 name: 'Pro',
-                price: '$12 / month',
+                price: '$19 / month or $149 / year',
                 description:
-                  'Full access to all assessment frameworks, AI coach, unlimited journal, growth recommendations, PDF export, and profile sharing.',
-              },
-              {
-                name: 'Teams',
-                price: '$49 / month',
-                description:
-                  'Everything in Pro, plus a team workspace to share profiles, view compatibility maps, and collaborate with up to 20 members.',
+                  'Full access to all six assessment frameworks, AI coach, unlimited journal, growth recommendations, PDF export, and profile sharing. Includes a 7-day free trial.',
               },
             ].map((tier) => (
               <div key={tier.name} className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">

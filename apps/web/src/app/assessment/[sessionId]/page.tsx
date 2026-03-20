@@ -6,6 +6,7 @@ import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { Suspense } from 'react'
 import { posthog } from '@/lib/posthog'
+import { trackAssessmentComplete } from '@/lib/ads'
 
 const ARCHETYPE_PHRASES = [
   'The Architect',
@@ -212,6 +213,7 @@ function AssessmentFlow() {
       )
 
       posthog.capture('assessment_completed', { framework: templateInfo?.type })
+      trackAssessmentComplete(templateInfo?.type ?? 'unknown')
       router.push(`/profile/${profile.id}`)
     } catch {
       setAnalyzing(false)

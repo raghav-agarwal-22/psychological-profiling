@@ -388,7 +388,7 @@ const PRICING = [
   },
   {
     name: 'Pro',
-    price: '$12',
+    price: '$19',
     period: '/ month',
     description:
       'All 6 assessments, AI coach, growth recommendations, and daily reflection prompts.',

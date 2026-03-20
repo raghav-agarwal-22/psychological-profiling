@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { posthog } from '@/lib/posthog'
+import { trackSignup } from '@/lib/ads'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -37,6 +38,7 @@ function VerifyContent() {
         if (data.token) {
           localStorage.setItem('innermind_token', data.token)
           posthog.capture('auth_completed')
+          trackSignup()
           setStatus('success')
           setTimeout(() => router.push('/dashboard'), 800)
         } else {
