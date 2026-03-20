@@ -129,9 +129,8 @@ export default function AssessmentPage() {
     }
   }
 
-  const visibleTemplates = isAnon
-    ? templates.filter((t) => ANON_ALLOWED.includes(t.type))
-    : templates
+  // Show all templates to all users; anon users see non-allowed ones as locked
+  const visibleTemplates = templates
 
   if (loading) {
     return (
@@ -238,45 +237,61 @@ export default function AssessmentPage() {
       )}
 
       <div className="space-y-4">
-        {visibleTemplates.map((template) => (
-          <div
-            key={template.id}
-            className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 transition-colors hover:border-stone-700"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex flex-1 gap-4">
-                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-stone-800 text-lg text-stone-300">
-                  {typeIcons[template.type] ?? '◯'}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3">
-                    <h2 className="font-serif text-xl text-stone-100">{template.title}</h2>
-                    {typeDuration[template.type] && (
-                      <span className="rounded-full border border-stone-700 px-2 py-0.5 text-[10px] text-stone-500">
-                        {typeDuration[template.type]}
-                      </span>
-                    )}
-                    {isAnon && (
-                      <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-400">
-                        Free
-                      </span>
-                    )}
+        {visibleTemplates.map((template) => {
+          const isLocked = isAnon && !ANON_ALLOWED.includes(template.type)
+          return (
+            <div
+              key={template.id}
+              className={`rounded-2xl border p-6 transition-colors ${
+                isLocked
+                  ? 'border-stone-800/50 bg-stone-900/20 opacity-75'
+                  : 'border-stone-800 bg-stone-900/50 hover:border-stone-700'
+              }`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-1 gap-4">
+                  <div className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg ${isLocked ? 'bg-stone-800/50 text-stone-600' : 'bg-stone-800 text-stone-300'}`}>
+                    {isLocked ? '🔒' : (typeIcons[template.type] ?? '◯')}
                   </div>
-                  <p className="mt-2 text-sm text-stone-400 leading-relaxed">
-                    {template.description ?? typeDescriptions[template.type] ?? ''}
-                  </p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3">
+                      <h2 className={`font-serif text-xl ${isLocked ? 'text-stone-500' : 'text-stone-100'}`}>{template.title}</h2>
+                      {typeDuration[template.type] && (
+                        <span className="rounded-full border border-stone-700 px-2 py-0.5 text-[10px] text-stone-500">
+                          {typeDuration[template.type]}
+                        </span>
+                      )}
+                      {isAnon && !isLocked && (
+                        <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-400">
+                          Free
+                        </span>
+                      )}
+                    </div>
+                    <p className={`mt-2 text-sm leading-relaxed ${isLocked ? 'text-stone-600' : 'text-stone-400'}`}>
+                      {template.description ?? typeDescriptions[template.type] ?? ''}
+                    </p>
+                  </div>
                 </div>
+                {isLocked ? (
+                  <a
+                    href="/auth/login"
+                    className="shrink-0 rounded-xl border border-stone-700 px-5 py-2.5 text-sm font-semibold text-stone-400 transition-colors hover:border-stone-600 hover:text-stone-200"
+                  >
+                    Sign in to unlock
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => handleBegin(template)}
+                    disabled={starting === template.id}
+                    className="shrink-0 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
+                  >
+                    {starting === template.id ? 'Starting…' : 'Begin'}
+                  </button>
+                )}
               </div>
-              <button
-                onClick={() => handleBegin(template)}
-                disabled={starting === template.id}
-                className="shrink-0 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
-              >
-                {starting === template.id ? 'Starting…' : 'Begin'}
-              </button>
             </div>
-          </div>
-        ))}
+          )
+        })}
 
         {visibleTemplates.length === 0 && (
           <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-8 text-center text-stone-400">
@@ -287,7 +302,7 @@ export default function AssessmentPage() {
         {isAnon && (
           <div className="mt-8 rounded-2xl border border-stone-800/60 bg-stone-900/30 p-5 text-center">
             <p className="text-sm text-stone-500">
-              All 5 frameworks (Values, Attachment, Enneagram, Light/Dark Triad) require a free account.
+              Create a free account to unlock all 6 frameworks and save your results permanently.
             </p>
             <a
               href="/auth/login"

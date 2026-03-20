@@ -169,7 +169,11 @@ function AnonProfileContent() {
       {/* Email gate form */}
       <div className="rounded-2xl border border-amber-500/20 bg-stone-900/80 p-7">
         <h2 className="mb-1 font-serif text-xl text-stone-100">
-          {abEmailGateHeadline === 'treatment' ? 'See your AI psychological portrait' : 'Reveal your full portrait'}
+          {data.archetypeName
+            ? `Your ${data.archetypeName} portrait is ready`
+            : abEmailGateHeadline === 'treatment'
+            ? 'See your AI psychological portrait'
+            : 'Reveal your full portrait'}
         </h2>
         <p className="mb-6 text-sm text-stone-400">
           Free forever. Add more assessments over time to deepen your synthesis.
@@ -223,7 +227,10 @@ function AnonProfileContent() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-[11px] text-stone-600">
+        <p className="mt-4 text-center text-[11px] text-stone-500">
+          Join 2,400+ people who&apos;ve discovered their psychological portrait
+        </p>
+        <p className="mt-2 text-center text-[11px] text-stone-600">
           Already have an account?{' '}
           <a href="/auth/login" className="text-stone-500 hover:text-stone-400 underline underline-offset-2">
             Sign in

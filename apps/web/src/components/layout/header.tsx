@@ -132,7 +132,7 @@ export function Header() {
                     Sign in
                   </Link>
                   <Link
-                    href="/auth/login"
+                    href="/assessment"
                     className="mt-2 block rounded-xl bg-amber-500 px-4 py-2.5 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
                     onClick={() => setMobileOpen(false)}
                   >
