@@ -84,6 +84,14 @@ function AssessmentFlow() {
   const shownMilestones = useRef<Set<number>>(new Set())
   const milestoneTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [archetypeIndex, setArchetypeIndex] = useState(0)
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Clear auto-advance timer on question change or unmount
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current)
+    }
+  }, [currentIndex])
 
   useEffect(() => {
     const token = getToken()
@@ -164,8 +172,15 @@ function AssessmentFlow() {
     (value: number) => {
       if (!currentQuestion) return
       setResponses((prev) => ({ ...prev, [currentQuestion.id]: value }))
+      // Auto-advance on non-last questions after a brief delay for visual feedback
+      if (currentIndex < questions.length - 1) {
+        if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current)
+        autoAdvanceTimer.current = setTimeout(() => {
+          setCurrentIndex((i) => i + 1)
+        }, 250)
+      }
     },
-    [currentQuestion],
+    [currentQuestion, currentIndex, questions.length],
   )
 
   const handleNext = useCallback(async () => {
@@ -383,13 +398,19 @@ function AssessmentFlow() {
         >
           Back
         </button>
-        <button
-          onClick={handleNext}
-          disabled={currentAnswer === undefined}
-          className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-40"
-        >
-          {isLast ? 'Submit' : 'Next'}
-        </button>
+        {isLast ? (
+          <button
+            onClick={handleNext}
+            disabled={currentAnswer === undefined}
+            className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-40"
+          >
+            Submit
+          </button>
+        ) : (
+          <p className="text-xs text-stone-600">
+            {currentAnswer !== undefined ? 'Moving on…' : 'Select an answer'}
+          </p>
+        )}
       </div>
     </div>
   )
