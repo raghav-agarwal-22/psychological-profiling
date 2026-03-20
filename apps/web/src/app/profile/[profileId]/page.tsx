@@ -446,6 +446,40 @@ export default function ProfilePage() {
     await navigator.clipboard.writeText(shareUrl)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+    posthog.capture('share_link_copied', { profileId: profile?.id, archetype: profile?.archetypes?.[0] })
+  }
+
+  const handleShareTwitter = () => {
+    if (!shareUrl || !profile) return
+    const archetype = profile.archetypes?.[0] ?? 'my archetype'
+    const topDimension = profile.dimensions
+      ? Object.entries(profile.dimensions)
+          .map(([key, score]) => ({ key, value: typeof score === 'object' ? score.normalized : Number(score) }))
+          .sort((a, b) => b.value - a.value)[0]
+      : null
+    const traitText = topDimension ? ` — ${BIG_FIVE_LABELS[topDimension.key] ?? topDimension.key}: ${topDimension.value}%` : ''
+    const tweet = `Just discovered I'm a "${archetype}"${traitText}. Find your psychological archetype at ${shareUrl}`
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank', 'noopener,noreferrer')
+    posthog.capture('share_twitter', { profileId: profile.id, archetype })
+  }
+
+  const handleDownloadInstagramStory = async () => {
+    if (!shareUrl || !profile) return
+    const shareToken = shareUrl.split('/p/')[1]
+    if (!shareToken) return
+    try {
+      const res = await fetch(`/api/share-story/${shareToken}`)
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `innermind-${profile.archetypes?.[0]?.toLowerCase().replace(/\s+/g, '-') ?? 'profile'}-story.png`
+      a.click()
+      URL.revokeObjectURL(url)
+      posthog.capture('share_instagram_download', { profileId: profile.id, archetype: profile.archetypes?.[0] })
+    } catch {
+      // silently fail
+    }
   }
 
   const handleDownloadPDF = async () => {
@@ -1240,9 +1274,14 @@ export default function ProfilePage() {
         <button
           onClick={handleShare}
           disabled={sharing}
-          className="rounded-xl border border-stone-700 bg-stone-900 px-6 py-2.5 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-800 disabled:opacity-50"
+          className="flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
         >
-          {sharing ? 'Generating link…' : 'Share Profile'}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+            <polyline points="16 6 12 2 8 6" />
+            <line x1="12" y1="2" x2="12" y2="15" />
+          </svg>
+          {sharing ? 'Generating link…' : 'Share your archetype'}
         </button>
         <button
           onClick={handleOpenCompare}
@@ -1269,9 +1308,9 @@ export default function ProfilePage() {
           <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-900 p-6 shadow-2xl">
             <div className="mb-4 flex items-start justify-between">
               <div>
-                <h3 className="font-serif text-xl text-stone-100">Share your profile</h3>
+                <h3 className="font-serif text-xl text-stone-100">Share your archetype</h3>
                 <p className="mt-1 text-sm text-stone-400">
-                  Anyone with this link can view your profile.
+                  Show the world who you are.
                 </p>
               </div>
               <button
@@ -1283,13 +1322,38 @@ export default function ProfilePage() {
               </button>
             </div>
 
+            {/* Social share buttons */}
+            <div className="mb-4 grid grid-cols-2 gap-3">
+              <button
+                onClick={handleShareTwitter}
+                className="flex items-center justify-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-4 py-3 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-700"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                Share on X
+              </button>
+              <button
+                onClick={handleDownloadInstagramStory}
+                className="flex items-center justify-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-4 py-3 text-sm font-semibold text-stone-200 transition-colors hover:border-stone-600 hover:bg-stone-700"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                Instagram Story
+              </button>
+            </div>
+
+            {/* Copy link */}
             <div className="mb-4 flex items-center gap-2 rounded-xl border border-stone-700 bg-stone-800 px-3 py-2">
               <span className="flex-1 truncate text-sm text-stone-300">{shareUrl}</span>
               <button
                 onClick={handleCopy}
                 className="shrink-0 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
               >
-                {copied ? 'Copied!' : 'Copy'}
+                {copied ? 'Copied!' : 'Copy link'}
               </button>
             </div>
 
