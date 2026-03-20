@@ -158,9 +158,9 @@ function AnonProfileContent() {
 
       {/* Email gate form */}
       <div className="rounded-2xl border border-amber-500/20 bg-stone-900/80 p-7">
-        <h2 className="mb-1 font-serif text-xl text-stone-100">Unlock your full profile</h2>
+        <h2 className="mb-1 font-serif text-xl text-stone-100">Reveal your full portrait</h2>
         <p className="mb-6 text-sm text-stone-400">
-          Free forever. No credit card. Save your portrait and track your growth over time.
+          Free forever. Add more assessments over time to deepen your synthesis.
         </p>
 
         <form onSubmit={handleClaim} className="space-y-4">

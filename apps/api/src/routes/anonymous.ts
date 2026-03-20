@@ -55,8 +55,15 @@ export async function anonymousRoutes(server: FastifyInstance) {
       return reply.status(404).send({ error: 'Template not found' })
     }
 
-    // Only allow free (BIG_FIVE + JUNGIAN_ARCHETYPES) types anonymously
-    const ANON_ALLOWED: string[] = [AssessmentType.BIG_FIVE, AssessmentType.JUNGIAN_ARCHETYPES]
+    // Allow all assessment types with narrative generators anonymously
+    const ANON_ALLOWED: string[] = [
+      AssessmentType.BIG_FIVE,
+      AssessmentType.JUNGIAN_ARCHETYPES,
+      AssessmentType.VALUES_INVENTORY,
+      AssessmentType.ATTACHMENT_STYLE,
+      AssessmentType.ENNEAGRAM,
+      AssessmentType.LIGHT_DARK_TRIAD,
+    ]
     if (!ANON_ALLOWED.includes(template.type)) {
       return reply.status(403).send({ error: 'This assessment type requires an account' })
     }
