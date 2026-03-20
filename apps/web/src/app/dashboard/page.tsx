@@ -310,11 +310,6 @@ export default function DashboardPage() {
   // Onboarding welcome modal
   const [showWelcome, setShowWelcome] = useState(false)
 
-  useEffect(() => {
-    const seen = localStorage.getItem('innermind_onboarding_seen')
-    if (!seen) setShowWelcome(true)
-  }, [])
-
   function dismissWelcome() {
     localStorage.setItem('innermind_onboarding_seen', '1')
     setShowWelcome(false)
@@ -343,6 +338,10 @@ export default function DashboardPage() {
       .then(([sessionData, journalData, nudgeData, promptData, digestPrefs, billingStatus]) => {
         setSessions(sessionData.sessions)
         setJournalEntries(journalData.entries)
+        // Show welcome modal for first-time users (no completed assessments + not yet dismissed)
+        if (sessionData.sessions.length === 0 && !localStorage.getItem('innermind_onboarding_seen')) {
+          setShowWelcome(true)
+        }
         if (nudgeData) setNudgeStatus(nudgeData)
         if (promptData) {
           setDailyPrompt(promptData)
@@ -523,7 +522,6 @@ export default function DashboardPage() {
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={dismissWelcome}
             aria-hidden="true"
           />
 
@@ -541,7 +539,7 @@ export default function DashboardPage() {
                 Welcome to Innermind
               </h2>
               <p className="text-sm text-stone-400">
-                Your journey toward self-understanding starts here.
+                Complete your first assessment to receive your psychological portrait — a unified map of your personality, values, and relationship patterns.
               </p>
             </div>
 
@@ -580,12 +578,13 @@ export default function DashboardPage() {
             {/* CTA */}
             <div className="text-center">
               <Link
-                href="/assessment"
+                href="/assessment/big-five"
                 onClick={dismissWelcome}
                 className="inline-block rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
               >
-                Start my first assessment →
+                Start Big Five (10–15 min) →
               </Link>
+              <p className="mt-2 text-xs text-stone-500">No right or wrong answers</p>
               <div className="mt-3">
                 <button
                   onClick={dismissWelcome}
@@ -1020,17 +1019,20 @@ export default function DashboardPage() {
         <h2 className="mb-4 font-serif text-xl text-stone-200">Assessment history</h2>
 
         {sessions.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-stone-700 p-10 text-center">
-            <div className="mb-4 text-4xl">◎</div>
-            <p className="mb-2 font-serif text-lg text-stone-200">Begin your self-discovery</p>
-            <p className="mb-6 text-sm text-stone-500">
-              Take your first assessment to generate your psychological profile.
+          <div className="rounded-2xl border border-stone-800 bg-gradient-to-b from-stone-900 to-stone-950 p-12 text-center">
+            <div className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10">
+              <span className="text-3xl">◎</span>
+            </div>
+            <h3 className="mb-3 font-serif text-2xl text-stone-100">Discover your psychological portrait</h3>
+            <p className="mx-auto mb-2 max-w-md text-sm text-stone-400">
+              Innermind maps your personality, values, and attachment style into a unified psychological profile — using validated frameworks trusted by researchers worldwide.
             </p>
+            <p className="mb-8 text-xs text-stone-500">Takes 10–15 minutes · No right or wrong answers</p>
             <Link
-              href="/assessment"
-              className="inline-block rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
+              href="/assessment/big-five"
+              className="inline-block rounded-xl bg-amber-500 px-8 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
             >
-              Start first assessment
+              Start Big Five →
             </Link>
           </div>
         ) : (
