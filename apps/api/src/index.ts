@@ -56,7 +56,8 @@ await server.register(jwt, {
 
 server.addContentTypeParser('application/json', { parseAs: 'buffer' }, function (req, body, done) {
   try {
-    const json = JSON.parse(body.toString())
+    const str = (body as Buffer).toString()
+    const json = str.length > 0 ? JSON.parse(str) : {}
     ;(req as unknown as { rawBody: Buffer }).rawBody = body as Buffer
     done(null, json)
   } catch (err) {

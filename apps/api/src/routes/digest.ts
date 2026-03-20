@@ -3,7 +3,13 @@ import { z } from 'zod'
 import { prisma } from '@innermind/db'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let _resend: Resend | null = null
+function getResend(): Resend {
+  if (!_resend) {
+    _resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
+  }
+  return _resend
+}
 const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
 const DIGEST_SECRET = process.env.DIGEST_SECRET ?? 'digest-dev-secret'
 
@@ -306,7 +312,7 @@ export async function digestRoutes(server: FastifyInstance) {
         server.log.info({ userId: user.id, email: user.email }, '[digest] SKIP_EMAIL=true — skipping send')
       } else {
         try {
-          await resend.emails.send({
+          await getResend().emails.send({
             from: FROM_ADDRESS,
             to: user.email,
             subject,

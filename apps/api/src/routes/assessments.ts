@@ -72,6 +72,18 @@ export async function assessmentRoutes(server: FastifyInstance) {
       return reply.status(404).send({ error: 'Session not found' })
     }
 
+    // Auto-link the active template for this type so scoring works at session completion
+    const template = await prisma.assessmentTemplate.findFirst({
+      where: { type: body.data.type, isActive: true },
+      orderBy: { createdAt: 'desc' },
+      select: { id: true, questionBank: true },
+    })
+
+    // Derive totalSteps from question bank length for accurate progress tracking
+    const questionCount = Array.isArray(template?.questionBank)
+      ? (template.questionBank as unknown[]).length
+      : null
+
     const assessment = await prisma.assessment.create({
       data: {
         userId: req.user.userId,
@@ -80,6 +92,8 @@ export async function assessmentRoutes(server: FastifyInstance) {
         title: body.data.title,
         description: body.data.description,
         status: AssessmentStatus.NOT_STARTED,
+        templateId: template?.id ?? null,
+        totalSteps: questionCount,
       },
     })
 
