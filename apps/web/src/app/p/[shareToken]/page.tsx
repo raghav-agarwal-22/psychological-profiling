@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { archetypeNameToSlug } from '@/lib/archetypes'
 
 interface DimensionScore {
   normalized: number
@@ -118,6 +119,13 @@ export default async function PublicProfilePage({ params }: Props) {
           </div>
           <h1 className="font-serif text-4xl text-stone-100">{profile.archetypes[0]}</h1>
           <p className="mt-2 text-stone-500">Psychological archetype</p>
+          <Link
+            href={`/archetypes/${archetypeNameToSlug(profile.archetypes[0])}`}
+            className="mt-3 inline-flex items-center gap-1.5 text-sm text-stone-500 transition-colors hover:text-stone-300"
+          >
+            <span>Explore this archetype</span>
+            <span>→</span>
+          </Link>
         </div>
       )}
 

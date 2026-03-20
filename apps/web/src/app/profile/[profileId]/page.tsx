@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
+import { archetypeNameToSlug } from '@/lib/archetypes'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -491,6 +492,13 @@ export default function ProfilePage() {
           </div>
           <h1 className="font-serif text-4xl text-stone-100">{profile.archetypes[0]}</h1>
           <p className="mt-2 text-stone-500">Your psychological archetype</p>
+          <Link
+            href={`/archetypes/${archetypeNameToSlug(profile.archetypes[0])}`}
+            className="mt-3 inline-flex items-center gap-1.5 text-sm text-stone-500 transition-colors hover:text-stone-300"
+          >
+            <span>Explore this archetype</span>
+            <span>→</span>
+          </Link>
         </div>
       ) : null}
 
