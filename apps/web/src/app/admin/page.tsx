@@ -547,6 +547,21 @@ export default async function AdminPage() {
           </div>
         </div>
 
+        {/* Affiliate program */}
+        <div>
+          <h2 className="mb-4 font-serif text-xl text-stone-200">Affiliate Program</h2>
+          <a
+            href="/admin/affiliates"
+            className="flex items-center justify-between rounded-2xl border border-stone-800 bg-stone-900/50 px-5 py-4 transition-colors hover:border-stone-600"
+          >
+            <div>
+              <p className="text-sm font-semibold text-stone-200">Manage affiliate applications</p>
+              <p className="mt-0.5 text-xs text-stone-500">Review applications, approve partners, and manage commissions</p>
+            </div>
+            <span className="text-stone-500">→</span>
+          </a>
+        </div>
+
         {/* Recent signups */}
         <div>
           <h2 className="mb-4 font-serif text-xl text-stone-200">Recent Signups</h2>

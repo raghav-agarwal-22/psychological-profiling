@@ -3,6 +3,7 @@ import Stripe from 'stripe'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { sendTrialEndingSoonEmail } from '../services/email.js'
+import { logAffiliateCommission } from './affiliates.js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
   apiVersion: '2026-02-25.clover',
@@ -185,6 +186,20 @@ export async function billingRoutes(server: FastifyInstance) {
             subscription_id: sub.id,
           })
         }
+      }
+    }
+
+    if (event.type === 'invoice.payment_succeeded') {
+      const invoice = event.data.object as Stripe.Invoice
+      const customerId = invoice.customer as string
+      const invoiceAmountCents = invoice.amount_paid
+      // Find user by Stripe customer ID and log affiliate commission if applicable
+      const user = await prisma.user.findUnique({
+        where: { stripeCustomerId: customerId },
+        select: { id: true },
+      })
+      if (user && invoiceAmountCents > 0 && invoice.id) {
+        await logAffiliateCommission(user.id, invoice.id, invoiceAmountCents)
       }
     }
 

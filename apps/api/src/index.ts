@@ -22,6 +22,7 @@ import { referralRoutes } from './routes/referrals.js'
 import { journalRoutes } from './routes/journal.js'
 import { adaptiveRoutes } from './routes/adaptive.js'
 import { onboardingRoutes } from './routes/onboarding.js'
+import { affiliateRoutes } from './routes/affiliates.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -91,6 +92,7 @@ await server.register(teamRoutes, { prefix: '/api/teams' })
 await server.register(referralRoutes, { prefix: '/api/referrals' })
 await server.register(journalRoutes, { prefix: '/api/journal' })
 await server.register(adaptiveRoutes, { prefix: '/api/adaptive' })
+await server.register(affiliateRoutes, { prefix: '/api/affiliates' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

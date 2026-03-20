@@ -83,6 +83,22 @@ export async function authRoutes(server: FastifyInstance) {
         where: { id: magicLink.user.id },
         data: { referredByCode: ref },
       })
+
+      // Check if ref matches an affiliate code — create AffiliateReferral for commission tracking
+      const affiliate = await prisma.affiliate.findUnique({
+        where: { referralCode: ref },
+        select: { id: true, status: true },
+      })
+      if (affiliate && affiliate.status === 'approved') {
+        const existingReferral = await prisma.affiliateReferral.findUnique({
+          where: { userId: magicLink.user.id },
+        })
+        if (!existingReferral) {
+          await prisma.affiliateReferral.create({
+            data: { affiliateId: affiliate.id, userId: magicLink.user.id },
+          })
+        }
+      }
     }
 
     // Send welcome email if this is the user's first login (no prior tokens used)

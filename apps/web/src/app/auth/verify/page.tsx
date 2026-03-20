@@ -20,10 +20,16 @@ function VerifyContent() {
       return
     }
 
+    // Read affiliate attribution cookie (set by middleware on ?ref= visits)
+    const affiliateRef = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('innermind_affiliate_ref='))
+      ?.split('=')[1]
+
     fetch(`${API_URL}/api/auth/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ token, ref: affiliateRef ?? undefined }),
     })
       .then((res) => res.json())
       .then((data) => {

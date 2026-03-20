@@ -425,6 +425,58 @@ model TeamMember {
   @@map("team_members")
 }
 
+// ─── Affiliate Program ────────────────────────────────────────────────────────
+
+model Affiliate {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  websiteUrl      String    @map("website_url")
+  audienceDesc    String    @map("audience_desc")
+  audienceSize    Int?      @map("audience_size")
+  status          String    @default("pending") // pending | approved | rejected
+  referralCode    String    @unique @map("referral_code")
+  userId          String?   @unique @map("user_id") // if they're also a registered user
+  totalClicks     Int       @default(0) @map("total_clicks")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  referrals       AffiliateReferral[]
+  commissions     AffiliateCommission[]
+
+  @@map("affiliates")
+}
+
+model AffiliateReferral {
+  id            String    @id @default(cuid())
+  affiliateId   String    @map("affiliate_id")
+  affiliate     Affiliate @relation(fields: [affiliateId], references: [id])
+  userId        String    @unique @map("user_id")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  commissions   AffiliateCommission[]
+
+  @@index([affiliateId])
+  @@map("affiliate_referrals")
+}
+
+model AffiliateCommission {
+  id              String    @id @default(cuid())
+  affiliateId     String    @map("affiliate_id")
+  affiliate       Affiliate @relation(fields: [affiliateId], references: [id])
+  referralId      String    @map("referral_id")
+  referral        AffiliateReferral @relation(fields: [referralId], references: [id])
+  amountCents     Int       @map("amount_cents") // commission in cents (e.g. 240 = $2.40)
+  status          String    @default("pending") // pending | paid
+  stripeInvoiceId String?   @unique @map("stripe_invoice_id")
+  paidAt          DateTime? @map("paid_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@index([affiliateId])
+  @@index([referralId])
+  @@map("affiliate_commissions")
+}
+
 // ─── Referral ─────────────────────────────────────────────────────────────────
 
 model Referral {
