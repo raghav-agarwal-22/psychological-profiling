@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import crypto from 'node:crypto'
 import Stripe from 'stripe'
+import PDFDocument from 'pdfkit'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 
@@ -19,8 +20,8 @@ const PROFESSIONAL_PRICE_IDS = {
 } as const
 
 const SEAT_LIMITS: Record<string, number> = {
-  starter: 3,
-  unlimited: 999,
+  starter: 10,
+  unlimited: 50,
 }
 
 const createWorkspaceSchema = z.object({
@@ -304,6 +305,119 @@ export async function professionalRoutes(server: FastifyInstance) {
     })
 
     return reply.send({ member })
+  })
+
+  // GET /api/professional/workspaces/:id/clients/:clientId/report — download PDF report
+  server.get<{ Params: { id: string; clientId: string } }>('/workspaces/:id/clients/:clientId/report', { preHandler: requireAuth }, async (req, reply) => {
+    const workspace = await prisma.team.findFirst({
+      where: { id: req.params.id, ownerId: req.user.userId, type: 'professional' },
+    })
+    if (!workspace) return reply.status(404).send({ error: 'Workspace not found' })
+
+    const member = await prisma.teamMember.findFirst({
+      where: { id: req.params.clientId, teamId: workspace.id, inviteStatus: 'accepted' },
+      include: {
+        user: {
+          select: {
+            email: true,
+            name: true,
+            profiles: {
+              orderBy: { generatedAt: 'desc' },
+              take: 1,
+              select: {
+                id: true,
+                summary: true,
+                archetypes: true,
+                dimensions: true,
+                blindSpots: true,
+                generatedAt: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!member?.user) return reply.status(404).send({ error: 'Client not found or has not accepted invite' })
+    const { user } = member
+    const profile = user.profiles[0]
+    if (!profile) return reply.status(404).send({ error: 'Client has not completed any assessments yet' })
+
+    const clientName = user.name ?? user.email
+    const doc = new PDFDocument({ margin: 50, size: 'A4' })
+    const chunks: Buffer[] = []
+    doc.on('data', (chunk: Buffer) => chunks.push(chunk))
+
+    await new Promise<void>((resolve) => {
+      doc.on('end', resolve)
+
+      // Header
+      doc.fontSize(9).fillColor('#b87333').text('INNERMIND PSYCHOLOGICAL PORTRAIT', { align: 'center' })
+      doc.moveDown(0.3)
+      doc.fontSize(22).fillColor('#1c1917').font('Helvetica-Bold').text(clientName, { align: 'center' })
+      doc.moveDown(0.2)
+      doc.fontSize(10).fillColor('#78716c').font('Helvetica').text(
+        `Generated ${new Date(profile.generatedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} · Prepared by ${workspace.name}`,
+        { align: 'center' },
+      )
+
+      doc.moveDown(0.5)
+      doc.moveTo(50, doc.y).lineTo(545, doc.y).strokeColor('#e7e5e0').stroke()
+      doc.moveDown(0.8)
+
+      // Archetypes
+      if (profile.archetypes && (profile.archetypes as string[]).length > 0) {
+        doc.fontSize(8).fillColor('#b87333').font('Helvetica-Bold').text('PRIMARY ARCHETYPES')
+        doc.moveDown(0.3)
+        doc.fontSize(13).fillColor('#1c1917').font('Helvetica-Bold').text((profile.archetypes as string[]).join('  ·  '))
+        doc.moveDown(0.8)
+      }
+
+      // Psychological summary
+      doc.fontSize(8).fillColor('#b87333').font('Helvetica-Bold').text('PSYCHOLOGICAL PORTRAIT')
+      doc.moveDown(0.3)
+      doc.fontSize(10).fillColor('#292524').font('Helvetica').text(profile.summary, { lineGap: 4 })
+      doc.moveDown(0.8)
+
+      // Blind spots
+      if (profile.blindSpots) {
+        const bs = profile.blindSpots as { title?: string; description?: string }[]
+        if (Array.isArray(bs) && bs.length > 0) {
+          doc.fontSize(8).fillColor('#b87333').font('Helvetica-Bold').text('BLIND SPOTS & GROWTH EDGES')
+          doc.moveDown(0.3)
+          for (const spot of bs) {
+            doc.fontSize(10).fillColor('#292524').font('Helvetica-Bold').text(spot.title ?? '', { continued: false })
+            doc.fontSize(9).fillColor('#57534e').font('Helvetica').text(spot.description ?? '', { lineGap: 3 })
+            doc.moveDown(0.4)
+          }
+        }
+      }
+
+      // Practitioner notes
+      if (member.practitionerNotes) {
+        doc.moveDown(0.3)
+        doc.moveTo(50, doc.y).lineTo(545, doc.y).strokeColor('#e7e5e0').stroke()
+        doc.moveDown(0.5)
+        doc.fontSize(8).fillColor('#b87333').font('Helvetica-Bold').text('PRACTITIONER NOTES (PRIVATE)')
+        doc.moveDown(0.3)
+        doc.fontSize(9).fillColor('#57534e').font('Helvetica').text(member.practitionerNotes, { lineGap: 3 })
+      }
+
+      // Footer
+      const footerY = doc.page.height - 60
+      doc.moveTo(50, footerY).lineTo(545, footerY).strokeColor('#e7e5e0').stroke()
+      doc.fontSize(8).fillColor('#a8a29e').text('Confidential — prepared for practitioner use only. innermind.app', 50, footerY + 10, { align: 'center' })
+
+      doc.end()
+    })
+
+    const pdfBuffer = Buffer.concat(chunks)
+    const filename = `${clientName.replace(/[^a-z0-9]/gi, '_')}_innermind_profile.pdf`
+
+    reply
+      .header('Content-Type', 'application/pdf')
+      .header('Content-Disposition', `attachment; filename="${filename}"`)
+      .send(pdfBuffer)
   })
 
   // GET /api/professional/accept-invite — accept client invite

@@ -52,6 +52,7 @@ export default function WorkspacePage() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
   const [notes, setNotes] = useState('')
   const [savingNotes, setSavingNotes] = useState(false)
+  const [downloadingReport, setDownloadingReport] = useState(false)
 
   const fetchWorkspace = useCallback(async () => {
     const token = getToken()
@@ -114,6 +115,31 @@ export default function WorkspacePage() {
     setNotes(client.practitionerNotes ?? '')
   }
 
+  async function handleDownloadReport(client: Client) {
+    const token = getToken()
+    if (!token) return
+    setDownloadingReport(true)
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'}/api/professional/workspaces/${workspaceId}/clients/${client.id}/report`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      if (!response.ok) throw new Error('Report unavailable')
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      const name = (client.user?.name ?? client.user?.email ?? 'client').replace(/[^a-z0-9]/gi, '_')
+      a.download = `${name}_innermind_profile.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch {
+      // silently fail — client hasn't completed assessments yet
+    } finally {
+      setDownloadingReport(false)
+    }
+  }
+
   if (loading) {
     return (
       <main className="mx-auto max-w-5xl px-6 py-12">
@@ -139,8 +165,8 @@ export default function WorkspacePage() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="font-serif text-2xl font-medium text-stone-100">{workspace.name}</h1>
-          <p className="mt-1 text-sm text-stone-500 capitalize">
-            {workspace.professionalTier} plan · {workspace.clientCount}/{workspace.seatLimit} clients
+          <p className="mt-1 text-sm text-stone-500">
+            {workspace.professionalTier === 'starter' ? 'Pro Business' : 'Team'} plan · {workspace.clientCount}/{workspace.seatLimit} clients
           </p>
         </div>
         <span className={`rounded-full px-3 py-1 text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-400' : 'bg-stone-700 text-stone-400'}`}>
@@ -217,12 +243,23 @@ export default function WorkspacePage() {
                     {selectedClient.user?.email ?? selectedClient.inviteEmail}
                   </p>
                 </div>
-                <button
-                  onClick={() => handleRemoveClient(selectedClient.id)}
-                  className="text-xs text-stone-600 hover:text-red-400 transition-colors"
-                >
-                  Remove
-                </button>
+                <div className="flex items-center gap-3">
+                  {selectedClient.user?.profiles && selectedClient.user.profiles.length > 0 && (
+                    <button
+                      onClick={() => handleDownloadReport(selectedClient)}
+                      disabled={downloadingReport}
+                      className="flex items-center gap-1.5 rounded-lg border border-stone-700 px-3 py-1.5 text-xs font-medium text-stone-300 transition-colors hover:border-stone-600 hover:text-stone-100 disabled:opacity-50"
+                    >
+                      {downloadingReport ? 'Generating…' : '↓ PDF Report'}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleRemoveClient(selectedClient.id)}
+                    className="text-xs text-stone-600 hover:text-red-400 transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
 
               {/* Latest profile */}

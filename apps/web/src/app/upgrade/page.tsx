@@ -260,6 +260,35 @@ function UpgradeContent() {
         </div>
       </div>
 
+      {/* B2B section */}
+      <div className="mt-14">
+        <div className="mb-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">For professionals</p>
+          <h2 className="mt-2 font-serif text-2xl text-stone-100">Innermind for Practitioners</h2>
+          <p className="mt-2 text-sm text-stone-400">Coaches, therapists, and HR teams use Innermind to build richer client understanding.</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-6">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Pro Business</p>
+            <p className="mb-1 font-serif text-xl text-stone-100">10 client seats</p>
+            <p className="mb-4 text-sm text-stone-400">Dashboard, PDF reports, practitioner notes.</p>
+            <p className="mb-4 text-2xl font-bold text-stone-100">$99<span className="text-sm font-normal text-stone-500"> / month</span></p>
+            <Link href="/professional" className="block w-full rounded-xl border border-amber-500/40 py-2.5 text-center text-sm font-semibold text-amber-400 transition-colors hover:border-amber-400 hover:text-amber-300">
+              Set up workspace →
+            </Link>
+          </div>
+          <div className="rounded-xl border border-amber-500/20 bg-stone-900/50 p-6">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Team</p>
+            <p className="mb-1 font-serif text-xl text-stone-100">50 client seats</p>
+            <p className="mb-4 text-sm text-stone-400">Pro Business + team cohort analytics and aggregate views.</p>
+            <p className="mb-4 text-2xl font-bold text-stone-100">$299<span className="text-sm font-normal text-stone-500"> / month</span></p>
+            <Link href="/professional" className="block w-full rounded-xl bg-amber-500 py-2.5 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400">
+              Set up workspace →
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Trust signals */}
       <div className="mt-14 grid gap-4 sm:grid-cols-3">
         {[

@@ -67,8 +67,8 @@ export default function ProfessionalPage() {
   }
 
   const TIER_PRICES = {
-    starter: { monthly: '$29', annual: '$290' },
-    unlimited: { monthly: '$79', annual: '$790' },
+    starter: { monthly: '$99', annual: '$948' },
+    unlimited: { monthly: '$299', annual: '$2,868' },
   }
 
   if (loading) {
@@ -100,7 +100,7 @@ export default function ProfessionalPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium text-stone-100">{ws.name}</p>
-                  <p className="mt-0.5 text-sm text-stone-500 capitalize">{ws.professionalTier} plan · {ws.members.filter((m) => m.inviteStatus === 'accepted').length} clients</p>
+                  <p className="mt-0.5 text-sm text-stone-500">{ws.professionalTier === 'starter' ? 'Pro Business' : 'Team'} plan · {ws.members.filter((m) => m.inviteStatus === 'accepted').length} clients</p>
                 </div>
                 <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${ws.subscriptionStatus === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-stone-700 text-stone-400'}`}>
                   {ws.subscriptionStatus === 'active' ? 'Active' : 'Inactive'}
@@ -119,11 +119,19 @@ export default function ProfessionalPage() {
         /* Pricing / create CTA */
         <div className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-2">
-            {/* Starter */}
+            {/* Pro Business */}
             <div className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
-              <h3 className="mb-1 font-semibold text-stone-100">Starter</h3>
-              <p className="mb-3 text-sm text-stone-400">Up to 3 clients. Perfect for individual practitioners.</p>
-              <p className="mb-6 text-2xl font-bold text-stone-100">$29<span className="text-sm font-normal text-stone-500"> / month</span></p>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Pro Business</p>
+              <h3 className="mb-1 font-serif text-xl text-stone-100">10 client seats</h3>
+              <p className="mb-3 text-sm text-stone-400">Client management, profile access, PDF reports. For coaches and therapists in private practice.</p>
+              <ul className="mb-5 space-y-1.5 text-sm text-stone-400">
+                {['10 client seats', 'Client assessment dashboard', 'PDF report downloads', 'Practitioner notes (private)'].map((f) => (
+                  <li key={f} className="flex items-center gap-2">
+                    <span className="text-amber-500">◎</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <p className="mb-4 text-2xl font-bold text-stone-100">$99<span className="text-sm font-normal text-stone-500"> / month</span></p>
               <button
                 onClick={() => { setTier('starter'); setShowCreate(true) }}
                 className="w-full rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
@@ -131,17 +139,43 @@ export default function ProfessionalPage() {
                 Get started →
               </button>
             </div>
-            {/* Unlimited */}
+            {/* Team */}
             <div className="rounded-xl border border-amber-500/30 bg-stone-900/60 p-6">
-              <h3 className="mb-1 font-semibold text-stone-100">Unlimited</h3>
-              <p className="mb-3 text-sm text-stone-400">Unlimited clients. For growing practices.</p>
-              <p className="mb-6 text-2xl font-bold text-stone-100">$79<span className="text-sm font-normal text-stone-500"> / month</span></p>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Team</p>
+              <h3 className="mb-1 font-serif text-xl text-stone-100">50 client seats</h3>
+              <p className="mb-3 text-sm text-stone-400">Everything in Pro Business plus team cohort analytics. For HR teams and OD consultants.</p>
+              <ul className="mb-5 space-y-1.5 text-sm text-stone-400">
+                {['50 client seats', 'Everything in Pro Business', 'Team cohort Big Five chart', 'Aggregate values/attachment view'].map((f) => (
+                  <li key={f} className="flex items-center gap-2">
+                    <span className="text-amber-500">◎</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <p className="mb-4 text-2xl font-bold text-stone-100">$299<span className="text-sm font-normal text-stone-500"> / month</span></p>
               <button
                 onClick={() => { setTier('unlimited'); setShowCreate(true) }}
                 className="w-full rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
               >
                 Get started →
               </button>
+            </div>
+          </div>
+
+          {/* Persona callouts */}
+          <div className="rounded-xl border border-stone-800/60 bg-stone-900/30 p-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-3">Built for</p>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 text-center">
+              {[
+                { icon: '◎', label: 'Life Coaches' },
+                { icon: '◉', label: 'Therapists' },
+                { icon: '◈', label: 'HR Managers' },
+                { icon: '◑', label: 'OD Consultants' },
+              ].map((p) => (
+                <div key={p.label} className="rounded-lg bg-stone-900/60 p-3">
+                  <div className="mb-1 text-lg text-amber-400">{p.icon}</div>
+                  <p className="text-xs text-stone-400">{p.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -171,8 +205,8 @@ export default function ProfessionalPage() {
                     onChange={(e) => setTier(e.target.value as 'starter' | 'unlimited')}
                     className="w-full rounded-lg bg-stone-800 px-3 py-2.5 text-sm text-stone-100 outline-none"
                   >
-                    <option value="starter">Starter (3 clients)</option>
-                    <option value="unlimited">Unlimited</option>
+                    <option value="starter">Pro Business (10 seats, $99/mo)</option>
+                    <option value="unlimited">Team (50 seats, $299/mo)</option>
                   </select>
                 </div>
                 <div>
