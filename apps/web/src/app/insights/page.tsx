@@ -205,7 +205,7 @@ export default function InsightsPage() {
 
                   {latest && (
                     <div className="space-y-1.5">
-                      {Object.entries(latest.dimensions)
+                      {Object.entries(latest.dimensions ?? {})
                         .slice(0, 4)
                         .map(([dim, score]) => (
                           <div key={dim} className="flex items-center justify-between gap-3">
