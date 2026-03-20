@@ -14,6 +14,7 @@ import { Day3InsightTeaserEmail } from '../emails/Day3InsightTeaserEmail.js'
 import { Day5SocialProofEmail } from '../emails/Day5SocialProofEmail.js'
 import { Day7ProOfferEmail } from '../emails/Day7ProOfferEmail.js'
 import { WeeklyGrowthChallengeEmail } from '../emails/WeeklyGrowthChallengeEmail.js'
+import { AnnualUpgradeEmail } from '../emails/AnnualUpgradeEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -482,6 +483,51 @@ export async function sendWeeklyGrowthChallengeEmail(
     subject: `Your ${archetypeName} growth challenge this week`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nThis week's growth challenge for ${archetypeName}s:\n\n${challengeTheme}\n${challengeText}\n\nSee your full portrait: ${profileUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Annual Conversion ────────────────────────────────────────────────────────
+
+// Monthly price: $12/mo. Annual: $10/mo ($120/year). Savings: $24 (2 months free).
+const MONTHLY_PRICE = '$12'
+const ANNUAL_PRICE = '$10'
+const ANNUAL_SAVINGS = '24'
+
+export async function sendAnnualUpgradeEmail(
+  email: string,
+  userName: string | null,
+  daysSinceSubscribed: number,
+  upgradeUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — annual upgrade (day ${daysSinceSubscribed}) for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(AnnualUpgradeEmail, {
+      userName,
+      upgradeUrl,
+      daysSinceSubscribed,
+      monthlySavings: ANNUAL_SAVINGS,
+      annualPrice: ANNUAL_PRICE,
+      monthlyPrice: MONTHLY_PRICE,
+    }),
+  )
+
+  const subjectByDay =
+    daysSinceSubscribed <= 14
+      ? `Lock in your rate for a year — save 2 months free`
+      : daysSinceSubscribed <= 21
+        ? `3 weeks in — save $${ANNUAL_SAVINGS} by switching to annual`
+        : `Last reminder: 2 months free if you switch to annual`
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: subjectByDay,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been on Innermind for ${daysSinceSubscribed} days. Switch to annual and save 2 months free ($${ANNUAL_SAVINGS}/year).\n\nSwitch now: ${upgradeUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 

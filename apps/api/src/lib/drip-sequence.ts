@@ -17,6 +17,7 @@ import {
   sendDay3InsightTeaserEmail,
   sendDay5SocialProofEmail,
   sendDay7ProOfferEmail,
+  sendAnnualUpgradeEmail,
 } from '../services/email.js'
 import { getArchetypeMetadata, getTopBigFiveTrait } from './archetypes.js'
 
@@ -160,6 +161,76 @@ async function sendDripEmail(user: UserRecord, emailType: DripEmailType): Promis
 
   console.info(`[drip] Sent ${emailType} to ${user.id}`)
   return { userId: user.id, emailType, sent: true }
+}
+
+// ─── Annual Conversion Sequence ───────────────────────────────────────────────
+// Targets monthly subscribers at Day 14, 21, 30 after firstPaidAt.
+// Email types: annual_day14, annual_day21, annual_day30
+// Skips users already on annual or who have cancelled.
+
+const ANNUAL_CONVERSION_DAYS = [
+  { emailType: 'annual_day14', offsetHours: 14 * 24, maxOffsetHours: 17 * 24 },
+  { emailType: 'annual_day21', offsetHours: 21 * 24, maxOffsetHours: 24 * 24 },
+  { emailType: 'annual_day30', offsetHours: 30 * 24, maxOffsetHours: 35 * 24 },
+] as const
+
+type AnnualEmailType = 'annual_day14' | 'annual_day21' | 'annual_day30'
+
+export async function processAnnualConversionEmails(): Promise<{ processed: number; sent: number; errors: number }> {
+  const now = new Date()
+  let processed = 0
+  let sent = 0
+  let errors = 0
+
+  for (const { emailType, offsetHours, maxOffsetHours } of ANNUAL_CONVERSION_DAYS) {
+    const minFirstPaidAt = new Date(now.getTime() - maxOffsetHours * 60 * 60 * 1000)
+    const maxFirstPaidAt = new Date(now.getTime() - offsetHours * 60 * 60 * 1000)
+
+    // Find monthly subscribers in the eligibility window who haven't received this email
+    const eligible = await prisma.user.findMany({
+      where: {
+        firstPaidAt: { gte: minFirstPaidAt, lte: maxFirstPaidAt },
+        subscriptionInterval: 'monthly',
+        subscriptionTier: { in: ['essential', 'pro'] },
+        emailDigestOptIn: true,
+        onboardingEmails: { none: { emailType } },
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        firstPaidAt: true,
+      },
+    })
+
+    for (const user of eligible) {
+      processed++
+      try {
+        const daysSinceSubscribed = user.firstPaidAt
+          ? Math.floor((now.getTime() - user.firstPaidAt.getTime()) / (1000 * 60 * 60 * 24))
+          : offsetHours / 24
+
+        await sendAnnualUpgradeEmail(
+          user.email,
+          user.name,
+          daysSinceSubscribed,
+          `${WEB_URL}/upgrade?ref=annual_email`,
+        )
+
+        await prisma.onboardingEmail.create({
+          data: { userId: user.id, emailType },
+        })
+
+        console.info(`[drip] Sent ${emailType} to ${user.id}`)
+        sent++
+      } catch (err) {
+        errors++
+        console.error(`[drip] Failed to send ${emailType} to ${user.id}:`, err)
+      }
+    }
+  }
+
+  return { processed, sent, errors }
 }
 
 // Call this when a user upgrades to Pro to suppress all unsent drip emails.
