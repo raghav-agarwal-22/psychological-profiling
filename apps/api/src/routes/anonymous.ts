@@ -134,44 +134,44 @@ export async function anonymousRoutes(server: FastifyInstance) {
     const dimensionScores = computeScores(responseMap, scoringConfig)
     const templateType = template.type
 
-    // Generate AI narrative and reflection prompts in parallel to halve LLM wait time
+    // Kick off reflection prompts immediately so they run in parallel with narrative generation.
+    const hasLlm = Object.keys(dimensionScores).length > 0 && !!process.env.ANTHROPIC_API_KEY
+    const reflectionPromptsPromise = hasLlm
+      ? generateReflectionPrompts(dimensionScores, templateType).catch((err: unknown) => {
+          server.log.warn({ err }, 'Anon reflection prompt generation failed — skipping')
+          return [] as string[]
+        })
+      : Promise.resolve([] as string[])
+
     let narrative: ProfileNarrative | null = null
     let valuesNarrative: ValuesNarrative | null = null
     let attachmentNarrative: AttachmentNarrative | null = null
     let triadNarrative: TriadNarrative | null = null
     let enneagramNarrative: EnneagramNarrative | null = null
     let jungianNarrative: JungianNarrative | null = null
-    let reflectionPrompts: string[] = []
 
-    if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
-      const narrativePromise = (async () => {
-        try {
-          if (templateType === AssessmentType.ATTACHMENT_STYLE) {
-            attachmentNarrative = await generateAttachmentNarrative(dimensionScores)
-          } else if (templateType === AssessmentType.VALUES_INVENTORY) {
-            valuesNarrative = await generateValuesNarrative(dimensionScores)
-          } else if (templateType === AssessmentType.LIGHT_DARK_TRIAD) {
-            triadNarrative = await generateTriadNarrative(dimensionScores)
-          } else if (templateType === AssessmentType.ENNEAGRAM) {
-            enneagramNarrative = await generateEnneagramNarrative(dimensionScores)
-          } else if (templateType === AssessmentType.JUNGIAN_ARCHETYPES) {
-            jungianNarrative = await generateJungianNarrative(dimensionScores)
-          } else {
-            narrative = await generateProfileNarrative(dimensionScores)
-          }
-        } catch (err) {
-          server.log.warn({ err }, 'Anon AI profile generation failed — storing numeric scores only')
+    if (hasLlm) {
+      try {
+        if (templateType === AssessmentType.ATTACHMENT_STYLE) {
+          attachmentNarrative = await generateAttachmentNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.VALUES_INVENTORY) {
+          valuesNarrative = await generateValuesNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.LIGHT_DARK_TRIAD) {
+          triadNarrative = await generateTriadNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.ENNEAGRAM) {
+          enneagramNarrative = await generateEnneagramNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.JUNGIAN_ARCHETYPES) {
+          jungianNarrative = await generateJungianNarrative(dimensionScores)
+        } else {
+          narrative = await generateProfileNarrative(dimensionScores)
         }
-      })()
-
-      const reflectionPromise = generateReflectionPrompts(dimensionScores, templateType).catch((err) => {
-        server.log.warn({ err }, 'Anon reflection prompt generation failed — skipping')
-        return [] as string[]
-      })
-
-      const [, prompts] = await Promise.all([narrativePromise, reflectionPromise])
-      reflectionPrompts = prompts
+      } catch (err) {
+        server.log.warn({ err }, 'Anon AI profile generation failed — storing numeric scores only')
+      }
     }
+
+    // Await reflection prompts — should already be done or nearly done
+    const reflectionPrompts = await reflectionPromptsPromise
 
     // Build profile fields
     let summary: string
