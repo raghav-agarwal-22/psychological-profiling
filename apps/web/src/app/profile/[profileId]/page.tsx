@@ -44,6 +44,18 @@ interface RawOutput {
     integrationGuidance?: string
     atBest?: string[]
     watchFor?: string[]
+    // Enneagram fields
+    primaryType?: number
+    wing?: number
+    typeName?: string
+    wingName?: string
+    coreFear?: string
+    coreDesire?: string
+    coreWound?: string
+    growthPath?: string
+    stressArrow?: number
+    securityArrow?: number
+    atWorst?: string[]
   }
 }
 
@@ -478,10 +490,12 @@ export default function ProfilePage() {
   const isValuesProfile = profile.rawOutput?.templateType === 'VALUES_INVENTORY'
   const isAttachmentProfile = profile.rawOutput?.templateType === 'ATTACHMENT_STYLE'
   const isTriadProfile = profile.rawOutput?.templateType === 'LIGHT_DARK_TRIAD'
+  const isEnneagramProfile = profile.rawOutput?.templateType === 'ENNEAGRAM'
   const valuesNarrative = profile.rawOutput?.narrative
   const attachmentStyle = isAttachmentProfile ? (profile.archetypes[0] ?? null) : null
   const attachmentNarrative = isAttachmentProfile ? profile.rawOutput?.narrative : null
   const triadNarrative = isTriadProfile ? profile.rawOutput?.narrative : null
+  const enneagramNarrative = isEnneagramProfile ? profile.rawOutput?.narrative : null
   const dimensionEntries = Object.entries(profile.dimensions)
 
   // For values profiles: sort dimensions by score descending
@@ -496,7 +510,24 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Header */}
-      {isTriadProfile ? (
+      {isEnneagramProfile ? (
+        <div className="mb-10 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/10 ring-1 ring-violet-500/20">
+            <span className="text-3xl">◑</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">
+            {enneagramNarrative?.typeName
+              ? `Type ${enneagramNarrative.primaryType}: ${enneagramNarrative.typeName}`
+              : profile.archetypes[0] ?? 'Enneagram'}
+          </h1>
+          {enneagramNarrative?.wing && enneagramNarrative?.wingName && (
+            <p className="mt-1 text-stone-500">
+              with a {enneagramNarrative.wing} wing — {enneagramNarrative.wingName}
+            </p>
+          )}
+          <p className="mt-2 text-stone-600 text-sm">Enneagram of Personality</p>
+        </div>
+      ) : isTriadProfile ? (
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500/10 to-rose-500/10 ring-1 ring-stone-700/30">
             <span className="text-3xl">◐</span>
@@ -554,7 +585,7 @@ export default function ProfilePage() {
       {/* Summary */}
       <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
         <h2 className="mb-3 font-serif text-xl text-stone-200">
-          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : isTriadProfile ? 'Your spectrum portrait' : 'Your narrative'}
+          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : isTriadProfile ? 'Your spectrum portrait' : isEnneagramProfile ? 'Your type portrait' : 'Your narrative'}
         </h2>
         <p className="text-stone-400 leading-relaxed">{profile.summary}</p>
         {isValuesProfile && valuesNarrative?.narrative && (
@@ -565,6 +596,28 @@ export default function ProfilePage() {
         )}
         {isTriadProfile && triadNarrative?.interpretation && (
           <p className="mt-4 text-stone-400 leading-relaxed">{triadNarrative.interpretation}</p>
+        )}
+        {isEnneagramProfile && (enneagramNarrative?.coreFear || enneagramNarrative?.coreDesire) && (
+          <div className="mt-5 space-y-2 rounded-xl bg-stone-800/40 p-4">
+            {enneagramNarrative.coreFear && (
+              <div className="flex gap-3">
+                <span className="shrink-0 text-xs font-semibold uppercase tracking-wider text-rose-500 pt-0.5 w-20">Core Fear</span>
+                <span className="text-sm text-stone-400">{enneagramNarrative.coreFear}</span>
+              </div>
+            )}
+            {enneagramNarrative.coreDesire && (
+              <div className="flex gap-3">
+                <span className="shrink-0 text-xs font-semibold uppercase tracking-wider text-violet-400 pt-0.5 w-20">Core Desire</span>
+                <span className="text-sm text-stone-400">{enneagramNarrative.coreDesire}</span>
+              </div>
+            )}
+            {enneagramNarrative.coreWound && (
+              <div className="flex gap-3">
+                <span className="shrink-0 text-xs font-semibold uppercase tracking-wider text-stone-500 pt-0.5 w-20">Core Wound</span>
+                <span className="text-sm text-stone-400">{enneagramNarrative.coreWound}</span>
+              </div>
+            )}
+          </div>
         )}
       </div>
 
@@ -605,6 +658,26 @@ export default function ProfilePage() {
               )
             })}
           </div>
+        </div>
+      )}
+
+      {/* Enneagram growth path */}
+      {isEnneagramProfile && enneagramNarrative?.growthPath && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-3 font-serif text-xl text-stone-200">Growth path</h2>
+          <p className="text-stone-400 leading-relaxed">{enneagramNarrative.growthPath}</p>
+          {enneagramNarrative.stressArrow && enneagramNarrative.securityArrow && (
+            <div className="mt-4 flex gap-6">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-rose-500" />
+                <span className="text-xs text-stone-500">Stress → Type {enneagramNarrative.stressArrow}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="text-xs text-stone-500">Security → Type {enneagramNarrative.securityArrow}</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -697,7 +770,7 @@ export default function ProfilePage() {
       )}
 
       {/* Big Five scores */}
-      {!isValuesProfile && !isAttachmentProfile && !isTriadProfile && dimensionEntries.length > 0 && (
+      {!isValuesProfile && !isAttachmentProfile && !isTriadProfile && !isEnneagramProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
           <h2 className="mb-5 font-serif text-xl text-stone-200">Personality dimensions</h2>
           <div className="space-y-4">
