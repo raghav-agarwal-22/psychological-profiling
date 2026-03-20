@@ -16,6 +16,8 @@ import { Day7ProOfferEmail } from '../emails/Day7ProOfferEmail.js'
 import { WeeklyGrowthChallengeEmail } from '../emails/WeeklyGrowthChallengeEmail.js'
 import { AnnualUpgradeEmail } from '../emails/AnnualUpgradeEmail.js'
 import { Day30ReAssessmentEmail } from '../emails/Day30ReAssessmentEmail.js'
+import { MilestoneJournalEmail } from '../emails/MilestoneJournalEmail.js'
+import { MilestoneShareEmail } from '../emails/MilestoneShareEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -591,5 +593,70 @@ export async function sendReferralInviteEmail(
     subject: `${senderName} invited you to Innermind — 1 month Pro free`,
     html,
     text: `${senderName} invited you to Innermind.\n\nTake 5 psychology assessments and get an AI-synthesized portrait of who you are. You'll both get 1 month Pro free when you complete your first assessment.\n\nJoin here: ${referralUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Milestone: 3rd Journal Entry ─────────────────────────────────────────────
+
+export async function sendMilestoneJournalEmail(
+  toEmail: string,
+  userName: string | null,
+  archetypeName: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — milestone_journal_3 to ${toEmail}`)
+    return
+  }
+
+  const webUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
+  const insightsUrl = `${webUrl}/insights`
+
+  const html = await render(
+    React.createElement(MilestoneJournalEmail, { userName, archetypeName, insightsUrl }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: toEmail,
+    subject: 'You have been reflecting — here is what we noticed',
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYou just wrote your third journal entry. As a ${archetypeName}, reflection is how you integrate experience.\n\nSee your growth chart: ${insightsUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Milestone: First Profile Share ───────────────────────────────────────────
+
+export async function sendMilestoneShareEmail(
+  toEmail: string,
+  userName: string | null,
+  archetypeName: string,
+  topTraits: string[],
+  shareToken: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — milestone_share_first to ${toEmail}`)
+    return
+  }
+
+  const webUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
+  const assessmentUrl = `${webUrl}/assessment`
+  const profileUrl = `${webUrl}/p/${shareToken}`
+
+  const html = await render(
+    React.createElement(MilestoneShareEmail, {
+      userName,
+      archetypeName,
+      topTraits,
+      assessmentUrl,
+      profileUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: toEmail,
+    subject: 'Your profile is live — here is what makes you unique',
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour psychological portrait is now public. Top traits: ${topTraits.slice(0, 3).join(', ')}.\n\nExplore more assessments: ${assessmentUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }

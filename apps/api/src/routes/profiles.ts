@@ -3,6 +3,7 @@ import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { computeDimensionProgress } from '../lib/profile-generator.js'
 import { randomUUID } from 'crypto'
+import { sendMilestoneShareEmail } from '../services/email.js'
 
 export async function profileRoutes(server: FastifyInstance) {
   server.addHook('preHandler', requireAuth)
@@ -119,6 +120,40 @@ export async function profileRoutes(server: FastifyInstance) {
 
       const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
       const shareUrl = updated.shareToken ? `${webUrl}/p/${updated.shareToken}` : null
+
+      // Fire milestone email on first share (fire-and-forget)
+      if (makePublic && updated.shareToken) {
+        const token = updated.shareToken
+        ;(async () => {
+          const alreadySent = await prisma.onboardingEmail.findUnique({
+            where: { userId_emailType: { userId: req.user.userId, emailType: 'milestone_share_first' } },
+          })
+          if (alreadySent) return
+          const user = await prisma.user.findUnique({
+            where: { id: req.user.userId },
+            select: {
+              email: true,
+              name: true,
+              profiles: {
+                where: { isLatest: true },
+                take: 1,
+                select: { archetypes: true, dimensions: true },
+              },
+            },
+          })
+          if (!user) return
+          const profile = user.profiles[0]
+          const archetypeName = (profile?.archetypes as Array<{ name: string }> | null)?.[0]?.name ?? 'your archetype'
+          const topTraits: string[] = (profile?.dimensions as Array<{ name: string; score: number }> | null)
+            ?.sort((a, b) => b.score - a.score)
+            .slice(0, 3)
+            .map((d) => d.name) ?? []
+          await prisma.onboardingEmail.create({
+            data: { userId: req.user.userId, emailType: 'milestone_share_first' },
+          })
+          await sendMilestoneShareEmail(user.email, user.name, archetypeName, topTraits, token)
+        })().catch((err) => console.error('[milestone] share_first error:', err))
+      }
 
       return reply.send({
         profile: {
