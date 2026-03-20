@@ -123,12 +123,12 @@ export default function AffiliatePage() {
             or inner work — you already know exactly who to share it with.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href="https://innermind.app/affiliates/apply"
+            <Link
+              href="/affiliates/apply"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-medium text-stone-900 transition-colors hover:bg-amber-400"
             >
               Apply to the program
-            </a>
+            </Link>
             <a
               href="#how-it-works"
               className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-8 py-3.5 text-sm font-medium text-stone-300 hover:border-stone-500 hover:text-stone-100"
@@ -138,6 +138,10 @@ export default function AffiliatePage() {
           </div>
           <p className="mt-4 text-[11px] text-stone-600">
             Free to join &nbsp;·&nbsp; 90-day cookie window &nbsp;·&nbsp; Paid monthly via Stripe
+            &nbsp;·&nbsp;{' '}
+            <Link href="/affiliates/dashboard" className="text-stone-500 hover:text-stone-400 underline underline-offset-2">
+              Affiliate login →
+            </Link>
           </p>
         </div>
       </section>
@@ -331,17 +335,17 @@ export default function AffiliatePage() {
             Applications are reviewed within 24 hours. Once approved, you get your link instantly.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href="https://innermind.app/affiliates/apply"
+            <Link
+              href="/affiliates/apply"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-medium text-stone-900 transition-colors hover:bg-amber-400"
             >
               Apply to the program
-            </a>
+            </Link>
             <Link
-              href="/for-professionals"
+              href="/affiliates/dashboard"
               className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-8 py-3.5 text-sm font-medium text-stone-300 hover:border-stone-500 hover:text-stone-100"
             >
-              Use Innermind with clients instead
+              View your dashboard →
             </Link>
           </div>
           <p className="mt-4 text-[11px] text-stone-600">
