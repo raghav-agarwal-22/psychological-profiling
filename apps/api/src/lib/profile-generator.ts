@@ -183,6 +183,67 @@ export interface FrameworkContext {
   summary?: string
 }
 
+// The 5 core portrait dimensions in order
+const CORE_DIMENSIONS = [
+  'BIG_FIVE',
+  'JUNGIAN_ARCHETYPES',
+  'ATTACHMENT_STYLE',
+  'ENNEAGRAM',
+  'VALUES_INVENTORY',
+] as const
+
+const DIMENSION_NAMES: Record<string, string> = {
+  BIG_FIVE: 'Personality Foundation',
+  JUNGIAN_ARCHETYPES: 'Identity & Myth',
+  ATTACHMENT_STYLE: 'Relationship Blueprint',
+  ENNEAGRAM: 'Core Motivation',
+  VALUES_INVENTORY: 'Purpose & Ethics',
+}
+
+export function computeDimensionProgress(completedTypes: string[]): {
+  count: number
+  total: number
+  completed: string[]
+  nextRecommended: string | null
+  qualityLabel: string
+  qualityTier: 'nascent' | 'developing' | 'complete'
+} {
+  const completed = CORE_DIMENSIONS.filter((d) => completedTypes.includes(d))
+  const count = completed.length
+  const nextRecommended = CORE_DIMENSIONS.find((d) => !completed.includes(d)) ?? null
+
+  let qualityLabel: string
+  let qualityTier: 'nascent' | 'developing' | 'complete'
+  if (count <= 2) {
+    qualityLabel = `Portrait based on ${count} dimension${count === 1 ? '' : 's'}`
+    qualityTier = 'nascent'
+  } else if (count <= 4) {
+    qualityLabel = `Richer portrait — ${count} of 5 dimensions`
+    qualityTier = 'developing'
+  } else {
+    qualityLabel = 'Complete portrait — all dimensions active'
+    qualityTier = 'complete'
+  }
+
+  return { count, total: 5, completed: [...completed], nextRecommended, qualityLabel, qualityTier }
+}
+
+function getDimensionAwareSynthesisInstruction(dimensionCount: number): string {
+  switch (dimensionCount) {
+    case 1:
+      return `You have this person's Big Five personality profile. Generate a portrait that captures their core personality architecture. This is their first dimension — acknowledge what would deepen with additional assessments (Jungian archetypes, attachment style, Enneagram, values), but do not let that acknowledgment overshadow the depth you can provide from this framework alone.`
+    case 2:
+      return `Cross-reference the Big Five traits with the Jungian archetypes present. E.g. high openness + Explorer archetype = coherent wanderer; high conscientiousness + Ruler archetype = potential perfectionist tension. Weave both together into a unified portrait. The synthesis should feel noticeably richer than a single-framework profile.`
+    case 3:
+      return `Add the relational layer to the personality and archetypal picture. How does their attachment style manifest given their personality traits and archetypal identity? E.g. anxious attachment + Lover archetype creates a specific vulnerability pattern. The portrait should now address who they are, how they see themselves, and how they connect with others.`
+    case 4:
+      return `Add motivational depth. What is the fear/desire engine (Enneagram) behind the personality, archetypes, and attachment pattern? Look for coherence and tension across all four frameworks. The synthesis should feel substantially deeper — addressing not just who they are and how they connect, but what drives them at a fundamental level.`
+    case 5:
+    default:
+      return `Full synthesis: Big Five (traits) × Jungian (identity) × Attachment (relationships) × Enneagram (motivation) × Values (purpose). Identify the single through-line that unifies all five frameworks. Name what is uniquely true about this person that could not be said from fewer frameworks. This is the complete portrait — make it feel like genuine self-knowledge, the kind that could only emerge from seeing someone this fully.`
+  }
+}
+
 const SYNTHESIS_SYSTEM_PROMPT = `You are a wise psychological counselor with deep knowledge of personality science, values theory, and humanistic psychology. You have access to a person's results across multiple psychological frameworks and your task is to weave them into a single, coherent self-portrait.
 
 Your synthesis should:
@@ -207,7 +268,8 @@ export async function generateCrossFrameworkSynthesis(
     return `## ${f.title}\n${scoreLines}${f.summary ? `\n\nSummary: ${f.summary}` : ''}`
   })
 
-  const userMessage = `Here are the psychological assessment results for this person across ${frameworks.length} framework${frameworks.length > 1 ? 's' : ''}:\n\n${sections.join('\n\n')}\n\nWrite a cross-framework synthesis — a single, flowing narrative that integrates all of these frameworks into one coherent self-portrait for this person.`
+  const dimensionInstruction = getDimensionAwareSynthesisInstruction(frameworks.length)
+  const userMessage = `Here are the psychological assessment results for this person across ${frameworks.length} framework${frameworks.length > 1 ? 's' : ''}:\n\n${sections.join('\n\n')}\n\nInstructions for this synthesis (${frameworks.length} of 5 dimensions): ${dimensionInstruction}\n\nWrite the synthesis now — a single, flowing narrative that integrates all of these frameworks into one coherent self-portrait for this person.`
 
   if (onChunk) {
     // Streaming mode

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { computeDimensionProgress } from '../lib/profile-generator.js'
 import { randomUUID } from 'crypto'
 
 export async function profileRoutes(server: FastifyInstance) {
@@ -8,13 +9,21 @@ export async function profileRoutes(server: FastifyInstance) {
 
   // GET /api/profiles — get the user's latest profile
   server.get('/', async (req, reply) => {
-    const profile = await prisma.profile.findFirst({
-      where: { userId: req.user.userId, isLatest: true },
-    })
+    const [profile, assessments] = await Promise.all([
+      prisma.profile.findFirst({
+        where: { userId: req.user.userId, isLatest: true },
+      }),
+      prisma.assessment.findMany({
+        where: { userId: req.user.userId, status: 'COMPLETED' },
+        select: { type: true },
+        distinct: ['type'],
+      }),
+    ])
     if (!profile) {
       return reply.status(404).send({ error: 'No profile found. Complete an assessment first.' })
     }
-    return reply.send({ profile })
+    const dimensionProgress = computeDimensionProgress(assessments.map((a) => a.type))
+    return reply.send({ profile, dimensionProgress })
   })
 
   // GET /api/profiles/history — get all profile versions
@@ -67,13 +76,21 @@ export async function profileRoutes(server: FastifyInstance) {
 
   // GET /api/profiles/:id — get a specific profile version
   server.get<{ Params: { id: string } }>('/:id', async (req, reply) => {
-    const profile = await prisma.profile.findFirst({
-      where: { id: req.params.id, userId: req.user.userId },
-    })
+    const [profile, assessments] = await Promise.all([
+      prisma.profile.findFirst({
+        where: { id: req.params.id, userId: req.user.userId },
+      }),
+      prisma.assessment.findMany({
+        where: { userId: req.user.userId, status: 'COMPLETED' },
+        select: { type: true },
+        distinct: ['type'],
+      }),
+    ])
     if (!profile) {
       return reply.status(404).send({ error: 'Profile not found' })
     }
-    return reply.send({ profile })
+    const dimensionProgress = computeDimensionProgress(assessments.map((a) => a.type))
+    return reply.send({ profile, dimensionProgress })
   })
 
   // PATCH /api/profiles/:id/share — toggle public sharing for a profile

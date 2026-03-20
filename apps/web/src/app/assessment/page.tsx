@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { posthog } from '@/lib/posthog'
+import { DimensionsProgress, type DimensionProgressData } from '@/components/DimensionsProgress'
 
 interface Template {
   id: string
@@ -47,6 +49,7 @@ export default function AssessmentPage() {
   const [starting, setStarting] = useState<string | null>(null)
   const [startError, setStartError] = useState<string | null>(null)
   const [isAnon, setIsAnon] = useState(false)
+  const [dimensionProgress, setDimensionProgress] = useState<DimensionProgressData | null>(null)
 
   useEffect(() => {
     const token = getToken()
@@ -58,6 +61,16 @@ export default function AssessmentPage() {
       .then((d) => setTemplates(d.templates))
       .catch(() => {})
       .finally(() => setLoading(false))
+
+    // Load dimension progress for authenticated users
+    if (token) {
+      api
+        .get<{ profile: unknown; dimensionProgress: DimensionProgressData }>('/api/profiles', token)
+        .then((d) => {
+          if (d.dimensionProgress) setDimensionProgress(d.dimensionProgress)
+        })
+        .catch(() => {})
+    }
   }, [])
 
   async function startAnonymousAssessment(template: Template) {
@@ -146,6 +159,79 @@ export default function AssessmentPage() {
           </p>
         )}
       </div>
+
+      {/* Continue Your Portrait — shown for returning authenticated users */}
+      {!isAnon && dimensionProgress && dimensionProgress.count > 0 && dimensionProgress.count < dimensionProgress.total && (() => {
+        const NEXT_DIMENSION_META: Record<string, { title: string; subtitle: string; cta: string; templateType: string }> = {
+          JUNGIAN_ARCHETYPES: {
+            title: 'Jungian Archetypes',
+            subtitle: 'Add your archetypal identity layer to see how your personality connects to deeper mythic patterns.',
+            cta: 'Add Identity & Myth',
+            templateType: 'JUNGIAN_ARCHETYPES',
+          },
+          ATTACHMENT_STYLE: {
+            title: 'Attachment Style',
+            subtitle: 'See how your personality shapes your closest connections — and what patterns emerge under stress.',
+            cta: 'Add Relationship Blueprint',
+            templateType: 'ATTACHMENT_STYLE',
+          },
+          ENNEAGRAM: {
+            title: 'Enneagram',
+            subtitle: 'Reveal the fear and desire engine beneath your personality — the motivation behind everything you do.',
+            cta: 'Add Core Motivation',
+            templateType: 'ENNEAGRAM',
+          },
+          VALUES_INVENTORY: {
+            title: 'Values Inventory',
+            subtitle: 'Complete your portrait with a values deep-dive — the non-negotiables that define your purpose.',
+            cta: 'Add Purpose & Ethics',
+            templateType: 'VALUES_INVENTORY',
+          },
+        }
+        const nextMeta = dimensionProgress.nextRecommended ? NEXT_DIMENSION_META[dimensionProgress.nextRecommended] : null
+        return (
+          <div className="mb-8 rounded-xl border border-indigo-500/20 bg-indigo-950/20 p-5">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h2 className="text-base font-semibold text-stone-200">Continue Your Portrait</h2>
+                <p className="text-sm text-stone-400 mt-0.5">
+                  You&apos;ve unlocked{' '}
+                  <span className="text-indigo-400 font-medium">{dimensionProgress.count} of {dimensionProgress.total} dimensions</span>.
+                </p>
+              </div>
+              <Link
+                href="/profile/latest"
+                className="shrink-0 text-xs text-stone-500 hover:text-stone-300 transition-colors"
+              >
+                View portrait →
+              </Link>
+            </div>
+
+            <DimensionsProgress progress={dimensionProgress} compact className="mb-4" />
+
+            {nextMeta && (() => {
+              const nextTemplate = templates.find((t) => t.type === nextMeta.templateType)
+              return nextTemplate ? (
+                <div className="rounded-lg border border-indigo-500/10 bg-stone-900/40 p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-medium text-stone-200">Next recommended: {nextMeta.title}</p>
+                      <p className="text-xs text-stone-400 mt-1 leading-relaxed">{nextMeta.subtitle}</p>
+                    </div>
+                    <button
+                      onClick={() => handleBegin(nextTemplate)}
+                      disabled={starting === nextTemplate.id}
+                      className="shrink-0 rounded-lg bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
+                    >
+                      {starting === nextTemplate.id ? 'Starting…' : nextMeta.cta}
+                    </button>
+                  </div>
+                </div>
+              ) : null
+            })()}
+          </div>
+        )
+      })()}
 
       {startError && (
         <p className="mb-4 rounded-xl border border-red-800/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">{startError}</p>
