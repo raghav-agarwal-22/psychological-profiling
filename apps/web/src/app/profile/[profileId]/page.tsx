@@ -181,6 +181,15 @@ export default function ProfilePage() {
   const [copied, setCopied] = useState(false)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
 
+  // History / retake state
+  interface HistoryProfile {
+    id: string
+    summary: string
+    dimensions: Record<string, DimensionScore>
+    generatedAt: string
+  }
+  const [historyProfiles, setHistoryProfiles] = useState<HistoryProfile[]>([])
+
   // Compare modal
   const [showCompareModal, setShowCompareModal] = useState(false)
   const [comparingShare, setComparingShare] = useState(false)
@@ -248,6 +257,22 @@ export default function ProfilePage() {
       .then((d) => {
         // Filter to entries for this specific profile (after profile loads we'll filter)
         setSavedEntries(d.entries)
+      })
+      .catch(() => {})
+
+    // Load profile history for retake delta (loaded after profile resolves)
+    api
+      .get<{ profile: Profile }>(endpoint, token)
+      .then((d) => {
+        const templateType = d.profile?.rawOutput?.templateType
+        if (templateType) {
+          const tok = getToken()
+          if (!tok) return
+          api
+            .get<{ profiles: HistoryProfile[] }>(`/api/profiles/history/by-type?type=${encodeURIComponent(templateType)}`, tok)
+            .then((h) => setHistoryProfiles(h.profiles))
+            .catch(() => {})
+        }
       })
       .catch(() => {})
 
@@ -1078,13 +1103,70 @@ export default function ProfilePage() {
         )
       })()}
 
+      {/* History: Changes since last assessment */}
+      {historyProfiles.length > 1 && (() => {
+        const current = historyProfiles[0]
+        const previous = historyProfiles[1]
+        if (!current || !previous) return null
+
+        const deltas: Array<{ dim: string; delta: number }> = []
+        for (const [key, currScore] of Object.entries(current.dimensions)) {
+          const prevScore = previous.dimensions[key]
+          if (prevScore !== undefined) {
+            const d = Math.round((currScore.normalized - prevScore.normalized) * 100)
+            deltas.push({ dim: key, delta: d })
+          }
+        }
+        const hasChanges = deltas.some((d) => d.delta !== 0)
+
+        return (
+          <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+            <h2 className="mb-1 font-serif text-xl text-stone-200">Changes since last assessment</h2>
+            <p className="mb-5 text-xs text-stone-500">
+              Compared to your assessment on{' '}
+              {new Date(previous.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </p>
+            {!hasChanges ? (
+              <p className="text-sm text-stone-500 italic">No significant changes detected.</p>
+            ) : (
+              <div className="space-y-3">
+                {deltas.map(({ dim, delta }) => {
+                  const label = dim.charAt(0).toUpperCase() + dim.slice(1).replace(/_/g, ' ')
+                  const positive = delta > 0
+                  const neutral = delta === 0
+                  return (
+                    <div key={dim} className="flex items-center justify-between gap-4">
+                      <span className="text-sm text-stone-400">{label}</span>
+                      <span
+                        className={`text-sm font-semibold tabular-nums ${
+                          neutral
+                            ? 'text-stone-500'
+                            : positive
+                              ? 'text-emerald-400'
+                              : 'text-rose-400'
+                        }`}
+                      >
+                        {neutral ? '— 0' : positive ? `▲ +${delta}` : `▼ ${delta}`}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            <p className="mt-4 text-xs text-stone-600">
+              {historyProfiles.length} assessment{historyProfiles.length !== 1 ? 's' : ''} total for this framework
+            </p>
+          </div>
+        )
+      })()}
+
       {/* CTA */}
       <div className="flex flex-wrap items-center justify-center gap-4">
         <Link
-          href="/assessment"
+          href={`/assessment${profile.rawOutput?.templateType ? `?type=${encodeURIComponent(profile.rawOutput.templateType)}` : ''}`}
           className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
         >
-          Retake assessment
+          Retake this assessment
         </Link>
         <button
           onClick={handleShare}
