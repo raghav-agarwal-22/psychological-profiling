@@ -44,15 +44,15 @@ export async function sendMagicLink(email: string, magicLinkUrl: string): Promis
     return
   }
 
-  const html = await render(
-    React.createElement(MagicLinkEmail, {
-      magicLinkUrl,
-      productName: PRODUCT_NAME,
-      tagline: TAGLINE,
-    }),
-  )
-
   try {
+    const html = await render(
+      React.createElement(MagicLinkEmail, {
+        magicLinkUrl,
+        productName: PRODUCT_NAME,
+        tagline: TAGLINE,
+      }),
+    )
+
     await getResend().emails.send({
       from: FROM_ADDRESS,
       to: email,

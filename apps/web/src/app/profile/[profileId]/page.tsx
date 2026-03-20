@@ -353,7 +353,11 @@ export default function ProfilePage() {
 
       const reader = res.body?.getReader()
       const decoder = new TextDecoder()
-      if (!reader) return
+      if (!reader) {
+        setSynthesisError('Failed to generate synthesis. Please try again.')
+        setSynthesis(null)
+        return
+      }
 
       let text = ''
       // eslint-disable-next-line no-constant-condition
@@ -362,8 +366,20 @@ export default function ProfilePage() {
         if (done) break
         const chunk = decoder.decode(value, { stream: true })
         text += chunk
+        // Check for error sentinel written by server on streaming failure
+        if (text.startsWith('\x00ERROR:')) {
+          setSynthesisError(text.slice(7) || 'Failed to generate synthesis. Please try again.')
+          setSynthesis(null)
+          return
+        }
         setSynthesis(text)
         synthesisRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+
+      if (!text) {
+        setSynthesisError('Failed to generate synthesis. Please try again.')
+        setSynthesis(null)
+        return
       }
 
       setSynthesisGeneratedAt(new Date().toISOString())

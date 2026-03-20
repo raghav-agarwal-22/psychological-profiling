@@ -235,6 +235,12 @@ export async function userRoutes(server: FastifyInstance) {
       return { type: templateType, title, scores: dims, summary: p.summary }
     })
 
+    // Guard: API key must be set and non-placeholder before we stream
+    const apiKey = process.env.ANTHROPIC_API_KEY
+    if (!apiKey || apiKey === 'placeholder' || apiKey.startsWith('sk-ant-placeholder')) {
+      return reply.status(503).send({ error: 'AI synthesis is temporarily unavailable. Please try again later.' })
+    }
+
     // Hijack reply so Fastify doesn't interfere with raw streaming
     reply.hijack()
     const origin = req.headers.origin ?? '*'
@@ -250,18 +256,26 @@ export async function userRoutes(server: FastifyInstance) {
       fullText = await generateCrossFrameworkSynthesis(frameworks, (chunk) => {
         reply.raw.write(chunk)
       })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error'
+      server.log.error({ err, msg }, 'synthesis generation failed')
+      // Stream couldn't start cleanly — nothing written yet, or partially written.
+      // Write a sentinel so the client can detect the failure.
+      reply.raw.write('\x00ERROR:' + (msg.includes('API key') || msg.includes('authentication') ? 'AI synthesis is temporarily unavailable. Please try again later.' : 'Failed to generate synthesis. Please try again.'))
     } finally {
       reply.raw.end()
     }
 
-    // Persist synthesis to user record (fire-and-forget after streaming)
-    await prisma.user.update({
-      where: { id: req.user.userId },
-      data: {
-        synthesis: fullText,
-        synthesisGeneratedAt: new Date(),
-      },
-    })
+    // Only persist if we got actual text
+    if (fullText) {
+      await prisma.user.update({
+        where: { id: req.user.userId },
+        data: {
+          synthesis: fullText,
+          synthesisGeneratedAt: new Date(),
+        },
+      })
+    }
   })
 
   // ─── Journal ─────────────────────────────────────────────────────────────
