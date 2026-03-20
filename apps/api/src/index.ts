@@ -24,6 +24,7 @@ import { adaptiveRoutes } from './routes/adaptive.js'
 import { onboardingRoutes } from './routes/onboarding.js'
 import { affiliateRoutes } from './routes/affiliates.js'
 import { anonymousRoutes } from './routes/anonymous.js'
+import { dripRoutes, resendWebhookRoutes } from './routes/drip.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -95,6 +96,8 @@ await server.register(journalRoutes, { prefix: '/api/journal' })
 await server.register(adaptiveRoutes, { prefix: '/api/adaptive' })
 await server.register(affiliateRoutes, { prefix: '/api/affiliates' })
 await server.register(anonymousRoutes, { prefix: '/api/anon' })
+await server.register(dripRoutes, { prefix: '/api/drip' })
+await server.register(resendWebhookRoutes, { prefix: '/api/webhooks' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

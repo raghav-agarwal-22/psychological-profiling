@@ -4,6 +4,7 @@ import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { sendTrialEndingSoonEmail } from '../services/email.js'
 import { logAffiliateCommission } from './affiliates.js'
+import { suppressDripSequence } from '../lib/drip-sequence.js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
   apiVersion: '2026-02-25.clover',
@@ -202,6 +203,11 @@ export async function billingRoutes(server: FastifyInstance) {
           },
         })
 
+        // Suppress pending drip emails when user subscribes or starts trial
+        suppressDripSequence(userId).catch((err) =>
+          server.log.warn({ err }, '[drip] Failed to suppress drip sequence on upgrade'),
+        )
+
         if (isTrialing) {
           await capturePosthogEvent(userId, 'trial_started', {
             trial_end_at: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
@@ -289,7 +295,7 @@ export async function billingRoutes(server: FastifyInstance) {
     if (event.type === 'invoice.payment_failed') {
       const invoice = event.data.object as Stripe.Invoice
       const customerId = invoice.customer as string
-      const subscriptionId = invoice.subscription as string | null
+      const subscriptionId = (invoice as unknown as Record<string, unknown>)['subscription'] as string | null
       const attemptCount = (invoice as unknown as Record<string, unknown>)['attempt_count'] as number | undefined
       const user = await prisma.user.findUnique({
         where: { stripeCustomerId: customerId },
