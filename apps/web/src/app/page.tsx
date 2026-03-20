@@ -395,12 +395,4 @@ const PRICING = [
     cta: 'Start free →',
     featured: true,
   },
-  {
-    name: 'Teams',
-    price: '$49',
-    period: '/ month',
-    description: 'Pro for everyone on your team, plus shared compatibility maps and team insights.',
-    cta: 'Talk to us',
-    featured: false,
-  },
 ]
