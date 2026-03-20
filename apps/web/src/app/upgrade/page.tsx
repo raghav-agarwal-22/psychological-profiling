@@ -26,6 +26,8 @@ const PRO_FEATURES = [
   'Weekly digest email',
 ]
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
+
 function UpgradeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -52,7 +54,7 @@ function UpgradeContent() {
         return
       }
 
-      const res = await fetch('/api/billing/checkout', {
+      const res = await fetch(`${API_URL}/api/billing/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
