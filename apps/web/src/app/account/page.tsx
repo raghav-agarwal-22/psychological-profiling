@@ -21,6 +21,13 @@ interface DigestPrefs {
   lastDigestSentAt: string | null
 }
 
+interface ReferralData {
+  code: string
+  referralUrl: string
+  referralsCount: number
+  pendingRewards: number
+}
+
 const TIER_LABELS: Record<string, string> = {
   free: 'Free',
   essential: 'Essential',
@@ -39,6 +46,10 @@ export default function AccountPage() {
   const [portalLoading, setPortalLoading] = useState(false)
   const [portalError, setPortalError] = useState<string | null>(null)
   const [digestError, setDigestError] = useState<string | null>(null)
+  const [referral, setReferral] = useState<ReferralData | null>(null)
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [inviteState, setInviteState] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const token = getToken()
@@ -50,10 +61,12 @@ export default function AccountPage() {
     Promise.all([
       api.get<{ user: UserMe }>('/api/auth/me', token),
       api.get<DigestPrefs>('/api/users/me/digest-preferences', token),
+      api.get<ReferralData>('/api/referrals/my-link', token),
     ])
-      .then(([meRes, digestRes]) => {
+      .then(([meRes, digestRes, referralRes]) => {
         setUser(meRes.user)
         setDigestPrefs(digestRes)
+        setReferral(referralRes)
       })
       .catch(() => {
         router.replace('/auth/login?redirect=/account')
@@ -86,6 +99,27 @@ export default function AccountPage() {
     } catch {
       setDigestPrefs((prev) => prev ? { ...prev, emailDigestOptIn: !newValue } : prev)
       setDigestError('Failed to save preference. Please try again.')
+    }
+  }
+
+  async function handleCopyLink() {
+    if (!referral) return
+    await navigator.clipboard.writeText(referral.referralUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  async function handleInvite(e: React.FormEvent) {
+    e.preventDefault()
+    const token = getToken()
+    if (!token || !inviteEmail) return
+    setInviteState('loading')
+    try {
+      await api.post('/api/referrals/invite', { email: inviteEmail }, token)
+      setInviteState('sent')
+      setInviteEmail('')
+    } catch {
+      setInviteState('error')
     }
   }
 
@@ -227,6 +261,69 @@ export default function AccountPage() {
               />
             </button>
           </div>
+        </section>
+
+        {/* Referral Program */}
+        <section className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
+          <h2 className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">
+            Refer a Friend
+          </h2>
+          <p className="mb-4 text-sm text-stone-400">
+            Share your link — your friend gets a 14-day trial, and you both get 1 month Pro free when they subscribe.
+          </p>
+
+          {referral && (
+            <div className="space-y-4">
+              {/* Stats */}
+              {referral.referralsCount > 0 && (
+                <div className="flex gap-4">
+                  <div className="rounded-lg bg-stone-800 px-4 py-2 text-center">
+                    <p className="text-lg font-semibold text-stone-100">{referral.referralsCount}</p>
+                    <p className="text-xs text-stone-500">referred</p>
+                  </div>
+                  <div className="rounded-lg bg-stone-800 px-4 py-2 text-center">
+                    <p className="text-lg font-semibold text-amber-400">{referral.pendingRewards}</p>
+                    <p className="text-xs text-stone-500">converted</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Referral URL copy */}
+              <div className="flex items-center gap-2 rounded-lg border border-stone-700 bg-stone-800/50 p-3">
+                <code className="flex-1 truncate text-xs text-stone-400">{referral.referralUrl}</code>
+                <button
+                  onClick={handleCopyLink}
+                  className="shrink-0 rounded-md bg-stone-700 px-3 py-1.5 text-xs font-medium text-stone-200 transition-colors hover:bg-stone-600"
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+
+              {/* Email invite */}
+              <form onSubmit={handleInvite} className="flex gap-2">
+                <input
+                  type="email"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  placeholder="friend@example.com"
+                  className="flex-1 rounded-lg border border-stone-700 bg-stone-800 px-3 py-2 text-sm text-stone-100 placeholder-stone-600 focus:border-amber-500/50 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={inviteState === 'loading' || !inviteEmail}
+                  className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
+                >
+                  {inviteState === 'loading' ? 'Sending…' : 'Invite'}
+                </button>
+              </form>
+              {inviteState === 'sent' && (
+                <p className="text-xs text-green-400">Invite sent!</p>
+              )}
+              {inviteState === 'error' && (
+                <p className="text-xs text-red-400">Failed to send invite. Try again.</p>
+              )}
+            </div>
+          )}
         </section>
 
         {/* Danger Zone */}

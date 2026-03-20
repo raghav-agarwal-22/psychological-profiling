@@ -188,6 +188,8 @@ export default function ProfilePage() {
   const [copied, setCopied] = useState(false)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showNewProfileBanner, setShowNewProfileBanner] = useState(false)
+  const [referralUrl, setReferralUrl] = useState<string | null>(null)
+  const [referralCopied, setReferralCopied] = useState(false)
 
   // History / retake state
   interface HistoryProfile {
@@ -254,6 +256,12 @@ export default function ProfilePage() {
         // Show share nudge when arriving fresh from assessment completion
         if (searchParams?.get('new') === '1') {
           setShowNewProfileBanner(true)
+          // Fetch referral URL for incentive display (best-effort)
+          if (token) {
+            api.get<{ referralUrl: string }>('/api/referrals/my-link', token)
+              .then((r) => setReferralUrl(r.referralUrl))
+              .catch(() => {})
+          }
         }
         posthog.capture('profile_viewed', { profileId: d.profile?.id })
       })
@@ -726,6 +734,18 @@ export default function ProfilePage() {
               </svg>
               {sharing ? 'Generating link…' : 'Share your archetype'}
             </button>
+            {referralUrl && (
+              <button
+                onClick={async () => {
+                  await navigator.clipboard.writeText(referralUrl)
+                  setReferralCopied(true)
+                  setTimeout(() => setReferralCopied(false), 2000)
+                }}
+                className="flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-semibold text-amber-400 transition-colors hover:bg-amber-500/20"
+              >
+                🎁 {referralCopied ? 'Copied!' : 'Invite friends — earn 1 month free'}
+              </button>
+            )}
           </div>
         </div>
       )}

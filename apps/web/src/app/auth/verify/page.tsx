@@ -28,15 +28,20 @@ function VerifyContent() {
       .find((c) => c.startsWith('innermind_affiliate_ref='))
       ?.split('=')[1]
 
+    // Read user referral code from localStorage (set by /ref/[code] redirect page)
+    const userReferralCode = localStorage.getItem('innermind_referral_code') ?? undefined
+    const ref = affiliateRef ?? userReferralCode
+
     fetch(`${API_URL}/api/auth/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, ref: affiliateRef ?? undefined }),
+      body: JSON.stringify({ token, ref }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
           localStorage.setItem('innermind_token', data.token)
+          localStorage.removeItem('innermind_referral_code')
           posthog.capture('auth_completed')
           trackSignup()
           setStatus('success')
