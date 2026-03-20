@@ -5,6 +5,7 @@ import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { sendMagicLink, sendWelcomeEmail } from '../services/email.js'
 import { applyReferral } from './referrals.js'
+import { upsertLoopsContact, sendLoopsEvent } from '../lib/loops.js'
 
 const requestMagicLinkSchema = z.object({
   email: z.string().email(),
@@ -134,6 +135,22 @@ export async function authRoutes(server: FastifyInstance) {
       await prisma.onboardingEmail.create({
         data: { userId: magicLink.user.id, emailType: 'welcome' },
       })
+
+      // Sync new user to Loops and fire signup event for automation triggers
+      upsertLoopsContact({
+        email: magicLink.user.email,
+        firstName: magicLink.user.name?.split(' ')[0] ?? null,
+        userId: magicLink.user.id,
+        userGroup: 'free',
+        completedFrameworks: 0,
+        subscriptionStatus: 'free',
+        utmSource: magicLink.user.utmSource ?? null,
+        utmMedium: magicLink.user.utmMedium ?? null,
+        utmCampaign: magicLink.user.utmCampaign ?? null,
+      }).catch((err) => server.log.error({ err }, '[loops] Failed to upsert contact on signup'))
+      sendLoopsEvent(magicLink.user.email, 'signup', { userId: magicLink.user.id }).catch((err) =>
+        server.log.error({ err }, '[loops] Failed to send signup event'),
+      )
     }
 
     // Sign JWT

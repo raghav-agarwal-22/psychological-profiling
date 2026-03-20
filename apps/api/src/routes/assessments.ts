@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, AssessmentType, AssessmentStatus } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { sendLoopsEvent, upsertLoopsContact } from '../lib/loops.js'
 
 const createAssessmentSchema = z.object({
   sessionId: z.string().cuid(),
@@ -177,6 +178,25 @@ export async function assessmentRoutes(server: FastifyInstance) {
         completedAt: new Date(),
       },
     })
+
+    // Sync to Loops: fire assessment_completed event and update completedFrameworks count
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { email: true, subscriptionTier: true, assessments: { where: { status: AssessmentStatus.COMPLETED }, select: { id: true } } },
+    })
+    if (user) {
+      const completedCount = user.assessments.length
+      sendLoopsEvent(user.email, 'assessment_completed', {
+        assessmentType: assessment.type,
+        completedCount,
+      }).catch(() => {})
+      upsertLoopsContact({
+        email: user.email,
+        userId: req.user.userId,
+        userGroup: user.subscriptionTier,
+        completedFrameworks: completedCount,
+      }).catch(() => {})
+    }
 
     return reply.send({ assessment: updated })
   })

@@ -5,6 +5,7 @@ import { requireAuth } from '../lib/auth.js'
 import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts, type ProfileNarrative, type ValuesNarrative, type AttachmentNarrative, type TriadNarrative, type EnneagramNarrative, type JungianNarrative } from '../lib/profile-generator.js'
 import { applyReferral } from './referrals.js'
 import { sendProfileRevealEmail } from '../services/email.js'
+import { sendLoopsEvent, upsertLoopsContact } from '../lib/loops.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -295,6 +296,32 @@ export async function sessionRoutes(server: FastifyInstance) {
         } as object,
       },
     })
+
+    // Sync portrait generation to Loops for PH retention campaign triggers
+    {
+      const primaryArchetype = archetypes[0] ?? null
+      const sessionUser = await prisma.user.findUnique({
+        where: { id: req.user.userId },
+        select: { email: true, subscriptionTier: true },
+      })
+      if (sessionUser) {
+        const topTraitName = typeof dimensionScores === 'object' && dimensionScores !== null
+          ? Object.entries(dimensionScores as Record<string, { normalized: number }>)
+              .sort((a, b) => (b[1]?.normalized ?? 0) - (a[1]?.normalized ?? 0))[0]?.[0] ?? null
+          : null
+        sendLoopsEvent(sessionUser.email, 'portrait_generated', {
+          ...(primaryArchetype ? { archetypeName: primaryArchetype } : {}),
+          ...(topTraitName ? { topTrait: topTraitName } : {}),
+        }).catch(() => {})
+        upsertLoopsContact({
+          email: sessionUser.email,
+          userId: req.user.userId,
+          userGroup: sessionUser.subscriptionTier,
+          primaryArchetype,
+          topTrait: topTraitName,
+        }).catch(() => {})
+      }
+    }
 
     // Generate delta observation if user has a prior profile for the same template
     if (process.env.ANTHROPIC_API_KEY && Object.keys(dimensionScores).length > 0) {
