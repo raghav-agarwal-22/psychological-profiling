@@ -2,6 +2,11 @@ import { Resend } from 'resend'
 import { render } from '@react-email/render'
 import { MagicLinkEmail } from '../emails/MagicLinkEmail.js'
 import { WeeklyDigestEmail } from '../emails/WeeklyDigestEmail.js'
+import { WelcomeEmail } from '../emails/WelcomeEmail.js'
+import { AssessmentNudgeEmail } from '../emails/AssessmentNudgeEmail.js'
+import { ProfileRevealEmail } from '../emails/ProfileRevealEmail.js'
+import { DeepDiveNudgeEmail } from '../emails/DeepDiveNudgeEmail.js'
+import { ProUpgradeEmail } from '../emails/ProUpgradeEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -155,3 +160,126 @@ export async function sendWeeklyDigest(email: string, data: DigestEmailData): Pr
 
 // Re-export data types for use in routes
 export type { DigestEmailData, GrowthRecommendation }
+
+// ─── Onboarding Sequence ──────────────────────────────────────────────────────
+
+const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
+
+export async function sendWelcomeEmail(email: string, userName: string | null): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — welcome email for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(WelcomeEmail, {
+      userName,
+      startUrl: `${WEB_URL}/assessments`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Welcome to ${PRODUCT_NAME} — your self-discovery starts now`,
+    html,
+    text: `Welcome to ${PRODUCT_NAME}!\n\nYour journey to understanding yourself begins with 5 validated psychology frameworks synthesized by AI.\n\nStart your first assessment: ${WEB_URL}/assessments\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendAssessmentNudgeEmail(email: string, userName: string | null): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — assessment nudge for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(AssessmentNudgeEmail, {
+      userName,
+      assessmentUrl: `${WEB_URL}/assessments`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Your ${PRODUCT_NAME} assessment is waiting — 8 minutes to clarity`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour psychological portrait is waiting. The Big Five takes 8 minutes.\n\nStart now: ${WEB_URL}/assessments\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendProfileRevealEmail(
+  email: string,
+  userName: string | null,
+  profileId: string,
+  completedFramework: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — profile reveal for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ProfileRevealEmail, {
+      userName,
+      profileUrl: `${WEB_URL}/profile/${profileId}`,
+      assessmentUrl: `${WEB_URL}/assessments`,
+      completedFramework,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Your psychological portrait is ready`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour ${completedFramework} portrait is ready.\n\nView it here: ${WEB_URL}/profile/${profileId}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendDeepDiveNudgeEmail(email: string, userName: string | null): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — deep dive nudge for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(DeepDiveNudgeEmail, {
+      userName,
+      deepDiveUrl: `${WEB_URL}/assessments`,
+      profileUrl: `${WEB_URL}/insights`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Go deeper — ${PRODUCT_NAME}'s AI has questions for you`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nReady to go deeper? ${PRODUCT_NAME}'s adaptive AI generates questions tailored to your unique profile.\n\nStart your deep dive: ${WEB_URL}/assessments\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendProUpgradeEmail(email: string, userName: string | null): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — pro upgrade for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ProUpgradeEmail, {
+      userName,
+      upgradeUrl: `${WEB_URL}/billing`,
+      dashboardUrl: `${WEB_URL}/insights`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Unlock the full ${PRODUCT_NAME} experience`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been using ${PRODUCT_NAME} for 2 weeks. Ready to unlock the full experience?\n\nUpgrade to Pro: ${WEB_URL}/billing\n\n— The ${PRODUCT_NAME} team`,
+  })
+}

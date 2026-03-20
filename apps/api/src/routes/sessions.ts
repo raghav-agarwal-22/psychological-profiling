@@ -4,6 +4,7 @@ import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores,
 import { requireAuth } from '../lib/auth.js'
 import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
 import { applyReferral } from './referrals.js'
+import { sendProfileRevealEmail } from '../services/email.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -332,6 +333,35 @@ export async function sessionRoutes(server: FastifyInstance) {
       where: { id: session.id },
       data: { status: SessionStatus.COMPLETED, completedAt: new Date() },
     })
+
+    // Send profile reveal email on first-ever profile (fire-and-forget)
+    try {
+      const profileCount = await prisma.profile.count({ where: { userId: req.user.userId } })
+      const alreadySentReveal = await prisma.onboardingEmail.findUnique({
+        where: { userId_emailType: { userId: req.user.userId, emailType: 'profile_reveal' } },
+      })
+      if (profileCount === 1 && !alreadySentReveal) {
+        const user = await prisma.user.findUnique({
+          where: { id: req.user.userId },
+          select: { email: true, name: true },
+        })
+        const frameworkLabel =
+          templateType === AssessmentType.VALUES_INVENTORY ? 'Schwartz Values Inventory' :
+          templateType === AssessmentType.ATTACHMENT_STYLE ? 'Attachment Style' :
+          templateType === AssessmentType.ENNEAGRAM ? 'Enneagram' :
+          templateType === AssessmentType.LIGHT_DARK_TRIAD ? 'Light & Dark Triad' :
+          templateType === AssessmentType.JUNGIAN_ARCHETYPES ? 'Jungian Archetypes' :
+          'Big Five Personality'
+        if (user) {
+          await sendProfileRevealEmail(user.email, user.name, profile.id, frameworkLabel)
+          await prisma.onboardingEmail.create({
+            data: { userId: req.user.userId, emailType: 'profile_reveal' },
+          })
+        }
+      }
+    } catch (err) {
+      server.log.warn({ err }, 'Profile reveal email failed — skipping')
+    }
 
     // Apply referral on first-ever assessment completion (fire-and-forget)
     try {

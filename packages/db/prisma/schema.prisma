@@ -62,7 +62,26 @@ model User {
   referralCode     String?    @unique @map("referral_code")
   referredByCode   String?    @map("referred_by_code")
 
+  // Onboarding email tracking
+  onboardingEmails OnboardingEmail[]
+
   @@map("users")
+}
+
+// ─── OnboardingEmail ─────────────────────────────────────────────────────────
+// Tracks which onboarding emails have been sent to each user.
+
+model OnboardingEmail {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  emailType String   @map("email_type") // welcome | assessment_nudge | profile_reveal | deep_dive | pro_upgrade
+  sentAt    DateTime @default(now()) @map("sent_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, emailType])
+  @@index([userId])
+  @@map("onboarding_emails")
 }
 
 // ─── Auth ────────────────────────────────────────────────────────────────────

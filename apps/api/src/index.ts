@@ -21,6 +21,7 @@ import { teamRoutes } from './routes/teams.js'
 import { referralRoutes } from './routes/referrals.js'
 import { journalRoutes } from './routes/journal.js'
 import { adaptiveRoutes } from './routes/adaptive.js'
+import { onboardingRoutes } from './routes/onboarding.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -83,6 +84,7 @@ await server.register(shareRoutes, { prefix: '/api/share' })
 await server.register(compareRoutes, { prefix: '/api/compare' })
 await server.register(coachRoutes, { prefix: '/api/coach' })
 await server.register(digestRoutes, { prefix: '/api/digest' })
+await server.register(onboardingRoutes, { prefix: '/api/onboarding' })
 await server.register(adminRoutes, { prefix: '/api/admin' })
 await server.register(billingRoutes, { prefix: '/api/billing' })
 await server.register(teamRoutes, { prefix: '/api/teams' })

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import crypto from 'node:crypto'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { sendMagicLink } from '../services/email.js'
+import { sendMagicLink, sendWelcomeEmail } from '../services/email.js'
 
 const requestMagicLinkSchema = z.object({
   email: z.string().email(),
@@ -82,6 +82,23 @@ export async function authRoutes(server: FastifyInstance) {
       await prisma.user.update({
         where: { id: magicLink.user.id },
         data: { referredByCode: ref },
+      })
+    }
+
+    // Send welcome email if this is the user's first login (no prior tokens used)
+    const priorUsedTokens = await prisma.magicLinkToken.count({
+      where: { userId: magicLink.user.id, usedAt: { not: null }, id: { not: magicLink.id } },
+    })
+    const alreadySentWelcome = await prisma.onboardingEmail.count({
+      where: { userId: magicLink.user.id, emailType: 'welcome' },
+    })
+    if (priorUsedTokens === 0 && alreadySentWelcome === 0) {
+      // Fire-and-forget welcome email
+      sendWelcomeEmail(magicLink.user.email, magicLink.user.name).catch((err) =>
+        server.log.error({ err }, '[email] Failed to send welcome email'),
+      )
+      await prisma.onboardingEmail.create({
+        data: { userId: magicLink.user.id, emailType: 'welcome' },
       })
     }
 
