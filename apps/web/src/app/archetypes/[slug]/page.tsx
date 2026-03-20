@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ARCHETYPES, ARCHETYPE_BY_SLUG, ARCHETYPE_COLORS } from '@/lib/archetypes'
+import { getArchetypeDeepDive } from '@/lib/archetype-deepdives'
 
 interface Props {
   params: { slug: string }
@@ -36,13 +37,29 @@ export default function ArchetypePage({ params }: Props) {
   const archetype = ARCHETYPE_BY_SLUG[params.slug]
   if (!archetype) notFound()
 
+  const deepDive = getArchetypeDeepDive(params.slug)
+
   const colorClasses = ARCHETYPE_COLORS[archetype.color] ?? ARCHETYPE_COLORS['stone']
-  const complementaryArchetypes = archetype.complementaryArchetypes
+  const complementaryArchetypes = (deepDive?.complementaryArchetypes ?? archetype.complementaryArchetypes)
     .map((slug) => ARCHETYPE_BY_SLUG[slug])
     .filter(Boolean)
-  const shadowArchetypes = archetype.shadowArchetypes
-    .map((slug) => ARCHETYPE_BY_SLUG[slug])
-    .filter(Boolean)
+  const shadowArchetypeSlug = deepDive?.shadowArchetype
+  const shadowCounterparts = shadowArchetypeSlug
+    ? [ARCHETYPE_BY_SLUG[shadowArchetypeSlug]].filter(Boolean)
+    : archetype.shadowArchetypes.map((slug) => ARCHETYPE_BY_SLUG[slug]).filter(Boolean)
+
+  // Split deep-dive description into paragraphs for rendering
+  const descriptionParagraphs = deepDive
+    ? deepDive.description.split('\n\n').filter(Boolean)
+    : [archetype.description]
+
+  const shadowParagraphs = deepDive
+    ? deepDive.shadowExpression.split('\n\n').filter(Boolean)
+    : [archetype.shadowExpression]
+
+  const growthParagraphs = deepDive
+    ? deepDive.growthPath.split('\n\n').filter(Boolean)
+    : [archetype.growthPath]
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
@@ -55,7 +72,7 @@ export default function ArchetypePage({ params }: Props) {
         <span>All archetypes</span>
       </Link>
 
-      {/* Header */}
+      {/* Hero */}
       <div className="mb-12 text-center">
         <div
           className={`mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl ring-1 ${colorClasses}`}
@@ -66,16 +83,35 @@ export default function ArchetypePage({ params }: Props) {
         </div>
         <h1 className="font-serif text-5xl text-stone-100">{archetype.name}</h1>
         <p className="mt-3 text-lg text-stone-400 italic">{archetype.tagline}</p>
-        <p className="mt-4 text-stone-400">{archetype.description}</p>
       </div>
 
-      {/* Core Theme */}
-      <section className="mb-10">
-        <h2 className="mb-4 font-serif text-2xl text-stone-100">Core Theme</h2>
-        <p className="leading-relaxed text-stone-300">{archetype.coreTheme}</p>
+      {/* Description paragraphs */}
+      <section className="mb-10 space-y-4">
+        {descriptionParagraphs.map((para, i) => (
+          <p key={i} className="leading-relaxed text-stone-300">
+            {para}
+          </p>
+        ))}
       </section>
 
-      {/* Strengths & Challenges */}
+      {/* Core themes as chips */}
+      {deepDive && (
+        <section className="mb-10">
+          <h2 className="mb-4 font-serif text-2xl text-stone-100">Core Themes</h2>
+          <div className="flex flex-wrap gap-2">
+            {deepDive.coreThemes.map((theme) => (
+              <span
+                key={theme}
+                className={`rounded-full border px-3 py-1.5 text-sm font-medium ${colorClasses}`}
+              >
+                {theme}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Strengths & Challenges (from base archetype data) */}
       <div className="mb-10 grid gap-6 sm:grid-cols-2">
         <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-6">
           <h3 className="mb-4 font-medium text-stone-100">Strengths</h3>
@@ -101,42 +137,58 @@ export default function ArchetypePage({ params }: Props) {
         </div>
       </div>
 
-      {/* Mythological References */}
-      <section className="mb-10">
-        <h2 className="mb-4 font-serif text-2xl text-stone-100">Mythological Roots</h2>
-        <ul className="space-y-3">
-          {archetype.mythologicalReferences.map((ref) => (
-            <li key={ref} className="flex gap-3 text-stone-300">
-              <span className="mt-1 shrink-0 text-stone-500">◎</span>
-              <span className="leading-relaxed">{ref}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* Shadow Expression */}
       <section className="mb-10 rounded-xl border border-rose-900/40 bg-rose-950/20 p-6">
-        <h2 className="mb-3 font-serif text-xl text-rose-300">Shadow Expression</h2>
-        <p className="leading-relaxed text-stone-300">{archetype.shadowExpression}</p>
+        <h2 className="mb-4 font-serif text-xl text-rose-300">Shadow Expression</h2>
+        <div className="space-y-3">
+          {shadowParagraphs.map((para, i) => (
+            <p key={i} className="leading-relaxed text-stone-300">
+              {para}
+            </p>
+          ))}
+        </div>
       </section>
 
-      {/* Growth Path */}
-      <section className="mb-10 rounded-xl border border-emerald-900/40 bg-emerald-950/20 p-6">
-        <h2 className="mb-3 font-serif text-xl text-emerald-300">Growth Path</h2>
-        <p className="leading-relaxed text-stone-300">{archetype.growthPath}</p>
+      {/* Mythological Roots */}
+      <section className="mb-10">
+        <h2 className="mb-4 font-serif text-2xl text-stone-100">Mythological Roots</h2>
+        {deepDive ? (
+          <p className="leading-relaxed text-stone-300">{deepDive.mythologicalRoots}</p>
+        ) : (
+          <ul className="space-y-3">
+            {archetype.mythologicalReferences.map((ref) => (
+              <li key={ref} className="flex gap-3 text-stone-300">
+                <span className="mt-1 shrink-0 text-stone-500">◎</span>
+                <span className="leading-relaxed">{ref}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       {/* Famous Examples */}
       <section className="mb-10">
         <h2 className="mb-4 font-serif text-2xl text-stone-100">Famous Examples</h2>
         <div className="flex flex-wrap gap-2">
-          {archetype.famousExamples.map((example) => (
+          {(deepDive?.famousExamples ?? archetype.famousExamples).map((example) => (
             <span
               key={example}
-              className="rounded-full border border-stone-700 bg-stone-800 px-3 py-1 text-sm text-stone-300"
+              className="rounded-full border border-stone-700 bg-stone-800 px-3 py-1.5 text-sm text-stone-300"
             >
               {example}
             </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Growth Path */}
+      <section className="mb-10 rounded-xl border border-emerald-900/40 bg-emerald-950/20 p-6">
+        <h2 className="mb-4 font-serif text-xl text-emerald-300">Growth Path</h2>
+        <div className="space-y-3">
+          {growthParagraphs.map((para, i) => (
+            <p key={i} className="leading-relaxed text-stone-300">
+              {para}
+            </p>
           ))}
         </div>
       </section>
@@ -175,13 +227,13 @@ export default function ArchetypePage({ params }: Props) {
               </div>
             </div>
           )}
-          {shadowArchetypes.length > 0 && (
+          {shadowCounterparts.length > 0 && (
             <div>
               <h3 className="mb-3 text-sm font-medium uppercase tracking-wider text-stone-500">
-                Shadow Counterparts
+                Shadow Counterpart
               </h3>
               <div className="space-y-2">
-                {shadowArchetypes.map((a) => {
+                {shadowCounterparts.map((a) => {
                   if (!a) return null
                   const aColor = ARCHETYPE_COLORS[a.color] ?? ARCHETYPE_COLORS['stone']
                   return (
@@ -209,13 +261,14 @@ export default function ArchetypePage({ params }: Props) {
       </section>
 
       {/* CTA */}
-      <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-8 text-center">
-        <p className="mb-4 text-stone-400">
-          Curious which archetype you carry? Take the psychological assessment to find out.
+      <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-8 text-center">
+        <p className="mb-1 font-serif text-lg text-stone-200">Discover your archetype</p>
+        <p className="mb-5 text-sm text-stone-400">
+          Take the psychological assessment to find out which archetype you carry — and what it reveals about your strengths, shadows, and growth edge.
         </p>
         <Link
           href="/assessment"
-          className="inline-flex items-center gap-2 rounded-lg bg-stone-100 px-5 py-2.5 text-sm font-medium text-stone-900 transition-colors hover:bg-white"
+          className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
         >
           Take the Assessment
         </Link>
