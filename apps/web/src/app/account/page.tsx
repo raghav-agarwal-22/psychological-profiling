@@ -326,6 +326,28 @@ export default function AccountPage() {
           )}
         </section>
 
+        {/* Affiliate Program */}
+        <section className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
+          <h2 className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">
+            Affiliate Program
+          </h2>
+          <p className="mb-4 text-sm text-stone-400">
+            Earn 20% recurring commission on every Pro subscriber you refer.
+          </p>
+          <Link
+            href="/affiliates/dashboard"
+            className="inline-block rounded-lg bg-stone-800 px-4 py-2 text-sm text-stone-300 transition-colors hover:bg-stone-700"
+          >
+            View affiliate dashboard →
+          </Link>
+          <Link
+            href="/affiliates"
+            className="ml-3 text-xs text-stone-600 hover:text-stone-400"
+          >
+            Learn more
+          </Link>
+        </section>
+
         {/* Danger Zone */}
         <section className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">

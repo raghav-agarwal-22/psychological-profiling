@@ -75,7 +75,7 @@ const FAQ = [
   },
   {
     q: 'How much does Pro cost, and what do I earn?',
-    a: 'Innermind Pro is $19/month or $149/year. You earn 20% per payment — that\'s $3.80/month or $29.80/year per active subscriber you referred.',
+    a: 'Innermind Pro is $19/month or $149/year. You earn 30% per payment — that\'s $5.70/month or $44.70/year per active subscriber you referred.',
   },
   {
     q: 'When does the commission start?',
@@ -147,7 +147,7 @@ export default function AffiliatePage() {
         <div className="mx-auto max-w-5xl">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {[
-              { stat: '20%', label: 'Recurring commission rate' },
+              { stat: '30%', label: 'Recurring commission rate' },
               { stat: '$0', label: 'Cost to join' },
               { stat: '90 days', label: 'Cookie attribution window' },
               { stat: 'Monthly', label: 'Payment schedule' },
@@ -221,27 +221,27 @@ export default function AffiliatePage() {
                 What could you earn?
               </h2>
               <p className="mt-3 text-stone-400">
-                Based on 20% commission on Innermind Pro ($149/yr or $19/mo).
+                Based on 30% commission on Innermind Pro ($149/yr or $19/mo).
               </p>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
               {[
                 {
                   referrals: '10 subscribers',
-                  annual: '$298/yr',
-                  monthly: '$38/mo',
+                  annual: '$447/yr',
+                  monthly: '$57/mo',
                   label: 'Micro audience',
                 },
                 {
                   referrals: '50 subscribers',
-                  annual: '$1,490/yr',
-                  monthly: '$190/mo',
+                  annual: '$2,235/yr',
+                  monthly: '$285/mo',
                   label: 'Active newsletter',
                 },
                 {
                   referrals: '200 subscribers',
-                  annual: '$5,960/yr',
-                  monthly: '$760/mo',
+                  annual: '$8,940/yr',
+                  monthly: '$1,140/mo',
                   label: 'Large community',
                 },
               ].map((tier) => (
