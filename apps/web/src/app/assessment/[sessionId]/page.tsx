@@ -1,11 +1,28 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { Suspense } from 'react'
 import { posthog } from '@/lib/posthog'
+
+const ARCHETYPE_PHRASES = [
+  'The Architect',
+  'The Explorer',
+  'The Sage',
+  'The Visionary',
+  'The Nurturer',
+  'The Strategist',
+  'The Empath',
+  'The Pioneer',
+]
+
+const MILESTONE_MESSAGES: Record<number, string> = {
+  25: 'Your personality dimensions are starting to take shape…',
+  50: 'Halfway there — your archetype is forming',
+  75: 'Almost there — one last push to see yourself clearly',
+}
 
 interface Question {
   id: string
@@ -63,6 +80,10 @@ function AssessmentFlow() {
   const [loading, setLoading] = useState(true)
   const [analyzing, setAnalyzing] = useState(false)
   const [showIntro, setShowIntro] = useState(false)
+  const [activeMilestone, setActiveMilestone] = useState<string | null>(null)
+  const shownMilestones = useRef<Set<number>>(new Set())
+  const milestoneTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [archetypeIndex, setArchetypeIndex] = useState(0)
 
   useEffect(() => {
     const token = getToken()
@@ -110,6 +131,30 @@ function AssessmentFlow() {
     }
     setShowIntro(false)
   }, [templateId])
+
+  // Milestone messages at 25%, 50%, 75%
+  useEffect(() => {
+    if (questions.length === 0 || showIntro) return
+    const pct = Math.round((currentIndex / questions.length) * 100)
+    const milestone = [25, 50, 75].find(
+      (m) => pct >= m && pct < m + Math.ceil(100 / questions.length) + 1,
+    )
+    if (milestone && !shownMilestones.current.has(milestone)) {
+      shownMilestones.current.add(milestone)
+      setActiveMilestone(MILESTONE_MESSAGES[milestone])
+      if (milestoneTimer.current) clearTimeout(milestoneTimer.current)
+      milestoneTimer.current = setTimeout(() => setActiveMilestone(null), 3500)
+    }
+  }, [currentIndex, questions.length, showIntro])
+
+  // Cycle archetype phrases during analysis
+  useEffect(() => {
+    if (!analyzing) return
+    const id = setInterval(() => {
+      setArchetypeIndex((i) => (i + 1) % ARCHETYPE_PHRASES.length)
+    }, 1200)
+    return () => clearInterval(id)
+  }, [analyzing])
 
   const currentQuestion = questions[currentIndex]
   const progress = questions.length > 0 ? (currentIndex / questions.length) * 100 : 0
@@ -232,14 +277,19 @@ function AssessmentFlow() {
     return (
       <div className="flex flex-col items-center justify-center px-6 py-32 text-center">
         <div className="relative mb-8">
+          {/* Outer pulse ring */}
+          <div className="absolute inset-0 -m-3 animate-ping rounded-full border border-amber-500/20" />
           <div className="h-20 w-20 animate-spin rounded-full border-2 border-stone-800 border-t-amber-500" />
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-2xl">◎</span>
           </div>
         </div>
-        <h2 className="font-serif text-3xl text-stone-100">Analyzing your responses…</h2>
-        <p className="mt-3 max-w-sm text-stone-500 leading-relaxed">
-          We&apos;re generating your personalized psychological profile. This takes just a moment.
+        <h2 className="font-serif text-3xl text-stone-100">Identifying your archetype…</h2>
+        <p className="mt-2 text-lg font-medium text-amber-400/80 transition-all duration-700">
+          {ARCHETYPE_PHRASES[archetypeIndex]}
+        </p>
+        <p className="mt-4 max-w-sm text-stone-500 leading-relaxed text-sm">
+          We&apos;re synthesizing your responses into a personalized psychological portrait.
         </p>
         <div className="mt-8 flex gap-1">
           {[0, 1, 2].map((i) => (
@@ -266,6 +316,14 @@ function AssessmentFlow() {
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-12">
+      {/* Milestone banner */}
+      {activeMilestone && (
+        <div className="mb-4 flex items-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-sm text-amber-300/90 transition-all duration-500">
+          <span className="text-amber-500">✦</span>
+          {activeMilestone}
+        </div>
+      )}
+
       {/* Progress */}
       <div className="mb-8">
         <div className="mb-2 flex justify-between text-xs text-stone-500">
