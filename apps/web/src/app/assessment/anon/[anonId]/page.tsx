@@ -145,7 +145,7 @@ function AnonAssessmentFlow() {
         if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current)
         autoAdvanceTimer.current = setTimeout(() => {
           setCurrentIndex((i) => i + 1)
-        }, 250)
+        }, 300)
       }
     },
     [currentQuestion, currentIndex, questions.length],

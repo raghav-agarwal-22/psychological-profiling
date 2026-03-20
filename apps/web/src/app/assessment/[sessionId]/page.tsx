@@ -53,16 +53,28 @@ const LIKERT_LABELS = [
 const TYPE_DURATION: Record<string, string> = {
   BIG_FIVE: '10–15 minutes',
   VALUES_INVENTORY: '5–8 minutes',
+  JUNGIAN_ARCHETYPES: '8–12 minutes',
+  ATTACHMENT_STYLE: '5–8 minutes',
+  LIGHT_DARK_TRIAD: '5–8 minutes',
+  ENNEAGRAM: '8–12 minutes',
 }
 
 const TYPE_OUTCOME: Record<string, string> = {
   BIG_FIVE: 'Your personality archetype, dimension scores across the Big Five, personal strengths, and growth areas.',
   VALUES_INVENTORY: 'Your ranked value profile, core values, and the value tensions that shape your decisions.',
+  JUNGIAN_ARCHETYPES: 'Your primary and shadow Jungian archetypes across 12 universal patterns including the Hero, Sage, Explorer, and more.',
+  ATTACHMENT_STYLE: 'Your attachment style (Secure, Anxious, Avoidant, or Fearful-Avoidant) and how it shapes your relationships.',
+  LIGHT_DARK_TRIAD: 'Your position on the prosocial–antagonistic spectrum, from the Light Triad to the Dark Triad.',
+  ENNEAGRAM: 'Your Enneagram type, wing, core fears and desires, and your unique growth path.',
 }
 
 const TYPE_ICONS: Record<string, string> = {
   BIG_FIVE: '◎',
   VALUES_INVENTORY: '◈',
+  JUNGIAN_ARCHETYPES: '◎',
+  ATTACHMENT_STYLE: '◉',
+  LIGHT_DARK_TRIAD: '◐',
+  ENNEAGRAM: '◑',
 }
 
 function AssessmentFlow() {
@@ -178,7 +190,7 @@ function AssessmentFlow() {
         if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current)
         autoAdvanceTimer.current = setTimeout(() => {
           setCurrentIndex((i) => i + 1)
-        }, 250)
+        }, 300)
       }
     },
     [currentQuestion, currentIndex, questions.length],
