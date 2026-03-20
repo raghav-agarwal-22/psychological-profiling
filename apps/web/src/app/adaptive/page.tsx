@@ -204,12 +204,19 @@ function AdaptiveFlow() {
   }
 
   if (phase === 'error') {
+    const isNoAssessment = errorMsg?.toLowerCase().includes('complete a base') || errorMsg?.toLowerCase().includes('assessment first')
     return (
       <div className="mx-auto max-w-md px-6 py-24 text-center">
-        <p className="mb-2 text-stone-300">{errorMsg}</p>
-        <Link href="/assessment" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
-          Take a base assessment first →
-        </Link>
+        <p className="mb-2 text-stone-300">{errorMsg ?? 'Something went wrong'}</p>
+        {isNoAssessment ? (
+          <Link href="/assessment" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
+            Take a base assessment first →
+          </Link>
+        ) : (
+          <Link href="/dashboard" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
+            ← Back to dashboard
+          </Link>
+        )}
       </div>
     )
   }
