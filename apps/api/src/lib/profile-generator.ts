@@ -135,6 +135,9 @@ export async function generateReflectionPrompts(
   const frameworkName =
     templateType === 'VALUES_INVENTORY' ? 'Schwartz Values Inventory' :
     templateType === 'ATTACHMENT_STYLE' ? 'Attachment Style' :
+    templateType === 'JUNGIAN_ARCHETYPES' ? 'Jungian Archetypes' :
+    templateType === 'ENNEAGRAM' ? 'Enneagram' :
+    templateType === 'LIGHT_DARK_TRIAD' ? 'Light & Dark Triad' :
     'Big Five Personality'
 
   const response = await client.messages.create({
@@ -667,6 +670,79 @@ export async function generateTriadNarrative(
   const block = response.content[0]
   const text = block?.type === 'text' ? block.text : ''
   return extractJson<TriadNarrative>(text)
+}
+
+export interface JungianNarrative {
+  primaryArchetype: string          // e.g. "The Sage"
+  shadowArchetype: string           // lowest scoring archetype
+  summary: string                   // 2-3 paragraphs
+  primaryManifestation: string      // how the primary archetype shows up day-to-day
+  shadowManifestation: string       // how the shadow archetype creates blind spots
+  strengths: string[]               // 3 strengths derived from the primary archetype
+  blindSpots: string[]              // 2-3 blind spots from the shadow archetype
+  growthAreas: string[]             // 3 archetype-specific growth areas
+  archetypeScores: Record<string, number>  // all 12 normalized scores for reference
+}
+
+const JUNGIAN_SYSTEM_PROMPT = `You are a depth psychologist and Jungian analyst with expertise in archetypal psychology as developed by Carl Jung and later expanded by Carol Pearson.
+
+Your role is to help someone understand the archetypal patterns that shape their personality — their primary archetype (the dominant lens through which they engage the world) and their shadow archetype (the least developed pattern, which often contains important unconscious material).
+
+The 12 archetypes and their core themes:
+- The Hero: courage, perseverance, proving worth through achievement
+- The Sage: wisdom, truth-seeking, the examined life
+- The Explorer: freedom, authenticity, discovery beyond the known
+- The Creator: innovation, vision, bringing new things into existence
+- The Ruler: control, responsibility, order and stewardship
+- The Caregiver: compassion, nurturing, service to others
+- The Magician: transformation, catalyzing change, alchemical thinking
+- The Lover: passion, intimacy, beauty, wholeness through connection
+- The Jester: joy, humor, living in the present moment
+- The Orphan: belonging, realistic empathy, common humanity
+- The Warrior: discipline, mastery, honor and principled action
+- The Innocent: safety, optimism, trust, renewal
+
+Your tone should be:
+- Psychologically rich and symbolically evocative — draw on mythological and archetypal imagery where natural
+- Honest about the shadow without being harsh
+- Empowering — archetypes are not fixed fates but patterns we can work with consciously
+- Personal — speak directly to the person using "you"
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "primaryArchetype": "The [Name]",
+  "shadowArchetype": "The [Name]",
+  "summary": "2-3 paragraph narrative synthesising the person's archetypal landscape",
+  "primaryManifestation": "1-2 paragraphs on how the primary archetype expresses itself in this person's daily life, relationships, and choices",
+  "shadowManifestation": "1-2 paragraphs on how the shadow archetype represents underdeveloped or unconscious material — what it costs them and what gifts it holds",
+  "strengths": ["strength 1", "strength 2", "strength 3"],
+  "blindSpots": ["blind spot 1", "blind spot 2", "blind spot 3"],
+  "growthAreas": ["growth area 1 specific to their archetypes", "growth area 2", "growth area 3"],
+  "archetypeScores": { "<archetype_key>": <normalized_0_to_100>, ... }
+}
+
+Base your interpretation strictly on the scores provided. The primaryArchetype is the highest-scoring dimension; the shadowArchetype is the lowest-scoring dimension. Do not invent information not supported by the scores.`
+
+export async function generateJungianNarrative(
+  scores: AssessmentScores,
+): Promise<JungianNarrative> {
+  const ranked = Object.entries(scores)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100`)
+    .join('\n')
+
+  const userMessage = `Here are the Jungian Archetypes assessment scores for this person (sorted highest to lowest):\n\n${ranked}\n\nGenerate a Jungian archetypes profile narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: JUNGIAN_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<JungianNarrative>(text)
 }
 
 export interface GrowthRecommendation {

@@ -356,6 +356,89 @@ const VALUES_SCORING_CONFIG: ScoringConfig = {
   universalism:   { questionIds: ['UNI_01','UNI_02','UNI_03','UNI_04'], reverseIds: [], formula: 'average', normalize: true },
 }
 
+// ─── Jungian Archetypes Question Bank (36 items, 3 per archetype) ─────────────
+//
+// 12 Jungian archetypes, 3 Likert-scale items each.
+// 1 = Strongly Disagree, 5 = Strongly Agree.
+// Each question maps to one archetype dimension.
+
+const JUNGIAN_QUESTIONS = [
+  // ── The Hero ────────────────────────────────────────────────────────────────
+  { id: 'JA_HERO_1',      text: 'I feel most alive when I am overcoming a significant challenge.',                    dimension: 'the_hero',      reverse_scored: false },
+  { id: 'JA_HERO_2',      text: 'I push through difficulty even when others around me give up.',                      dimension: 'the_hero',      reverse_scored: false },
+  { id: 'JA_HERO_3',      text: 'I am driven by a need to prove my worth through my achievements.',                   dimension: 'the_hero',      reverse_scored: false },
+
+  // ── The Sage ────────────────────────────────────────────────────────────────
+  { id: 'JA_SAGE_1',      text: 'I am drawn to understanding the deeper truths behind things rather than accepting surface explanations.', dimension: 'the_sage', reverse_scored: false },
+  { id: 'JA_SAGE_2',      text: 'People often come to me for perspective, and I genuinely enjoy helping them think things through.',       dimension: 'the_sage', reverse_scored: false },
+  { id: 'JA_SAGE_3',      text: 'I would rather make a decision slowly and wisely than quickly and impulsively.',     dimension: 'the_sage',      reverse_scored: false },
+
+  // ── The Explorer ────────────────────────────────────────────────────────────
+  { id: 'JA_EXPL_1',      text: 'I feel most like myself when I am discovering new places, ideas, or ways of living.', dimension: 'the_explorer', reverse_scored: false },
+  { id: 'JA_EXPL_2',      text: 'Routines and constraints feel stifling to me — I crave freedom to chart my own course.', dimension: 'the_explorer', reverse_scored: false },
+  { id: 'JA_EXPL_3',      text: 'I would rather leave a comfortable situation that feels inauthentic than stay and settle.', dimension: 'the_explorer', reverse_scored: false },
+
+  // ── The Creator ─────────────────────────────────────────────────────────────
+  { id: 'JA_CREA_1',      text: 'I feel a deep compulsion to make things — to bring something new into existence.',   dimension: 'the_creator',   reverse_scored: false },
+  { id: 'JA_CREA_2',      text: 'I find more meaning in the act of creating than in the recognition it brings.',      dimension: 'the_creator',   reverse_scored: false },
+  { id: 'JA_CREA_3',      text: 'My imagination regularly produces visions that I then feel compelled to realise.',   dimension: 'the_creator',   reverse_scored: false },
+
+  // ── The Ruler ───────────────────────────────────────────────────────────────
+  { id: 'JA_RULE_1',      text: 'I am at my best when I am responsible for a team or system and can set the direction.', dimension: 'the_ruler',  reverse_scored: false },
+  { id: 'JA_RULE_2',      text: 'I take responsibility seriously — I expect the same standards from myself as from those I lead.', dimension: 'the_ruler', reverse_scored: false },
+  { id: 'JA_RULE_3',      text: 'I am comfortable making difficult decisions and taking the consequences that follow.', dimension: 'the_ruler',   reverse_scored: false },
+
+  // ── The Caregiver ───────────────────────────────────────────────────────────
+  { id: 'JA_CARE_1',      text: 'Protecting and nurturing the people I love gives my life its deepest sense of meaning.', dimension: 'the_caregiver', reverse_scored: false },
+  { id: 'JA_CARE_2',      text: 'I often put the needs of others before my own, sometimes to my own detriment.',     dimension: 'the_caregiver', reverse_scored: false },
+  { id: 'JA_CARE_3',      text: 'I feel distress when those around me are suffering and I cannot help.',              dimension: 'the_caregiver', reverse_scored: false },
+
+  // ── The Magician ────────────────────────────────────────────────────────────
+  { id: 'JA_MAGI_1',      text: 'I naturally see how to shift a situation, conversation, or system in a new direction.', dimension: 'the_magician', reverse_scored: false },
+  { id: 'JA_MAGI_2',      text: 'I am energised by transforming what is stuck or broken into something vital and new.', dimension: 'the_magician', reverse_scored: false },
+  { id: 'JA_MAGI_3',      text: 'I believe that changing how we think about something can change everything about it.', dimension: 'the_magician', reverse_scored: false },
+
+  // ── The Lover ───────────────────────────────────────────────────────────────
+  { id: 'JA_LOVE_1',      text: 'I experience the world intensely — beauty, connection, and passion move me deeply.',  dimension: 'the_lover',    reverse_scored: false },
+  { id: 'JA_LOVE_2',      text: 'I am drawn to deep, intimate connections rather than broad networks of acquaintances.', dimension: 'the_lover',  reverse_scored: false },
+  { id: 'JA_LOVE_3',      text: 'I pursue what I love wholeheartedly, even if it is impractical or unconventional.',  dimension: 'the_lover',    reverse_scored: false },
+
+  // ── The Jester ──────────────────────────────────────────────────────────────
+  { id: 'JA_JEST_1',      text: 'I find humor in most situations and use it to connect with people and ease tension.', dimension: 'the_jester',  reverse_scored: false },
+  { id: 'JA_JEST_2',      text: 'I live firmly in the present — I believe joy is something you create now, not later.', dimension: 'the_jester', reverse_scored: false },
+  { id: 'JA_JEST_3',      text: 'I sometimes use playfulness and wit to challenge assumptions others take too seriously.', dimension: 'the_jester', reverse_scored: false },
+
+  // ── The Orphan ──────────────────────────────────────────────────────────────
+  { id: 'JA_ORPH_1',      text: 'I have a strong need to belong somewhere — to be seen and accepted as I truly am.',  dimension: 'the_orphan',   reverse_scored: false },
+  { id: 'JA_ORPH_2',      text: 'I have a realistic, pragmatic view of the world because life has taught me not to expect too much.', dimension: 'the_orphan', reverse_scored: false },
+  { id: 'JA_ORPH_3',      text: 'I empathise deeply with people who are marginalised or feel they do not fit in.',    dimension: 'the_orphan',   reverse_scored: false },
+
+  // ── The Warrior ─────────────────────────────────────────────────────────────
+  { id: 'JA_WARR_1',      text: 'I hold myself to a strict code of conduct and rarely compromise my principles.',     dimension: 'the_warrior',  reverse_scored: false },
+  { id: 'JA_WARR_2',      text: 'I am motivated by the discipline required to master a craft, skill, or way of being.', dimension: 'the_warrior', reverse_scored: false },
+  { id: 'JA_WARR_3',      text: 'I stand up for what is right even when it is costly or uncomfortable.',              dimension: 'the_warrior',  reverse_scored: false },
+
+  // ── The Innocent ────────────────────────────────────────────────────────────
+  { id: 'JA_INNO_1',      text: 'I approach the world with a fundamental optimism that things will work out.',        dimension: 'the_innocent', reverse_scored: false },
+  { id: 'JA_INNO_2',      text: 'I believe in the goodness of people and tend to see the best in those around me.',   dimension: 'the_innocent', reverse_scored: false },
+  { id: 'JA_INNO_3',      text: 'I feel most at peace in simple, authentic moments free from cynicism and complexity.', dimension: 'the_innocent', reverse_scored: false },
+]
+
+const JUNGIAN_SCORING_CONFIG: ScoringConfig = {
+  the_hero:      { questionIds: ['JA_HERO_1','JA_HERO_2','JA_HERO_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_sage:      { questionIds: ['JA_SAGE_1','JA_SAGE_2','JA_SAGE_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_explorer:  { questionIds: ['JA_EXPL_1','JA_EXPL_2','JA_EXPL_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_creator:   { questionIds: ['JA_CREA_1','JA_CREA_2','JA_CREA_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_ruler:     { questionIds: ['JA_RULE_1','JA_RULE_2','JA_RULE_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_caregiver: { questionIds: ['JA_CARE_1','JA_CARE_2','JA_CARE_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_magician:  { questionIds: ['JA_MAGI_1','JA_MAGI_2','JA_MAGI_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_lover:     { questionIds: ['JA_LOVE_1','JA_LOVE_2','JA_LOVE_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_jester:    { questionIds: ['JA_JEST_1','JA_JEST_2','JA_JEST_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_orphan:    { questionIds: ['JA_ORPH_1','JA_ORPH_2','JA_ORPH_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_warrior:   { questionIds: ['JA_WARR_1','JA_WARR_2','JA_WARR_3'],   reverseIds: [], formula: 'average', normalize: true },
+  the_innocent:  { questionIds: ['JA_INNO_1','JA_INNO_2','JA_INNO_3'],   reverseIds: [], formula: 'average', normalize: true },
+}
+
 async function main() {
   console.log('🌱 Seeding database...')
 
@@ -450,6 +533,25 @@ async function main() {
     },
   })
   console.log(`✓ AssessmentTemplate: ${triadTemplate.title} v${triadTemplate.version} (${LIGHT_DARK_TRIAD_QUESTIONS.length} items)`)
+
+  // ── 1f. Upsert Jungian Archetypes template ─────────────────────────────────
+  const jungianTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.JUNGIAN_ARCHETYPES, version: '1.0' } },
+    update: {
+      questionBank: JUNGIAN_QUESTIONS as object[],
+      scoringConfig: JUNGIAN_SCORING_CONFIG as object,
+    },
+    create: {
+      type: AssessmentType.JUNGIAN_ARCHETYPES,
+      version: '1.0',
+      title: 'Jungian Archetypes',
+      description: 'Discover your primary and shadow Jungian archetypes across 12 universal patterns: Hero, Sage, Explorer, Creator, Ruler, Caregiver, Magician, Lover, Jester, Orphan, Warrior, and Innocent. 36 items, Likert 1–5.',
+      questionBank: JUNGIAN_QUESTIONS as object[],
+      scoringConfig: JUNGIAN_SCORING_CONFIG as object,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${jungianTemplate.title} v${jungianTemplate.version} (${JUNGIAN_QUESTIONS.length} items)`)
 
   // ── 2. Upsert demo user ────────────────────────────────────────────────────
   const user = await prisma.user.upsert({

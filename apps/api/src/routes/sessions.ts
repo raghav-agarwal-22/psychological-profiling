@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -172,6 +172,7 @@ export async function sessionRoutes(server: FastifyInstance) {
     let attachmentNarrative = null
     let triadNarrative = null
     let enneagramNarrative = null
+    let jungianNarrative = null
     if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
       try {
         if (templateType === AssessmentType.ATTACHMENT_STYLE) {
@@ -182,6 +183,8 @@ export async function sessionRoutes(server: FastifyInstance) {
           triadNarrative = await generateTriadNarrative(dimensionScores)
         } else if (templateType === AssessmentType.ENNEAGRAM) {
           enneagramNarrative = await generateEnneagramNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.JUNGIAN_ARCHETYPES) {
+          jungianNarrative = await generateJungianNarrative(dimensionScores)
         } else {
           narrative = await generateProfileNarrative(dimensionScores)
         }
@@ -227,6 +230,12 @@ export async function sessionRoutes(server: FastifyInstance) {
       values = enneagramNarrative.atBest
       blindSpots = enneagramNarrative.atWorst
       strengths = enneagramNarrative.atBest
+    } else if (templateType === AssessmentType.JUNGIAN_ARCHETYPES && jungianNarrative) {
+      summary = jungianNarrative.summary
+      archetypes = [jungianNarrative.primaryArchetype, jungianNarrative.shadowArchetype]
+      values = jungianNarrative.growthAreas
+      blindSpots = jungianNarrative.blindSpots
+      strengths = jungianNarrative.strengths
     } else {
       summary = narrative?.summary ?? 'Profile generated from assessment responses.'
       archetypes = narrative?.archetype ? [narrative.archetype] : []
@@ -260,7 +269,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           sessionId: session.id,
           scores: dimensionScores,
           templateType,
-          narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative,
+          narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative ?? jungianNarrative,
           reflectionPrompts,
         } as object,
       },
@@ -299,6 +308,7 @@ export async function sessionRoutes(server: FastifyInstance) {
               templateType === AssessmentType.ATTACHMENT_STYLE ? 'Attachment Style Inventory' :
               templateType === AssessmentType.ENNEAGRAM ? 'Enneagram' :
               templateType === AssessmentType.LIGHT_DARK_TRIAD ? 'Light & Dark Triad' :
+              templateType === AssessmentType.JUNGIAN_ARCHETYPES ? 'Jungian Archetypes' :
               'Big Five Personality'
             const observation = await generateDeltaObservation(frameworkTitle, deltas)
             await prisma.profile.update({
