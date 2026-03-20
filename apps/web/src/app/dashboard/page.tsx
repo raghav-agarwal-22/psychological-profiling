@@ -601,27 +601,18 @@ export default function DashboardPage() {
       )}
 
       {/* AI Coach CTA */}
-      <div className="mb-8 rounded-2xl border border-amber-500/25 bg-gradient-to-r from-amber-500/5 to-stone-900/30 p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-start gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/10 text-xl">
-              ◎
-            </div>
-            <div>
-              <h2 className="font-serif text-lg text-stone-100">Talk to your coach</h2>
-              <p className="mt-0.5 text-sm text-stone-400">
-                Your AI coach knows your full psychological profile. Ask anything.
-              </p>
-            </div>
+      <Link href="/coach" className="mb-8 block rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 hover:border-amber-500/50 hover:bg-amber-500/10 transition-colors">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/20">
+            <span className="text-xl">◈</span>
           </div>
-          <Link
-            href="/coach"
-            className="shrink-0 rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
-          >
-            Start a conversation
-          </Link>
+          <div>
+            <p className="font-serif text-stone-100">Talk to your coach</p>
+            <p className="text-xs text-stone-400">Explore your profile in conversation</p>
+          </div>
+          <span className="ml-auto text-stone-500">→</span>
         </div>
-      </div>
+      </Link>
 
       {/* Growth recommendations */}
       {(recommendations || recommendationsLoading) && sessions.length > 0 && (() => {

@@ -11,73 +11,63 @@ function buildCoachSystemPrompt(
     dimensions: unknown
     archetypes: unknown
     values: unknown
-    blindSpots: unknown
     strengths: unknown
+    blindSpots: unknown
     rawOutput: unknown
   } | null,
   synthesis: string | null,
 ): string {
-  if (!profile) {
-    return `You are a warm, psychologically-informed life coach. The user hasn't completed any assessments yet.
+  const profileSection = profile
+    ? `
+## Psychological Profile
 
-Encourage them to explore Innermind's assessments to unlock a personalized coaching experience.
-Be warm, curious, and supportive. Ask open questions that help them reflect on what they're seeking.`
-  }
+**Summary:** ${profile.summary}
 
-  const raw = profile.rawOutput as Record<string, unknown> | null
-  const templateType = (raw?.templateType as string) ?? 'BIG_FIVE'
-  const frameworkName =
-    templateType === 'VALUES_INVENTORY'
-      ? 'Schwartz Values Inventory'
-      : templateType === 'ATTACHMENT_STYLE'
-        ? 'Attachment Style Inventory'
-        : 'Big Five Personality'
+**Personality dimensions:**
+${Object.entries(profile.dimensions as Record<string, { normalized: number }>)
+  .sort(([, a], [, b]) => b.normalized - a.normalized)
+  .map(([k, v]) => `- ${k}: ${v.normalized}/100`)
+  .join('\n')}
 
-  const dims = (profile.dimensions as Record<string, { normalized: number }>) ?? {}
-  const dimLines = Object.entries(dims)
-    .sort(([, a], [, b]) => b.normalized - a.normalized)
-    .map(([k, v]) => `  - ${k}: ${v.normalized}/100`)
-    .join('\n')
+**Dominant archetypes:** ${(profile.archetypes as string[]).join(', ')}
+**Core values:** ${(profile.values as string[]).join(', ')}
+**Key strengths:** ${(profile.strengths as string[]).join(', ')}
+**Growth areas (blind spots):** ${(profile.blindSpots as string[]).join(', ')}
+`
+    : 'No psychological profile on file yet — user has not completed an assessment.'
 
-  const archetypes = (profile.archetypes as string[]) ?? []
-  const values = (profile.values as string[]) ?? []
-  const blindSpots = (profile.blindSpots as string[]) ?? []
-  const strengths = (profile.strengths as string[]) ?? []
+  const synthesisSection = synthesis
+    ? `
+## Cross-framework synthesis
+${synthesis}
+`
+    : ''
 
-  return `You are a deeply knowledgeable, compassionate psychological life coach. You have access to this person's full psychological profile from Innermind's assessments. Use this context to provide personalized, grounded coaching.
+  return `You are a compassionate, insightful AI life coach and psychological guide for Innermind. You have deep training in humanistic psychology, Jungian archetypes, attachment theory, and values-based coaching.
 
-## This person's psychological profile
+Your role is to help this person navigate their inner life — processing emotions, understanding behavioral patterns, working toward meaningful change, and building self-awareness.
 
-**Framework:** ${frameworkName}
+Here is what you know about this person:
+${profileSection}
+${synthesisSection}
 
-**Dimension scores:**
-${dimLines}
+## How to coach
 
-**Dominant archetype:** ${archetypes[0] ?? 'Unknown'}
-**Core values:** ${values.join(', ') || 'Not yet assessed'}
-**Identified strengths:** ${strengths.join(', ') || 'None identified'}
-**Growth areas / blind spots:** ${blindSpots.join(', ') || 'None identified'}
+- **Ground responses in their actual profile** — reference specific dimensions, archetypes, or values when relevant. Do not be generic.
+- **Be warm but honest** — not a cheerleader, not a therapist, but a wise guide
+- **Use Socratic questioning** — help them discover insights themselves
+- **Acknowledge complexity** — inner life is nuanced, resist oversimplification
+- **Be concise** — aim for 2-4 paragraphs max unless depth is genuinely needed
+- **Never diagnose** — you are a coach, not a clinician
+- **Refer to their actual archetype and values** naturally when they come up
 
-**Profile summary:**
-${profile.summary}
-
-${synthesis ? `**Cross-framework synthesis:**\n${synthesis}` : ''}
-
-## Your coaching style
-
-- Warm, direct, and psychologically sophisticated — not generic chatbot advice
-- Ground your responses in their actual profile data when relevant
-- Ask one powerful question at the end of each response when appropriate
-- Reference their specific scores, archetypes, or patterns naturally in conversation
-- Do not be preachy. Be like a trusted, insightful friend who happens to know a lot about psychology.
-- Keep responses focused: 3-5 sentences for simple questions, longer for complex explorations
-- You are NOT a therapist — refer them to professional support for clinical concerns`
+Speak as if you know this person and have been following their journey.`
 }
 
 export async function coachRoutes(server: FastifyInstance) {
   server.addHook('preHandler', requireAuth)
 
-  // GET /api/coach/conversations — list user's coach conversations
+  // GET /api/coach/conversations — list all conversations
   server.get('/conversations', async (req, reply) => {
     const conversations = await prisma.coachConversation.findMany({
       where: { userId: req.user.userId },
@@ -89,7 +79,7 @@ export async function coachRoutes(server: FastifyInstance) {
         updatedAt: true,
         messages: {
           take: 1,
-          orderBy: { createdAt: 'asc' },
+          orderBy: { createdAt: 'desc' },
           select: { content: true, role: true },
         },
       },
@@ -100,64 +90,49 @@ export async function coachRoutes(server: FastifyInstance) {
   // POST /api/coach/conversations — create a new conversation
   server.post('/conversations', async (req, reply) => {
     const conversation = await prisma.coachConversation.create({
-      data: { userId: req.user.userId },
+      data: {
+        userId: req.user.userId,
+        title: (req.body as { title?: string })?.title ?? null,
+      },
       select: { id: true, title: true, createdAt: true },
     })
     return reply.status(201).send({ conversation })
   })
 
-  // GET /api/coach/conversations/:id — get a conversation with messages
-  server.get<{ Params: { id: string } }>('/conversations/:id', async (req, reply) => {
+  // GET /api/coach/conversations/:id/messages — load messages for a conversation
+  server.get<{ Params: { id: string } }>('/conversations/:id/messages', async (req, reply) => {
     const conversation = await prisma.coachConversation.findFirst({
       where: { id: req.params.id, userId: req.user.userId },
       include: {
-        messages: { orderBy: { createdAt: 'asc' } },
+        messages: {
+          orderBy: { createdAt: 'asc' },
+          select: { id: true, role: true, content: true, createdAt: true },
+        },
       },
     })
-    if (!conversation) {
-      return reply.status(404).send({ error: 'Conversation not found' })
-    }
+    if (!conversation) return reply.status(404).send({ error: 'Conversation not found' })
     return reply.send({ conversation })
   })
 
-  // POST /api/coach/conversations/:id/messages — send a message (streaming)
-  server.post<{ Params: { id: string }; Body: { content: string } }>(
-    '/conversations/:id/messages',
+  // POST /api/coach/conversations/:id/message — send a message, stream response
+  server.post<{ Params: { id: string }; Body: { message: string } }>(
+    '/conversations/:id/message',
     async (req, reply) => {
-      const { content } = req.body as { content?: string }
-      if (!content?.trim()) {
-        return reply.status(400).send({ error: 'Message content is required' })
+      const { message } = req.body as { message?: string }
+      if (!message?.trim()) {
+        return reply.status(400).send({ error: 'message is required' })
       }
 
-      // Verify conversation belongs to user
       const conversation = await prisma.coachConversation.findFirst({
         where: { id: req.params.id, userId: req.user.userId },
-        include: { messages: { orderBy: { createdAt: 'asc' } } },
-      })
-      if (!conversation) {
-        return reply.status(404).send({ error: 'Conversation not found' })
-      }
-
-      // Save the user message
-      await prisma.coachMessage.create({
-        data: {
-          conversationId: conversation.id,
-          role: 'user',
-          content: content.trim(),
+        include: {
+          messages: { orderBy: { createdAt: 'asc' }, select: { role: true, content: true } },
         },
       })
+      if (!conversation) return reply.status(404).send({ error: 'Conversation not found' })
 
-      // Auto-title the conversation from first message
-      if (!conversation.title && conversation.messages.length === 0) {
-        const short = content.trim().slice(0, 60)
-        await prisma.coachConversation.update({
-          where: { id: conversation.id },
-          data: { title: short + (content.length > 60 ? '\u2026' : '') },
-        })
-      }
-
-      // Fetch user's latest profile + synthesis for context
-      const [latestProfile, user] = await Promise.all([
+      // Load user profile and synthesis
+      const [profile, user] = await Promise.all([
         prisma.profile.findFirst({
           where: { userId: req.user.userId, isLatest: true },
           select: {
@@ -165,8 +140,8 @@ export async function coachRoutes(server: FastifyInstance) {
             dimensions: true,
             archetypes: true,
             values: true,
-            blindSpots: true,
             strengths: true,
+            blindSpots: true,
             rawOutput: true,
           },
         }),
@@ -176,16 +151,32 @@ export async function coachRoutes(server: FastifyInstance) {
         }),
       ])
 
-      const systemPrompt = buildCoachSystemPrompt(latestProfile, user?.synthesis ?? null)
+      // Save user message
+      await prisma.coachMessage.create({
+        data: { conversationId: conversation.id, role: 'user', content: message.trim() },
+      })
+
+      // Auto-title the conversation after first message
+      if (!conversation.title && conversation.messages.length === 0) {
+        const shortTitle = message.trim().slice(0, 60) + (message.trim().length > 60 ? '\u2026' : '')
+        await prisma.coachConversation.update({
+          where: { id: conversation.id },
+          data: { title: shortTitle },
+        })
+      }
 
       // Build message history for Claude
-      const history = conversation.messages.map((m) => ({
-        role: m.role as 'user' | 'assistant',
-        content: m.content,
-      }))
-      history.push({ role: 'user', content: content.trim() })
+      const history: Array<{ role: 'user' | 'assistant'; content: string }> = [
+        ...conversation.messages.map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        })),
+        { role: 'user', content: message.trim() },
+      ]
 
-      // Stream the response
+      const systemPrompt = buildCoachSystemPrompt(profile, user?.synthesis ?? null)
+
+      // Stream response
       reply.hijack()
       const origin = req.headers.origin ?? '*'
       reply.raw.setHeader('Content-Type', 'text/plain; charset=utf-8')
@@ -205,24 +196,21 @@ export async function coachRoutes(server: FastifyInstance) {
         })
         for await (const chunk of stream) {
           if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-            reply.raw.write(chunk.delta.text)
-            fullResponse += chunk.delta.text
+            const text = chunk.delta.text
+            fullResponse += text
+            reply.raw.write(text)
           }
         }
       } finally {
         reply.raw.end()
       }
 
-      // Persist assistant response
+      // Save assistant message
       await prisma.coachMessage.create({
-        data: {
-          conversationId: conversation.id,
-          role: 'assistant',
-          content: fullResponse,
-        },
+        data: { conversationId: conversation.id, role: 'assistant', content: fullResponse },
       })
 
-      // Touch conversation updatedAt
+      // Update conversation timestamp
       await prisma.coachConversation.update({
         where: { id: conversation.id },
         data: { updatedAt: new Date() },

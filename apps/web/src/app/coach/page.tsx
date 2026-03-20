@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 
@@ -34,33 +35,34 @@ interface ConversationListItem {
 
 // ─── Suggested starter prompts ────────────────────────────────────────────────
 
-const SUGGESTED_STARTERS = [
-  'What does my profile say about how I handle stress?',
-  'Help me understand my biggest blind spots.',
-  "What patterns in my personality might be holding me back in relationships?",
-  "Based on my profile, what kind of career environment would suit me best?",
+const STARTERS = [
+  "Why do I keep repeating the same patterns in relationships?",
+  "Help me understand my shadow — what am I not seeing about myself?",
+  "What should I focus on growing in the next 3 months?",
+  "I'm at a crossroads in my career. What does my profile say?",
+  "Why do I struggle with [anxiety/intimacy/commitment]?",
 ]
 
 // ─── Streaming fetch helper ───────────────────────────────────────────────────
 
 async function streamMessage(
   conversationId: string,
-  content: string,
+  message: string,
   token: string,
   onChunk: (chunk: string) => void,
 ): Promise<void> {
-  const res = await fetch(`${API_URL}/api/coach/conversations/${conversationId}/messages`, {
+  const res = await fetch(`${API_URL}/api/coach/conversations/${conversationId}/message`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ content }),
+    body: JSON.stringify({ message }),
   })
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({ error: 'Unknown error' }))
-    throw new Error(body.error ?? `HTTP ${res.status}`)
+    throw new Error((body as { error?: string }).error ?? `HTTP ${res.status}`)
   }
 
   if (!res.body) throw new Error('No response body')
@@ -90,7 +92,7 @@ function MessageBubble({
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
         <div className="mr-3 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/10 text-xs text-amber-400">
-          ◎
+          ◈
         </div>
       )}
       <div
@@ -136,7 +138,16 @@ function Sidebar({
 }) {
   return (
     <aside className="flex h-full w-64 shrink-0 flex-col border-r border-stone-800 bg-stone-950">
-      <div className="border-b border-stone-800 p-4">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-stone-800 px-4 py-4">
+        <Link href="/dashboard" className="text-xs text-stone-600 transition-colors hover:text-stone-400">
+          ← Dashboard
+        </Link>
+        <span className="font-serif text-sm text-stone-400">Coach</span>
+      </div>
+
+      {/* New conversation button */}
+      <div className="border-b border-stone-800 p-3">
         <button
           onClick={onNew}
           disabled={creating}
@@ -151,6 +162,7 @@ function Sidebar({
         </button>
       </div>
 
+      {/* Conversation list */}
       <div className="flex-1 overflow-y-auto py-2">
         {conversations.length === 0 ? (
           <p className="px-4 py-6 text-center text-xs text-stone-600">No conversations yet</p>
@@ -188,13 +200,13 @@ function Sidebar({
   )
 }
 
-// ─── Empty state ──────────────────────────────────────────────────────────────
+// ─── Empty conversation state ─────────────────────────────────────────────────
 
 function EmptyConversation({ onStarter }: { onStarter: (text: string) => void }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6">
+    <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/5">
-        <span className="text-3xl">◎</span>
+        <span className="text-3xl">◈</span>
       </div>
       <h2 className="mb-2 font-serif text-xl text-stone-100">Your AI Coach</h2>
       <p className="mb-8 max-w-sm text-center text-sm text-stone-500">
@@ -202,7 +214,7 @@ function EmptyConversation({ onStarter }: { onStarter: (text: string) => void })
         relationships, self-understanding.
       </p>
       <div className="grid w-full max-w-lg gap-2">
-        {SUGGESTED_STARTERS.map((starter) => (
+        {STARTERS.map((starter) => (
           <button
             key={starter}
             onClick={() => onStarter(starter)}
@@ -222,7 +234,7 @@ function NoConversationSelected({ onNew, creating }: { onNew: () => void; creati
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-6">
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-stone-800 bg-stone-900/50">
-        <span className="text-3xl text-stone-600">◎</span>
+        <span className="text-3xl text-stone-600">◈</span>
       </div>
       <h2 className="mb-2 font-serif text-xl text-stone-300">Select a conversation</h2>
       <p className="mb-6 text-sm text-stone-600">Or start a new one</p>
@@ -289,7 +301,7 @@ export default function CoachPage() {
 
     try {
       const data = await api.get<{ conversation: Conversation & { messages: Message[] } }>(
-        `/api/coach/conversations/${id}`,
+        `/api/coach/conversations/${id}/messages`,
         token,
       )
       setActiveConversation(data.conversation)
@@ -375,11 +387,10 @@ export default function CoachPage() {
         setMessages((prev) => [...prev, assistantMsg])
         setStreamingContent(null)
 
-        // Update conversation list: title may have been set from this first message
-        // Refresh the conversation from API to get the updated title
+        // Refresh to get auto-generated title
         const updatedConv = await api
           .get<{ conversation: Conversation & { messages: Message[] } }>(
-            `/api/coach/conversations/${activeConversation.id}`,
+            `/api/coach/conversations/${activeConversation.id}/messages`,
             token,
           )
           .catch(() => null)
@@ -429,7 +440,6 @@ export default function CoachPage() {
       let targetConvId = activeConversation?.id ?? null
 
       if (!targetConvId) {
-        // Create a new conversation first, then send directly using the returned id
         setCreatingConversation(true)
         try {
           const data = await api.post<{ conversation: Conversation }>(
@@ -492,7 +502,7 @@ export default function CoachPage() {
         // Refresh to get the auto-generated title
         const updatedConv = await api
           .get<{ conversation: Conversation & { messages: Message[] } }>(
-            `/api/coach/conversations/${targetConvId}`,
+            `/api/coach/conversations/${targetConvId}/messages`,
             token,
           )
           .catch(() => null)
@@ -595,13 +605,13 @@ export default function CoachPage() {
             </svg>
           </button>
 
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <h1 className="truncate font-serif text-base text-stone-200">
               {activeConversation?.title ?? (activeConversation ? 'New conversation' : 'AI Coach')}
             </h1>
           </div>
 
-          {/* New conversation button — visible on desktop when a conversation is active */}
+          {/* New conversation button — desktop only */}
           {activeConversation && (
             <button
               onClick={handleNewConversation}

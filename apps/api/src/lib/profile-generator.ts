@@ -326,7 +326,7 @@ export async function generateDailyReflectionPrompt(
       'Who in your life do you find yourself most relaxed around, and what does that say about what you need?',
       'If you could only keep three values from how you currently live, which would they be and why?',
     ]
-    return genericPrompts[Math.floor(Math.random() * genericPrompts.length)]
+    return genericPrompts[Math.floor(Math.random() * genericPrompts.length)]!
   }
 
   const topDims = Object.entries(profile.dimensions)
