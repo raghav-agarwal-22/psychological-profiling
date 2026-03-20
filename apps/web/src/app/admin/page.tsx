@@ -35,6 +35,18 @@ interface AtRiskSubscriber {
   expiresAt: string
 }
 
+interface FunnelStep {
+  label: string
+  count: number
+  dropoffRate: number
+  conversionFromPrev: number
+}
+
+interface FunnelMetrics {
+  steps: FunnelStep[]
+  overallConversion: number
+}
+
 interface RevenueMetrics {
   mrr: number
   arr: number
@@ -59,6 +71,21 @@ async function fetchMetrics(): Promise<Metrics | null> {
   const adminSecret = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
   try {
     const res = await fetch(`${apiUrl}/api/admin/metrics`, {
+      headers: { Authorization: `Bearer ${adminSecret}` },
+      next: { revalidate: 60 },
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+async function fetchFunnel(): Promise<FunnelMetrics | null> {
+  const apiUrl = process.env.API_URL ?? 'http://localhost:3001'
+  const adminSecret = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
+  try {
+    const res = await fetch(`${apiUrl}/api/admin/funnel`, {
       headers: { Authorization: `Bearer ${adminSecret}` },
       next: { revalidate: 60 },
     })
@@ -117,7 +144,7 @@ function formatCurrency(value: number) {
 }
 
 export default async function AdminPage() {
-  const [metrics, revenue] = await Promise.all([fetchMetrics(), fetchRevenue()])
+  const [metrics, revenue, funnel] = await Promise.all([fetchMetrics(), fetchRevenue(), fetchFunnel()])
 
   if (!metrics) {
     return (
@@ -251,6 +278,58 @@ export default async function AdminPage() {
                   ))}
                 </ul>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Conversion Funnel */}
+      {funnel && (
+        <div className="mb-12">
+          <div className="mb-4 flex items-center gap-3">
+            <h2 className="font-serif text-xl text-stone-200">Conversion Funnel</h2>
+            <span className="rounded-full border border-stone-700 bg-stone-800/50 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-stone-400">
+              Overall {funnel.overallConversion}% free→pro
+            </span>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-stone-800 bg-stone-900/50">
+            <div className="divide-y divide-stone-800/60">
+              {funnel.steps.map((step, i) => {
+                const maxCount = funnel.steps[0]?.count ?? 1
+                const barWidth = maxCount > 0 ? (step.count / maxCount) * 100 : 0
+                const isLast = i === funnel.steps.length - 1
+                return (
+                  <div key={step.label} className="px-5 py-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-stone-800 text-[10px] font-medium text-stone-400">
+                          {i + 1}
+                        </span>
+                        <span className="text-sm text-stone-300">{step.label}</span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm tabular-nums">
+                        <span className="text-stone-100">{step.count.toLocaleString()}</span>
+                        {i > 0 && (
+                          <span className={`text-xs ${step.conversionFromPrev >= 50 ? 'text-emerald-500' : step.conversionFromPrev >= 20 ? 'text-amber-500' : 'text-red-500'}`}>
+                            {step.conversionFromPrev}% from prev
+                          </span>
+                        )}
+                        {!isLast && step.dropoffRate > 0 && (
+                          <span className="text-xs text-stone-500">
+                            -{step.dropoffRate}% drop
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
+                      <div
+                        className={`h-full rounded-full transition-all ${isLast ? 'bg-emerald-500' : 'bg-indigo-500/70'}`}
+                        style={{ width: `${barWidth}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

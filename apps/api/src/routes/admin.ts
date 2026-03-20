@@ -74,6 +74,72 @@ export async function adminRoutes(server: FastifyInstance) {
     })
   })
 
+  // GET /api/admin/funnel — conversion funnel: signup → assessment → profile → pro
+  server.get('/funnel', async (_req, reply) => {
+    const [
+      totalUsers,
+      usersStartedAssessment,
+      usersCompletedAssessment,
+      usersWithProfile,
+      proUsers,
+    ] = await Promise.all([
+      prisma.user.count(),
+      prisma.assessment.findMany({
+        distinct: ['userId'],
+        select: { userId: true },
+      }).then((r) => r.length),
+      prisma.assessment.findMany({
+        where: { status: 'COMPLETED' },
+        distinct: ['userId'],
+        select: { userId: true },
+      }).then((r) => r.length),
+      prisma.profile.findMany({
+        distinct: ['userId'],
+        select: { userId: true },
+      }).then((r) => r.length),
+      prisma.user.count({ where: { subscriptionTier: 'pro' } }),
+    ])
+
+    const pct = (num: number, denom: number) =>
+      denom > 0 ? Math.round((num / denom) * 1000) / 10 : 0
+
+    return reply.send({
+      steps: [
+        {
+          label: 'Signed up',
+          count: totalUsers,
+          dropoffRate: 0,
+          conversionFromPrev: 100,
+        },
+        {
+          label: 'Started assessment',
+          count: usersStartedAssessment,
+          dropoffRate: pct(totalUsers - usersStartedAssessment, totalUsers),
+          conversionFromPrev: pct(usersStartedAssessment, totalUsers),
+        },
+        {
+          label: 'Completed assessment',
+          count: usersCompletedAssessment,
+          dropoffRate: pct(usersStartedAssessment - usersCompletedAssessment, usersStartedAssessment),
+          conversionFromPrev: pct(usersCompletedAssessment, usersStartedAssessment),
+        },
+        {
+          label: 'Profile generated',
+          count: usersWithProfile,
+          dropoffRate: pct(usersCompletedAssessment - usersWithProfile, usersCompletedAssessment),
+          conversionFromPrev: pct(usersWithProfile, usersCompletedAssessment),
+        },
+        {
+          label: 'Upgraded to Pro',
+          count: proUsers,
+          dropoffRate: pct(usersWithProfile - proUsers, usersWithProfile),
+          conversionFromPrev: pct(proUsers, usersWithProfile),
+        },
+      ],
+      overallConversion: pct(proUsers, totalUsers),
+    })
+  })
+
   // GET /api/admin/revenue — subscription and revenue analytics
   server.get('/revenue', async (_req, reply) => {
     const now = Date.now()
