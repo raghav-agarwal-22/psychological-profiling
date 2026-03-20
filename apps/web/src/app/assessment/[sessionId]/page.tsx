@@ -214,7 +214,7 @@ function AssessmentFlow() {
 
       posthog.capture('assessment_completed', { framework: templateInfo?.type })
       trackAssessmentComplete(templateInfo?.type ?? 'unknown')
-      router.push(`/profile/${profile.id}`)
+      router.push(`/profile/${profile.id}?new=1`)
     } catch {
       setAnalyzing(false)
     }
