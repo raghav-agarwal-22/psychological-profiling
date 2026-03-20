@@ -4,9 +4,33 @@ import { LaunchBanner } from '@/components/LaunchBanner'
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
 
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Innermind',
+  url: 'https://innermind.app',
+  logo: 'https://innermind.app/icon.png',
+  description: 'Psychological profiling platform — Big Five, Jungian Archetypes, Attachment Style, Enneagram, Values Inventory, and Light/Dark Triad synthesized by AI into one psychological portrait.',
+  sameAs: [],
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Innermind',
+  url: 'https://innermind.app',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://innermind.app/blog?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+}
+
 export default function HomePage() {
   return (
     <div className="flex flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <LaunchBanner />
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 py-32 text-center">

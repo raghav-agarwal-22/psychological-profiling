@@ -167,14 +167,49 @@ function formatDate(iso: string) {
   })
 }
 
+const WEB_URL = 'https://innermind.app'
+
 export default function BlogPostPage({ params }: Props) {
   const post = getPost(params.slug)
   if (!post) notFound()
 
   const related = relatedAssessments[post.slug]
+  const postUrl = `${WEB_URL}/blog/${post.slug}`
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: { '@type': 'Organization', name: 'Innermind', url: WEB_URL },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Innermind',
+      url: WEB_URL,
+      logo: { '@type': 'ImageObject', url: `${WEB_URL}/icon.png` },
+    },
+    url: postUrl,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+    keywords: post.keywords.join(', '),
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: WEB_URL },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${WEB_URL}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+    ],
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+
       {/* Breadcrumb */}
       <div className="mb-8 flex items-center gap-2 text-sm text-stone-500">
         <Link href="/blog" className="hover:text-stone-300 transition">Blog</Link>

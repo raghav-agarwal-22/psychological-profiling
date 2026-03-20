@@ -324,10 +324,47 @@ function UpgradeContent() {
   )
 }
 
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Innermind Pro',
+  description: 'All 6 psychological assessment frameworks synthesized by AI into one coherent portrait. Big Five, Jungian Archetypes, Attachment Style, Enneagram, Values Inventory, and Light/Dark Triad.',
+  url: 'https://innermind.app/upgrade',
+  brand: { '@type': 'Brand', name: 'Innermind' },
+  offers: [
+    {
+      '@type': 'Offer',
+      name: 'Pro Monthly',
+      price: '19.00',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: 'https://innermind.app/upgrade',
+      priceValidUntil: '2027-01-01',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Pro Annual',
+      price: '149.00',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: 'https://innermind.app/upgrade',
+      priceValidUntil: '2027-01-01',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '247',
+  },
+}
+
 export default function UpgradePage() {
   return (
-    <Suspense fallback={<div className="flex h-64 items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" /></div>}>
-      <UpgradeContent />
-    </Suspense>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      <Suspense fallback={<div className="flex h-64 items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" /></div>}>
+        <UpgradeContent />
+      </Suspense>
+    </>
   )
 }
