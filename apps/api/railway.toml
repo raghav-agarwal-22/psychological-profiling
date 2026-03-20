@@ -3,8 +3,8 @@ builder = "NIXPACKS"
 buildCommand = "cd ../.. && pnpm install --frozen-lockfile && pnpm --filter @innermind/db build && pnpm --filter @innermind/api build"
 
 [deploy]
-startCommand = "node apps/api/dist/index.js"
-healthcheckPath = "/health"
+startCommand = "pnpm --filter @innermind/db migrate:deploy && node apps/api/dist/index.js"
+healthcheckPath = "/api/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5
