@@ -47,20 +47,20 @@ export async function assessmentRoutes(server: FastifyInstance) {
       return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
     }
 
-    // Pro-only assessment types
-    const PRO_TYPES: AssessmentType[] = [
+    // Essential+ assessment types (Values, Attachment, Enneagram, Light & Dark Triad)
+    const ESSENTIAL_TYPES: AssessmentType[] = [
       AssessmentType.VALUES_INVENTORY,
       AssessmentType.ATTACHMENT_STYLE,
       AssessmentType.ENNEAGRAM,
       AssessmentType.LIGHT_DARK_TRIAD,
     ]
-    if (PRO_TYPES.includes(body.data.type)) {
+    if (ESSENTIAL_TYPES.includes(body.data.type)) {
       const user = await prisma.user.findUnique({
         where: { id: req.user.userId },
         select: { subscriptionTier: true },
       })
-      if (user?.subscriptionTier !== 'pro') {
-        return reply.status(403).send({ error: 'Pro subscription required for this assessment type', upgradeUrl: '/upgrade' })
+      if (user?.subscriptionTier !== 'pro' && user?.subscriptionTier !== 'essential') {
+        return reply.status(403).send({ error: 'Essential or Pro subscription required for this assessment type', upgradeUrl: '/upgrade' })
       }
     }
 

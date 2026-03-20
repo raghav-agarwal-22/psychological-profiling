@@ -15,7 +15,24 @@ function getSubPeriodEnd(sub: Stripe.Subscription): number {
   return (sub as unknown as Record<string, number>)['current_period_end'] ?? 0
 }
 
-const PRO_PRICE_ID = process.env.STRIPE_PRO_PRICE_ID ?? 'price_placeholder'
+const PRICE_IDS = {
+  essential_monthly: process.env.STRIPE_ESSENTIAL_MONTHLY_PRICE_ID ?? 'price_essential_monthly_placeholder',
+  essential_annual: process.env.STRIPE_ESSENTIAL_ANNUAL_PRICE_ID ?? 'price_essential_annual_placeholder',
+  pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID ?? (process.env.STRIPE_PRO_PRICE_ID ?? 'price_pro_monthly_placeholder'),
+  pro_annual: process.env.STRIPE_PRO_ANNUAL_PRICE_ID ?? 'price_pro_annual_placeholder',
+} as const
+
+// Reverse-lookup: price ID → { tier, interval }
+function tierFromPriceId(priceId: string): { tier: 'essential' | 'pro'; interval: 'monthly' | 'annual' } | null {
+  for (const [key, id] of Object.entries(PRICE_IDS)) {
+    if (id === priceId) {
+      const [tier, interval] = key.split('_') as ['essential' | 'pro', 'monthly' | 'annual']
+      return { tier, interval }
+    }
+  }
+  return null
+}
+
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
@@ -41,13 +58,19 @@ async function capturePosthogEvent(
 export async function billingRoutes(server: FastifyInstance) {
   // POST /api/billing/checkout — create Stripe Checkout session (auth required)
   server.post('/checkout', { preHandler: requireAuth }, async (req, reply) => {
+    const body = req.body as { tier?: string; interval?: string }
+    const tier = (body.tier === 'essential' || body.tier === 'pro') ? body.tier : 'pro'
+    const interval = (body.interval === 'annual') ? 'annual' : 'monthly'
+    const priceKey = `${tier}_${interval}` as keyof typeof PRICE_IDS
+    const priceId = PRICE_IDS[priceKey]
+
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { email: true, stripeCustomerId: true, subscriptionTier: true },
+      select: { email: true, stripeCustomerId: true, subscriptionTier: true, trialEndsAt: true, stripeSubscriptionId: true },
     })
     if (!user) return reply.status(404).send({ error: 'User not found' })
-    if (user.subscriptionTier === 'pro') {
-      return reply.status(400).send({ error: 'Already subscribed to Pro' })
+    if (user.subscriptionTier === tier) {
+      return reply.status(400).send({ error: `Already subscribed to ${tier}` })
     }
 
     // Create or reuse Stripe customer
@@ -61,26 +84,22 @@ export async function billingRoutes(server: FastifyInstance) {
       })
     }
 
-    // Check if user is eligible for trial (never had a subscription or trial)
-    // Check both stripeSubscriptionId (active) and trialEndsAt (had trial before, may have cancelled)
-    const existingData = await prisma.user.findUnique({
-      where: { id: req.user.userId },
-      select: { trialEndsAt: true, stripeSubscriptionId: true },
-    })
-    const hasHadTrial = !!(existingData?.stripeSubscriptionId || existingData?.trialEndsAt)
+    // Trial eligibility: trial only applies to Pro; never had a subscription or trial before
+    const hasHadTrial = !!(user.stripeSubscriptionId || user.trialEndsAt)
+    const trialEligible = tier === 'pro' && !hasHadTrial
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
-      line_items: [{ price: PRO_PRICE_ID, quantity: 1 }],
+      line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
-      subscription_data: hasHadTrial ? undefined : { trial_period_days: 7 },
+      subscription_data: trialEligible ? { trial_period_days: 7 } : undefined,
       success_url: `${WEB_URL}/dashboard?upgraded=1`,
       cancel_url: `${WEB_URL}/upgrade?cancelled=1`,
       metadata: { userId: req.user.userId },
     })
 
-    return reply.send({ url: session.url, hasTrial: !hasHadTrial })
+    return reply.send({ url: session.url, hasTrial: trialEligible })
   })
 
   // POST /api/billing/portal — create Stripe Customer Portal session
@@ -125,10 +144,16 @@ export async function billingRoutes(server: FastifyInstance) {
         const sub = await stripe.subscriptions.retrieve(session.subscription as string)
         const isTrialing = sub.status === 'trialing'
         const trialEnd = (sub as unknown as Record<string, number | null>)['trial_end']
+        // Derive tier and interval from the price ID on the subscription
+        const subPriceId = sub.items.data[0]?.price.id ?? ''
+        const tierInfo = tierFromPriceId(subPriceId)
+        const resolvedTier = tierInfo?.tier ?? 'pro'
+        const resolvedInterval = tierInfo?.interval ?? 'monthly'
         await prisma.user.update({
           where: { id: userId },
           data: {
-            subscriptionTier: 'pro',
+            subscriptionTier: resolvedTier,
+            subscriptionInterval: resolvedInterval,
             stripeSubscriptionId: sub.id,
             subscriptionExpiresAt: new Date(getSubPeriodEnd(sub) * 1000),
             trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
@@ -138,10 +163,13 @@ export async function billingRoutes(server: FastifyInstance) {
           await capturePosthogEvent(userId, 'trial_started', {
             trial_end_at: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
             subscription_id: sub.id,
+            tier: resolvedTier,
           })
         } else {
-          await capturePosthogEvent(userId, 'pro_subscription_started', {
+          await capturePosthogEvent(userId, 'subscription_started', {
             subscription_id: sub.id,
+            tier: resolvedTier,
+            interval: resolvedInterval,
           })
         }
       }
@@ -153,6 +181,7 @@ export async function billingRoutes(server: FastifyInstance) {
         where: { stripeSubscriptionId: sub.id },
         data: {
           subscriptionTier: 'free',
+          subscriptionInterval: null,
           stripeSubscriptionId: null,
           subscriptionExpiresAt: null,
           trialEndsAt: null,
@@ -167,6 +196,10 @@ export async function billingRoutes(server: FastifyInstance) {
       const trialEnd = (sub as unknown as Record<string, number | null>)['trial_end']
       const previousAttributes = (event.data as unknown as Record<string, unknown>)['previous_attributes'] as Record<string, unknown> | undefined
       const wasTrialing = (previousAttributes as Record<string, unknown> | undefined)?.['status'] === 'trialing'
+      const subPriceId = sub.items.data[0]?.price.id ?? ''
+      const tierInfo = tierFromPriceId(subPriceId)
+      const resolvedTier = tierInfo?.tier ?? 'pro'
+      const resolvedInterval = tierInfo?.interval ?? 'monthly'
       const updatedUsers = await prisma.user.findMany({
         where: { stripeSubscriptionId: sub.id },
         select: { id: true },
@@ -174,7 +207,8 @@ export async function billingRoutes(server: FastifyInstance) {
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: {
-          subscriptionTier: active ? 'pro' : 'free',
+          subscriptionTier: active ? resolvedTier : 'free',
+          subscriptionInterval: active ? resolvedInterval : null,
           subscriptionExpiresAt: active ? new Date(getSubPeriodEnd(sub) * 1000) : null,
           trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
         },
@@ -184,6 +218,7 @@ export async function billingRoutes(server: FastifyInstance) {
         for (const user of updatedUsers) {
           await capturePosthogEvent(user.id, 'trial_converted', {
             subscription_id: sub.id,
+            tier: resolvedTier,
           })
         }
       }
@@ -221,7 +256,7 @@ export async function billingRoutes(server: FastifyInstance) {
 
     const users = await prisma.user.findMany({
       where: {
-        subscriptionTier: 'pro',
+        subscriptionTier: { in: ['pro', 'essential'] },
         trialEndsAt: { gte: windowStart, lte: windowEnd },
       },
       select: { id: true, email: true, name: true, trialEndsAt: true },
@@ -262,7 +297,7 @@ export async function billingRoutes(server: FastifyInstance) {
   server.get('/status', { preHandler: requireAuth }, async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { subscriptionTier: true, subscriptionExpiresAt: true, trialEndsAt: true },
+      select: { subscriptionTier: true, subscriptionInterval: true, subscriptionExpiresAt: true, trialEndsAt: true },
     })
     const now = new Date()
     const trialEndsAt = user?.trialEndsAt ?? null
@@ -270,9 +305,13 @@ export async function billingRoutes(server: FastifyInstance) {
     const trialDaysRemaining = isOnTrial
       ? Math.ceil((trialEndsAt!.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
       : null
+    const tier = user?.subscriptionTier ?? 'free'
     return reply.send({
-      tier: user?.subscriptionTier ?? 'free',
-      isPro: user?.subscriptionTier === 'pro',
+      tier,
+      interval: user?.subscriptionInterval ?? null,
+      isPro: tier === 'pro',
+      isEssential: tier === 'essential',
+      isPaid: tier === 'pro' || tier === 'essential',
       expiresAt: user?.subscriptionExpiresAt ?? null,
       isOnTrial,
       trialEndsAt,

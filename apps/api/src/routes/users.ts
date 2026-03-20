@@ -306,6 +306,18 @@ export async function userRoutes(server: FastifyInstance) {
       return reply.status(400).send({ error: 'Invalid request', issues: parsed.error.issues })
     }
 
+    // Essential tier: limit to 30 journal entries
+    const userTier = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { subscriptionTier: true },
+    })
+    if (userTier?.subscriptionTier === 'essential') {
+      const count = await prisma.journalEntry.count({ where: { userId: req.user.userId } })
+      if (count >= 30) {
+        return reply.status(403).send({ error: 'Journal entry limit reached (30). Upgrade to Pro for unlimited entries.', upgradeUrl: '/upgrade' })
+      }
+    }
+
     // Verify profileId belongs to this user if provided
     if (parsed.data.profileId) {
       const profile = await prisma.profile.findFirst({
