@@ -304,6 +304,7 @@ export default function DashboardPage() {
 
   // Subscription state
   const [isPro, setIsPro] = useState(false)
+  const [isEssential, setIsEssential] = useState(false)
   const [trialDaysRemaining, setTrialDaysRemaining] = useState<number | null>(null)
 
   // Onboarding welcome modal
@@ -337,7 +338,7 @@ export default function DashboardPage() {
       api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
       api.get<DailyPromptData>('/api/users/me/daily-prompt', token).catch(() => null),
       api.get<{ emailDigestOptIn: boolean }>('/api/users/me/digest-preferences', token).catch(() => null),
-      api.get<{ tier: string; isPro: boolean; expiresAt: string | null; isOnTrial: boolean; trialDaysRemaining: number | null }>('/api/billing/status', token).catch(() => null),
+      api.get<{ tier: string; isPro: boolean; isEssential: boolean; isPaid: boolean; expiresAt: string | null; isOnTrial: boolean; trialDaysRemaining: number | null }>('/api/billing/status', token).catch(() => null),
     ])
       .then(([sessionData, journalData, nudgeData, promptData, digestPrefs, billingStatus]) => {
         setSessions(sessionData.sessions)
@@ -350,6 +351,7 @@ export default function DashboardPage() {
         if (digestPrefs) setDigestOptIn(digestPrefs.emailDigestOptIn)
         if (billingStatus) {
           setIsPro(billingStatus.isPro)
+          setIsEssential(billingStatus.isEssential)
           if (billingStatus.isOnTrial && billingStatus.trialDaysRemaining !== null) {
             setTrialDaysRemaining(billingStatus.trialDaysRemaining)
           }
@@ -605,6 +607,11 @@ export default function DashboardPage() {
               Pro
             </span>
           )}
+          {isEssential && !isPro && (
+            <span className="rounded-full border border-stone-600 bg-stone-800 px-2.5 py-0.5 text-xs font-semibold text-stone-300">
+              Essential
+            </span>
+          )}
         </div>
         <Link
           href="/assessment"
@@ -698,15 +705,30 @@ export default function DashboardPage() {
       )}
 
       {/* Upgrade banner — shown to free users only */}
-      {!isPro && (
+      {!isPro && !isEssential && (
         <div className="mb-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-medium text-stone-200">Upgrade to Innermind Pro</p>
-              <p className="text-xs text-stone-400 mt-0.5">Unlock all 5 frameworks, AI coach, and more — $9/month</p>
+              <p className="text-sm font-medium text-stone-200">Unlock your full psychological profile</p>
+              <p className="text-xs text-stone-400 mt-0.5">Essential ($9/mo) — all 5 frameworks + full portrait · Pro ($19/mo) — adds AI coach</p>
             </div>
-            <Link href="/upgrade" className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 hover:bg-amber-400">
-              Upgrade →
+            <Link href="/upgrade" className="shrink-0 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-stone-950 hover:bg-amber-400">
+              See plans →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Upgrade to Pro banner — shown to Essential users only */}
+      {isEssential && !isPro && (
+        <div className="mb-6 rounded-xl border border-stone-700 bg-stone-900/40 p-4">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-stone-200">Upgrade to Pro for AI coaching</p>
+              <p className="text-xs text-stone-400 mt-0.5">Unlimited AI coach, adaptive deep-dive, and compatibility mapping — $19/mo</p>
+            </div>
+            <Link href="/upgrade" className="shrink-0 rounded-lg border border-amber-500/40 px-3 py-1.5 text-xs font-semibold text-amber-400 hover:bg-amber-500/10">
+              Upgrade to Pro →
             </Link>
           </div>
         </div>
