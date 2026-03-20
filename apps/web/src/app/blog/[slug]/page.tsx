@@ -61,6 +61,66 @@ const categoryColors: Record<string, string> = {
   'Personal Growth': 'text-sky-400 bg-sky-400/10',
 }
 
+interface RelatedAssessment {
+  label: string
+  title: string
+  description: string
+  href: string
+  icon: string
+}
+
+const relatedAssessments: Record<string, RelatedAssessment> = {
+  'what-is-big-five-personality-test': {
+    label: 'Take the assessment',
+    title: 'Measure your Big Five personality',
+    description: 'Get your OCEAN scores across all five dimensions in 10–15 minutes.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'big-five-vs-mbti': {
+    label: 'Take the assessment',
+    title: 'Try the science-backed alternative',
+    description: 'Take the Big Five — the gold standard of personality science — and see how it compares.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'attachment-styles-explained': {
+    label: 'Take the assessment',
+    title: 'Discover your attachment style',
+    description: 'Understand your relational blueprint in just 3–5 minutes.',
+    href: '/assessment',
+    icon: '◉',
+  },
+  'enneagram-vs-big-five': {
+    label: 'Take both assessments',
+    title: 'Get your Enneagram type and Big Five scores',
+    description: 'Innermind gives you both — and synthesizes them into one coherent portrait.',
+    href: '/assessment',
+    icon: '◑',
+  },
+  'the-12-jungian-archetypes': {
+    label: 'Discover your archetypes',
+    title: 'Find your Jungian archetypes',
+    description: 'Your psychological portrait includes Jungian archetypes alongside four other frameworks.',
+    href: '/assessment',
+    icon: '◈',
+  },
+  'schwartz-values-inventory': {
+    label: 'Take the assessment',
+    title: 'Measure your core values',
+    description: 'Get your Schwartz Values Inventory scores — what actually drives your decisions.',
+    href: '/assessment',
+    icon: '◈',
+  },
+  'enneagram-attachment-style': {
+    label: 'Take both assessments',
+    title: 'Get your Enneagram type and attachment style',
+    description: 'See how your core type and relational patterns interact — synthesized by AI.',
+    href: '/assessment',
+    icon: '◑',
+  },
+}
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -72,6 +132,8 @@ function formatDate(iso: string) {
 export default function BlogPostPage({ params }: Props) {
   const post = getPost(params.slug)
   if (!post) notFound()
+
+  const related = relatedAssessments[post.slug]
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
@@ -104,6 +166,28 @@ export default function BlogPostPage({ params }: Props) {
         className="prose-invert"
         dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
       />
+
+      {/* Related assessment CTA */}
+      {related && (
+        <div className="mt-12 rounded-2xl border border-stone-700 bg-stone-900/60 p-6">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
+            Related assessment
+          </p>
+          <div className="flex items-start gap-4">
+            <span className="mt-0.5 text-2xl text-amber-400">{related.icon}</span>
+            <div className="flex-1">
+              <h3 className="mb-1 font-serif text-lg font-medium text-stone-100">{related.title}</h3>
+              <p className="mb-4 text-sm text-stone-400 leading-relaxed">{related.description}</p>
+              <Link
+                href={related.href}
+                className="inline-flex items-center rounded-lg bg-amber-500 px-5 py-2 text-sm font-semibold text-stone-950 hover:bg-amber-400 transition"
+              >
+                {related.label} →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CTA */}
       <div className="mt-16 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-8 text-center">
