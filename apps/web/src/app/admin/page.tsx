@@ -29,11 +29,51 @@ interface Metrics {
   signupsLast30Days: { createdAt: string; _count: { id: number } }[]
 }
 
+interface AtRiskSubscriber {
+  id: string
+  email: string
+  expiresAt: string
+}
+
+interface RevenueMetrics {
+  mrr: number
+  arr: number
+  subscriptionDistribution: {
+    pro: number
+    free: number
+    total: number
+    proPercent: number
+  }
+  conversionRate: number
+  newUsersLast30Days: number
+  newProLast30Days: number
+  monthlyChurnRate: number
+  cancelledLast30Days: number
+  estimatedLtv: number
+  atRiskSubscribers: AtRiskSubscriber[]
+  stripeDataAvailable: boolean
+}
+
 async function fetchMetrics(): Promise<Metrics | null> {
   const apiUrl = process.env.API_URL ?? 'http://localhost:3001'
   const adminSecret = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
   try {
     const res = await fetch(`${apiUrl}/api/admin/metrics`, {
+      headers: { Authorization: `Bearer ${adminSecret}` },
+      next: { revalidate: 60 },
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+async function fetchRevenue(): Promise<RevenueMetrics | null> {
+  const apiUrl = process.env.API_URL ?? 'http://localhost:3001'
+  const adminSecret = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
+  try {
+    const res = await fetch(`${apiUrl}/api/admin/revenue`, {
       headers: { Authorization: `Bearer ${adminSecret}` },
       next: { revalidate: 60 },
     })
@@ -69,8 +109,15 @@ function formatAssessmentType(type: string) {
     .join(' ')
 }
 
+function formatCurrency(value: number) {
+  if (value >= 1000) {
+    return `$${(value / 1000).toFixed(1)}k`
+  }
+  return `$${value.toFixed(0)}`
+}
+
 export default async function AdminPage() {
-  const metrics = await fetchMetrics()
+  const [metrics, revenue] = await Promise.all([fetchMetrics(), fetchRevenue()])
 
   if (!metrics) {
     return (
@@ -98,7 +145,121 @@ export default async function AdminPage() {
         </p>
       </div>
 
+      {/* Revenue section */}
+      {revenue && (
+        <div className="mb-12">
+          <div className="mb-4 flex items-center gap-3">
+            <h2 className="font-serif text-xl text-stone-200">Revenue</h2>
+            {!revenue.stripeDataAvailable && (
+              <span className="rounded-full border border-amber-800/40 bg-amber-950/30 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-amber-500/70">
+                DB estimates — Stripe not configured
+              </span>
+            )}
+          </div>
+
+          {/* Key revenue metrics */}
+          <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+              <p className="text-3xl font-light text-emerald-400">{formatCurrency(revenue.mrr)}</p>
+              <p className="mt-1 text-sm text-stone-500">MRR</p>
+            </div>
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+              <p className="text-3xl font-light text-emerald-400">{formatCurrency(revenue.arr)}</p>
+              <p className="mt-1 text-sm text-stone-500">ARR</p>
+            </div>
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+              <p className="text-3xl font-light text-stone-100">{formatCurrency(revenue.estimatedLtv)}</p>
+              <p className="mt-1 text-sm text-stone-500">Est. LTV</p>
+            </div>
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
+              <p className="text-3xl font-light text-stone-100">{revenue.monthlyChurnRate}%</p>
+              <p className="mt-1 text-sm text-stone-500">Monthly Churn</p>
+            </div>
+          </div>
+
+          {/* Subscription distribution + conversion */}
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Plan distribution */}
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+              <p className="mb-4 text-sm font-medium text-stone-400">Plan Distribution</p>
+              <div className="space-y-3">
+                <div>
+                  <div className="mb-1 flex justify-between text-sm">
+                    <span className="text-stone-300">Pro</span>
+                    <span className="tabular-nums text-stone-100">
+                      {revenue.subscriptionDistribution.pro} ({revenue.subscriptionDistribution.proPercent}%)
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
+                    <div
+                      className="h-full rounded-full bg-emerald-500"
+                      style={{ width: `${revenue.subscriptionDistribution.proPercent}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1 flex justify-between text-sm">
+                    <span className="text-stone-300">Free</span>
+                    <span className="tabular-nums text-stone-100">
+                      {revenue.subscriptionDistribution.free} ({100 - revenue.subscriptionDistribution.proPercent}%)
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
+                    <div
+                      className="h-full rounded-full bg-stone-600"
+                      style={{ width: `${100 - revenue.subscriptionDistribution.proPercent}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-stone-800 pt-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-stone-500">New users (30d)</span>
+                  <span className="tabular-nums text-stone-300">{revenue.newUsersLast30Days}</span>
+                </div>
+                <div className="mt-1 flex justify-between text-sm">
+                  <span className="text-stone-500">New pro (30d)</span>
+                  <span className="tabular-nums text-stone-300">{revenue.newProLast30Days}</span>
+                </div>
+                <div className="mt-1 flex justify-between text-sm">
+                  <span className="text-stone-500">Free→Pro conversion</span>
+                  <span className="tabular-nums text-stone-300">{revenue.conversionRate}%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* At-risk subscribers */}
+            <div className="lg:col-span-2 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+              <p className="mb-4 text-sm font-medium text-stone-400">
+                At-Risk Subscribers
+                <span className="ml-2 text-stone-500 font-normal">(renewing within 7 days)</span>
+              </p>
+              {revenue.atRiskSubscribers.length === 0 ? (
+                <p className="text-sm text-stone-500">No subscribers expiring soon.</p>
+              ) : (
+                <ul className="divide-y divide-stone-800/60">
+                  {revenue.atRiskSubscribers.map((sub) => (
+                    <li key={sub.id} className="flex items-center justify-between py-2.5">
+                      <span className="truncate text-sm text-stone-300">{sub.email}</span>
+                      <span className="ml-4 shrink-0 text-xs text-amber-500">
+                        {new Date(sub.expiresAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Metric cards */}
+      <div className="mb-4">
+        <h2 className="font-serif text-xl text-stone-200">Usage</h2>
+      </div>
       <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <MetricCard value={totals.users} label="Total Users" />
         <MetricCard value={totals.completedSessions} label="Completed Sessions" />
