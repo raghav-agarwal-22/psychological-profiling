@@ -65,6 +65,10 @@ interface RevenueMetrics {
   estimatedLtv: number
   atRiskSubscribers: AtRiskSubscriber[]
   stripeDataAvailable: boolean
+  utmAttribution: { source: string; count: number }[]
+  mrrTimeline: { date: string; mrr: number }[]
+  daysSinceLaunch: number | null
+  firstPaidAt: string | null
 }
 
 async function fetchMetrics(): Promise<Metrics | null> {
@@ -403,6 +407,83 @@ export default async function AdminPage() {
                 </ul>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* MRR Timeline + UTM Attribution */}
+      {revenue && (revenue.mrrTimeline.length > 0 || revenue.utmAttribution.length > 0) && (
+        <div className="mb-12">
+          <div className="mb-4 flex items-center gap-3">
+            <h2 className="font-serif text-xl text-stone-200">Revenue Attribution</h2>
+            {revenue.daysSinceLaunch !== null && (
+              <span className="rounded-full border border-stone-700 bg-stone-800/50 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-stone-400">
+                Day {revenue.daysSinceLaunch} since first payment
+              </span>
+            )}
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* MRR Timeline */}
+            {revenue.mrrTimeline.length > 0 && (
+              <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+                <p className="mb-4 text-sm font-medium text-stone-400">MRR Growth (days since launch)</p>
+                <div className="space-y-1.5">
+                  {revenue.mrrTimeline.map((point, i) => {
+                    const maxMrr = revenue.mrrTimeline[revenue.mrrTimeline.length - 1]?.mrr ?? 1
+                    const barWidth = maxMrr > 0 ? (point.mrr / maxMrr) * 100 : 0
+                    const dayNum = revenue.firstPaidAt
+                      ? Math.floor((new Date(point.date).getTime() - new Date(revenue.firstPaidAt).getTime()) / (1000 * 60 * 60 * 24))
+                      : i
+                    return (
+                      <div key={point.date} className="flex items-center gap-2">
+                        <span className="w-12 shrink-0 text-right text-[10px] tabular-nums text-stone-500">
+                          D{dayNum}
+                        </span>
+                        <div className="flex-1 overflow-hidden rounded-full bg-stone-800 h-1.5">
+                          <div
+                            className="h-full rounded-full bg-emerald-500/70"
+                            style={{ width: `${barWidth}%` }}
+                          />
+                        </div>
+                        <span className="w-14 shrink-0 text-right text-[10px] tabular-nums text-emerald-400">
+                          ${point.mrr}/mo
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* UTM Attribution */}
+            {revenue.utmAttribution.length > 0 && (
+              <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+                <p className="mb-4 text-sm font-medium text-stone-400">Acquisition Channel (paid users)</p>
+                <div className="space-y-3">
+                  {revenue.utmAttribution.map((row) => {
+                    const total = revenue.utmAttribution.reduce((s, r) => s + r.count, 0)
+                    const pct = total > 0 ? Math.round((row.count / total) * 100) : 0
+                    return (
+                      <div key={row.source}>
+                        <div className="mb-1 flex justify-between text-sm">
+                          <span className="text-stone-300">{row.source}</span>
+                          <span className="tabular-nums text-stone-100">
+                            {row.count} <span className="text-stone-500">({pct}%)</span>
+                          </span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
+                          <div
+                            className="h-full rounded-full bg-indigo-500/70"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

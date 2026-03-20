@@ -38,6 +38,28 @@ const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com'
 
+async function notifyFirstCustomer(email: string, tier: string, interval: string, utmSource?: string | null) {
+  const msg = `FIRST PAYING CUSTOMER: ${email}, ${tier}, ${interval}, utm_source=${utmSource ?? 'unknown'}`
+  console.log(`[billing] 🎉 ${msg}`)
+
+  // Slack webhook (optional)
+  const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
+  if (slackWebhookUrl) {
+    try {
+      await fetch(slackWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: `🎉 ${msg}` }),
+      })
+    } catch {
+      // non-critical
+    }
+  }
+
+  // Founder email via PostHog identify (we don't have a direct email helper for internal alerts)
+  // Log to stdout as well so Railway captures it
+}
+
 async function capturePosthogEvent(
   distinctId: string,
   event: string,
@@ -66,7 +88,7 @@ export async function billingRoutes(server: FastifyInstance) {
 
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { email: true, stripeCustomerId: true, subscriptionTier: true, trialEndsAt: true, stripeSubscriptionId: true },
+      select: { email: true, stripeCustomerId: true, subscriptionTier: true, trialEndsAt: true, stripeSubscriptionId: true, utmSource: true, utmMedium: true, utmCampaign: true },
     })
     if (!user) return reply.status(404).send({ error: 'User not found' })
     if (user.subscriptionTier === tier) {
@@ -96,7 +118,12 @@ export async function billingRoutes(server: FastifyInstance) {
       subscription_data: trialEligible ? { trial_period_days: 7 } : undefined,
       success_url: `${WEB_URL}/dashboard?upgraded=1`,
       cancel_url: `${WEB_URL}/upgrade?cancelled=1`,
-      metadata: { userId: req.user.userId },
+      metadata: {
+        userId: req.user.userId,
+        ...(user.utmSource ? { utm_source: user.utmSource } : {}),
+        ...(user.utmMedium ? { utm_medium: user.utmMedium } : {}),
+        ...(user.utmCampaign ? { utm_campaign: user.utmCampaign } : {}),
+      },
     })
 
     return reply.send({ url: session.url, hasTrial: trialEligible })
@@ -140,6 +167,7 @@ export async function billingRoutes(server: FastifyInstance) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
       const userId = session.metadata?.userId
+      const utmSource = session.metadata?.utm_source ?? null
       if (userId && session.subscription) {
         const sub = await stripe.subscriptions.retrieve(session.subscription as string)
         const isTrialing = sub.status === 'trialing'
@@ -149,6 +177,18 @@ export async function billingRoutes(server: FastifyInstance) {
         const tierInfo = tierFromPriceId(subPriceId)
         const resolvedTier = tierInfo?.tier ?? 'pro'
         const resolvedInterval = tierInfo?.interval ?? 'monthly'
+
+        // Detect if this is the very first paid subscription ever
+        const existingPaidCount = await prisma.user.count({
+          where: { firstPaidAt: { not: null } },
+        })
+        const isFirstEver = existingPaidCount === 0 && !isTrialing
+
+        const userRecord = await prisma.user.findUnique({
+          where: { id: userId },
+          select: { email: true, firstPaidAt: true, utmSource: true },
+        })
+
         await prisma.user.update({
           where: { id: userId },
           data: {
@@ -157,8 +197,11 @@ export async function billingRoutes(server: FastifyInstance) {
             stripeSubscriptionId: sub.id,
             subscriptionExpiresAt: new Date(getSubPeriodEnd(sub) * 1000),
             trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
+            // Set firstPaidAt only once, only for non-trial starts
+            ...(!isTrialing && !userRecord?.firstPaidAt ? { firstPaidAt: new Date() } : {}),
           },
         })
+
         if (isTrialing) {
           await capturePosthogEvent(userId, 'trial_started', {
             trial_end_at: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
@@ -166,11 +209,25 @@ export async function billingRoutes(server: FastifyInstance) {
             tier: resolvedTier,
           })
         } else {
+          const effectiveUtmSource = utmSource ?? userRecord?.utmSource ?? null
           await capturePosthogEvent(userId, 'subscription_started', {
             subscription_id: sub.id,
             tier: resolvedTier,
             interval: resolvedInterval,
+            utm_source: effectiveUtmSource,
+            is_first_ever: isFirstEver,
           })
+
+          // First customer milestone alert
+          if (isFirstEver && userRecord?.email) {
+            await notifyFirstCustomer(userRecord.email, resolvedTier, resolvedInterval, effectiveUtmSource)
+            await capturePosthogEvent(userId, 'first_paying_customer', {
+              email: userRecord.email,
+              tier: resolvedTier,
+              interval: resolvedInterval,
+              utm_source: effectiveUtmSource,
+            })
+          }
         }
       }
     }
@@ -215,6 +272,11 @@ export async function billingRoutes(server: FastifyInstance) {
       })
       // Fire trial_converted when transitioning from trialing → active
       if (wasTrialing && sub.status === 'active') {
+        // Set firstPaidAt for users who didn't pay directly (trial converters)
+        await prisma.user.updateMany({
+          where: { stripeSubscriptionId: sub.id, firstPaidAt: null },
+          data: { firstPaidAt: new Date() },
+        })
         for (const user of updatedUsers) {
           await capturePosthogEvent(user.id, 'trial_converted', {
             subscription_id: sub.id,

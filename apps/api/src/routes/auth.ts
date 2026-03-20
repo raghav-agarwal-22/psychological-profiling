@@ -9,6 +9,9 @@ import { applyReferral } from './referrals.js'
 const requestMagicLinkSchema = z.object({
   email: z.string().email(),
   name: z.string().optional(),
+  utmSource: z.string().max(100).optional(),
+  utmMedium: z.string().max(100).optional(),
+  utmCampaign: z.string().max(100).optional(),
 })
 
 const verifyMagicLinkSchema = z.object({
@@ -24,14 +27,20 @@ export async function authRoutes(server: FastifyInstance) {
       return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
     }
 
-    const { email, name } = body.data
+    const { email, name, utmSource, utmMedium, utmCampaign } = body.data
 
     try {
-      // Upsert user
+      // Upsert user — store UTM params only on first signup (not overwritten on subsequent logins)
       const user = await prisma.user.upsert({
         where: { email },
         update: {},
-        create: { email, name },
+        create: {
+          email,
+          name,
+          ...(utmSource ? { utmSource } : {}),
+          ...(utmMedium ? { utmMedium } : {}),
+          ...(utmCampaign ? { utmCampaign } : {}),
+        },
       })
 
       // Generate token (secure random)

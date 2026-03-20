@@ -386,6 +386,45 @@ export async function adminRoutes(server: FastifyInstance) {
       },
     })
 
+    // UTM attribution: distribution of utm_source among paid users
+    const paidUsersWithUtm = await prisma.user.findMany({
+      where: { subscriptionTier: { in: ['pro', 'essential'] } },
+      select: { utmSource: true },
+    })
+    const utmCounts: Record<string, number> = {}
+    for (const u of paidUsersWithUtm) {
+      const src = u.utmSource ?? '(direct)'
+      utmCounts[src] = (utmCounts[src] ?? 0) + 1
+    }
+    const utmAttribution = Object.entries(utmCounts)
+      .map(([source, count]) => ({ source, count }))
+      .sort((a, b) => b.count - a.count)
+
+    // MRR timeline: first paid date per user → daily MRR accumulation
+    const firstPaidUsers = await prisma.user.findMany({
+      where: { firstPaidAt: { not: null } },
+      select: { firstPaidAt: true, subscriptionInterval: true },
+      orderBy: { firstPaidAt: 'asc' },
+    })
+    const PRO_MONTHLY = 19
+    let runningMrr = 0
+    const mrrTimeline = firstPaidUsers.map((u) => {
+      const contribution = u.subscriptionInterval === 'annual'
+        ? Math.round((PRO_MONTHLY * 12) / 12) // annuals contribute same monthly
+        : PRO_MONTHLY
+      runningMrr += contribution
+      return {
+        date: u.firstPaidAt!.toISOString().slice(0, 10),
+        mrr: runningMrr,
+      }
+    })
+
+    // Days since first paid customer
+    const firstPaidAt = firstPaidUsers[0]?.firstPaidAt ?? null
+    const daysSinceLaunch = firstPaidAt
+      ? Math.floor((Date.now() - firstPaidAt.getTime()) / (1000 * 60 * 60 * 24))
+      : null
+
     return reply.send({
       mrr: Math.round(mrr * 100) / 100,
       arr: Math.round(arr * 100) / 100,
@@ -413,6 +452,10 @@ export async function adminRoutes(server: FastifyInstance) {
         expiresAt: u.subscriptionExpiresAt,
       })),
       stripeDataAvailable,
+      utmAttribution,
+      mrrTimeline,
+      daysSinceLaunch,
+      firstPaidAt: firstPaidAt?.toISOString() ?? null,
     })
   })
 

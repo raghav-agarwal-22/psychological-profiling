@@ -41,6 +41,12 @@ model User {
   stripeSubscriptionId  String?   @map("stripe_subscription_id")
   subscriptionExpiresAt DateTime? @map("subscription_expires_at")
   trialEndsAt           DateTime? @map("trial_ends_at")
+  firstPaidAt           DateTime? @map("first_paid_at")
+
+  // Acquisition attribution
+  utmSource   String? @map("utm_source")
+  utmMedium   String? @map("utm_medium")
+  utmCampaign String? @map("utm_campaign")
 
   // Auth
   magicLinkTokens MagicLinkToken[]
