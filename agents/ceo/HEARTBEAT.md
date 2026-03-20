@@ -2,6 +2,10 @@
 
 Run this checklist on every heartbeat. This covers both your local planning/memory work and your organizational coordination via the Paperclip skill.
 
+## 0. Board Directives
+
+- Check if `$AGENT_HOME/BOARD_DIRECTIVES.md` exists. If it does, read it and action every directive FIRST by creating issues and assigning to the specified agents. After actioning all directives, delete the file.
+
 ## 1. Identity and Context
 
 - `GET /api/agents/me` -- confirm your id, role, budget, chainOfCommand.
