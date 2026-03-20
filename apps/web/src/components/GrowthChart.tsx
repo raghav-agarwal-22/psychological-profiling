@@ -149,7 +149,7 @@ export function GrowthChart({ profiles, frameType }: GrowthChartProps) {
     }
     for (const dim of allDimensions) {
       const score = p.dimensions[dim]
-      point[dim] = score ? Math.round(score.normalized * 100) : 0
+      point[dim] = score ? Math.round(score.normalized) : 0
     }
     return point
   })

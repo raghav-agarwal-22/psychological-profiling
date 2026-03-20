@@ -78,14 +78,17 @@ function AssessmentFlow() {
 
     Promise.all([
       api.get<{ template: { title: string; description: string | null; type: string; questionBank: Question[] } }>(`/api/templates/${templateId}`),
-      api.get<{ assessments: Assessment[] }>(`/api/assessments`, token),
+      api.get<{ assessments: (Assessment & { sessionId: string })[] }>(`/api/assessments`, token),
     ])
       .then(([templateData, assessmentsData]) => {
         const tpl = templateData.template
         setQuestions(tpl.questionBank)
         setTemplateInfo({ title: tpl.title, description: tpl.description, type: tpl.type })
 
-        const found = assessmentsData.assessments[0]
+        // Find the assessment that belongs to this session
+        const found =
+          assessmentsData.assessments.find((a) => a.sessionId === sessionId) ??
+          assessmentsData.assessments[0]
         if (found) setAssessment(found)
 
         // Track assessment started
