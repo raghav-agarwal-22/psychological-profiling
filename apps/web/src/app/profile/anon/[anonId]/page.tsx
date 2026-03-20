@@ -24,6 +24,14 @@ function AnonProfileContent() {
   const [loading, setLoading] = useState(true)
   const [guestToken, setGuestToken] = useState<string | null>(null)
 
+  // A/B: email-gate-headline flag
+  const [abEmailGateHeadline, setAbEmailGateHeadline] = useState<string>('control')
+
+  useEffect(() => {
+    const variant = posthog.getFeatureFlag('email-gate-headline')
+    if (typeof variant === 'string') setAbEmailGateHeadline(variant)
+  }, [])
+
   // Email gate state
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
@@ -62,6 +70,7 @@ function AnonProfileContent() {
       framework: data.templateType,
       archetypeName: data.archetypeName,
       hasSummaryTeaser: !!data.summaryTeaser,
+      ab_email_gate_headline: abEmailGateHeadline,
     })
     const handleUnload = () => {
       posthog.capture('profile_email_gate_abandoned', {
@@ -91,6 +100,7 @@ function AnonProfileContent() {
       posthog.capture('profile_email_gate_conversion', {
         framework: data.templateType,
         archetypeName: data.archetypeName,
+        ab_email_gate_headline: abEmailGateHeadline,
       })
 
       setToken(token)
@@ -158,7 +168,9 @@ function AnonProfileContent() {
 
       {/* Email gate form */}
       <div className="rounded-2xl border border-amber-500/20 bg-stone-900/80 p-7">
-        <h2 className="mb-1 font-serif text-xl text-stone-100">Reveal your full portrait</h2>
+        <h2 className="mb-1 font-serif text-xl text-stone-100">
+          {abEmailGateHeadline === 'treatment' ? 'See your AI psychological portrait' : 'Reveal your full portrait'}
+        </h2>
         <p className="mb-6 text-sm text-stone-400">
           Free forever. Add more assessments over time to deepen your synthesis.
         </p>

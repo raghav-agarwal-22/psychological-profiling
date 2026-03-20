@@ -19,7 +19,7 @@ export async function requirePro(req: FastifyRequest, reply: FastifyReply) {
     where: { id: req.user.userId },
     select: { subscriptionTier: true },
   })
-  if (user?.subscriptionTier !== 'pro') {
+  if (user?.subscriptionTier !== 'pro' && user?.subscriptionTier !== 'essential') {
     return reply.status(403).send({ error: 'Pro subscription required', upgradeUrl: '/upgrade' })
   }
 }

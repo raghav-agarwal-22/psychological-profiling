@@ -60,9 +60,20 @@ function UpgradeContent() {
   const [loadingTier, setLoadingTier] = useState<Tier | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [hasTrial, setHasTrial] = useState(true)
+  const [abCtaCopy, setAbCtaCopy] = useState<string>('control')
+  const [abEssentialEmphasis, setAbEssentialEmphasis] = useState<string>('control')
 
   useEffect(() => {
-    posthog.capture('upgrade_page_viewed')
+    const ctaVariant = posthog.getFeatureFlag('upgrade-cta-copy')
+    const emphasisVariant = posthog.getFeatureFlag('essential-tier-emphasis')
+    const resolvedCta = typeof ctaVariant === 'string' ? ctaVariant : 'control'
+    const resolvedEmphasis = typeof emphasisVariant === 'string' ? emphasisVariant : 'control'
+    setAbCtaCopy(resolvedCta)
+    setAbEssentialEmphasis(resolvedEmphasis)
+    posthog.capture('upgrade_page_viewed', {
+      ab_upgrade_cta_copy: resolvedCta,
+      ab_essential_emphasis: resolvedEmphasis,
+    })
     const token = localStorage.getItem('innermind_token')
     if (token) {
       fetch(`${API_URL}/api/billing/status`, {
@@ -83,6 +94,11 @@ function UpgradeContent() {
   async function handleUpgrade(tier: Tier) {
     setLoadingTier(tier)
     setError(null)
+    posthog.capture('upgrade_cta_clicked', {
+      tier,
+      interval,
+      ab_upgrade_cta_copy: abCtaCopy,
+    })
     try {
       const token = localStorage.getItem('innermind_token')
       if (!token) {
@@ -212,7 +228,14 @@ function UpgradeContent() {
         </div>
 
         {/* Essential tier */}
-        <div className="flex flex-col rounded-2xl border border-stone-600 bg-stone-900/60 p-6">
+        <div className={`relative flex flex-col rounded-2xl ${abEssentialEmphasis === 'treatment' ? 'border border-stone-400' : 'border border-stone-600'} bg-stone-900/60 p-6`}>
+          {abEssentialEmphasis === 'treatment' && (
+            <div className="absolute -top-3 left-6">
+              <span className="rounded-full border border-stone-500/60 bg-stone-700 px-3 py-0.5 text-xs font-semibold text-stone-200">
+                Best value to start
+              </span>
+            </div>
+          )}
           <div className="mb-5">
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-300">
               Essential
@@ -228,6 +251,8 @@ function UpgradeContent() {
             <p className="mt-1 text-xs text-stone-500">
               {interval === 'annual'
                 ? `${PRICES.essential.annual.monthly} · ${PRICES.essential.annual.save}`
+                : abEssentialEmphasis === 'treatment'
+                ? 'Most popular for first-time users.'
                 : 'Cancel anytime.'}
             </p>
           </div>
@@ -246,7 +271,7 @@ function UpgradeContent() {
             disabled={loadingTier !== null}
             className="block w-full rounded-xl border border-stone-500 py-2.5 text-center text-sm font-semibold text-stone-200 transition-colors hover:border-stone-400 hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loadingTier === 'essential' ? 'Redirecting…' : `Get Essential →`}
+            {loadingTier === 'essential' ? 'Redirecting…' : abCtaCopy === 'treatment' ? 'Start free →' : 'Get Essential →'}
           </button>
         </div>
 
@@ -297,7 +322,7 @@ function UpgradeContent() {
             {loadingTier === 'pro'
               ? 'Redirecting…'
               : hasTrial && interval === 'monthly'
-              ? 'Start 7-day free trial →'
+              ? (abCtaCopy === 'treatment' ? 'Try free for 7 days →' : 'Start 7-day free trial →')
               : 'Upgrade to Pro →'}
           </button>
 

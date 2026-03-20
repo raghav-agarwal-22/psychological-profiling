@@ -286,6 +286,24 @@ export async function billingRoutes(server: FastifyInstance) {
       }
     }
 
+    if (event.type === 'invoice.payment_failed') {
+      const invoice = event.data.object as Stripe.Invoice
+      const customerId = invoice.customer as string
+      const subscriptionId = invoice.subscription as string | null
+      const attemptCount = (invoice as unknown as Record<string, unknown>)['attempt_count'] as number | undefined
+      const user = await prisma.user.findUnique({
+        where: { stripeCustomerId: customerId },
+        select: { id: true },
+      })
+      if (user) {
+        await capturePosthogEvent(user.id, 'payment_failed', {
+          subscription_id: subscriptionId,
+          attempt_count: attemptCount ?? null,
+          customer_id: customerId,
+        })
+      }
+    }
+
     if (event.type === 'invoice.payment_succeeded') {
       const invoice = event.data.object as Stripe.Invoice
       const customerId = invoice.customer as string
