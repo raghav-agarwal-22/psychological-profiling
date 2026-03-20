@@ -1,5 +1,8 @@
 import Link from 'next/link'
 
+// ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
+export const revalidate = 3600
+
 export default function HomePage() {
   return (
     <div className="flex flex-col">

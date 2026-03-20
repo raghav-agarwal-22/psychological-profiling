@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllSlugs, getPost } from '../posts'
 
+// Blog posts are statically generated at build time; revalidate daily for new posts
+export const revalidate = 86400
+
 interface Props {
   params: { slug: string }
 }

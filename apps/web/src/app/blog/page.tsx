@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { posts } from './posts'
 
+// Blog index: revalidate daily — static content, cache aggressively under PH traffic
+export const revalidate = 86400
+
 export const metadata: Metadata = {
   title: 'Blog — Psychology, Self-Understanding & Personal Growth',
   description:

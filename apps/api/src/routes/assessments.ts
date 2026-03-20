@@ -41,7 +41,23 @@ export async function assessmentRoutes(server: FastifyInstance) {
   })
 
   // POST /api/assessments — create a new assessment
-  server.post('/', async (req, reply) => {
+  // Rate limit: prevent abuse — max 20 assessments per 10 minutes per IP
+  server.post(
+    '/',
+    {
+      config: {
+        rateLimit: {
+          max: 20,
+          timeWindow: '10 minutes',
+          errorResponseBuilder: () => ({
+            statusCode: 429,
+            error: 'Too Many Requests',
+            message: 'Too many assessments created. Please wait before creating another.',
+          }),
+        },
+      },
+    },
+    async (req, reply) => {
     const body = createAssessmentSchema.safeParse(req.body)
     if (!body.success) {
       return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
@@ -98,7 +114,8 @@ export async function assessmentRoutes(server: FastifyInstance) {
     })
 
     return reply.status(201).send({ assessment })
-  })
+  },
+  )
 
   // GET /api/assessments/:id — get a specific assessment
   server.get<{ Params: { id: string } }>('/:id', async (req, reply) => {

@@ -129,7 +129,23 @@ export async function sessionRoutes(server: FastifyInstance) {
   })
 
   // POST /api/sessions/:id/complete — finalize session and trigger scoring
-  server.post<{ Params: { id: string } }>('/:id/complete', async (req, reply) => {
+  // Strict rate limit: LLM synthesis is expensive — max 10 completions per hour per IP
+  server.post<{ Params: { id: string } }>(
+    '/:id/complete',
+    {
+      config: {
+        rateLimit: {
+          max: 10,
+          timeWindow: '1 hour',
+          errorResponseBuilder: () => ({
+            statusCode: 429,
+            error: 'Too Many Requests',
+            message: 'You are generating too many profiles. Please wait before retrying.',
+          }),
+        },
+      },
+    },
+    async (req, reply) => {
     const session = await prisma.session.findFirst({
       where: { id: req.params.id, userId: req.user.userId },
       include: {
@@ -383,7 +399,8 @@ export async function sessionRoutes(server: FastifyInstance) {
     }
 
     return reply.send({ session: updated, profile })
-  })
+  },
+  )
 
   // GET /api/sessions/:id/results — get scored profile for a session
   server.get<{ Params: { id: string } }>('/:id/results', async (req, reply) => {
