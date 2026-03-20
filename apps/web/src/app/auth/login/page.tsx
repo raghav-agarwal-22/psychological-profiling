@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { posthog } from '@/lib/posthog'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -24,6 +25,8 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (!res.ok) throw new Error(data.error ?? 'Something went wrong')
+
+      posthog.capture('magic_link_requested')
 
       // In dev, the API returns devMagicLinkUrl — auto-redirect
       if (data.devMagicLinkUrl) {
