@@ -122,7 +122,7 @@ export async function affiliateRoutes(server: FastifyInstance) {
       status: affiliate.status,
       referralCode: affiliate.status === 'approved' ? affiliate.referralCode : null,
       referralUrl: affiliate.status === 'approved'
-        ? `${WEB_URL}/?ref=${affiliate.referralCode}`
+        ? `${WEB_URL}/ref/${affiliate.referralCode}`
         : null,
     })
   })
@@ -173,7 +173,7 @@ export async function affiliateRoutes(server: FastifyInstance) {
 
     return reply.send({
       referralCode: affiliate.referralCode,
-      referralUrl: `${WEB_URL}/?ref=${affiliate.referralCode}`,
+      referralUrl: `${WEB_URL}/ref/${affiliate.referralCode}`,
       stats: {
         totalClicks: affiliate.totalClicks,
         totalReferrals,
@@ -255,7 +255,7 @@ export async function affiliateRoutes(server: FastifyInstance) {
     })
 
     // Send approval email with referral link
-    const referralUrl = `${WEB_URL}/?ref=${affiliate.referralCode}`
+    const referralUrl = `${WEB_URL}/ref/${affiliate.referralCode}`
     const dashboardUrl = `${WEB_URL}/affiliates/dashboard`
     try {
       await resend.emails.send({

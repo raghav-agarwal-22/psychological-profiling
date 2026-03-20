@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
+
 export default function ReferralRedirectPage() {
   const router = useRouter()
   const params = useParams()
@@ -12,6 +14,12 @@ export default function ReferralRedirectPage() {
     if (code) {
       // Store the referral code in localStorage so the verify flow can pick it up
       localStorage.setItem('innermind_referral_code', code)
+      // Track the click (fire-and-forget, don't block redirect)
+      fetch(`${API_URL}/api/affiliates/track-click`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      }).catch(() => {/* ignore tracking errors */})
     }
     router.replace(`/auth/login?ref=${encodeURIComponent(code ?? '')}`)
   }, [code, router])
