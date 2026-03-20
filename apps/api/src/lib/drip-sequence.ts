@@ -17,20 +17,37 @@ import {
   sendDay3InsightTeaserEmail,
   sendDay5SocialProofEmail,
   sendDay7ProOfferEmail,
+  sendDay30ReAssessmentEmail,
   sendAnnualUpgradeEmail,
 } from '../services/email.js'
 import { getArchetypeMetadata, getTopBigFiveTrait } from './archetypes.js'
 
 const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
+const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
+const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com'
+
+async function capturePosthogEvent(userId: string, event: string, properties: Record<string, unknown>): Promise<void> {
+  if (!POSTHOG_API_KEY) return
+  try {
+    await fetch(`${POSTHOG_HOST}/capture/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: POSTHOG_API_KEY, distinct_id: userId, event, properties }),
+    })
+  } catch {
+    // non-critical — don't block email sends
+  }
+}
 
 const DRIP_DAYS = [
   { emailType: 'drip_day1', offsetHours: 24, maxOffsetHours: 7 * 24 },
   { emailType: 'drip_day3', offsetHours: 72, maxOffsetHours: 10 * 24 },
   { emailType: 'drip_day5', offsetHours: 120, maxOffsetHours: 12 * 24 },
   { emailType: 'drip_day7', offsetHours: 168, maxOffsetHours: 21 * 24 },
+  { emailType: 'drip_day30', offsetHours: 720, maxOffsetHours: 37 * 24 },
 ] as const
 
-type DripEmailType = 'drip_day1' | 'drip_day3' | 'drip_day5' | 'drip_day7'
+type DripEmailType = 'drip_day1' | 'drip_day3' | 'drip_day5' | 'drip_day7' | 'drip_day30'
 
 interface DripResult {
   userId: string
@@ -113,9 +130,14 @@ async function sendDripEmail(user: UserRecord, emailType: DripEmailType): Promis
     }
   }
 
-  // Days 3–7: free users only
+  // Days 3–7 and Day 30: free users only
   if (emailType !== 'drip_day1' && user.subscriptionTier !== 'free') {
     return { userId: user.id, emailType, sent: false, reason: 'paid_user' }
+  }
+
+  // Day 30: requires at least 1 completed assessment (same as Day 1)
+  if (emailType === 'drip_day30' && user.assessments.length === 0) {
+    return { userId: user.id, emailType, sent: false, reason: 'no_assessment' }
   }
 
   const profile = user.profiles[0]
@@ -152,6 +174,18 @@ async function sendDripEmail(user: UserRecord, emailType: DripEmailType): Promis
       upgradeUrl,
       dashboardUrl,
     )
+  } else if (emailType === 'drip_day30') {
+    const subjectVariant: 'a' | 'b' = Math.random() < 0.5 ? 'a' : 'b'
+    await sendDay30ReAssessmentEmail(
+      user.email,
+      user.name,
+      archetypeMeta.name,
+      topTrait,
+      `${WEB_URL}/assessment`,
+      profileUrl,
+      subjectVariant,
+    )
+    await capturePosthogEvent(user.id, 'retention_day30_email_sent', { variant: subjectVariant })
   }
 
   // Record the send to prevent duplicates
@@ -235,7 +269,7 @@ export async function processAnnualConversionEmails(): Promise<{ processed: numb
 
 // Call this when a user upgrades to Pro to suppress all unsent drip emails.
 export async function suppressDripSequence(userId: string): Promise<void> {
-  const allDripTypes: DripEmailType[] = ['drip_day1', 'drip_day3', 'drip_day5', 'drip_day7']
+  const allDripTypes: DripEmailType[] = ['drip_day1', 'drip_day3', 'drip_day5', 'drip_day7', 'drip_day30']
 
   // Find which types haven't been sent yet
   const alreadySent = await prisma.onboardingEmail.findMany({

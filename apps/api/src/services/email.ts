@@ -15,6 +15,7 @@ import { Day5SocialProofEmail } from '../emails/Day5SocialProofEmail.js'
 import { Day7ProOfferEmail } from '../emails/Day7ProOfferEmail.js'
 import { WeeklyGrowthChallengeEmail } from '../emails/WeeklyGrowthChallengeEmail.js'
 import { AnnualUpgradeEmail } from '../emails/AnnualUpgradeEmail.js'
+import { Day30ReAssessmentEmail } from '../emails/Day30ReAssessmentEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -528,6 +529,44 @@ export async function sendAnnualUpgradeEmail(
     subject: subjectByDay,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been on Innermind for ${daysSinceSubscribed} days. Switch to annual and save 2 months free ($${ANNUAL_SAVINGS}/year).\n\nSwitch now: ${upgradeUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Day 30 Re-Assessment ─────────────────────────────────────────────────────
+
+export async function sendDay30ReAssessmentEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  topTrait: string,
+  assessmentUrl: string,
+  profileUrl: string,
+  subjectVariant: 'a' | 'b',
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — day30 re-assessment for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(Day30ReAssessmentEmail, {
+      userName,
+      archetypeName,
+      topTrait,
+      assessmentUrl,
+      profileUrl,
+    }),
+  )
+
+  const subject =
+    subjectVariant === 'a' ? 'A month in — how have you changed?' : 'Your 30-day personality check-in'
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nA month ago, you discovered you're the ${archetypeName} with high ${topTrait}. A lot can change in 30 days — retake the Big Five to see how.\n\nRetake now: ${assessmentUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 
