@@ -45,16 +45,23 @@ interface FunnelStep {
 interface FunnelMetrics {
   steps: FunnelStep[]
   overallConversion: number
+  currentlyTrialing: number
 }
 
 interface RevenueMetrics {
   mrr: number
   arr: number
+  arrGoal: number
+  arrProgress: number
+  newMrr: number
+  churnedMrr: number
+  netMrr: number
   subscriptionDistribution: {
     pro: number
     free: number
     total: number
     proPercent: number
+    trial: number
   }
   conversionRate: number
   newUsersLast30Days: number
@@ -64,6 +71,20 @@ interface RevenueMetrics {
   estimatedLtv: number
   atRiskSubscribers: AtRiskSubscriber[]
   stripeDataAvailable: boolean
+}
+
+interface CohortRow {
+  cohort: string
+  weekLabel: string
+  signups: number
+  paidPro: number
+  trialing: number
+  conversionRate: number
+  paidConversionRate: number
+}
+
+interface CohortMetrics {
+  cohorts: CohortRow[]
 }
 
 async function fetchMetrics(): Promise<Metrics | null> {
@@ -111,6 +132,21 @@ async function fetchRevenue(): Promise<RevenueMetrics | null> {
   }
 }
 
+async function fetchCohorts(): Promise<CohortMetrics | null> {
+  const apiUrl = process.env.API_URL ?? 'http://localhost:3001'
+  const adminSecret = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
+  try {
+    const res = await fetch(`${apiUrl}/api/admin/cohorts`, {
+      headers: { Authorization: `Bearer ${adminSecret}` },
+      next: { revalidate: 300 },
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
 function MetricCard({ value, label }: { value: number; label: string }) {
   return (
     <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-center">
@@ -144,7 +180,12 @@ function formatCurrency(value: number) {
 }
 
 export default async function AdminPage() {
-  const [metrics, revenue, funnel] = await Promise.all([fetchMetrics(), fetchRevenue(), fetchFunnel()])
+  const [metrics, revenue, funnel, cohorts] = await Promise.all([
+    fetchMetrics(),
+    fetchRevenue(),
+    fetchFunnel(),
+    fetchCohorts(),
+  ])
 
   if (!metrics) {
     return (
@@ -171,6 +212,34 @@ export default async function AdminPage() {
           Live metrics — refreshes every 60 seconds via ISR.
         </p>
       </div>
+
+      {/* $100k ARR Goal Progress */}
+      {revenue && (
+        <div className="mb-10 rounded-2xl border border-emerald-900/40 bg-emerald-950/10 p-6">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-emerald-500/70">60-Day Goal</p>
+              <p className="mt-0.5 font-serif text-xl text-stone-100">$100k ARR</p>
+            </div>
+            <div className="text-right">
+              <p className="text-3xl font-light tabular-nums text-emerald-400">
+                {formatCurrency(revenue.arr)}
+              </p>
+              <p className="text-sm text-stone-500">current ARR run rate</p>
+            </div>
+          </div>
+          <div className="mb-2 h-3 overflow-hidden rounded-full bg-stone-800">
+            <div
+              className="h-full rounded-full bg-emerald-500 transition-all"
+              style={{ width: `${Math.max(revenue.arrProgress, 0.5)}%` }}
+            />
+          </div>
+          <div className="flex items-center justify-between text-xs text-stone-500">
+            <span>{revenue.arrProgress}% of $100k</span>
+            <span>{formatCurrency(revenue.arrGoal - revenue.arr)} remaining</span>
+          </div>
+        </div>
+      )}
 
       {/* Revenue section */}
       {revenue && (
@@ -204,6 +273,24 @@ export default async function AdminPage() {
             </div>
           </div>
 
+          {/* MRR movement (last 30 days) */}
+          <div className="mb-6 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5 text-center">
+              <p className="text-2xl font-light text-emerald-400">+{formatCurrency(revenue.newMrr)}</p>
+              <p className="mt-1 text-sm text-stone-500">New MRR (30d)</p>
+            </div>
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5 text-center">
+              <p className="text-2xl font-light text-red-400">-{formatCurrency(revenue.churnedMrr)}</p>
+              <p className="mt-1 text-sm text-stone-500">Churned MRR (30d)</p>
+            </div>
+            <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5 text-center">
+              <p className={`text-2xl font-light ${revenue.netMrr >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                {revenue.netMrr >= 0 ? '+' : ''}{formatCurrency(revenue.netMrr)}
+              </p>
+              <p className="mt-1 text-sm text-stone-500">Net MRR (30d)</p>
+            </div>
+          </div>
+
           {/* Subscription distribution + conversion */}
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Plan distribution */}
@@ -212,9 +299,9 @@ export default async function AdminPage() {
               <div className="space-y-3">
                 <div>
                   <div className="mb-1 flex justify-between text-sm">
-                    <span className="text-stone-300">Pro</span>
+                    <span className="text-stone-300">Paid Pro</span>
                     <span className="tabular-nums text-stone-100">
-                      {revenue.subscriptionDistribution.pro} ({revenue.subscriptionDistribution.proPercent}%)
+                      {revenue.subscriptionDistribution.pro - revenue.subscriptionDistribution.trial} ({revenue.subscriptionDistribution.proPercent}%)
                     </span>
                   </div>
                   <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
@@ -224,6 +311,22 @@ export default async function AdminPage() {
                     />
                   </div>
                 </div>
+                {revenue.subscriptionDistribution.trial > 0 && (
+                  <div>
+                    <div className="mb-1 flex justify-between text-sm">
+                      <span className="text-stone-300">On Trial</span>
+                      <span className="tabular-nums text-stone-100">
+                        {revenue.subscriptionDistribution.trial}
+                      </span>
+                    </div>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
+                      <div
+                        className="h-full rounded-full bg-amber-500/60"
+                        style={{ width: `${(revenue.subscriptionDistribution.trial / Math.max(revenue.subscriptionDistribution.total, 1)) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
                 <div>
                   <div className="mb-1 flex justify-between text-sm">
                     <span className="text-stone-300">Free</span>
@@ -291,6 +394,11 @@ export default async function AdminPage() {
             <span className="rounded-full border border-stone-700 bg-stone-800/50 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-stone-400">
               Overall {funnel.overallConversion}% free→pro
             </span>
+            {funnel.currentlyTrialing > 0 && (
+              <span className="rounded-full border border-amber-800/40 bg-amber-950/30 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-amber-500/70">
+                {funnel.currentlyTrialing} trialing now
+              </span>
+            )}
           </div>
           <div className="overflow-hidden rounded-2xl border border-stone-800 bg-stone-900/50">
             <div className="divide-y divide-stone-800/60">
@@ -323,7 +431,7 @@ export default async function AdminPage() {
                     </div>
                     <div className="h-1.5 overflow-hidden rounded-full bg-stone-800">
                       <div
-                        className={`h-full rounded-full transition-all ${isLast ? 'bg-emerald-500' : 'bg-indigo-500/70'}`}
+                        className={`h-full rounded-full transition-all ${isLast ? 'bg-emerald-500' : i === funnel.steps.length - 2 ? 'bg-amber-500/70' : 'bg-indigo-500/70'}`}
                         style={{ width: `${barWidth}%` }}
                       />
                     </div>
@@ -331,6 +439,49 @@ export default async function AdminPage() {
                 )
               })}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Weekly Cohort Retention */}
+      {cohorts && cohorts.cohorts.length > 0 && (
+        <div className="mb-12">
+          <div className="mb-4 flex items-center gap-3">
+            <h2 className="font-serif text-xl text-stone-200">Weekly Cohort Retention</h2>
+            <span className="rounded-full border border-stone-700 bg-stone-800/50 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-stone-400">
+              Last 8 weeks
+            </span>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-stone-800 bg-stone-900/50">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-stone-800">
+                  <th className="px-5 py-3 text-left font-medium text-stone-400">Week of</th>
+                  <th className="px-5 py-3 text-right font-medium text-stone-400">Signups</th>
+                  <th className="px-5 py-3 text-right font-medium text-stone-400">Trialing</th>
+                  <th className="px-5 py-3 text-right font-medium text-stone-400">Paid Pro</th>
+                  <th className="px-5 py-3 text-right font-medium text-stone-400">Conversion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cohorts.cohorts.map((row, i) => (
+                  <tr
+                    key={row.cohort}
+                    className={i < cohorts.cohorts.length - 1 ? 'border-b border-stone-800/60' : ''}
+                  >
+                    <td className="px-5 py-3 text-stone-300">{row.weekLabel}</td>
+                    <td className="px-5 py-3 text-right tabular-nums text-stone-100">{row.signups}</td>
+                    <td className="px-5 py-3 text-right tabular-nums text-amber-400/80">{row.trialing}</td>
+                    <td className="px-5 py-3 text-right tabular-nums text-emerald-400">{row.paidPro}</td>
+                    <td className="px-5 py-3 text-right">
+                      <span className={`tabular-nums ${row.conversionRate >= 5 ? 'text-emerald-400' : row.conversionRate >= 2 ? 'text-amber-400' : 'text-stone-400'}`}>
+                        {row.conversionRate}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
