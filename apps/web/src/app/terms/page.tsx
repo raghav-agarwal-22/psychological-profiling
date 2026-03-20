@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — Innermind',
+  title: 'Terms of Service',
   description: 'The terms and conditions governing your use of the Innermind platform.',
+  robots: { index: true, follow: true },
 }
 
 export default function TermsPage() {

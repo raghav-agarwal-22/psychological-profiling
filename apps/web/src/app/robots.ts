@@ -6,8 +6,18 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/assessment', '/archetypes/', '/p/', '/compare'],
-        disallow: ['/dashboard', '/profile/', '/coach', '/admin'],
+        allow: ['/', '/about', '/assessment', '/archetypes/', '/upgrade', '/privacy', '/terms', '/p/', '/compare'],
+        disallow: [
+          '/dashboard',
+          '/profile/',
+          '/coach',
+          '/admin',
+          '/journal',
+          '/insights',
+          '/teams',
+          '/adaptive',
+          '/auth/',
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

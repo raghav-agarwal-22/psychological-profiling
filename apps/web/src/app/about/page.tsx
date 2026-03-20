@@ -2,8 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About — Innermind',
+  title: 'About',
   description: 'Innermind combines psychology, reflection, and symbolic wisdom to help people navigate life with more clarity, meaning, and agency.',
+  openGraph: {
+    title: 'About Innermind',
+    description: 'Innermind combines psychology, reflection, and symbolic wisdom to help people navigate life with more clarity, meaning, and agency.',
+  },
 }
 
 export default function AboutPage() {

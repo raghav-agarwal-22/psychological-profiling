@@ -10,7 +10,6 @@ export const metadata: Metadata = {
     title: 'The 12 Jungian Archetypes | Innermind',
     description:
       'Explore the twelve Jungian archetypes — mythologically-grounded psychological patterns that shape how we think, feel, and move through the world.',
-    images: [{ url: '/og-default.png' }],
   },
 }
 

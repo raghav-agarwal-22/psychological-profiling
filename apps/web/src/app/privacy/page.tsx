@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Innermind',
+  title: 'Privacy Policy',
   description: 'How Innermind collects, uses, and protects your personal data.',
+  robots: { index: true, follow: true },
 }
 
 export default function PrivacyPage() {

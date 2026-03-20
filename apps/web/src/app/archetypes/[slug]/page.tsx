@@ -22,13 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${archetype.name} — Jungian Archetype | Innermind`,
       description: `${archetype.tagline}. ${archetype.description}`,
-      images: [{ url: '/og-default.png' }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: 'summary',
       title: `${archetype.name} — Jungian Archetype | Innermind`,
       description: `${archetype.tagline}. ${archetype.description}`,
-      images: ['/og-default.png'],
     },
   }
 }
