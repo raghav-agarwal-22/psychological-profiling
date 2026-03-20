@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { LaunchBanner } from '@/components/LaunchBanner'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -6,6 +7,7 @@ export const revalidate = 3600
 export default function HomePage() {
   return (
     <div className="flex flex-col">
+      <LaunchBanner />
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 py-32 text-center">
         {/* Faint radial circle pattern */}

@@ -521,3 +521,15 @@ model Referral {
   @@index([referrerId])
   @@map("referrals")
 }
+
+// ─── NotifyList ───────────────────────────────────────────────────────────────
+// Pre-launch email capture — people who want to be notified on Product Hunt day.
+
+model NotifyList {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("prelaunch_notify")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notify_list")
+}

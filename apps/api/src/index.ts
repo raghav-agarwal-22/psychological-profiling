@@ -25,6 +25,7 @@ import { onboardingRoutes } from './routes/onboarding.js'
 import { affiliateRoutes } from './routes/affiliates.js'
 import { anonymousRoutes } from './routes/anonymous.js'
 import { dripRoutes, resendWebhookRoutes } from './routes/drip.js'
+import { notifyRoutes } from './routes/notify.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -98,6 +99,7 @@ await server.register(affiliateRoutes, { prefix: '/api/affiliates' })
 await server.register(anonymousRoutes, { prefix: '/api/anon' })
 await server.register(dripRoutes, { prefix: '/api/drip' })
 await server.register(resendWebhookRoutes, { prefix: '/api/webhooks' })
+await server.register(notifyRoutes, { prefix: '/api/users' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

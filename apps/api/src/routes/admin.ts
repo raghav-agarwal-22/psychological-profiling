@@ -565,4 +565,22 @@ export async function adminRoutes(server: FastifyInstance) {
 
     return reply.send({ ok: true, results })
   })
+
+  // GET /api/admin/notify-list — CSV export of pre-launch email subscribers
+  server.get('/notify-list', async (_req, reply) => {
+    const rows = await prisma.notifyList.findMany({
+      orderBy: { createdAt: 'asc' },
+      select: { email: true, source: true, createdAt: true },
+    })
+
+    const csv = [
+      'email,source,created_at',
+      ...rows.map((r) => `${r.email},${r.source},${r.createdAt.toISOString()}`),
+    ].join('\n')
+
+    return reply
+      .header('Content-Type', 'text/csv')
+      .header('Content-Disposition', 'attachment; filename="notify-list.csv"')
+      .send(csv)
+  })
 }
