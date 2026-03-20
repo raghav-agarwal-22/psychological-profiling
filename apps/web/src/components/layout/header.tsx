@@ -26,6 +26,12 @@ export function Header() {
             Teams
           </Link>
           <Link
+            href="/journal"
+            className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+          >
+            Journal
+          </Link>
+          <Link
             href="/auth/login"
             className="text-sm text-stone-400 transition-colors hover:text-stone-100"
           >

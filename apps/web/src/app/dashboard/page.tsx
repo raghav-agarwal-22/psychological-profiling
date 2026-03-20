@@ -817,7 +817,7 @@ export default function DashboardPage() {
       )}
 
       {/* AI Coach CTA */}
-      <Link href="/coach" className="mb-8 block rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 hover:border-amber-500/50 hover:bg-amber-500/10 transition-colors">
+      <Link href="/coach" className="mb-4 block rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 hover:border-amber-500/50 hover:bg-amber-500/10 transition-colors">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/20">
             <span className="text-xl">◈</span>
@@ -825,6 +825,20 @@ export default function DashboardPage() {
           <div>
             <p className="font-serif text-stone-100">Talk to your coach</p>
             <p className="text-xs text-stone-400">Explore your profile in conversation</p>
+          </div>
+          <span className="ml-auto text-stone-500">→</span>
+        </div>
+      </Link>
+
+      {/* Reflection Journal CTA */}
+      <Link href="/journal" className="mb-8 block rounded-2xl border border-stone-800 bg-stone-900/50 p-5 hover:border-stone-700 hover:bg-stone-900/80 transition-colors">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-800">
+            <span className="text-xl">◉</span>
+          </div>
+          <div>
+            <p className="font-serif text-stone-100">Reflection Journal</p>
+            <p className="text-xs text-stone-400">Write about your discoveries</p>
           </div>
           <span className="ml-auto text-stone-500">→</span>
         </div>
