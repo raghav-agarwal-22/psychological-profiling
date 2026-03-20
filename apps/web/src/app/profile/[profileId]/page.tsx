@@ -519,6 +519,7 @@ export default function ProfilePage() {
     )
   }
 
+  const isCustomProfile = profile.rawOutput?.templateType === 'CUSTOM'
   const isValuesProfile = profile.rawOutput?.templateType === 'VALUES_INVENTORY'
   const isAttachmentProfile = profile.rawOutput?.templateType === 'ATTACHMENT_STYLE'
   const isTriadProfile = profile.rawOutput?.templateType === 'LIGHT_DARK_TRIAD'
@@ -542,7 +543,17 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Header */}
-      {isEnneagramProfile ? (
+      {isCustomProfile ? (
+        <div className="mb-10 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 ring-1 ring-amber-500/20">
+            <span className="text-3xl">◈</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">Adaptive Deep-Dive</h1>
+          <p className="mt-2 text-stone-500">
+            Personalized profile from your AI-generated follow-up questions
+          </p>
+        </div>
+      ) : isEnneagramProfile ? (
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/10 ring-1 ring-violet-500/20">
             <span className="text-3xl">◑</span>
@@ -617,7 +628,7 @@ export default function ProfilePage() {
       {/* Summary */}
       <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
         <h2 className="mb-3 font-serif text-xl text-stone-200">
-          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : isTriadProfile ? 'Your spectrum portrait' : isEnneagramProfile ? 'Your type portrait' : 'Your narrative'}
+          {isCustomProfile ? 'Your adaptive synthesis' : isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : isTriadProfile ? 'Your spectrum portrait' : isEnneagramProfile ? 'Your type portrait' : 'Your narrative'}
         </h2>
         <p className="text-stone-400 leading-relaxed">{profile.summary}</p>
         {isValuesProfile && valuesNarrative?.narrative && (
@@ -652,6 +663,19 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {/* Adaptive profile: integration theme */}
+      {isCustomProfile && (() => {
+        const adaptiveNarrative = profile.rawOutput?.narrative as { integrationTheme?: string; keyPatterns?: string[] } | null
+        if (!adaptiveNarrative?.integrationTheme) return null
+        return (
+          <div className="mb-8 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
+            <h2 className="mb-1 font-serif text-xl text-stone-200">Integration theme</h2>
+            <p className="mb-1 text-xs text-stone-500">The central insight from your deep-dive</p>
+            <p className="mt-3 leading-relaxed text-stone-300">{adaptiveNarrative.integrationTheme}</p>
+          </div>
+        )
+      })()}
 
       {/* Values profile: ranked list with core values highlighted */}
       {isValuesProfile && sortedValueEntries.length > 0 && (
@@ -1177,14 +1201,42 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Adaptive Deep-Dive CTA — shown on non-CUSTOM profiles */}
+      {!isCustomProfile && (
+        <div className="mb-8 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 ring-1 ring-amber-500/20">
+              <span className="text-base">◈</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="mb-1 text-sm font-semibold text-stone-200">
+                Ready to go deeper?
+              </h3>
+              <p className="mb-4 text-sm text-stone-400">
+                Claude will analyze your profile and generate 10 personalized follow-up questions
+                targeting your unique psychological patterns.
+              </p>
+              <Link
+                href={`/adaptive?profileId=${encodeURIComponent(profile.id)}`}
+                className="inline-block rounded-xl bg-amber-500 px-5 py-2 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+              >
+                Start Adaptive Deep-Dive
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* CTA */}
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <Link
-          href={`/assessment${profile.rawOutput?.templateType ? `?type=${encodeURIComponent(profile.rawOutput.templateType)}` : ''}`}
-          className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
-        >
-          Retake this assessment
-        </Link>
+        {!isCustomProfile && (
+          <Link
+            href={`/assessment${profile.rawOutput?.templateType ? `?type=${encodeURIComponent(profile.rawOutput.templateType)}` : ''}`}
+            className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Retake this assessment
+          </Link>
+        )}
         <button
           onClick={handleShare}
           disabled={sharing}
