@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { getToken, clearToken } from '@/lib/auth'
+import { getToken } from '@/lib/auth'
 
 const NAV_LINKS = [
   { label: 'About', href: '/about' },
@@ -16,19 +16,11 @@ const NAV_LINKS = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
     setIsLoggedIn(!!getToken())
   }, [pathname])
-
-  function handleSignOut() {
-    clearToken()
-    setIsLoggedIn(false)
-    setMobileOpen(false)
-    router.push('/')
-  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-stone-800 bg-stone-950/80 backdrop-blur-sm">
@@ -58,9 +50,12 @@ export function Header() {
               >
                 Dashboard
               </Link>
-              <Button size="sm" variant="ghost" onClick={handleSignOut} className="text-stone-400 hover:text-stone-100">
-                Sign out
-              </Button>
+              <Link
+                href="/account"
+                className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+              >
+                Account
+              </Link>
             </>
           ) : (
             <>
@@ -119,12 +114,13 @@ export function Header() {
                   >
                     Dashboard
                   </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="mt-2 block w-full rounded-xl bg-stone-800 px-4 py-2.5 text-center text-sm font-semibold text-stone-300 transition-colors hover:bg-stone-700"
+                  <Link
+                    href="/account"
+                    className="block rounded-lg px-3 py-2.5 text-sm text-stone-300 transition-colors hover:bg-stone-800/60 hover:text-stone-100"
+                    onClick={() => setMobileOpen(false)}
                   >
-                    Sign out
-                  </button>
+                    Account
+                  </Link>
                 </>
               ) : (
                 <>

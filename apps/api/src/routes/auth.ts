@@ -149,7 +149,17 @@ export async function authRoutes(server: FastifyInstance) {
   server.get('/me', { preHandler: requireAuth }, async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { id: true, email: true, name: true, avatarUrl: true, timezone: true, createdAt: true },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        avatarUrl: true,
+        timezone: true,
+        createdAt: true,
+        subscriptionTier: true,
+        trialEndsAt: true,
+        stripeCustomerId: true,
+      },
     })
 
     if (!user) {
