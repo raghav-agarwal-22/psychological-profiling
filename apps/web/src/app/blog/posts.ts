@@ -4247,6 +4247,1028 @@ Understanding your Enneagram type directs your shadow inquiry toward the terrain
 [Take Innermind's free psychological assessment](/auth/login) — your Jungian archetypes profile includes insights about your shadow content and the integration work most relevant to your psychological profile.
 `,
   },
+  {
+    slug: 'intj-personality-type',
+    title: 'INTJ Personality Type: The Architect Explained',
+    description:
+      'INTJs are strategic, independent, and relentlessly competent. Here\'s a deep dive into INTJ traits, strengths, blind spots, and how the Big Five maps to this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 9,
+    category: 'Personality Types',
+    keywords: ['INTJ personality type', 'INTJ traits', 'INTJ explained', 'INTJ strengths and weaknesses', 'INTJ Big Five'],
+    content: `
+## What Is INTJ?
+
+INTJ stands for Introverted, iNtuitive, Thinking, Judging — one of 16 types in the Myers-Briggs Type Indicator system, often nicknamed "The Architect" or "The Mastermind." INTJs represent roughly 2–4% of the population and are among the rarest types, particularly rare in women.
+
+The INTJ profile describes someone who is:
+- Energized by solitude and internal processing rather than external stimulation (Introverted)
+- Oriented toward patterns, abstract systems, and long-range possibilities (Intuitive)
+- Decision-making driven by logic, analysis, and objective criteria (Thinking)
+- Preferring closure, planning, and decisive action over open-ended flexibility (Judging)
+
+The INTJ archetype — strategic, self-confident, and intensely focused on mastery and long-range vision — resonates strongly with those who identify with it.
+
+## The INTJ Experience
+
+INTJs experience the world through a lens of systems and strategy. Everything from social dynamics to career choices gets filtered through the question: what is the most effective path to the best possible outcome?
+
+**The internal blueprint.** INTJs typically carry a detailed internal model of how things should work. They're less interested in how things are done conventionally and more interested in what would actually work best. This produces both genuine innovation and occasional friction with institutions and social conventions.
+
+**High standards as a default setting.** INTJs hold themselves and others to demanding standards. This isn't arrogance — it's a deeply held belief that things can and should be done well. The frustration when they aren't can be significant.
+
+**Social selectivity.** INTJs tend to invest deeply in a small number of relationships rather than cultivating a wide social network. Small talk often feels like a waste of time compared to substantive conversation.
+
+## INTJ Strengths
+
+**Long-range strategic thinking.** INTJs are unusually good at seeing several steps ahead, anticipating obstacles, and designing systems to reach complex goals efficiently.
+
+**Independent judgment.** INTJs don't defer to authority or consensus easily. They form their own views based on evidence and analysis — which makes them excellent critical thinkers and resistant to groupthink.
+
+**Intellectual depth.** The combination of Introversion and Intuition produces people who go deep into domains they care about. INTJs are often domain experts with encyclopedic knowledge in areas of interest.
+
+**Decisive execution.** The Judging preference means INTJs don't just plan — they act. Once a course is decided, they pursue it with sustained focus and discipline.
+
+## INTJ Blind Spots and Challenges
+
+**Interpersonal rigidity.** The preference for logic and systems can translate into impatience with emotional processing, social niceties, or the slower, messier reality of working with people.
+
+**Overconfidence in internal models.** INTJs can be highly confident in their analysis — sometimes past the point warranted. An internal model that seems airtight can still be missing crucial variables.
+
+**Dismissiveness.** The combination of high standards and impatience can make INTJs come across as dismissive, contemptuous, or arrogant — even when that's not the intent.
+
+**Under-investment in relationships.** The INTJ drive for efficiency can lead to neglecting the emotional maintenance that relationships require. Close relationships may suffer from the INTJ's discomfort with vulnerability.
+
+## What Big Five Research Says About INTJ-Like Profiles
+
+Because the MBTI has known reliability limitations, translating to the Big Five provides a more scientifically robust picture. An INTJ profile roughly maps to:
+
+- **Low Extraversion** (Introversion, preference for solitude and depth)
+- **High Openness** (Intuition, abstract thinking, intellectual curiosity)
+- **Low Agreeableness** (Thinking, willingness to challenge and confront)
+- **High Conscientiousness** (Judging, discipline, planning, follow-through)
+- **Low to Moderate Neuroticism** (generally stable emotionally, though prone to irritability under inefficiency)
+
+This profile — high Openness and Conscientiousness with low Extraversion and Agreeableness — is associated with: **scientific achievement, entrepreneurial success, leadership in technical domains, and some interpersonal friction.** The low Agreeableness is often the most challenging dimension in collaborative contexts.
+
+## Beyond the INTJ Label
+
+The INTJ label can be a useful shorthand for a cluster of traits — but it can also become a justification for patterns that deserve examination. "I'm an INTJ" doesn't fully explain why certain relationships are difficult or why emotional intimacy is avoided.
+
+The Enneagram adds important nuance: INTJs commonly cluster in Types 1, 3, 5, and 8 — each with distinct motivational structures. An INTJ who is Enneagram Type 5 (the Investigator) is driven by a fundamentally different fear than an INTJ who is Type 8 (the Challenger), even if their surface behaviors look similar.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'intp-personality-type',
+    title: 'INTP Personality Type: The Thinker Explained',
+    description:
+      'INTPs are analytical, inventive, and relentlessly curious. Here\'s a deep dive into INTP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['INTP personality type', 'INTP traits', 'INTP explained', 'INTP strengths and weaknesses', 'INTP Big Five'],
+    content: `
+## What Is INTP?
+
+INTP stands for Introverted, iNtuitive, Thinking, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Thinker" or "The Logician." INTPs make up roughly 3–5% of the population and are particularly common in technical, scientific, and philosophical fields.
+
+The INTP profile describes someone who is:
+- Primarily focused inward, energized by ideas and solitude (Introverted)
+- Drawn to abstract systems, theoretical models, and underlying principles (Intuitive)
+- Decision-making guided by logic, analysis, and intellectual coherence (Thinking)
+- Preferring open-ended exploration over premature conclusions (Perceiving)
+
+The INTP archetype — the tireless theorist who would rather understand how something works than do anything practical with that understanding — resonates powerfully with those who recognize themselves in it.
+
+## The INTP Experience
+
+INTPs experience the world primarily as a space of problems to be understood. The internal intellectual landscape is rich, constantly active, and often more compelling than external reality.
+
+**The quest for the model.** INTPs want to understand the underlying structure of whatever they're engaging with — not the surface behavior, but the generative principles. This produces deep expertise but can make INTPs seem slow to act when they feel they don't fully understand yet.
+
+**The perfectionism-completion tension.** INTPs can spend so long refining their understanding of a problem that they never arrive at a solution. The perfect internal model is always one more iteration away. This is the INTP version of the procrastination that plagues Perceiving types.
+
+**Social awkwardness as byproduct, not identity.** INTPs aren't antisocial — they simply find social performance tiring and uninteresting compared to substantive intellectual exchange. When a conversation becomes genuinely interesting, INTPs can engage with surprising enthusiasm and depth.
+
+## INTP Strengths
+
+**Theoretical and analytical precision.** INTPs are unusually good at identifying logical inconsistencies, faulty assumptions, and gaps in reasoning. They make excellent critics, researchers, and systems architects.
+
+**Cross-domain pattern recognition.** The high Openness of INTPs means they often find structural similarities between fields that specialists miss. This produces genuine intellectual innovation.
+
+**Intellectual honesty.** INTPs are more committed to logical consistency than to being liked or being right. They will update their views when presented with compelling evidence — a rarer trait than it sounds.
+
+**Independent thinking.** INTPs form views through reasoning, not consensus. They're resistant to social pressure and groupthink in a way that makes them valuable contrarians in intellectual environments.
+
+## INTP Blind Spots and Challenges
+
+**Analysis paralysis.** The drive for complete understanding before acting can make INTPs slow to commit and prone to indefinite delay. Decisions that require imperfect information are genuinely uncomfortable.
+
+**Emotional underdevelopment.** The strong Thinking preference can leave INTPs less practiced at emotional expression, empathy, and the non-logical dimensions of human relationship. This can create real distance from people they care about.
+
+**Follow-through.** The Perceiving preference means INTPs are far more energized by exploring problems than implementing solutions. Maintenance, administration, and routine execution are frequently neglected.
+
+**Communication of internal complexity.** INTPs often have highly nuanced internal models that are difficult to translate into language that others follow. They may come across as unclear, overly complicated, or unexpectedly impatient when others don't track their thinking.
+
+## What Big Five Research Says About INTP-Like Profiles
+
+Translating MBTI to the more scientifically validated Big Five, an INTP profile roughly maps to:
+
+- **Low Extraversion** (strong preference for solitude and internal processing)
+- **High Openness** (theoretical curiosity, abstract thinking, novelty-seeking in ideas)
+- **Low Agreeableness** (intellectual challenge over social harmony; skepticism of consensus)
+- **Low Conscientiousness** (Perceiving preference; resistance to structure and deadlines)
+- **Low to Moderate Neuroticism** (emotionally stable in general but prone to anxiety around uncompleted intellectual problems)
+
+This profile — the combination of high Openness with low Conscientiousness and low Agreeableness — is characteristic of **creative intellectual domains**: research, philosophy, programming, theoretical science. The low Conscientiousness is typically the most professionally limiting dimension.
+
+## Beyond the INTP Label
+
+INTP as an identity can explain a lot — but it can also calcify patterns that deserve attention. "I'm an INTP" can become a sophisticated way of avoiding growth in areas like emotional expression, commitment, and follow-through.
+
+The Enneagram adds important depth: INTPs tend to cluster in Types 5, 9, and 4. An INTP who is Enneagram Type 5 (the Investigator) has a fundamentally different relationship with their intellectual withdrawal than an INTP who is Type 9 (the Peacemaker), even if both test as INTP.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'entj-personality-type',
+    title: 'ENTJ Personality Type: The Commander Explained',
+    description:
+      'ENTJs are natural leaders — decisive, strategic, and driven. Here\'s a deep dive into ENTJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 9,
+    category: 'Personality Types',
+    keywords: ['ENTJ personality type', 'ENTJ traits', 'ENTJ explained', 'ENTJ strengths and weaknesses', 'ENTJ Big Five'],
+    content: `
+## What Is ENTJ?
+
+ENTJ stands for Extraverted, iNtuitive, Thinking, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Commander" or "The Executive." ENTJs represent roughly 2–3% of the general population and are among the most commonly encountered types in executive leadership roles.
+
+The ENTJ profile describes someone who is:
+- Energized by social interaction, assertion, and external engagement (Extraverted)
+- Focused on long-range patterns, strategy, and systemic possibilities (Intuitive)
+- Decision-making driven by logic, efficiency, and objective analysis (Thinking)
+- Oriented toward planning, structure, and decisive execution (Judging)
+
+The ENTJ archetype — commanding, strategic, relentlessly results-oriented — is perhaps the most stereotypically associated with formal leadership and organizational power.
+
+## The ENTJ Experience
+
+ENTJs experience the world as a set of problems to be solved and systems to be optimized. The internal question is often: what needs to change, who needs to lead that change, and what's the most efficient path to get there?
+
+**Natural command orientation.** ENTJs often find themselves in charge of things — not necessarily because they seek power for its own sake, but because they see what needs to happen, are willing to say it, and are able to organize others around a plan. Leadership feels natural, not effortful.
+
+**Intolerance of inefficiency.** ENTJs find waste — of time, talent, or resources — genuinely frustrating. This produces high-performance environments but can also make them difficult to work with when others operate at different paces or with different standards.
+
+**The future as the primary arena.** ENTJs are less interested in preserving the past or managing the present than in designing and building the future. The visionary quality is real, but it can make them impatient with current realities that don't immediately serve the future goal.
+
+## ENTJ Strengths
+
+**Strategic vision and execution.** ENTJs combine long-range planning with the decisiveness and energy to execute. This is rarer than it sounds — many strategic thinkers can't execute, and many executors can't think strategically.
+
+**Leadership under pressure.** ENTJs tend to become more decisive, not less, when situations become complex or ambiguous. They communicate clearly, make decisions, and organize people around action.
+
+**High competence and work ethic.** The Thinking-Judging combination produces people who are both analytically rigorous and disciplined in follow-through. ENTJs tend to be high performers in almost any domain they commit to.
+
+**Direct communication.** ENTJs say what they mean and mean what they say. This directness, while sometimes blunt, creates clarity and avoids the ambiguity that wastes organizational time.
+
+## ENTJ Blind Spots and Challenges
+
+**Emotional dismissiveness.** The strong Thinking preference can make ENTJs impatient with emotional processing — in themselves and others. This creates a leadership style that's effective but can feel cold or dehumanizing to more feeling-oriented colleagues.
+
+**Dominance and listening.** ENTJs can default to taking charge so quickly that they short-circuit the input-gathering process. The confidence that makes them effective leaders can also make them poor listeners.
+
+**Impatience with process.** ENTJs want results. The slower rhythms of institutional process, consensus-building, and political navigation can feel like obstacles rather than legitimate constraints. This impatience can create unnecessary conflict.
+
+**Neglect of relationships.** The relentless focus on goals and performance can lead ENTJs to underinvest in the relational dimensions of leadership — the trust-building, recognition, and connection that sustains high-performing teams over time.
+
+## What Big Five Research Says About ENTJ-Like Profiles
+
+Translating to the more scientifically validated Big Five, an ENTJ profile roughly maps to:
+
+- **High Extraversion** (assertiveness, dominance, positive affect, social energy)
+- **High Openness** (strategic vision, abstract thinking, tolerance for complexity)
+- **Low Agreeableness** (directness, competitiveness, willingness to challenge)
+- **High Conscientiousness** (discipline, goal-directedness, planning, follow-through)
+- **Low Neuroticism** (emotional stability, resilience under pressure)
+
+This combination — high Extraversion, Conscientiousness, and Openness with low Agreeableness and Neuroticism — is perhaps the most consistently **associated with executive leadership performance** in organizational research. It's also correlated with higher lifetime earnings and professional status.
+
+## Beyond the ENTJ Label
+
+ENTJ as an identity can be genuinely useful — it captures a real pattern. But the label can also become armor: a way of framing emotional unavailability or dominance as simply "how I am."
+
+The Enneagram adds important depth: ENTJs cluster heavily in Types 3, 8, and 1. An ENTJ who is Enneagram Type 3 (the Achiever) has a fundamentally different relationship with success and failure than an ENTJ who is Type 8 (the Challenger). Both may look the same from the outside; their interior experiences diverge significantly.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'entp-personality-type',
+    title: 'ENTP Personality Type: The Debater Explained',
+    description:
+      'ENTPs are quick-witted, inventive, and love intellectual sparring. Here\'s a deep dive into ENTP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ENTP personality type', 'ENTP traits', 'ENTP explained', 'ENTP strengths and weaknesses', 'ENTP Big Five'],
+    content: `
+## What Is ENTP?
+
+ENTP stands for Extraverted, iNtuitive, Thinking, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Debater" or "The Visionary." ENTPs make up roughly 3–5% of the population and tend to cluster in entrepreneurial, creative, and intellectually stimulating fields.
+
+The ENTP profile describes someone who is:
+- Energized by social interaction, debate, and external engagement (Extraverted)
+- Drawn to abstract possibilities, novel connections, and systemic patterns (Intuitive)
+- Decision-making guided by logical analysis and intellectual consistency (Thinking)
+- Preferring flexible exploration over committed structure (Perceiving)
+
+The ENTP archetype — irreverent, clever, idea-rich, and perpetually interested in the next interesting thing — is immediately recognizable to many who identify with it.
+
+## The ENTP Experience
+
+ENTPs experience the world as an endlessly interesting space of ideas, arguments, and possibilities. The primary motivation is intellectual stimulation — finding the most interesting angle on any problem.
+
+**The argument as exploration.** For ENTPs, debate isn't about winning — it's a thinking tool. They take positions to stress-test them, advocate devil's advocate stances genuinely, and can find it genuinely confusing that others treat argument as conflict rather than exploration.
+
+**Novelty as fuel.** ENTPs are energized by new ideas, new projects, and new problems. The early phase of anything — ideation, exploration, the wide-open space of possibility — is where ENTPs thrive. Maintenance, repetition, and incremental execution are often where they stall.
+
+**Rapid cross-domain synthesis.** ENTPs frequently find connections between apparently unrelated fields. This pattern recognition across domains is one of their signature intellectual strengths and can produce genuinely innovative ideas.
+
+## ENTP Strengths
+
+**Generative ideation.** ENTPs produce ideas at a rate that surprises those around them. Not all ideas are good, but the sheer volume creates statistical opportunities for genuinely excellent ones.
+
+**Intellectual agility.** ENTPs can engage with complex, ambiguous problems with unusual speed. They're comfortable with uncertainty, skilled at reframing problems, and fast at identifying assumptions.
+
+**Persuasion and communication.** The combination of Extraversion, Intuition, and Thinking produces people who can present complex ideas compellingly. ENTPs often make excellent communicators, advocates, and entrepreneurs.
+
+**Entrepreneurial orientation.** The combination of vision, risk tolerance, and flexibility makes ENTPs natural entrepreneurs. They're less bothered by uncertainty and more motivated by possibility than most other types.
+
+## ENTP Blind Spots and Challenges
+
+**Follow-through deficits.** The Perceiving preference creates a structural tension between the ENTP's enthusiasm for starting things and the discipline required to finish them. The graveyard of started-but-abandoned projects is a familiar ENTP experience.
+
+**Argument fatigue in relationships.** ENTPs' natural debate orientation can exhaust partners, colleagues, and friends who don't experience argument as intellectual play. It can inadvertently create an adversarial tone even in low-stakes conversations.
+
+**Commitment to execution.** ENTPs are excellent strategists but can be poor implementers. The operational details, administrative requirements, and routine execution of bringing an idea to completion often feel painful.
+
+**Underestimating emotional factors.** The Thinking function can make ENTPs less attuned to the emotional undercurrents in decisions and relationships. They may be surprised when logical solutions create emotional friction.
+
+## What Big Five Research Says About ENTP-Like Profiles
+
+Translating to the Big Five, an ENTP profile roughly maps to:
+
+- **High Extraversion** (social energy, assertiveness, enthusiasm, positive affect)
+- **High Openness** (idea generation, novelty-seeking, abstract thinking, creativity)
+- **Low to Moderate Agreeableness** (intellectual challenge, skepticism of consensus, debate orientation)
+- **Low Conscientiousness** (flexible, spontaneous, resistant to structure and routine)
+- **Low to Moderate Neuroticism** (generally resilient, though prone to restlessness and boredom)
+
+This profile — high Extraversion and Openness with low Conscientiousness — is strongly associated with **entrepreneurial and creative achievement**. The low Conscientiousness is the most common professional liability, as it creates friction with the execution demands of most organizations.
+
+## Beyond the ENTP Label
+
+ENTP identification is often enthusiastically embraced — the archetype flatters intellectual self-concept. But the label can also normalize patterns worth examining: avoidance of commitment, debate that damages relationships, and the perpetual incompletion that prevents impact.
+
+The Enneagram adds important depth: ENTPs cluster in Types 7, 3, and 5. An ENTP who is Enneagram Type 7 (the Enthusiast) has a relationship with novelty and avoidance that goes much deeper than Myers-Briggs can capture.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'enfj-personality-type',
+    title: 'ENFJ Personality Type: The Protagonist Explained',
+    description:
+      'ENFJs are charismatic, empathic leaders who inspire others toward growth. Here\'s a deep dive into ENFJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 9,
+    category: 'Personality Types',
+    keywords: ['ENFJ personality type', 'ENFJ traits', 'ENFJ explained', 'ENFJ strengths and weaknesses', 'ENFJ Big Five'],
+    content: `
+## What Is ENFJ?
+
+ENFJ stands for Extraverted, iNtuitive, Feeling, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Protagonist" or "The Teacher." ENFJs represent roughly 2–3% of the population and are often drawn to leadership roles that involve people development, advocacy, and social change.
+
+The ENFJ profile describes someone who is:
+- Energized by people, social engagement, and interpersonal connection (Extraverted)
+- Focused on possibilities, patterns, and what people could become (Intuitive)
+- Decision-making driven by values, empathy, and human impact (Feeling)
+- Preferring structure, planning, and decisive action over open-ended flexibility (Judging)
+
+The ENFJ archetype — inspiring, warm, visionary, and driven by an almost missionary commitment to helping others grow — is one of the most strongly people-oriented of all 16 types.
+
+## The ENFJ Experience
+
+ENFJs experience the world through relationships and human potential. Where others see individuals, ENFJs often see trajectories — who someone is becoming, what they're capable of, how they might be supported or inspired.
+
+**Leadership as service.** ENFJs don't typically lead for power or status. They lead because they see what could be done for people and feel personally responsible for making it happen. This produces highly motivated, people-centered leadership — but can also produce burnout when the ENFJ's vision for others isn't matched by those others' own desire to grow.
+
+**Emotional attunement as a core skill.** ENFJs pick up on emotional undercurrents in groups with unusual accuracy. They often know what's going on in a room before it's expressed — and feel compelled to respond to it. This is both their greatest gift and a significant source of emotional exhaustion.
+
+**The need for harmony and its cost.** ENFJs have a strong pull toward harmony. Conflict — especially unresolved conflict — is genuinely distressing. This can lead to avoidance of necessary confrontations or the accommodation of others' needs at the expense of their own.
+
+## ENFJ Strengths
+
+**Inspiring leadership.** ENFJs have an unusual ability to see the potential in others and communicate it in a way that is genuinely motivating. They often catalyze growth in people who didn't know they were capable of more.
+
+**Emotional intelligence.** The combination of Feeling and Intuition produces sophisticated empathy — not just recognition of how others feel, but understanding of why and what they need.
+
+**Organizational energy.** The Judging preference means ENFJs don't just envision — they plan and execute. They're effective at moving groups from vision to action.
+
+**Authentic connection.** ENFJs' warmth tends to be genuine rather than performative. They remember details about people, follow up, and invest in relationships with consistency.
+
+## ENFJ Blind Spots and Challenges
+
+**Self-neglect.** ENFJs are so oriented toward others' needs that their own needs often go unaddressed until depletion forces the issue. The self-care instinct is frequently underdeveloped.
+
+**Over-identification with others' outcomes.** ENFJs can become entangled in other people's growth journeys in ways that aren't healthy — taking responsibility for outcomes that aren't theirs to own, and feeling personally diminished when others don't fulfill their potential.
+
+**Conflict avoidance.** The strong pull toward harmony can prevent ENFJs from delivering the honest feedback that the people they care about most actually need. Hard truths get softened to the point of ineffectiveness.
+
+**People-pleasing at the expense of authenticity.** Under stress, ENFJs can become chameleons — adapting so completely to what others need that they lose touch with their own perspective.
+
+## What Big Five Research Says About ENFJ-Like Profiles
+
+Translating to the Big Five, an ENFJ profile roughly maps to:
+
+- **High Extraversion** (sociability, warmth, assertiveness in social leadership)
+- **High Openness** (visionary thinking, possibility orientation, creativity in human domains)
+- **High Agreeableness** (empathy, cooperation, values-orientation, prosocial motivation)
+- **High Conscientiousness** (planning, follow-through, organizational discipline)
+- **Moderate to High Neuroticism** (emotional sensitivity, responsiveness to others' distress, vulnerability to burnout)
+
+This profile — high on all traits except potentially Neuroticism — is strongly associated with **people-centered leadership, prosocial behavior, relationship quality, and occupational success in human services domains.** The Neuroticism dimension is the primary risk factor for burnout and emotional exhaustion.
+
+## Beyond the ENFJ Label
+
+The ENFJ label captures something real — but it can also become a way of making self-sacrifice feel noble rather than examining it. "I'm an ENFJ — I just care about people" can be a way of not examining patterns of codependency, poor boundaries, or the deep need for appreciation that drives the helping.
+
+The Enneagram adds important depth here: ENFJs cluster most in Types 2, 3, and 1. An ENFJ who is Enneagram Type 2 (the Helper) has a fundamentally different relationship with caregiving — and its shadow — than an ENFJ who is Type 3 (the Achiever).
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'infp-personality-type',
+    title: 'INFP Personality Type: The Mediator Explained',
+    description:
+      'INFPs are idealistic, empathic, and guided by deep personal values. Here\'s a deep dive into INFP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 9,
+    category: 'Personality Types',
+    keywords: ['INFP personality type', 'INFP traits', 'INFP explained', 'INFP strengths and weaknesses', 'INFP Big Five'],
+    content: `
+## What Is INFP?
+
+INFP stands for Introverted, iNtuitive, Feeling, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Mediator" or "The Idealist." INFPs represent roughly 4–5% of the population and tend to gravitate toward creative, counseling, and mission-driven fields.
+
+The INFP profile describes someone who is:
+- Oriented inward, energized by solitude and internal exploration (Introverted)
+- Focused on abstract possibilities, meaning, and imaginative depth (Intuitive)
+- Decision-making guided by deeply held personal values (Feeling)
+- Preferring open-ended exploration over rigid structure (Perceiving)
+
+The INFP archetype — deeply idealistic, empathic, quietly creative, and intensely committed to authenticity — resonates powerfully with those who identify with it.
+
+## The INFP Experience
+
+INFPs experience the world through the lens of meaning and values. Questions of authenticity — "Is this true to who I am?" — are central rather than peripheral.
+
+**The internal landscape.** INFPs have rich inner worlds — vivid imaginations, complex emotional lives, and a catalog of personal values that serve as a compass through every major decision. What happens externally is often less important than what happens internally in response.
+
+**The idealism-reality gap.** INFPs carry a vision of how things should be — in themselves, in their relationships, in the world — that is frequently in tension with how things actually are. This can be a source of both creative motivation and chronic disappointment.
+
+**Selective but deep engagement.** INFPs don't engage with everything equally. But when something or someone aligns with their values and imagination, they invest with extraordinary depth and loyalty.
+
+## INFP Strengths
+
+**Empathic understanding.** INFPs have a rare capacity to understand others' inner experience — not just to observe behavior but to imaginatively inhabit another perspective. This makes them exceptional at creative work, counseling, and any domain that requires genuine understanding of human experience.
+
+**Creative depth.** The combination of Intuition, Feeling, and rich inner life frequently produces powerful creative work. INFPs tend to write, create, or communicate in ways that connect with emotional truth.
+
+**Value consistency.** When INFPs commit to something that aligns with their values, they're remarkably consistent. They don't need external monitoring or incentives when the work feels genuinely meaningful.
+
+**Curiosity about identity and meaning.** INFPs are natural seekers — of self-understanding, philosophical depth, and authentic expression. This makes them thoughtful and often wise beyond their years in domains of personal and interpersonal insight.
+
+## INFP Blind Spots and Challenges
+
+**Idealism as avoidance.** The INFP vision of how things should be can become an obstacle to engaging with how things actually are. The gap between ideal and real is painful enough that some INFPs retreat into fantasy or chronic dissatisfaction rather than engaging with imperfect reality.
+
+**Difficulty with practical structure.** The Perceiving preference combined with the Feeling function can make administrative tasks, financial planning, and organizational demands feel alien and exhausting. INFPs may leave important practical matters chronically unaddressed.
+
+**Conflict sensitivity.** INFPs find interpersonal conflict deeply distressing. This can lead to avoidance of necessary confrontations, accumulation of unspoken resentments, and relationships where honest exchange is sacrificed for surface peace.
+
+**Over-identification with feelings.** The strong Feeling function can make it difficult to distinguish between "I feel strongly about this" and "this is objectively important." Emotional intensity can be mistaken for moral clarity.
+
+## What Big Five Research Says About INFP-Like Profiles
+
+Translating to the Big Five, an INFP profile roughly maps to:
+
+- **Low Extraversion** (introversion, preference for depth over breadth in social engagement)
+- **High Openness** (creativity, imaginative depth, aesthetic sensitivity, interest in meaning)
+- **High Agreeableness** (empathy, values-orientation, harmony-seeking, prosocial concern)
+- **Low Conscientiousness** (flexibility, spontaneity, resistance to rigid external structure)
+- **Moderate to High Neuroticism** (emotional sensitivity, intensity, vulnerability to criticism and disappointment)
+
+This profile is associated with **creative and empathic domains**, strong relationship quality when emotional regulation is healthy, and vulnerability to **anxiety, depression, and occupational drift** when the low Conscientiousness and higher Neuroticism interact under chronic stress.
+
+## Beyond the INFP Label
+
+INFP is among the most widely identified-with types online, and the archetype carries real resonance. But it can also become a frame that normalizes avoidance of structure and practical responsibility as inherent to identity rather than habits that can be developed.
+
+The Enneagram adds crucial depth: INFPs cluster heavily in Types 4, 9, and occasionally 6. An INFP who is Enneagram Type 4 (the Individualist) has a fundamentally different relationship with their emotional depth and sense of identity than an INFP who is Type 9 (the Peacemaker).
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'isfj-personality-type',
+    title: 'ISFJ Personality Type: The Defender Explained',
+    description:
+      'ISFJs are caring, reliable, and deeply committed to those they love. Here\'s a deep dive into ISFJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ISFJ personality type', 'ISFJ traits', 'ISFJ explained', 'ISFJ strengths and weaknesses', 'ISFJ Big Five'],
+    content: `
+## What Is ISFJ?
+
+ISFJ stands for Introverted, Sensing, Feeling, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Defender" or "The Protector." ISFJs are one of the most common types, representing roughly 9–14% of the population, with higher prevalence in women.
+
+The ISFJ profile describes someone who is:
+- Inwardly focused, energized by quiet and meaningful close relationships (Introverted)
+- Processing the world through concrete, factual, sensory details (Sensing)
+- Decision-making guided by personal values and care for others (Feeling)
+- Preferring order, structure, and planned outcomes (Judging)
+
+The ISFJ archetype — quietly devoted, reliable, warm, and deeply invested in protecting and caring for the people and institutions they love — captures a real and important psychological pattern.
+
+## The ISFJ Experience
+
+ISFJs experience the world through relationships and responsibility. They notice details others miss — not abstract patterns, but the concrete particulars that matter to the people they care about.
+
+**Memory for people.** ISFJs often have extraordinary memory for details about others: birthdays, preferences, past conversations, what matters to each person. This capacity to hold others in mind is the behavioral expression of their deep relational investment.
+
+**Duty as identity.** ISFJs have a strong sense of responsibility — to family, to institutions, to the roles they occupy. This produces extraordinary reliability and follow-through, but can also mean ISFJs carry responsibilities that aren't fully theirs and feel guilty when they don't.
+
+**The quiet labor problem.** ISFJs often do enormous amounts of invisible work — emotional labor, practical caretaking, organizational maintenance — without acknowledgment. They often don't ask for recognition, and they may feel chronically undervalued as a result.
+
+## ISFJ Strengths
+
+**Reliability and follow-through.** When ISFJs commit to something, they deliver. Their Judging preference combined with Sensing attention to detail produces consistent, high-quality execution on practical responsibilities.
+
+**Warmth and attentiveness.** ISFJs notice what matters to each person and respond to it. They create environments where people feel genuinely cared for and seen.
+
+**Institutional memory.** ISFJs often serve as the memory of an organization or family — holding history, precedent, and context in ways that provide continuity and stability.
+
+**Practical care.** ISFJs express love and care through action: the meal prepared, the appointment remembered, the quiet support offered without fanfare.
+
+## ISFJ Blind Spots and Challenges
+
+**Difficulty saying no.** The combination of high Agreeableness and a strong sense of duty makes boundary-setting genuinely difficult. ISFJs may take on more than is sustainable out of an inability to disappoint others.
+
+**Avoidance of conflict.** ISFJs tend to manage conflict by smoothing it over rather than addressing it directly. This can allow resentments to accumulate beneath a surface of apparent harmony.
+
+**Under-expression of own needs.** The relational orientation means ISFJs often focus on what others need while leaving their own needs unexpressed. They may expect others to notice and reciprocate in the same attentive way — and feel hurt when they don't.
+
+**Resistance to change.** The Sensing-Judging combination creates genuine comfort with the familiar and discomfort with unexpected change. ISFJs may resist change that would genuinely serve them because it disrupts established patterns.
+
+## What Big Five Research Says About ISFJ-Like Profiles
+
+Translating to the Big Five, an ISFJ profile roughly maps to:
+
+- **Low Extraversion** (introversion, quiet relational warmth over broad social engagement)
+- **Low Openness** (concrete over abstract, conventional over novel, practical over theoretical)
+- **High Agreeableness** (warmth, cooperation, empathy, prosocial motivation)
+- **High Conscientiousness** (reliability, organization, planning, follow-through)
+- **Moderate Neuroticism** (emotional sensitivity, especially around relational disruption and criticism)
+
+This profile — high Agreeableness and Conscientiousness with low Extraversion and Openness — is associated with **relational reliability, occupational consistency, and strong caregiving.** It's also associated with some vulnerability to **anxiety around change** and burnout from invisible caretaking labor.
+
+## Beyond the ISFJ Label
+
+The ISFJ label captures a real and important psychological pattern. But it can also normalize the chronic self-neglect and invisible labor that many ISFJs experience as simply "how I am."
+
+The Enneagram adds important depth: ISFJs cluster in Types 1, 2, 6, and 9. An ISFJ who is Enneagram Type 2 (the Helper) has a deeply different relationship with their care-giving — and what drives it — than an ISFJ who is Type 6 (the Loyalist), even if both appear reliably supportive on the surface.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'istj-personality-type',
+    title: 'ISTJ Personality Type: The Inspector Explained',
+    description:
+      'ISTJs are responsible, methodical, and fiercely dependable. Here\'s a deep dive into ISTJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ISTJ personality type', 'ISTJ traits', 'ISTJ explained', 'ISTJ strengths and weaknesses', 'ISTJ Big Five'],
+    content: `
+## What Is ISTJ?
+
+ISTJ stands for Introverted, Sensing, Thinking, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Inspector" or "The Logistician." ISTJs are one of the most common types, representing roughly 11–14% of the population and are particularly prevalent in law enforcement, military, accounting, and administrative roles.
+
+The ISTJ profile describes someone who is:
+- Inwardly focused, energized by solitude and focused work (Introverted)
+- Processing experience through concrete facts, sensory details, and precedent (Sensing)
+- Decision-making guided by logic, analysis, and objective standards (Thinking)
+- Preferring structure, clear expectations, and decisive closure (Judging)
+
+The ISTJ archetype — dependable, precise, principled, and committed to duty — represents one of the foundational temperaments of stable institutions and reliable execution.
+
+## The ISTJ Experience
+
+ISTJs experience the world through the lens of responsibility and precision. They pay close attention to how things work, what the rules are, and what has worked reliably in the past.
+
+**Duty before preference.** ISTJs have a strong internal sense of what they're responsible for and a genuine commitment to meeting that responsibility regardless of how they feel in the moment. This isn't martyrdom — it's a sincere value. Reliability is not just behavior; it's identity.
+
+**Trust built on evidence.** ISTJs don't extend trust quickly or based on charm. They form opinions based on demonstrated behavior over time. Once established, their loyalty and trust are exceptionally durable.
+
+**Methodical problem-solving.** When ISTJs approach a problem, they do it systematically — gathering relevant information, applying established principles, checking their work. This produces reliable, high-quality outcomes in domains where procedure matters.
+
+## ISTJ Strengths
+
+**Unmatched reliability.** ISTJs deliver what they commit to, consistently, regardless of circumstances. In a world where follow-through is rare, this makes them exceptionally valuable to any team or institution.
+
+**Precision and accuracy.** The Sensing-Thinking combination produces people who catch errors, spot inconsistencies, and maintain high standards of factual accuracy. They are natural auditors, analysts, and quality controllers.
+
+**Clear standards.** ISTJs know what they expect — of themselves and others — and communicate it clearly. This creates clarity and consistency in environments they lead or inhabit.
+
+**Long-term stability.** ISTJs' resistance to impulsiveness and preference for proven approaches make them stabilizing forces in volatile environments.
+
+## ISTJ Blind Spots and Challenges
+
+**Resistance to change.** The strong preference for precedent and proven methods can make ISTJs slow to adapt when circumstances genuinely require new approaches. Resistance to change isn't always wrong, but it can become reflexive.
+
+**Inflexibility in edge cases.** ISTJs apply rules and standards consistently — which is usually a strength, but can produce rigid outcomes when the situation calls for discretion or exception-making.
+
+**Emotional underexpression.** The Thinking preference means ISTJs often process emotionally significant experiences internally without expressing them. This can create distance in close relationships where partners or family members need more emotional engagement.
+
+**Difficulty with ambiguity.** ISTJs prefer clear information and established procedure. When tasks are ambiguous, standards are unclear, or expectations are shifting, the ISTJ can experience genuine discomfort and resistance.
+
+## What Big Five Research Says About ISTJ-Like Profiles
+
+Translating to the Big Five, an ISTJ profile roughly maps to:
+
+- **Low Extraversion** (preference for solitude, focused internal processing, low social energy)
+- **Low Openness** (concrete thinking, conventional approach, reliance on precedent over novelty)
+- **Low Agreeableness** (directness, standards-based rather than harmony-based, willingness to hold firm)
+- **High Conscientiousness** (highest possible — reliable, disciplined, detail-oriented, rule-following)
+- **Low to Moderate Neuroticism** (generally stable, with stress responses triggered by disorder, unreliability, or unclear expectations)
+
+The ISTJ Big Five profile is perhaps the clearest example of **high Conscientiousness** as a dominant trait. This dimension is the strongest predictor of occupational performance across virtually all studied roles.
+
+## Beyond the ISTJ Label
+
+ISTJs sometimes resist personality typing precisely because it feels imprecise and potentially untestable. That skepticism is actually consistent with the type. But understanding the pattern can be useful — particularly for recognizing how certain tendencies (resistance to change, emotional underexpression) can limit what's possible in relationships and adaptive leadership.
+
+The Enneagram adds important depth: ISTJs cluster in Types 1, 5, and 6. An ISTJ who is Enneagram Type 1 (the Perfectionist) has a relationship with standards and correctness that goes deeper than MBTI captures — including the anxiety that often underlies the precision.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'esfj-personality-type',
+    title: 'ESFJ Personality Type: The Consul Explained',
+    description:
+      'ESFJs are warm, socially gifted, and deeply invested in the wellbeing of those around them. Here\'s a deep dive into ESFJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ESFJ personality type', 'ESFJ traits', 'ESFJ explained', 'ESFJ strengths and weaknesses', 'ESFJ Big Five'],
+    content: `
+## What Is ESFJ?
+
+ESFJ stands for Extraverted, Sensing, Feeling, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Consul" or "The Caregiver." ESFJs are among the most common types, representing roughly 9–13% of the population, with particularly high prevalence among women.
+
+The ESFJ profile describes someone who is:
+- Energized by people, social interaction, and communal engagement (Extraverted)
+- Attending to concrete details, practical realities, and present-moment experience (Sensing)
+- Decision-making guided by values, harmony, and care for others (Feeling)
+- Preferring structure, planning, and organized outcomes (Judging)
+
+The ESFJ archetype — warm, socially fluent, responsible, and genuinely invested in the wellbeing of their community — is one of the most recognizable in any social group.
+
+## The ESFJ Experience
+
+ESFJs experience the world through relationships and social responsibility. They notice social dynamics, emotional states, and the practical needs of the people around them with unusual accuracy.
+
+**Social attunement as navigation.** ESFJs read social environments fluently — they know who's comfortable, who's excluded, who needs attention, and what the social norms are. This fluency is natural and largely unconscious, producing effortlessly smooth social performance.
+
+**Harmony as a core need.** ESFJs have a genuine need for harmonious environments. Conflict, disapproval, and social tension are not just uncomfortable — they're destabilizing. The drive to restore harmony is one of the ESFJs most powerful motivators.
+
+**Care through action.** ESFJs express affection and commitment through practical acts of service: organizing, preparing, remembering, hosting. The concrete action is the love language.
+
+## ESFJ Strengths
+
+**Social leadership.** ESFJs are natural community organizers. They create environments where people feel welcomed, included, and cared for — which makes them effective in team leadership, community management, and caregiving roles.
+
+**Practical attentiveness.** ESFJs notice and respond to what people actually need in practical terms — the logistical support, the remembered detail, the timely check-in. This is a form of intelligence that many more abstract types undervalue.
+
+**Reliable follow-through.** The Judging preference means ESFJs don't just initiate — they execute and complete. They can be counted on to carry projects through to delivery.
+
+**Institutional commitment.** ESFJs tend to take their responsibilities to organizations, families, and communities seriously. They provide the relational and administrative glue that keeps groups functioning.
+
+## ESFJ Blind Spots and Challenges
+
+**Need for approval.** ESFJs care deeply about how they're perceived, and disapproval can be disproportionately destabilizing. This can create people-pleasing behavior, difficulty with criticism, and decisions made to maintain approval rather than serve genuine values.
+
+**Conflict avoidance.** The drive for harmony can prevent ESFJs from having the direct, honest conversations that relationships and organizations actually need. Problems get smoothed over rather than resolved.
+
+**Conventional constraint.** The Sensing-Judging combination creates real comfort with established norms and genuine discomfort with unconventional approaches. ESFJs may enforce conventional expectations in ways that limit creativity or marginalize people who operate outside the norm.
+
+**External locus of self-worth.** ESFJs' sense of themselves often depends heavily on social feedback. When relational systems are disrupted or feedback is withdrawn, the ESFJ's sense of self can become fragile.
+
+## What Big Five Research Says About ESFJ-Like Profiles
+
+Translating to the Big Five, an ESFJ profile roughly maps to:
+
+- **High Extraversion** (sociability, warmth, positive affect, social energy)
+- **Low Openness** (practical over theoretical, conventional over novel, present-focused)
+- **High Agreeableness** (empathy, harmony-seeking, cooperation, prosocial motivation)
+- **High Conscientiousness** (organization, reliability, planning, follow-through)
+- **Moderate Neuroticism** (emotional sensitivity to social disapproval and relational disruption)
+
+This profile — high Extraversion, Agreeableness, and Conscientiousness with low Openness — is strongly associated with **occupational success in caregiving, educational, and social service domains**, strong social networks, and high relationship satisfaction. The combination of high Agreeableness and Conscientiousness is one of the most reliable predictors of prosocial behavior.
+
+## Beyond the ESFJ Label
+
+ESFJs often have complex feelings about being identified with a type that is sometimes described as conformist or overly conventional. The label captures something real but misses the genuine moral seriousness and relational depth that drives the best ESFJ patterns.
+
+The Enneagram adds important nuance: ESFJs cluster in Types 2, 6, and 1. An ESFJ who is Enneagram Type 2 (the Helper) has a relationship with caregiving that is driven by a specific fear — of being unloved if they stop — that goes much deeper than the MBTI pattern suggests.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'estj-personality-type',
+    title: 'ESTJ Personality Type: The Executive Explained',
+    description:
+      'ESTJs are organized, decisive, and driven to lead through structure and accountability. Here\'s a deep dive into ESTJ traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ESTJ personality type', 'ESTJ traits', 'ESTJ explained', 'ESTJ strengths and weaknesses', 'ESTJ Big Five'],
+    content: `
+## What Is ESTJ?
+
+ESTJ stands for Extraverted, Sensing, Thinking, Judging — one of 16 Myers-Briggs types, commonly nicknamed "The Executive" or "The Supervisor." ESTJs represent roughly 8–12% of the population and are among the most commonly found types in managerial, administrative, and civic leadership roles.
+
+The ESTJ profile describes someone who is:
+- Energized by social engagement, assertiveness, and external action (Extraverted)
+- Processing experience through concrete facts, practical reality, and proven methods (Sensing)
+- Decision-making guided by logic, rules, and objective standards (Thinking)
+- Strongly preferring structure, clear expectations, and decisive closure (Judging)
+
+The ESTJ archetype — responsible, organized, direct, and committed to getting things done the right way — is one of the most characteristically institutional of all 16 types.
+
+## The ESTJ Experience
+
+ESTJs experience the world through responsibility and order. They have a clear, confident sense of how things should be done, who is responsible for what, and what standards apply.
+
+**The organizational backbone.** ESTJs are frequently the person who holds groups together — not through vision or inspiration, but through the unglamorous work of enforcing standards, clarifying expectations, and ensuring follow-through. They are institutional organisms in the best sense.
+
+**Directness as a value.** ESTJs don't hedge, soften, or equivocate unnecessarily. They say what they think, expect others to do the same, and find indirectness or ambiguity genuinely frustrating. This directness is both a professional strength and, in more emotionally complex situations, a potential blind spot.
+
+**Rules as infrastructure.** ESTJs trust established procedures and institutional rules not because they're blindly conformist, but because they genuinely understand that coordination requires standards. When rules are absent or unclear, ESTJs often create them.
+
+## ESTJ Strengths
+
+**Decisive leadership.** ESTJs make decisions, communicate them clearly, and hold themselves and others accountable to them. This is the operational core of effective management.
+
+**Organizational competence.** ESTJs are excellent at designing systems, clarifying roles, and managing the practical logistics of complex operations. They excel at making organizations actually work.
+
+**Accountability orientation.** ESTJs hold high standards — for themselves first, then for others. This creates environments where expectations are clear and performance is taken seriously.
+
+**Social confidence.** ESTJs are comfortable in formal social contexts, able to represent institutions, and effective at navigating the political dimensions of organizational life.
+
+## ESTJ Blind Spots and Challenges
+
+**Emotional rigidity.** The Thinking preference combined with a strong sense of how things should be done can make ESTJs dismissive of emotional factors in decision-making. People-related problems may get treated as performance problems.
+
+**Inflexibility.** ESTJs have strong opinions about the right way to do things. When novel situations require unconventional approaches, the ESTJ's reliance on established procedure can become an obstacle.
+
+**Over-reliance on authority.** ESTJs respect institutional hierarchy and established authority. This can lead to uncritical enforcement of rules that should be questioned, or excessive deference to credentials over substance.
+
+**Social dominance.** In group settings, ESTJs can take up significant space — directing, correcting, and organizing in ways that leave less room for others' contributions. The confidence that makes them effective leaders can create subordination dynamics that suppress valuable input.
+
+## What Big Five Research Says About ESTJ-Like Profiles
+
+Translating to the Big Five, an ESTJ profile roughly maps to:
+
+- **High Extraversion** (assertiveness, social confidence, dominance, positive affect in action)
+- **Low Openness** (concrete over abstract, conventional over novel, procedural over imaginative)
+- **Low Agreeableness** (directness, standards-holding, willingness to confront and correct)
+- **High Conscientiousness** (discipline, organization, rule-following, reliability)
+- **Low Neuroticism** (emotional stability, resilience, clear head under pressure)
+
+The ESTJ Big Five profile — high Extraversion and Conscientiousness, low Openness and Agreeableness, low Neuroticism — is strongly associated with **managerial effectiveness, occupational reliability, and operational leadership.** The low Agreeableness is the dimension that most commonly creates interpersonal friction.
+
+## Beyond the ESTJ Label
+
+ESTJs are often underrepresented in personality typing conversations, which tend toward introspective and conceptual types. But the ESTJ pattern — the person who actually makes systems work and holds institutions together — is one of the most socially important.
+
+The Enneagram adds important depth: ESTJs cluster heavily in Types 1, 3, and 8. An ESTJ who is Enneagram Type 1 (the Perfectionist) has a relationship with rules and standards that is driven by a specific moral anxiety — a fear of being wrong or corrupt — that goes much deeper than the MBTI description captures.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'esfp-personality-type',
+    title: 'ESFP Personality Type: The Entertainer Explained',
+    description:
+      'ESFPs are spontaneous, energetic, and bring joy wherever they go. Here\'s a deep dive into ESFP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ESFP personality type', 'ESFP traits', 'ESFP explained', 'ESFP strengths and weaknesses', 'ESFP Big Five'],
+    content: `
+## What Is ESFP?
+
+ESFP stands for Extraverted, Sensing, Feeling, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Entertainer" or "The Performer." ESFPs represent roughly 7–10% of the population and are strongly drawn to performance, social work, event management, and any field where presence, warmth, and immediacy matter.
+
+The ESFP profile describes someone who is:
+- Powerfully energized by people, activity, and social stimulation (Extraverted)
+- Attending to concrete sensory experience, present-moment reality, and practical detail (Sensing)
+- Decision-making guided by personal values and attunement to others' feelings (Feeling)
+- Preferring spontaneity, flexibility, and experience over rigid planning (Perceiving)
+
+The ESFP archetype — vivacious, warm, socially magnetic, and fully alive in the present moment — is among the most immediately recognizable in any social setting.
+
+## The ESFP Experience
+
+ESFPs experience the world through sensation and connection. Life is meant to be lived fully, in the present, with the people you love and the experiences that make you feel alive.
+
+**The gift of presence.** ESFPs are genuinely, fully present in ways that many other types struggle to achieve. They're not thinking about what comes next or processing what just happened — they're here, now, completely engaged. This quality makes people feel genuinely seen and valued in their company.
+
+**The social catalyst.** ESFPs have an unusual ability to shift the energy of a room — to introduce levity, connection, or momentum that wasn't there before. This isn't performance in the cynical sense; it's a genuine relational gift.
+
+**Practical empathy.** When someone they care about is hurting, ESFPs don't philosophize. They act. They show up, they do things, they create comfort through presence and concrete action.
+
+## ESFP Strengths
+
+**Infectious energy.** ESFPs bring an enthusiasm and vitality to their environments that is genuinely contagious. They make work, events, and relationships more energizing.
+
+**Real-time adaptability.** The Perceiving preference combined with Sensing means ESFPs are exceptional at improvising in the moment. They read situations quickly and respond fluidly to changing circumstances.
+
+**Relational warmth.** ESFPs make people feel welcomed, appreciated, and accepted. This isn't superficial sociability — it's a genuine interest in people that creates real connection.
+
+**Practical resourcefulness.** When faced with concrete problems, ESFPs are often remarkably creative in finding immediate, workable solutions from whatever is available.
+
+## ESFP Blind Spots and Challenges
+
+**Long-term planning.** The strong present-moment orientation means ESFPs can neglect future consequences. Financial planning, career strategy, and long-term commitments can feel abstract and easy to defer.
+
+**Follow-through on commitments.** The Perceiving preference creates genuine tension between the ESFP's enthusiastic initial commitment and the sustained discipline required to see complex, unglamorous tasks through to completion.
+
+**Conflict avoidance.** ESFPs dislike conflict intensely and may avoid necessary difficult conversations in favor of maintaining the social warmth they value. This can allow problems to accumulate beneath the surface.
+
+**Sensitivity to criticism.** ESFPs often invest their identity in their social performance — in being likeable, fun, and appreciated. Criticism can land as rejection of the self rather than feedback on specific behavior.
+
+## What Big Five Research Says About ESFP-Like Profiles
+
+Translating to the Big Five, an ESFP profile roughly maps to:
+
+- **High Extraversion** (sociability, positive affect, excitement-seeking, warmth)
+- **Low Openness** (present-focused, concrete, experiential rather than theoretical)
+- **High Agreeableness** (warmth, empathy, cooperation, sensitivity to others' feelings)
+- **Low Conscientiousness** (spontaneity, flexibility, resistance to rigid structure and planning)
+- **Low to Moderate Neuroticism** (generally positive and resilient, with sensitivity around social rejection)
+
+This profile — high Extraversion and Agreeableness with low Conscientiousness — is strongly associated with **high social capital, strong in-person performance, and relational influence.** The low Conscientiousness is the primary professional liability in most organizational contexts.
+
+## Beyond the ESFP Label
+
+ESFPs are sometimes dismissed in personality typing communities as shallow or unreflective — a bias toward the introspective and theoretical. This misses the genuine intelligence of presence, social reading, and practical empathy that ESFPs embody.
+
+The Enneagram adds important depth: ESFPs cluster in Types 7, 2, and 3. An ESFP who is Enneagram Type 7 (the Enthusiast) has a relationship with pleasure-seeking and avoidance that goes much deeper than the surface joy suggests — including the anxiety that the present-moment focus is often managing.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'estp-personality-type',
+    title: 'ESTP Personality Type: The Entrepreneur Explained',
+    description:
+      'ESTPs are action-oriented, pragmatic, and thrive in fast-moving environments. Here\'s a deep dive into ESTP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ESTP personality type', 'ESTP traits', 'ESTP explained', 'ESTP strengths and weaknesses', 'ESTP Big Five'],
+    content: `
+## What Is ESTP?
+
+ESTP stands for Extraverted, Sensing, Thinking, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Entrepreneur" or "The Dynamo." ESTPs represent roughly 4–6% of the population and are frequently found in sales, entrepreneurship, emergency services, sports, and any environment that rewards fast thinking and immediate action.
+
+The ESTP profile describes someone who is:
+- Energized by external action, social engagement, and immediate challenge (Extraverted)
+- Processing the world through concrete sensory experience and real-time data (Sensing)
+- Decision-making guided by logic, pragmatism, and objective analysis (Thinking)
+- Preferring flexibility, spontaneity, and responsiveness to rigid planning (Perceiving)
+
+The ESTP archetype — bold, pragmatic, socially confident, and fully alive in high-stakes environments — is among the most action-oriented of all 16 types.
+
+## The ESTP Experience
+
+ESTPs experience the world through action and immediate engagement. The question isn't "what does this mean?" but "what do we do about it, right now?"
+
+**Thriving under pressure.** Where many types become less effective under stress, ESTPs often become more so. The combination of Sensing and Thinking with a high tolerance for ambiguity produces someone who makes good decisions fast when stakes are high and information is incomplete.
+
+**The deal-maker's instinct.** ESTPs read people and situations with unusual speed — not for emotional depth, but for practical opportunity, leverage, and immediate dynamics. This makes them naturally gifted negotiators and salespeople.
+
+**Boredom as a genuine threat.** ESTPs need stimulation. Routine, repetition, and slow-moving environments don't just feel uncomfortable — they trigger real disengagement. The ESTP's best performances come when the environment is changing fast enough to require constant improvisation.
+
+## ESTP Strengths
+
+**Real-time problem-solving.** ESTPs are exceptionally good at immediate, practical problem-solving under pressure. When the situation is chaotic and time is short, they're at their best.
+
+**Social confidence.** ESTPs move through social environments with unusual ease — reading people quickly, adapting their approach in real time, and projecting a confidence that creates social momentum.
+
+**Risk tolerance.** ESTPs have a higher risk tolerance than most other types, which makes them effective in high-stakes environments where timid decision-making produces worse outcomes than bold, imperfect action.
+
+**Pragmatic execution.** ESTPs are effective at getting things done without getting bogged down in analysis, process, or abstract considerations. They cut through complexity to practical action.
+
+## ESTP Blind Spots and Challenges
+
+**Long-term consequences.** The strong present-moment focus can make ESTPs less attentive to the downstream consequences of current actions. Short-term optimization can produce long-term problems that weren't anticipated.
+
+**Emotional attunement.** The Thinking preference combined with action-orientation means ESTPs may miss or dismiss the emotional dimensions of decisions and relationships. People close to them may feel like instrumentalized elements of the ESTP's action landscape rather than fully seen individuals.
+
+**Commitment and follow-through.** The Perceiving preference creates genuine tension between the ESTP's enthusiasm for initial action and the sustained discipline required to maintain commitments through the less exciting phases.
+
+**Restlessness in stability.** ESTPs may self-sabotage stable situations — good relationships, solid careers — simply because stability feels like stagnation. The need for stimulation can create unnecessary disruption.
+
+## What Big Five Research Says About ESTP-Like Profiles
+
+Translating to the Big Five, an ESTP profile roughly maps to:
+
+- **High Extraversion** (dominance, sensation-seeking, social boldness, positive affect)
+- **Low Openness** (concrete over abstract, practical over theoretical, present over future)
+- **Low Agreeableness** (directness, competitiveness, willingness to challenge and confront)
+- **Low Conscientiousness** (flexible, spontaneous, resistant to rigid structure)
+- **Low Neuroticism** (high stress tolerance, emotional stability, confidence under pressure)
+
+This profile — high Extraversion with low Agreeableness, Conscientiousness, and Neuroticism — is strongly associated with **entrepreneurial and high-stakes performance environments.** It's also associated with higher rates of risk-taking behavior and some vulnerability to impulsivity.
+
+## Beyond the ESTP Label
+
+ESTPs can find personality typing itself somewhat amusing — why spend time analyzing when you could be doing? But understanding the ESTP pattern can be genuinely useful, particularly for recognizing how the action-orientation and stimulation-seeking can sometimes work against longer-term goals.
+
+The Enneagram adds important depth: ESTPs cluster in Types 7, 8, and 3. An ESTP who is Enneagram Type 8 (the Challenger) has a relationship with power and vulnerability that goes much deeper than the bold surface suggests — including the tenderness that is most carefully protected.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'isfp-personality-type',
+    title: 'ISFP Personality Type: The Adventurer Explained',
+    description:
+      'ISFPs are gentle, artistic, and quietly passionate about living life on their own terms. Here\'s a deep dive into ISFP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ISFP personality type', 'ISFP traits', 'ISFP explained', 'ISFP strengths and weaknesses', 'ISFP Big Five'],
+    content: `
+## What Is ISFP?
+
+ISFP stands for Introverted, Sensing, Feeling, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Adventurer" or "The Composer." ISFPs represent roughly 5–9% of the population and are drawn to artistic, creative, and nature-connected domains where beauty, craft, and authentic self-expression matter.
+
+The ISFP profile describes someone who is:
+- Oriented inward, preferring quiet and selected intimate relationships (Introverted)
+- Attending to concrete sensory experience — beauty, craft, physical environment (Sensing)
+- Decision-making guided by deep personal values (Feeling)
+- Preferring spontaneous, open-ended experience over rigid planning (Perceiving)
+
+The ISFP archetype — quietly passionate, aesthetically sensitive, authentically themselves, and deeply private — is often described as one of the most genuinely free-spirited of all 16 types.
+
+## The ISFP Experience
+
+ISFPs experience the world through the senses and personal values — a combination that produces both aesthetic sensitivity and a deep need for authenticity in everything they do.
+
+**The private inner life.** ISFPs have rich inner lives that they rarely share widely. Their values and feelings run deep, but expression tends to come through action, art, or intimate relationship rather than verbal disclosure. Many ISFPs are described as mysterious by those who don't know them well.
+
+**Aesthetic attunement.** ISFPs notice beauty — in environments, in objects, in people, in arrangements of color and form — in a way that feels almost involuntary. This sensitivity often finds expression in craft, design, music, visual art, or the creation of beautiful physical spaces.
+
+**Values as compass.** ISFPs have a quiet but firm internal compass. They don't often speak loudly about their values, but their behavior tracks them with unusual consistency. When asked to act against their values, ISFPs simply don't — with a quiet, unhurried firmness that surprises people who assumed they were passive.
+
+## ISFP Strengths
+
+**Aesthetic intelligence.** ISFPs have genuine talent for noticing and creating beauty. This manifests across domains: visual art, music, cooking, interior design, fashion, nature craft. The sensory-aesthetic intelligence is a real and valuable form of intelligence.
+
+**Authentic presence.** ISFPs don't perform. What you see is genuinely what they are — no social mask, no managed impression. This authenticity creates real trust in those close to them.
+
+**Practical compassion.** Like other Feeling types, ISFPs respond to others' suffering with genuine care — but in characteristically concrete ways. They don't philosophize about pain; they address it practically.
+
+**Present-moment engagement.** The combination of Sensing and Perceiving produces genuine capacity for presence — full engagement with what's actually here, rather than what's planned or analyzed.
+
+## ISFP Blind Spots and Challenges
+
+**Long-term planning.** The Perceiving preference combined with a present-moment orientation makes financial planning, career strategy, and long-term goal-setting feel uncomfortable and easy to defer. ISFPs may find themselves in precarious situations from having not planned far enough ahead.
+
+**Conflict expression.** ISFPs find direct conflict genuinely uncomfortable. Rather than addressing problems verbally, they may withdraw, disengage, or simply remove themselves from situations that feel wrong. Unexpressed issues can accumulate until the ISFP simply exits the relationship or situation.
+
+**Self-advocacy.** The combination of introversion and conflict-avoidance means ISFPs often don't advocate effectively for their own needs, recognition, or compensation. Their contributions may be undervalued because they don't promote them.
+
+**Sensitivity to criticism.** ISFPs' work is often an expression of their values and identity. Criticism of the work can feel like criticism of the self, landing with disproportionate emotional weight.
+
+## What Big Five Research Says About ISFP-Like Profiles
+
+Translating to the Big Five, an ISFP profile roughly maps to:
+
+- **Low Extraversion** (introversion, selective intimacy, preference for quiet and beauty over stimulation)
+- **Moderate Openness** (aesthetic sensitivity and creativity, but grounded in sensory experience rather than abstract theory)
+- **High Agreeableness** (warmth, empathy, values-orientation, genuine care for others)
+- **Low Conscientiousness** (spontaneity, flexibility, resistance to external structure and planning)
+- **Moderate Neuroticism** (emotional sensitivity, particularly around authenticity violation and criticism)
+
+This profile is associated with **artistic and creative achievement, strong relational quality in intimate contexts, and some professional vulnerability** in conventional structured environments that reward assertiveness and long-term planning.
+
+## Beyond the ISFP Label
+
+The ISFP label captures the gentle outer manner but often misses the depth of values and the quiet firmness underneath. ISFPs are not simply pleasant and passive — they have a strong moral core that drives behavior in ways that only become visible over time.
+
+The Enneagram adds important depth: ISFPs cluster in Types 4, 9, and 6. An ISFP who is Enneagram Type 4 (the Individualist) has a relationship with identity, beauty, and authenticity that goes much deeper than the MBTI captures — including the melancholy that can accompany the intense awareness of what feels missing.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
+  {
+    slug: 'istp-personality-type',
+    title: 'ISTP Personality Type: The Virtuoso Explained',
+    description:
+      'ISTPs are coolly analytical, hands-on, and masters of understanding how things work. Here\'s a deep dive into ISTP traits, strengths, blind spots, and what the Big Five says about this profile.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Types',
+    keywords: ['ISTP personality type', 'ISTP traits', 'ISTP explained', 'ISTP strengths and weaknesses', 'ISTP Big Five'],
+    content: `
+## What Is ISTP?
+
+ISTP stands for Introverted, Sensing, Thinking, Perceiving — one of 16 Myers-Briggs types, commonly nicknamed "The Virtuoso" or "The Craftsman." ISTPs represent roughly 5–8% of the population and are strongly drawn to mechanical, technical, athletic, and hands-on domains where mastery of how things work is the primary value.
+
+The ISTP profile describes someone who is:
+- Internally oriented, independent, and energized by focused solitary activity (Introverted)
+- Processing the world through concrete sensory data and practical reality (Sensing)
+- Decision-making guided by logic, analysis, and objective principles (Thinking)
+- Preferring spontaneous, flexible engagement over predetermined plans (Perceiving)
+
+The ISTP archetype — coolly competent, mechanically gifted, economically communicative, and fiercely independent — is one of the most recognizably self-sufficient of all 16 types.
+
+## The ISTP Experience
+
+ISTPs experience the world through direct, practical engagement with physical and logical systems. The primary drive is to understand how things work — and then to demonstrate that understanding through skilled action.
+
+**Mastery as identity.** ISTPs derive deep satisfaction from becoming genuinely skilled at something — whether that's a mechanical system, a physical discipline, a technical craft, or a complex analytical domain. The mastery itself matters more than the recognition it might bring.
+
+**Observation before action.** ISTPs gather information quietly and extensively before acting. They watch how systems behave, identify patterns, and then act with precision when they have enough data. This can look like passivity from the outside; from the inside, it's reconnaissance.
+
+**Efficient communication.** ISTPs tend to say exactly what needs to be said and nothing more. Small talk, emotional processing, and social performance feel like inefficiency. Conversation is useful when it exchanges useful information; otherwise, silence is preferred.
+
+## ISTP Strengths
+
+**Technical mastery.** ISTPs have an unusual gift for understanding how complex physical and mechanical systems work. They can diagnose problems, improvise solutions, and execute skilled physical tasks with a precision that comes from genuine understanding rather than rote procedure.
+
+**Cool-headed crisis response.** ISTPs remain calm and analytical in crisis situations. The Thinking function provides clarity; the Sensing function provides accurate situational awareness; the Perceiving preference allows rapid adaptation. Together, they produce exceptional emergency response.
+
+**Practical independence.** ISTPs don't need external validation or group coordination to function effectively. They can identify what needs doing and do it — which makes them exceptionally self-sufficient in solo and small-team contexts.
+
+**Efficient action.** ISTPs move from understanding to action without the extended processing, consultation, or deliberation that slows other types. When they know what to do, they do it.
+
+## ISTP Blind Spots and Challenges
+
+**Emotional unavailability.** The Thinking-Introversion combination can make ISTPs genuinely difficult to access emotionally. They may care deeply but express almost nothing — which creates real distance in romantic and family relationships that need more emotional exchange.
+
+**Long-term commitment.** The Perceiving preference creates genuine tension with the obligations of sustained commitment — whether in relationships, careers, or projects. ISTPs may exit situations when they become routine or when they feel their autonomy is constrained.
+
+**Communication of internal state.** ISTPs often have rich internal experiences — analytical observations, sensory enjoyment, emotional reactions — that they don't express. Partners and colleagues may consistently underestimate how much is actually happening internally.
+
+**Impatience with theory and process.** ISTPs want to act, not analyze. Extended theoretical discussion, procedural requirements, or bureaucratic process feel pointless when you can simply fix the thing. This impatience can create friction in organizations that require deliberation.
+
+## What Big Five Research Says About ISTP-Like Profiles
+
+Translating to the Big Five, an ISTP profile roughly maps to:
+
+- **Low Extraversion** (introversion, preference for solo activity, economical in social engagement)
+- **Low to Moderate Openness** (concrete and practical over abstract and theoretical; though curiosity about how things work is high within the physical-technical domain)
+- **Low Agreeableness** (directness, independence, skepticism, low need for social harmony)
+- **Low Conscientiousness** (flexible, spontaneous, resistant to rules and routine that feel arbitrary)
+- **Low Neuroticism** (emotional stability, calm under pressure, high stress tolerance)
+
+This profile — low Extraversion and Neuroticism, low Agreeableness and Conscientiousness — is associated with **technical expertise, crisis performance, and strong independence.** The low Conscientiousness is the primary factor limiting organizational effectiveness in conventional contexts.
+
+## Beyond the ISTP Label
+
+ISTPs often have an amused skepticism toward personality typing — which is itself an accurate expression of the type. Understanding the ISTP pattern can still be valuable, particularly for recognizing how the emotional self-sufficiency that serves them so well technically can create unnecessary distance in relationships.
+
+The Enneagram adds important depth: ISTPs cluster in Types 5, 9, and 8. An ISTP who is Enneagram Type 5 (the Investigator) has a relationship with knowledge, autonomy, and emotional withdrawal that goes much deeper than the practical focus of the MBTI profile suggests.
+
+[Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
+`,
+  },
 ]
 
 export function getPost(slug: string): BlogPost | undefined {
@@ -4255,4 +5277,12 @@ export function getPost(slug: string): BlogPost | undefined {
 
 export function getAllSlugs(): string[] {
   return posts.map((p) => p.slug)
+}
+
+export function getRelatedPosts(slug: string, limit = 3): BlogPost[] {
+  const current = getPost(slug)
+  if (!current) return []
+  return posts
+    .filter((p) => p.slug !== slug && p.category === current.category)
+    .slice(0, limit)
 }

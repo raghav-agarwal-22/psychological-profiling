@@ -9,6 +9,7 @@ import { getToken } from '@/lib/auth'
 const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'For Professionals', href: '/for-professionals' },
+  { label: 'Compare', href: '/compare' },
   { label: 'Journal', href: '/journal' },
   { label: 'Insights', href: '/insights' },
 ]

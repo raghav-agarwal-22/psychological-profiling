@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getAllSlugs, getPost } from '../posts'
+import { getAllSlugs, getPost, getRelatedPosts } from '../posts'
 
 // Blog posts are statically generated at build time; revalidate daily for new posts
 export const revalidate = 86400
@@ -174,6 +174,7 @@ export default function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   const related = relatedAssessments[post.slug]
+  const relatedPosts = getRelatedPosts(post.slug)
   const postUrl = `${WEB_URL}/blog/${post.slug}`
 
   const articleSchema = {
@@ -278,6 +279,27 @@ export default function BlogPostPage({ params }: Props) {
           Take your free assessment →
         </Link>
       </div>
+
+      {/* Related posts */}
+      {relatedPosts.length > 0 && (
+        <div className="mt-16 border-t border-stone-800 pt-12">
+          <h2 className="mb-6 font-serif text-xl font-medium text-stone-100">More in {post.category}</h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {relatedPosts.map((rp) => (
+              <Link
+                key={rp.slug}
+                href={`/blog/${rp.slug}`}
+                className="group rounded-xl border border-stone-800 bg-stone-900/40 p-4 transition-colors hover:border-stone-700"
+              >
+                <p className="mb-1.5 text-xs text-stone-500">{rp.readingTime} min read</p>
+                <p className="text-sm font-medium text-stone-200 leading-snug group-hover:text-stone-100 transition-colors line-clamp-3">
+                  {rp.title}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Back link */}
       <div className="mt-8 text-center">
