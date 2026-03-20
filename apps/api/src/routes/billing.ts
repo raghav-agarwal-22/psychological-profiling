@@ -19,12 +19,16 @@ function getTrialEnd(sub: Stripe.Subscription): number | null {
 }
 
 const PRO_PRICE_ID = process.env.STRIPE_PRO_PRICE_ID ?? 'price_placeholder'
+const PRO_ANNUAL_PRICE_ID = process.env.STRIPE_PRO_ANNUAL_PRICE_ID ?? 'price_annual_placeholder'
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
 
 export async function billingRoutes(server: FastifyInstance) {
   // POST /api/billing/checkout — create Stripe Checkout session (auth required)
   server.post('/checkout', { preHandler: requireAuth }, async (req, reply) => {
+    const body = req.body as { interval?: 'monthly' | 'annual' } | undefined
+    const billingInterval = body?.interval === 'annual' ? 'annual' : 'monthly'
+
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
       select: { email: true, stripeCustomerId: true, subscriptionTier: true, stripeSubscriptionId: true },
@@ -45,18 +49,19 @@ export async function billingRoutes(server: FastifyInstance) {
       })
     }
 
-    // Trial only for first-time subscribers (no prior subscription)
-    const hasTrial = !user.stripeSubscriptionId
+    // Trial only for monthly first-time subscribers (no prior subscription)
+    const hasTrial = billingInterval === 'monthly' && !user.stripeSubscriptionId
+    const priceId = billingInterval === 'annual' ? PRO_ANNUAL_PRICE_ID : PRO_PRICE_ID
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
-      line_items: [{ price: PRO_PRICE_ID, quantity: 1 }],
+      line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
       subscription_data: hasTrial ? { trial_period_days: 7 } : undefined,
       success_url: `${WEB_URL}/dashboard?upgraded=1`,
       cancel_url: `${WEB_URL}/upgrade?cancelled=1`,
-      metadata: { userId: req.user.userId },
+      metadata: { userId: req.user.userId, billingInterval },
     })
 
     return reply.send({ url: session.url, hasTrial })

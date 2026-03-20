@@ -28,6 +28,8 @@ const PRO_FEATURES = [
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
+type BillingInterval = 'monthly' | 'annual'
+
 function UpgradeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -36,6 +38,7 @@ function UpgradeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hasTrial, setHasTrial] = useState(true) // optimistic: assume trial eligible
+  const [interval, setInterval] = useState<BillingInterval>('monthly')
 
   useEffect(() => {
     posthog.capture('upgrade_page_viewed')
@@ -57,9 +60,15 @@ function UpgradeContent() {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')
   }, [cancelled])
 
+  function handleIntervalChange(newInterval: BillingInterval) {
+    setInterval(newInterval)
+    posthog.capture('upgrade_plan_toggle', { interval: newInterval })
+  }
+
   async function handleUpgrade() {
     setLoading(true)
     setError(null)
+    posthog.capture('upgrade_cta_clicked', { interval, hasTrial: hasTrial && interval === 'monthly' })
     try {
       const token = localStorage.getItem('innermind_token')
       if (!token) {
@@ -73,6 +82,7 @@ function UpgradeContent() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ interval }),
       })
 
       if (!res.ok) {
@@ -90,17 +100,29 @@ function UpgradeContent() {
     }
   }
 
+  const isAnnual = interval === 'annual'
+  const trialEligible = hasTrial && !isAnnual
+
+  const monthlyDisplay = isAnnual ? '6.58' : '9'
+  const ctaLabel = loading
+    ? 'Redirecting to checkout…'
+    : trialEligible
+      ? 'Start 7-day free trial →'
+      : isAnnual
+        ? 'Get annual plan →'
+        : 'Upgrade to Pro →'
+
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
       {/* Header */}
-      <div className="mb-14 text-center">
+      <div className="mb-10 text-center">
         <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10">
           <span className="text-2xl text-amber-400">◎</span>
         </div>
         <h1 className="mb-3 font-serif text-4xl text-stone-100">
           Unlock your full psychological profile
         </h1>
-        {hasTrial && (
+        {trialEligible && (
           <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5">
             <span className="text-amber-400 text-sm font-semibold">7-day free trial</span>
             <span className="text-stone-500 text-xs">· No charge until day 8</span>
@@ -110,6 +132,35 @@ function UpgradeContent() {
           Go deeper with all five assessment frameworks, AI-powered coaching, and personalised
           growth tools — all for less than a coffee a week.
         </p>
+      </div>
+
+      {/* Billing interval toggle */}
+      <div className="mb-8 flex justify-center">
+        <div className="inline-flex items-center gap-0 rounded-xl border border-stone-700 bg-stone-900 p-1">
+          <button
+            onClick={() => handleIntervalChange('monthly')}
+            className={`rounded-lg px-5 py-2 text-sm font-semibold transition-colors ${
+              !isAnnual
+                ? 'bg-stone-700 text-stone-100'
+                : 'text-stone-400 hover:text-stone-200'
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => handleIntervalChange('annual')}
+            className={`flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-semibold transition-colors ${
+              isAnnual
+                ? 'bg-stone-700 text-stone-100'
+                : 'text-stone-400 hover:text-stone-200'
+            }`}
+          >
+            Annual
+            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold text-emerald-400">
+              Save 35%
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Cancelled banner */}
@@ -172,11 +223,18 @@ function UpgradeContent() {
               Pro
             </p>
             <div className="flex items-end gap-1.5">
-              <span className="font-serif text-4xl text-stone-100">$9</span>
+              <span className="font-serif text-4xl text-stone-100">${monthlyDisplay}</span>
               <span className="mb-1 text-sm text-stone-500">/ month</span>
+              {isAnnual && (
+                <span className="mb-1 ml-1 text-xs text-stone-500">billed $79/yr</span>
+              )}
             </div>
             <p className="mt-2 text-xs text-stone-500">
-              {hasTrial ? '7-day free trial, then $9/mo. Cancel anytime.' : 'Cancel anytime. Billed monthly via Stripe.'}
+              {trialEligible
+                ? '7-day free trial, then $9/mo. Cancel anytime.'
+                : isAnnual
+                  ? '$79 billed once per year. Cancel anytime.'
+                  : 'Cancel anytime. Billed monthly via Stripe.'}
             </p>
           </div>
 
@@ -194,17 +252,17 @@ function UpgradeContent() {
             disabled={loading}
             className="block w-full rounded-xl bg-amber-500 py-3 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? 'Redirecting to checkout…' : hasTrial ? 'Start 7-day free trial →' : 'Upgrade to Pro →'}
+            {ctaLabel}
           </button>
 
           <p className="mt-3 text-center text-xs text-stone-600">
-            {hasTrial ? 'No charge for 7 days · ' : ''}Secure payment powered by Stripe
+            {trialEligible ? 'No charge for 7 days · ' : ''}Secure payment powered by Stripe
           </p>
         </div>
       </div>
 
       {/* FAQ / trust signals */}
-      <div className="mt-14 grid gap-4 sm:grid-cols-3">
+      <div className="mt-10 grid gap-4 sm:grid-cols-4">
         {[
           {
             icon: '◎',
@@ -219,9 +277,14 @@ function UpgradeContent() {
           {
             icon: '◉',
             title: 'Instant access',
-            body: hasTrial
+            body: trialEligible
               ? 'All Pro features unlock immediately. No charge for 7 days.'
               : 'Pro features activate immediately after your payment completes.',
+          },
+          {
+            icon: '◇',
+            title: '7-day guarantee',
+            body: 'Not satisfied in the first 7 days? Email us and we\'ll refund you in full.',
           },
         ].map((item) => (
           <div
@@ -234,6 +297,15 @@ function UpgradeContent() {
           </div>
         ))}
       </div>
+
+      {/* Annual savings callout */}
+      {isAnnual && (
+        <div className="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-4 text-center">
+          <p className="text-sm text-emerald-300">
+            <strong>You save $29/year</strong> with the annual plan — that&apos;s 3 months free.
+          </p>
+        </div>
+      )}
     </div>
   )
 }
