@@ -1,12 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import ProfileCompletenessWidget from '@/components/ProfileCompletenessWidget'
 import ReferralWidget from '@/components/ReferralWidget'
+import { track } from '@/lib/analytics'
 
 interface DimensionScore {
   normalized: number
@@ -277,6 +278,7 @@ async function downloadProfilePDF(profileId: string, token: string, archetypes: 
 
 export default function DashboardPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [sessions, setSessions] = useState<SessionSummary[]>([])
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
   const [loading, setLoading] = useState(true)
@@ -319,6 +321,13 @@ export default function DashboardPage() {
   const [tagPickerOpenFor, setTagPickerOpenFor] = useState<string | null>(null)
   const [sessionTags, setSessionTags] = useState<Record<string, string[]>>({})
   const [savingTagsFor, setSavingTagsFor] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (searchParams.get('upgraded') === '1') {
+      track('upgrade_completed')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const token = getToken()

@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useParams, useSearchParams } from 'next/navigation'
 import { api, ApiError } from '@/lib/api'
 import { getToken } from '@/lib/auth'
+import { track } from '@/lib/analytics'
 
 interface Profile {
   id: string
@@ -32,6 +33,8 @@ interface Workspace {
   professionalTier: string
   seatLimit: number
   subscriptionStatus: string
+  trialEndsAt: string | null
+  trialDaysLeft: number | null
   clientCount: number
   seatsRemaining: number
   members: Client[]
@@ -70,6 +73,13 @@ export default function WorkspacePage() {
   useEffect(() => {
     fetchWorkspace()
   }, [fetchWorkspace])
+
+  useEffect(() => {
+    if (searchParams.get('checkout') === 'success') {
+      track('b2b_upgrade_completed', { workspace_id: workspaceId })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function handleInvite(e: React.FormEvent) {
     e.preventDefault()
@@ -153,12 +163,48 @@ export default function WorkspacePage() {
 
   const clients = workspace.members.filter((m) => m.role !== 'owner')
   const isActive = workspace.subscriptionStatus === 'active'
+  const isTrial = workspace.subscriptionStatus === 'trial'
+  const isTrialExpired = isTrial && (workspace.trialDaysLeft ?? 0) <= 0
+  const canInvite = (isActive || (isTrial && !isTrialExpired)) && workspace.seatsRemaining > 0
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       {searchParams.get('checkout') === 'success' && (
         <div className="mb-6 rounded-xl bg-green-500/10 border border-green-500/30 px-4 py-3 text-sm text-green-400">
           Subscription activated! You can now invite clients.
+        </div>
+      )}
+
+      {searchParams.get('checkout') === 'trial' && (
+        <div className="mb-6 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3 text-sm text-amber-300">
+          Your 14-day free trial has started. Invite up to 3 clients — no credit card needed.
+        </div>
+      )}
+
+      {isTrial && !isTrialExpired && workspace.trialDaysLeft !== null && (
+        <div className="mb-6 rounded-xl bg-stone-800/60 border border-stone-700 px-4 py-3 flex items-center justify-between">
+          <p className="text-sm text-stone-300">
+            <span className="font-medium text-amber-400">{workspace.trialDaysLeft} day{workspace.trialDaysLeft !== 1 ? 's' : ''} left</span> in your free trial
+          </p>
+          <a
+            href={`/professional?upgrade=${workspace.id}`}
+            onClick={(e) => { e.preventDefault(); window.location.href = '/professional' }}
+            className="rounded-lg bg-amber-500 px-4 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Upgrade →
+          </a>
+        </div>
+      )}
+
+      {isTrialExpired && (
+        <div className="mb-6 rounded-xl bg-red-500/10 border border-red-500/30 px-4 py-3 flex items-center justify-between">
+          <p className="text-sm text-red-400">Your trial has expired. Upgrade to invite more clients.</p>
+          <a
+            href="/professional"
+            className="rounded-lg bg-amber-500 px-4 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Upgrade →
+          </a>
         </div>
       )}
 
@@ -169,8 +215,8 @@ export default function WorkspacePage() {
             {workspace.professionalTier === 'starter' ? 'Pro Business' : 'Team'} plan · {workspace.clientCount}/{workspace.seatLimit} clients
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1 text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-400' : 'bg-stone-700 text-stone-400'}`}>
-          {isActive ? 'Active' : 'Inactive'}
+        <span className={`rounded-full px-3 py-1 text-xs font-medium ${isActive ? 'bg-green-500/20 text-green-400' : isTrial ? 'bg-amber-500/20 text-amber-400' : 'bg-stone-700 text-stone-400'}`}>
+          {isActive ? 'Active' : isTrial ? 'Trial' : 'Inactive'}
         </span>
       </div>
 
@@ -200,7 +246,7 @@ export default function WorkspacePage() {
             )}
 
             {/* Invite form */}
-            {isActive && workspace.seatsRemaining > 0 && (
+            {canInvite && (
               <form onSubmit={handleInvite} className="mt-4 border-t border-stone-800 pt-4">
                 <input
                   type="email"
@@ -222,7 +268,14 @@ export default function WorkspacePage() {
               </form>
             )}
 
-            {!isActive && (
+            {isTrial && workspace.seatsRemaining === 0 && !isTrialExpired && (
+              <p className="mt-4 text-center text-xs text-stone-500 border-t border-stone-800 pt-4">
+                Trial seat limit reached (3/3).{' '}
+                <a href="/professional" className="text-amber-500 hover:underline">Upgrade</a> for more.
+              </p>
+            )}
+
+            {!isActive && !isTrial && (
               <p className="mt-4 text-center text-xs text-stone-600 border-t border-stone-800 pt-4">
                 Activate subscription to invite clients
               </p>

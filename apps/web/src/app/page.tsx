@@ -1,5 +1,7 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { LaunchBanner } from '@/components/LaunchBanner'
+import { LandingAnalytics } from '@/components/LandingAnalytics'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -31,6 +33,7 @@ export default function HomePage() {
     <div className="flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <Suspense fallback={null}><LandingAnalytics /></Suspense>
       <LaunchBanner />
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 py-32 text-center">
