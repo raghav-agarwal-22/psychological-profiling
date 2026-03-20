@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { sendReferralInviteEmail } from '../services/email.js'
 
 const applyReferralBodySchema = z.object({
   code: z.string().min(1).max(100),
@@ -91,6 +92,38 @@ export async function referralRoutes(server: FastifyInstance) {
       referralsCount,
       pendingRewards,
     })
+  })
+
+  // POST /api/referrals/invite — send referral invite email to a friend
+  server.post('/invite', async (req, reply) => {
+    const parsed = z.object({ email: z.string().email() }).safeParse(req.body)
+    if (!parsed.success) {
+      return reply.status(400).send({ error: 'Invalid email address' })
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { id: true, name: true, referralCode: true },
+    })
+    if (!user) return reply.status(404).send({ error: 'User not found' })
+
+    let referralCode = user.referralCode
+    if (!referralCode) {
+      referralCode = generateReferralCode(user.id)
+      await prisma.user.update({ where: { id: user.id }, data: { referralCode } })
+    }
+
+    const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
+    const referralUrl = `${webUrl}/auth/signup?ref=${encodeURIComponent(referralCode)}`
+
+    await sendReferralInviteEmail(parsed.data.email, user.name, referralUrl)
+
+    // Track pending referral (best-effort, ignore duplicates)
+    await prisma.referral.create({
+      data: { referrerId: user.id, referredEmail: parsed.data.email, status: 'pending' },
+    }).catch(() => {})
+
+    return reply.send({ ok: true })
   })
 
   // POST /api/referrals/apply — apply a referral code for the current user

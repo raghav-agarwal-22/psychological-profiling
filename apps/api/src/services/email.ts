@@ -8,6 +8,7 @@ import { ProfileRevealEmail } from '../emails/ProfileRevealEmail.js'
 import { DeepDiveNudgeEmail } from '../emails/DeepDiveNudgeEmail.js'
 import { ProUpgradeEmail } from '../emails/ProUpgradeEmail.js'
 import { TrialEndingSoonEmail } from '../emails/TrialEndingSoonEmail.js'
+import { ReferralInviteEmail } from '../emails/ReferralInviteEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -310,5 +311,29 @@ export async function sendTrialEndingSoonEmail(
     subject: `Your ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYour ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}. After that, you'll be charged $9/month.\n\nManage your plan: ${WEB_URL}/dashboard/billing\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendReferralInviteEmail(
+  toEmail: string,
+  referrerName: string | null,
+  referralUrl: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — referral invite from ${referrerName ?? 'anonymous'} to ${toEmail}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ReferralInviteEmail, { referrerName, referralUrl }),
+  )
+
+  const senderName = referrerName ?? 'A friend'
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: toEmail,
+    subject: `${senderName} invited you to Innermind — 1 month Pro free`,
+    html,
+    text: `${senderName} invited you to Innermind.\n\nTake 5 psychology assessments and get an AI-synthesized portrait of who you are. You'll both get 1 month Pro free when you complete your first assessment.\n\nJoin here: ${referralUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }

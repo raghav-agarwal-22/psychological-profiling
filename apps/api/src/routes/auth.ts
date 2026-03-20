@@ -4,6 +4,7 @@ import crypto from 'node:crypto'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 import { sendMagicLink, sendWelcomeEmail } from '../services/email.js'
+import { applyReferral } from './referrals.js'
 
 const requestMagicLinkSchema = z.object({
   email: z.string().email(),
@@ -98,6 +99,9 @@ export async function authRoutes(server: FastifyInstance) {
             data: { affiliateId: affiliate.id, userId: magicLink.user.id },
           })
         }
+      } else {
+        // Try user-to-user referral (ref is a user's referralCode)
+        await applyReferral(magicLink.user.id, ref, (msg) => server.log.info(msg))
       }
     }
 
