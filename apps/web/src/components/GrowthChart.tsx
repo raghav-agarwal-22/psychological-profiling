@@ -138,7 +138,7 @@ export function GrowthChart({ profiles, frameType }: GrowthChartProps) {
 
   // Collect all dimension keys from all profiles
   const allDimensions = Array.from(
-    new Set(sorted.flatMap((p) => Object.keys(p.dimensions))),
+    new Set(sorted.flatMap((p) => Object.keys(p.dimensions ?? {}))),
   )
 
   // Build chart data — each point is one assessment take
