@@ -377,6 +377,54 @@ export async function billingRoutes(server: FastifyInstance) {
     return reply.send({ sent, total: users.length })
   })
 
+  // POST /api/billing/pause — pause Stripe subscription for 30 days (auth required)
+  server.post('/pause', { preHandler: requireAuth }, async (req, reply) => {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { stripeSubscriptionId: true, subscriptionTier: true },
+    })
+    if (!user?.stripeSubscriptionId || !['pro', 'essential'].includes(user.subscriptionTier ?? '')) {
+      return reply.status(400).send({ error: 'No active paid subscription found' })
+    }
+
+    await stripe.subscriptions.update(user.stripeSubscriptionId, {
+      pause_collection: { behavior: 'void' },
+    })
+
+    await capturePosthogEvent(req.user.userId, 'cancellation_save_accepted_pause', {
+      subscription_id: user.stripeSubscriptionId,
+    })
+
+    return reply.send({ paused: true })
+  })
+
+  // POST /api/billing/retention-discount — apply 50% off coupon to subscription (auth required)
+  server.post('/retention-discount', { preHandler: requireAuth }, async (req, reply) => {
+    const couponId = process.env.STRIPE_RETENTION_COUPON_ID
+    if (!couponId) {
+      return reply.status(500).send({ error: 'Retention coupon not configured' })
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { stripeSubscriptionId: true, subscriptionTier: true },
+    })
+    if (!user?.stripeSubscriptionId || !['pro', 'essential'].includes(user.subscriptionTier ?? '')) {
+      return reply.status(400).send({ error: 'No active paid subscription found' })
+    }
+
+    await stripe.subscriptions.update(user.stripeSubscriptionId, {
+      discounts: [{ coupon: couponId }],
+    })
+
+    await capturePosthogEvent(req.user.userId, 'cancellation_save_accepted_discount', {
+      subscription_id: user.stripeSubscriptionId,
+      coupon_id: couponId,
+    })
+
+    return reply.send({ discountApplied: true })
+  })
+
   // GET /api/billing/status — get current subscription status (auth required)
   server.get('/status', { preHandler: requireAuth }, async (req, reply) => {
     const user = await prisma.user.findUnique({

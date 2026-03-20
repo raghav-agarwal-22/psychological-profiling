@@ -176,6 +176,14 @@ export default function AccountPage() {
                   {portalError && (
                     <p className="mt-1.5 text-xs text-red-400">{portalError}</p>
                   )}
+                  <div className="mt-2 text-right">
+                    <Link
+                      href="/cancel-save"
+                      className="text-xs text-stone-600 underline-offset-2 hover:text-stone-400 hover:underline"
+                    >
+                      Cancel subscription
+                    </Link>
+                  </div>
                 </div>
               ) : (
                 <Link
