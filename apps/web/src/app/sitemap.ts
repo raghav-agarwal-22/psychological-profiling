@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { getAllSlugs } from './blog/posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'
@@ -23,6 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
+    })),
+    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...getAllSlugs().map((slug) => ({
+      url: `${baseUrl}/blog/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
     })),
   ]
 }
