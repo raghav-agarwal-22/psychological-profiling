@@ -112,13 +112,24 @@ export async function compareRoutes(server: FastifyInstance) {
     const overlapScores = computeOverlapScores(dimsA, dimsB)
     const compatibilityScore = overallCompatibility(overlapScores)
 
-    // Generate AI compatibility narrative
-    const frameworksA = buildFrameworks(profileA)
-    const frameworksB = buildFrameworks(profileB)
-    const narrative = await generateCompatibilityNarrative(
-      { label: 'Person A', frameworks: frameworksA },
-      { label: 'Person B', frameworks: frameworksB },
-    )
+    // Generate AI compatibility narrative (graceful fallback if AI unavailable)
+    let narrative: Awaited<ReturnType<typeof generateCompatibilityNarrative>>
+    try {
+      const frameworksA = buildFrameworks(profileA)
+      const frameworksB = buildFrameworks(profileB)
+      narrative = await generateCompatibilityNarrative(
+        { label: 'Person A', frameworks: frameworksA },
+        { label: 'Person B', frameworks: frameworksB },
+      )
+    } catch {
+      narrative = {
+        overallNarrative: 'Compatibility analysis based on dimension scores.',
+        whatWorks: [],
+        watchFor: [],
+        complementaryStrengths: 'Profiles show complementary patterns across dimensions.',
+        growthOpportunities: 'Each profile brings unique strengths to the relationship.',
+      }
+    }
 
     return reply.send({
       profileA: {
