@@ -13,6 +13,7 @@ import { Day1ArchetypeEmail } from '../emails/Day1ArchetypeEmail.js'
 import { Day3InsightTeaserEmail } from '../emails/Day3InsightTeaserEmail.js'
 import { Day5SocialProofEmail } from '../emails/Day5SocialProofEmail.js'
 import { Day7ProOfferEmail } from '../emails/Day7ProOfferEmail.js'
+import { WeeklyGrowthChallengeEmail } from '../emails/WeeklyGrowthChallengeEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -445,6 +446,42 @@ export async function sendDay7ProOfferEmail(
     subject: `One week in — unlock the full ${PRODUCT_NAME} experience`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been on ${PRODUCT_NAME} for a week. Ready to go deeper?\n\nUpgrade to Pro: ${upgradeUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Weekly Growth Challenge ──────────────────────────────────────────────────
+
+export async function sendWeeklyGrowthChallengeEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string,
+  challengeTheme: string,
+  challengeText: string,
+  profileUrl: string,
+  proFeatureTeaser: string,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — weekly growth challenge for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(WeeklyGrowthChallengeEmail, {
+      userName,
+      archetypeName,
+      challengeTheme,
+      challengeText,
+      profileUrl,
+      proFeatureTeaser,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Your ${archetypeName} growth challenge this week`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nThis week's growth challenge for ${archetypeName}s:\n\n${challengeTheme}\n${challengeText}\n\nSee your full portrait: ${profileUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 
