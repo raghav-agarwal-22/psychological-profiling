@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { getToken, clearToken } from '@/lib/auth'
 
 const NAV_LINKS = [
   { label: 'About', href: '/about' },
@@ -13,6 +15,19 @@ const NAV_LINKS = [
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    setIsLoggedIn(!!getToken())
+  }, [])
+
+  function handleSignOut() {
+    clearToken()
+    setIsLoggedIn(false)
+    setMobileOpen(false)
+    router.push('/')
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-stone-800 bg-stone-950/80 backdrop-blur-sm">
@@ -34,15 +49,31 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/auth/login"
-            className="text-sm text-stone-400 transition-colors hover:text-stone-100"
-          >
-            Sign in
-          </Link>
-          <Button asChild size="sm">
-            <Link href="/auth/login">Start free →</Link>
-          </Button>
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+              >
+                Dashboard
+              </Link>
+              <Button size="sm" variant="ghost" onClick={handleSignOut} className="text-stone-400 hover:text-stone-100">
+                Sign out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="text-sm text-stone-400 transition-colors hover:text-stone-100"
+              >
+                Sign in
+              </Link>
+              <Button asChild size="sm">
+                <Link href="/auth/login">Start free →</Link>
+              </Button>
+            </>
+          )}
         </nav>
 
         {/* Mobile: hamburger button */}
@@ -78,20 +109,40 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-2 border-t border-stone-800 pt-3">
-              <Link
-                href="/auth/login"
-                className="block rounded-lg px-3 py-2.5 text-sm text-stone-300 transition-colors hover:bg-stone-800/60 hover:text-stone-100"
-                onClick={() => setMobileOpen(false)}
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/auth/login"
-                className="mt-2 block rounded-xl bg-amber-500 px-4 py-2.5 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
-                onClick={() => setMobileOpen(false)}
-              >
-                Start free →
-              </Link>
+              {isLoggedIn ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="block rounded-lg px-3 py-2.5 text-sm text-stone-300 transition-colors hover:bg-stone-800/60 hover:text-stone-100"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="mt-2 block w-full rounded-xl bg-stone-800 px-4 py-2.5 text-center text-sm font-semibold text-stone-300 transition-colors hover:bg-stone-700"
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/login"
+                    className="block rounded-lg px-3 py-2.5 text-sm text-stone-300 transition-colors hover:bg-stone-800/60 hover:text-stone-100"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    className="mt-2 block rounded-xl bg-amber-500 px-4 py-2.5 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Start free →
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>
