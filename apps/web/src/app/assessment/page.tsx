@@ -17,18 +17,24 @@ const typeDescriptions: Record<string, string> = {
   BIG_FIVE: 'Explore the five fundamental dimensions of your personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism.',
   VALUES_INVENTORY: 'Discover what truly motivates you across 9 universal value dimensions — from Self-Direction and Universalism to Security and Hedonism — based on Schwartz\'s foundational values research.',
   ATTACHMENT_STYLE: 'Understand your relational blueprint — how you connect, trust, and seek closeness in relationships. Based on Bowlby and Ainsworth\'s attachment theory.',
+  ENNEAGRAM: 'Discover your core Enneagram type and wing — the motivational system that drives your fears, desires, and patterns of growth. Based on the nine-type personality model.',
+  LIGHT_DARK_TRIAD: 'Explore where you fall on the light-dark personality spectrum. Measures three prosocial virtues (Kantianism, Humanism, Faith in Humanity) alongside three antagonistic tendencies (Narcissism, Machiavellianism, Psychopathy). Based on Kaufman et al.',
 }
 
 const typeIcons: Record<string, string> = {
   BIG_FIVE: '◎',
   VALUES_INVENTORY: '◈',
   ATTACHMENT_STYLE: '◉',
+  ENNEAGRAM: '◑',
+  LIGHT_DARK_TRIAD: '◐',
 }
 
 const typeDuration: Record<string, string> = {
   BIG_FIVE: '10–15 min',
   VALUES_INVENTORY: '5–8 min',
   ATTACHMENT_STYLE: '3–5 min',
+  ENNEAGRAM: '8–12 min',
+  LIGHT_DARK_TRIAD: '3–5 min',
 }
 
 export default function AssessmentPage() {

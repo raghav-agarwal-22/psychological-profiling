@@ -182,6 +182,53 @@ const VALUES_QUESTIONS = [
   { id: 'UNI_04', text: 'Understanding people who are very different from me enriches my life.',   dimension: 'universalism',   reverse_scored: false },
 ]
 
+// ─── Light Triad + Dark Triad (18 items, Kaufman et al. inspired) ────────────
+//
+// Light Triad: Kantianism, Humanism, Faith in Humanity (prosocial)
+// Dark Triad: Narcissism, Machiavellianism, Psychopathy (antagonistic)
+// 3 items per dimension, 1-5 Likert scale
+
+const LIGHT_DARK_TRIAD_QUESTIONS = [
+  // ── Kantianism (Light) ─────────────────────────────────────────────────────
+  { id: 'KAN_01', text: 'I treat all people as worthy of dignity and respect, regardless of what they can do for me.',     dimension: 'kantianism',        reverse_scored: false },
+  { id: 'KAN_02', text: 'I would not use someone as a means to my own ends without their knowledge.',                      dimension: 'kantianism',        reverse_scored: false },
+  { id: 'KAN_03', text: 'I believe every person has intrinsic worth that cannot be reduced to their usefulness.',          dimension: 'kantianism',        reverse_scored: false },
+
+  // ── Humanism (Light) ───────────────────────────────────────────────────────
+  { id: 'HUM_01', text: 'I am interested in the inner life and unique story of every person I meet.',                      dimension: 'humanism',          reverse_scored: false },
+  { id: 'HUM_02', text: 'I genuinely care about the wellbeing of people I will never meet.',                               dimension: 'humanism',          reverse_scored: false },
+  { id: 'HUM_03', text: "I believe that understanding another person's perspective is one of the most valuable things I can do.", dimension: 'humanism',   reverse_scored: false },
+
+  // ── Faith in Humanity (Light) ──────────────────────────────────────────────
+  { id: 'FIH_01', text: 'I believe that most people are fundamentally good at heart.',                                     dimension: 'faith_in_humanity', reverse_scored: false },
+  { id: 'FIH_02', text: 'I think that if given the chance, most people will try to do the right thing.',                  dimension: 'faith_in_humanity', reverse_scored: false },
+  { id: 'FIH_03', text: 'Despite the suffering in the world, I maintain a basic trust in human nature.',                  dimension: 'faith_in_humanity', reverse_scored: false },
+
+  // ── Narcissism (Dark) ──────────────────────────────────────────────────────
+  { id: 'NAR_01', text: 'I deserve special treatment that others do not.',                                                 dimension: 'narcissism',        reverse_scored: false },
+  { id: 'NAR_02', text: 'I like to be the center of attention and feel diminished when I am not.',                        dimension: 'narcissism',        reverse_scored: false },
+  { id: 'NAR_03', text: 'I expect people to recognize and admire my abilities.',                                          dimension: 'narcissism',        reverse_scored: false },
+
+  // ── Machiavellianism (Dark) ────────────────────────────────────────────────
+  { id: 'MAC_01', text: 'I am willing to be dishonest if it helps me get what I want.',                                   dimension: 'machiavellianism',  reverse_scored: false },
+  { id: 'MAC_02', text: 'I tend to manipulate others to get my way.',                                                     dimension: 'machiavellianism',  reverse_scored: false },
+  { id: 'MAC_03', text: 'I believe that most people can be manipulated if you know the right techniques.',                dimension: 'machiavellianism',  reverse_scored: false },
+
+  // ── Psychopathy (Dark) ─────────────────────────────────────────────────────
+  { id: 'PSY_01', text: 'I rarely feel remorse for hurting others.',                                                      dimension: 'psychopathy',       reverse_scored: false },
+  { id: 'PSY_02', text: 'I find it easy to take advantage of people without feeling bad about it.',                       dimension: 'psychopathy',       reverse_scored: false },
+  { id: 'PSY_03', text: "I tend to lack empathy — other people's emotions don't affect me much.",                        dimension: 'psychopathy',       reverse_scored: false },
+]
+
+const LIGHT_DARK_TRIAD_SCORING_CONFIG: ScoringConfig = {
+  kantianism:        { questionIds: ['KAN_01','KAN_02','KAN_03'], reverseIds: [], formula: 'average', normalize: true },
+  humanism:          { questionIds: ['HUM_01','HUM_02','HUM_03'], reverseIds: [], formula: 'average', normalize: true },
+  faith_in_humanity: { questionIds: ['FIH_01','FIH_02','FIH_03'], reverseIds: [], formula: 'average', normalize: true },
+  narcissism:        { questionIds: ['NAR_01','NAR_02','NAR_03'], reverseIds: [], formula: 'average', normalize: true },
+  machiavellianism:  { questionIds: ['MAC_01','MAC_02','MAC_03'], reverseIds: [], formula: 'average', normalize: true },
+  psychopathy:       { questionIds: ['PSY_01','PSY_02','PSY_03'], reverseIds: [], formula: 'average', normalize: true },
+}
+
 // ─── Attachment Style Inventory (18 items, ECR-inspired) ─────────────────────
 //
 // Dimensions: anxiety (fear of abandonment), avoidance (discomfort with closeness)
@@ -213,6 +260,88 @@ const ATTACHMENT_QUESTIONS = [
 const ATTACHMENT_SCORING_CONFIG: ScoringConfig = {
   anxiety:   { questionIds: ['ANX_01','ANX_02','ANX_03','ANX_04','ANX_05','ANX_06','ANX_07','ANX_08','ANX_09'], reverseIds: ['ANX_06','ANX_07','ANX_08','ANX_09'], formula: 'average', normalize: true },
   avoidance: { questionIds: ['AVO_01','AVO_02','AVO_03','AVO_04','AVO_05','AVO_06','AVO_07','AVO_08','AVO_09'], reverseIds: ['AVO_06','AVO_07','AVO_08','AVO_09'], formula: 'average', normalize: true },
+}
+
+// ─── Enneagram Question Bank (45 items, 5 per type) ───────────────────────────
+//
+// Likert-scale statements: 1 = strongly disagree, 5 = strongly agree.
+// Dimensions map to type_1 through type_9 corresponding to the nine types.
+
+const ENNEAGRAM_QUESTIONS = [
+  // ── Type 1: The Reformer ───────────────────────────────────────────────────
+  { id: 'E1_01', text: 'I have a strong sense of what is right and wrong.',                          dimension: 'type_1', reverse_scored: false },
+  { id: 'E1_02', text: 'I often notice details that others overlook.',                               dimension: 'type_1', reverse_scored: false },
+  { id: 'E1_03', text: 'I feel an inner pressure to improve myself and the world around me.',        dimension: 'type_1', reverse_scored: false },
+  { id: 'E1_04', text: 'I find it difficult to tolerate sloppiness or moral compromise.',            dimension: 'type_1', reverse_scored: false },
+  { id: 'E1_05', text: 'I hold myself to a higher standard than I hold most other people.',          dimension: 'type_1', reverse_scored: false },
+
+  // ── Type 2: The Helper ─────────────────────────────────────────────────────
+  { id: 'E2_01', text: 'I naturally tune in to what other people need before they ask.',             dimension: 'type_2', reverse_scored: false },
+  { id: 'E2_02', text: 'Being needed by others gives me a deep sense of purpose.',                   dimension: 'type_2', reverse_scored: false },
+  { id: 'E2_03', text: 'I find it hard to say no, especially to people I care about.',              dimension: 'type_2', reverse_scored: false },
+  { id: 'E2_04', text: 'I give generously to others and sometimes feel unappreciated for it.',       dimension: 'type_2', reverse_scored: false },
+  { id: 'E2_05', text: 'My relationships are the most important thing in my life.',                  dimension: 'type_2', reverse_scored: false },
+
+  // ── Type 3: The Achiever ───────────────────────────────────────────────────
+  { id: 'E3_01', text: 'I am very motivated by success and the recognition that comes with it.',     dimension: 'type_3', reverse_scored: false },
+  { id: 'E3_02', text: 'I am skilled at presenting myself well in different social contexts.',       dimension: 'type_3', reverse_scored: false },
+  { id: 'E3_03', text: 'I set ambitious goals and work hard to achieve them.',                       dimension: 'type_3', reverse_scored: false },
+  { id: 'E3_04', text: 'I think about how I am perceived and work to project a winning image.',      dimension: 'type_3', reverse_scored: false },
+  { id: 'E3_05', text: 'Failure or appearing incompetent is one of my deepest fears.',               dimension: 'type_3', reverse_scored: false },
+
+  // ── Type 4: The Individualist ──────────────────────────────────────────────
+  { id: 'E4_01', text: 'I have a persistent sense that something essential is missing from my life.', dimension: 'type_4', reverse_scored: false },
+  { id: 'E4_02', text: 'I feel most alive when I can express myself authentically and creatively.',  dimension: 'type_4', reverse_scored: false },
+  { id: 'E4_03', text: 'I am drawn to beauty, melancholy, and things that feel deeply meaningful.',  dimension: 'type_4', reverse_scored: false },
+  { id: 'E4_04', text: 'I see myself as fundamentally different from most other people.',            dimension: 'type_4', reverse_scored: false },
+  { id: 'E4_05', text: 'My emotions are intense, and I dwell on them more than most people do.',     dimension: 'type_4', reverse_scored: false },
+
+  // ── Type 5: The Investigator ───────────────────────────────────────────────
+  { id: 'E5_01', text: 'I prefer to observe and understand a situation before I engage with it.',    dimension: 'type_5', reverse_scored: false },
+  { id: 'E5_02', text: 'I protect my time and privacy very carefully.',                              dimension: 'type_5', reverse_scored: false },
+  { id: 'E5_03', text: 'I feel most comfortable when I have mastery of a subject or skill.',         dimension: 'type_5', reverse_scored: false },
+  { id: 'E5_04', text: 'I tend to withdraw when I feel emotionally or socially overwhelmed.',        dimension: 'type_5', reverse_scored: false },
+  { id: 'E5_05', text: 'I am energized by deep intellectual exploration and independent thinking.',  dimension: 'type_5', reverse_scored: false },
+
+  // ── Type 6: The Loyalist ───────────────────────────────────────────────────
+  { id: 'E6_01', text: 'I often anticipate what could go wrong before committing to a course of action.', dimension: 'type_6', reverse_scored: false },
+  { id: 'E6_02', text: 'I value loyalty and trust, and I am deeply committed to the people I align with.', dimension: 'type_6', reverse_scored: false },
+  { id: 'E6_03', text: 'I frequently look to trusted authorities or groups to help me feel secure.',  dimension: 'type_6', reverse_scored: false },
+  { id: 'E6_04', text: 'I can be suspicious of people\'s motives until they prove themselves trustworthy.', dimension: 'type_6', reverse_scored: false },
+  { id: 'E6_05', text: 'Anxiety and self-doubt are recurring companions in my decision-making.',     dimension: 'type_6', reverse_scored: false },
+
+  // ── Type 7: The Enthusiast ─────────────────────────────────────────────────
+  { id: 'E7_01', text: 'I am drawn to new experiences, adventures, and exciting possibilities.',     dimension: 'type_7', reverse_scored: false },
+  { id: 'E7_02', text: 'I tend to keep my options open rather than commit to one path.',             dimension: 'type_7', reverse_scored: false },
+  { id: 'E7_03', text: 'I reframe difficult situations quickly to find the positive angle.',         dimension: 'type_7', reverse_scored: false },
+  { id: 'E7_04', text: 'I find it hard to sit with boredom, routine, or emotional pain for long.',  dimension: 'type_7', reverse_scored: false },
+  { id: 'E7_05', text: 'I have many interests and can become scattered when pursuing all of them.',  dimension: 'type_7', reverse_scored: false },
+
+  // ── Type 8: The Challenger ─────────────────────────────────────────────────
+  { id: 'E8_01', text: 'I am assertive and have no problem confronting people or situations directly.', dimension: 'type_8', reverse_scored: false },
+  { id: 'E8_02', text: 'I have a strong need to be in control of my own life and decisions.',        dimension: 'type_8', reverse_scored: false },
+  { id: 'E8_03', text: 'I instinctively protect those who are weaker or who I consider under my care.', dimension: 'type_8', reverse_scored: false },
+  { id: 'E8_04', text: 'Showing vulnerability feels dangerous or uncomfortable to me.',              dimension: 'type_8', reverse_scored: false },
+  { id: 'E8_05', text: 'I respect people who are direct and strong, and I lose respect for those who seem weak.', dimension: 'type_8', reverse_scored: false },
+
+  // ── Type 9: The Peacemaker ─────────────────────────────────────────────────
+  { id: 'E9_01', text: 'I tend to go along with what others want to keep the peace.',               dimension: 'type_9', reverse_scored: false },
+  { id: 'E9_02', text: 'I have difficulty knowing what I truly want when others\' needs are present.', dimension: 'type_9', reverse_scored: false },
+  { id: 'E9_03', text: 'I feel an almost physical discomfort when there is conflict around me.',     dimension: 'type_9', reverse_scored: false },
+  { id: 'E9_04', text: 'I can lose myself in routines or distractions rather than face difficult feelings.', dimension: 'type_9', reverse_scored: false },
+  { id: 'E9_05', text: 'I see all sides of an issue and often struggle to take a firm stance.',      dimension: 'type_9', reverse_scored: false },
+]
+
+const ENNEAGRAM_SCORING_CONFIG: ScoringConfig = {
+  type_1: { questionIds: ['E1_01','E1_02','E1_03','E1_04','E1_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_2: { questionIds: ['E2_01','E2_02','E2_03','E2_04','E2_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_3: { questionIds: ['E3_01','E3_02','E3_03','E3_04','E3_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_4: { questionIds: ['E4_01','E4_02','E4_03','E4_04','E4_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_5: { questionIds: ['E5_01','E5_02','E5_03','E5_04','E5_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_6: { questionIds: ['E6_01','E6_02','E6_03','E6_04','E6_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_7: { questionIds: ['E7_01','E7_02','E7_03','E7_04','E7_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_8: { questionIds: ['E8_01','E8_02','E8_03','E8_04','E8_05'], reverseIds: [], formula: 'average', normalize: true },
+  type_9: { questionIds: ['E9_01','E9_02','E9_03','E9_04','E9_05'], reverseIds: [], formula: 'average', normalize: true },
 }
 
 const VALUES_SCORING_CONFIG: ScoringConfig = {
@@ -286,6 +415,41 @@ async function main() {
     },
   })
   console.log(`✓ AssessmentTemplate: ${attachmentTemplate.title} v${attachmentTemplate.version} (${ATTACHMENT_QUESTIONS.length} items)`)
+
+  // ── 1d. Upsert Enneagram template ──────────────────────────────────────────
+  const enneagramTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.ENNEAGRAM, version: '1.0' } },
+    update: {},
+    create: {
+      type: AssessmentType.ENNEAGRAM,
+      version: '1.0',
+      title: 'Enneagram Personality Types',
+      description: 'Discover your core Enneagram type and wing through 45 statements about how you think, feel, and behave.',
+      questionBank: ENNEAGRAM_QUESTIONS as object[],
+      scoringConfig: ENNEAGRAM_SCORING_CONFIG as object,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${enneagramTemplate.title} v${enneagramTemplate.version} (${ENNEAGRAM_QUESTIONS.length} items)`)
+
+  // ── 1e. Upsert Light/Dark Triad template ───────────────────────────────────
+  const triadTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.LIGHT_DARK_TRIAD, version: '1.0' } },
+    update: {
+      questionBank: LIGHT_DARK_TRIAD_QUESTIONS as object[],
+      scoringConfig: LIGHT_DARK_TRIAD_SCORING_CONFIG as object,
+    },
+    create: {
+      type: AssessmentType.LIGHT_DARK_TRIAD,
+      version: '1.0',
+      title: 'Light & Dark Triad',
+      description: 'Explore your position on the light-dark personality spectrum. Measures three prosocial virtues (Kantianism, Humanism, Faith in Humanity) and three antagonistic tendencies (Narcissism, Machiavellianism, Psychopathy). 18 items, Likert 1–5.',
+      questionBank: LIGHT_DARK_TRIAD_QUESTIONS as object[],
+      scoringConfig: LIGHT_DARK_TRIAD_SCORING_CONFIG as object,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${triadTemplate.title} v${triadTemplate.version} (${LIGHT_DARK_TRIAD_QUESTIONS.length} items)`)
 
   // ── 2. Upsert demo user ────────────────────────────────────────────────────
   const user = await prisma.user.upsert({

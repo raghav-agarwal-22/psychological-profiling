@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateDeltaObservation, generateReflectionPrompts } from '../lib/profile-generator.js'
 
 const createSessionSchema = z.object({
   title: z.string().max(200).optional(),
@@ -170,12 +170,18 @@ export async function sessionRoutes(server: FastifyInstance) {
     let narrative = null
     let valuesNarrative = null
     let attachmentNarrative = null
+    let triadNarrative = null
+    let enneagramNarrative = null
     if (Object.keys(dimensionScores).length > 0 && process.env.ANTHROPIC_API_KEY) {
       try {
         if (templateType === AssessmentType.ATTACHMENT_STYLE) {
           attachmentNarrative = await generateAttachmentNarrative(dimensionScores)
         } else if (templateType === AssessmentType.VALUES_INVENTORY) {
           valuesNarrative = await generateValuesNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.LIGHT_DARK_TRIAD) {
+          triadNarrative = await generateTriadNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.ENNEAGRAM) {
+          enneagramNarrative = await generateEnneagramNarrative(dimensionScores)
         } else {
           narrative = await generateProfileNarrative(dimensionScores)
         }
@@ -209,6 +215,18 @@ export async function sessionRoutes(server: FastifyInstance) {
       values = valuesNarrative.coreValues
       blindSpots = valuesNarrative.tensions.map((t) => `${t.value1} vs ${t.value2}: ${t.description}`)
       strengths = []
+    } else if (templateType === AssessmentType.LIGHT_DARK_TRIAD && triadNarrative) {
+      summary = triadNarrative.summary
+      archetypes = [triadNarrative.dominantLight]
+      values = triadNarrative.atBest
+      blindSpots = triadNarrative.watchFor
+      strengths = triadNarrative.atBest
+    } else if (templateType === AssessmentType.ENNEAGRAM && enneagramNarrative) {
+      summary = enneagramNarrative.summary
+      archetypes = [`${enneagramNarrative.typeName} (${enneagramNarrative.wingName} wing)`]
+      values = enneagramNarrative.atBest
+      blindSpots = enneagramNarrative.atWorst
+      strengths = enneagramNarrative.atBest
     } else {
       summary = narrative?.summary ?? 'Profile generated from assessment responses.'
       archetypes = narrative?.archetype ? [narrative.archetype] : []
@@ -242,7 +260,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           sessionId: session.id,
           scores: dimensionScores,
           templateType,
-          narrative: narrative ?? valuesNarrative ?? attachmentNarrative,
+          narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative,
           reflectionPrompts,
         } as object,
       },
@@ -279,6 +297,8 @@ export async function sessionRoutes(server: FastifyInstance) {
             const frameworkTitle =
               templateType === AssessmentType.VALUES_INVENTORY ? 'Schwartz Values Inventory' :
               templateType === AssessmentType.ATTACHMENT_STYLE ? 'Attachment Style Inventory' :
+              templateType === AssessmentType.ENNEAGRAM ? 'Enneagram' :
+              templateType === AssessmentType.LIGHT_DARK_TRIAD ? 'Light & Dark Triad' :
               'Big Five Personality'
             const observation = await generateDeltaObservation(frameworkTitle, deltas)
             await prisma.profile.update({

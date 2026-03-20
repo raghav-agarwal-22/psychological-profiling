@@ -175,6 +175,8 @@ enum AssessmentType {
   LIFE_SATISFACTION     // Life domain satisfaction mapping
   STRENGTHS             // Strengths-based assessment
   ATTACHMENT_STYLE      // Attachment style
+  ENNEAGRAM             // Enneagram 9 types with wing identification
+  LIGHT_DARK_TRIAD      // Light Triad (humanism, Kantianism, faith) + Dark Triad (narcissism, Machiavellianism, psychopathy)
   CUSTOM                // AI-generated adaptive assessment
 }
 

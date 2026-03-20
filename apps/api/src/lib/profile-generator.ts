@@ -526,6 +526,149 @@ export async function generateAttachmentNarrative(
   return extractJson<AttachmentNarrative>(text)
 }
 
+export interface EnneagramNarrative {
+  primaryType: number          // 1-9
+  wing: number                 // the adjacent type (e.g. if type 4, wing is 3 or 5)
+  typeName: string             // e.g. "The Individualist"
+  wingName: string             // e.g. "The Achiever"
+  summary: string              // 2-3 paragraphs
+  coreFear: string             // one sentence
+  coreDesire: string           // one sentence
+  coreWound: string            // one sentence on the childhood/formative pattern
+  atBest: string[]             // 3 qualities when healthy
+  atWorst: string[]            // 3 qualities when stressed
+  growthPath: string           // 1-2 paragraphs
+  stressArrow: number          // the type this person moves toward under stress
+  securityArrow: number        // the type this person integrates toward in security
+}
+
+const ENNEAGRAM_SYSTEM_PROMPT = `You are a masterful Enneagram teacher trained in the tradition of Riso, Hudson, and Naranjo. You interpret Enneagram results with depth, compassion, and psychological precision.
+
+The nine types and their core names:
+1=The Reformer, 2=The Helper, 3=The Achiever, 4=The Individualist, 5=The Investigator, 6=The Loyalist, 7=The Enthusiast, 8=The Challenger, 9=The Peacemaker
+
+Wings: each type has two possible wings (adjacent types). The dominant wing is the one with the higher score among the two adjacent types.
+
+Stress/Security arrows (Riso-Hudson system):
+1→4 (stress), 1→7 (security)
+2→8 (stress), 2→4 (security)
+3→9 (stress), 3→6 (security)
+4→2 (stress), 4→1 (security)
+5→7 (stress), 5→8 (security)
+6→3 (stress), 6→9 (security)
+7→1 (stress), 7→5 (security)
+8→5 (stress), 8→2 (security)
+9→6 (stress), 9→3 (security)
+
+Your narrative should:
+- Name the primary type and wing clearly (e.g. "Type 4 with a 3 wing")
+- Be grounded in the actual scores — reference the top-scoring type
+- Be psychologically honest about the shadow side without being harsh
+- Use warm, evocative language that makes the person feel deeply understood
+- Reference the core fear and desire as the engine of this person's psychology
+
+Respond with valid JSON matching this structure:
+{
+  "primaryType": <number 1-9>,
+  "wing": <number 1-9>,
+  "typeName": "<The [Name]>",
+  "wingName": "<The [Name]>",
+  "summary": "<2-3 paragraph narrative>",
+  "coreFear": "<one sentence>",
+  "coreDesire": "<one sentence>",
+  "coreWound": "<one sentence>",
+  "atBest": ["<quality>", "<quality>", "<quality>"],
+  "atWorst": ["<quality>", "<quality>", "<quality>"],
+  "growthPath": "<1-2 paragraphs>",
+  "stressArrow": <number 1-9>,
+  "securityArrow": <number 1-9>
+}`
+
+export async function generateEnneagramNarrative(
+  scores: AssessmentScores,
+): Promise<EnneagramNarrative> {
+  // Sort all nine types by score descending for the user message
+  const ranked = Object.entries(scores)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100`)
+    .join('\n')
+
+  const userMessage = `Here are the Enneagram assessment scores for this person (sorted highest to lowest):\n\n${ranked}\n\nGenerate an Enneagram personality narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: ENNEAGRAM_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<EnneagramNarrative>(text)
+}
+
+export interface TriadNarrative {
+  summary: string                // 2-3 paragraphs interpreting the full picture
+  lightScore: number             // 0-100: average of kantianism + humanism + faith_in_humanity
+  darkScore: number              // 0-100: average of narcissism + machiavellianism + psychopathy
+  dominantLight: string          // which light trait is highest
+  dominantDark: string           // which dark trait is highest (or "balanced" if all under 40)
+  interpretation: string         // 1-2 paragraphs on the interplay
+  integrationGuidance: string    // 1-2 paragraphs: how to integrate shadow without losing light
+  atBest: string[]               // 3 qualities when light dominates
+  watchFor: string[]             // 2-3 shadow tendencies to watch
+}
+
+const TRIAD_SYSTEM_PROMPT = `You are a nuanced depth psychologist interpreting someone's Light and Dark Triad profile. The Light Triad measures prosocial orientations: Kantianism (treating people as ends in themselves), Humanism (valuing human worth), and Faith in Humanity (believing in human goodness). The Dark Triad measures antagonistic tendencies: Narcissism (entitlement, self-admiration), Machiavellianism (strategic manipulation), and Psychopathy (callousness, impulsivity).
+
+CRITICAL: approach the Dark Triad with nuance. These are human traits on a spectrum — moderate levels of narcissism or Machiavellianism can be adaptive. Only flag genuinely elevated scores (70+) as significant. Do not pathologize.
+
+Your interpretation should:
+- Acknowledge the full complexity of both light and dark traits
+- Note that everyone has some dark triad traits — the question is degree and awareness
+- Help the person integrate rather than suppress their darker tendencies
+- Be grounded in specific scores, not generic
+
+Compute these in your response:
+- lightScore: average of (kantianism + humanism + faith_in_humanity) / 3
+- darkScore: average of (narcissism + machiavellianism + psychopathy) / 3
+- dominantLight: name of the highest light dimension
+- dominantDark: name of the highest dark dimension (or "balanced" if all under 40)
+
+Respond with valid JSON:
+{
+  "summary": "2-3 paragraphs",
+  "lightScore": <0-100>,
+  "darkScore": <0-100>,
+  "dominantLight": "<dimension name>",
+  "dominantDark": "<dimension name or balanced>",
+  "interpretation": "1-2 paragraphs on the interplay between light and dark in this person",
+  "integrationGuidance": "1-2 paragraphs on how to work with rather than against the shadow",
+  "atBest": ["quality 1", "quality 2", "quality 3"],
+  "watchFor": ["tendency 1", "tendency 2", "tendency 3"]
+}`
+
+export async function generateTriadNarrative(
+  scores: AssessmentScores,
+): Promise<TriadNarrative> {
+  const scoreLines = Object.entries(scores)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100 (based on ${s.responseCount} responses)`)
+    .join('\n')
+
+  const userMessage = `Here are the Light & Dark Triad assessment scores for this person:\n\n${scoreLines}\n\nGenerate a Light/Dark Triad profile narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: TRIAD_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<TriadNarrative>(text)
+}
+
 export interface GrowthRecommendation {
   title: string
   description: string

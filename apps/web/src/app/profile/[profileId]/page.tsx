@@ -35,6 +35,15 @@ interface RawOutput {
     growthEdges?: string[]
     anxietyLevel?: string
     avoidanceLevel?: string
+    // Triad fields
+    lightScore?: number
+    darkScore?: number
+    dominantLight?: string
+    dominantDark?: string
+    interpretation?: string
+    integrationGuidance?: string
+    atBest?: string[]
+    watchFor?: string[]
   }
 }
 
@@ -123,6 +132,24 @@ const ATTACHMENT_STYLE_COLORS: Record<string, string> = {
   anxious: 'bg-amber-500/10 ring-amber-500/20 text-amber-400',
   avoidant: 'bg-indigo-500/10 ring-indigo-500/20 text-indigo-400',
   fearful: 'bg-rose-500/10 ring-rose-500/20 text-rose-400',
+}
+
+const TRIAD_LABELS: Record<string, string> = {
+  kantianism: 'Kantianism',
+  humanism: 'Humanism',
+  faith_in_humanity: 'Faith in Humanity',
+  narcissism: 'Narcissism',
+  machiavellianism: 'Machiavellianism',
+  psychopathy: 'Psychopathy',
+}
+
+const TRIAD_COLORS: Record<string, string> = {
+  kantianism: 'bg-teal-500',
+  humanism: 'bg-emerald-500',
+  faith_in_humanity: 'bg-cyan-500',
+  narcissism: 'bg-rose-500',
+  machiavellianism: 'bg-orange-500',
+  psychopathy: 'bg-red-700',
 }
 
 export default function ProfilePage() {
@@ -450,9 +477,11 @@ export default function ProfilePage() {
 
   const isValuesProfile = profile.rawOutput?.templateType === 'VALUES_INVENTORY'
   const isAttachmentProfile = profile.rawOutput?.templateType === 'ATTACHMENT_STYLE'
+  const isTriadProfile = profile.rawOutput?.templateType === 'LIGHT_DARK_TRIAD'
   const valuesNarrative = profile.rawOutput?.narrative
   const attachmentStyle = isAttachmentProfile ? (profile.archetypes[0] ?? null) : null
   const attachmentNarrative = isAttachmentProfile ? profile.rawOutput?.narrative : null
+  const triadNarrative = isTriadProfile ? profile.rawOutput?.narrative : null
   const dimensionEntries = Object.entries(profile.dimensions)
 
   // For values profiles: sort dimensions by score descending
@@ -467,7 +496,27 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Header */}
-      {isAttachmentProfile ? (
+      {isTriadProfile ? (
+        <div className="mb-10 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500/10 to-rose-500/10 ring-1 ring-stone-700/30">
+            <span className="text-3xl">◐</span>
+          </div>
+          <h1 className="font-serif text-4xl text-stone-100">Light & Dark Triad</h1>
+          <p className="mt-2 text-stone-500">Your position on the prosocial–antagonistic spectrum</p>
+          {triadNarrative?.lightScore !== undefined && triadNarrative?.darkScore !== undefined && (
+            <div className="mt-4 flex items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
+                <span className="text-sm text-stone-400">Light: <span className="font-semibold text-teal-400">{triadNarrative.lightScore}/100</span></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
+                <span className="text-sm text-stone-400">Dark: <span className="font-semibold text-rose-400">{triadNarrative.darkScore}/100</span></span>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : isAttachmentProfile ? (
         <div className="mb-10 text-center">
           <div className={`mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl ring-1 ${attachmentStyle ? ATTACHMENT_STYLE_COLORS[attachmentStyle] : 'bg-stone-800/10 ring-stone-700/20'}`}>
             <span className="text-3xl">◉</span>
@@ -505,7 +554,7 @@ export default function ProfilePage() {
       {/* Summary */}
       <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
         <h2 className="mb-3 font-serif text-xl text-stone-200">
-          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : 'Your narrative'}
+          {isAttachmentProfile ? 'Your relational narrative' : isValuesProfile ? 'Your value landscape' : isTriadProfile ? 'Your spectrum portrait' : 'Your narrative'}
         </h2>
         <p className="text-stone-400 leading-relaxed">{profile.summary}</p>
         {isValuesProfile && valuesNarrative?.narrative && (
@@ -513,6 +562,9 @@ export default function ProfilePage() {
         )}
         {isAttachmentProfile && attachmentNarrative?.narrative && (
           <p className="mt-4 text-stone-400 leading-relaxed">{attachmentNarrative.narrative}</p>
+        )}
+        {isTriadProfile && triadNarrative?.interpretation && (
+          <p className="mt-4 text-stone-400 leading-relaxed">{triadNarrative.interpretation}</p>
         )}
       </div>
 
@@ -556,6 +608,68 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Triad dimensions */}
+      {isTriadProfile && dimensionEntries.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-1 font-serif text-xl text-stone-200">Spectrum dimensions</h2>
+          <p className="mb-5 text-xs text-stone-500">Light Triad (prosocial) and Dark Triad (antagonistic) scores</p>
+          <div className="mb-4 space-y-1">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600">Light Triad</p>
+          </div>
+          <div className="mb-6 space-y-4">
+            {['kantianism', 'humanism', 'faith_in_humanity'].map((key) => {
+              const score = profile.dimensions[key]
+              if (!score) return null
+              const label = TRIAD_LABELS[key] ?? key
+              const color = TRIAD_COLORS[key] ?? 'bg-teal-400'
+              const pct = typeof score === 'object' ? score.normalized : Number(score)
+              return (
+                <div key={key}>
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span className="text-sm text-stone-300">{label}</span>
+                    <span className="text-sm font-medium text-stone-400">{pct}</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-stone-800">
+                    <div className={`h-full rounded-full transition-all duration-500 ${color}`} style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <div className="mb-4 space-y-1">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-rose-700">Dark Triad</p>
+          </div>
+          <div className="space-y-4">
+            {['narcissism', 'machiavellianism', 'psychopathy'].map((key) => {
+              const score = profile.dimensions[key]
+              if (!score) return null
+              const label = TRIAD_LABELS[key] ?? key
+              const color = TRIAD_COLORS[key] ?? 'bg-rose-400'
+              const pct = typeof score === 'object' ? score.normalized : Number(score)
+              return (
+                <div key={key}>
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span className="text-sm text-stone-300">{label}</span>
+                    <span className="text-sm font-medium text-stone-400">{pct}</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-stone-800">
+                    <div className={`h-full rounded-full transition-all duration-500 ${color}`} style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Triad integration guidance */}
+      {isTriadProfile && triadNarrative?.integrationGuidance && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-3 font-serif text-xl text-stone-200">Integration guidance</h2>
+          <p className="text-stone-400 leading-relaxed">{triadNarrative.integrationGuidance}</p>
+        </div>
+      )}
+
       {/* Attachment dimensions */}
       {isAttachmentProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
@@ -583,7 +697,7 @@ export default function ProfilePage() {
       )}
 
       {/* Big Five scores */}
-      {!isValuesProfile && !isAttachmentProfile && dimensionEntries.length > 0 && (
+      {!isValuesProfile && !isAttachmentProfile && !isTriadProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
           <h2 className="mb-5 font-serif text-xl text-stone-200">Personality dimensions</h2>
           <div className="space-y-4">
