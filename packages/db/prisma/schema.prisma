@@ -396,7 +396,8 @@ model JournalEntry {
 }
 
 // ─── Team ─────────────────────────────────────────────────────────────────────
-// A workspace for a group of users to share profiles and view compatibility.
+// Repurposed as a practitioner workspace for the Professional tier.
+// type: "professional" = coach/therapist workspace with client management
 
 model Team {
   id          String   @id @default(cuid())
@@ -408,7 +409,12 @@ model Team {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  // Stripe subscription for teams
+  // Workspace type
+  type             String   @default("professional") @map("type") // "professional"
+  seatLimit        Int      @default(3) @map("seat_limit")
+  professionalTier String   @default("starter") @map("professional_tier") // "starter" | "unlimited"
+
+  // Stripe subscription
   stripeCustomerId     String?  @unique @map("stripe_customer_id")
   stripeSubscriptionId String?  @unique @map("stripe_subscription_id")
   subscriptionStatus   String   @default("inactive") @map("subscription_status")
@@ -421,14 +427,22 @@ model Team {
 model TeamMember {
   id       String   @id @default(cuid())
   teamId   String   @map("team_id")
-  userId   String   @map("user_id")
-  role     String   @default("member") // "owner" | "admin" | "member"
+  userId   String?  @map("user_id") // null until client accepts invite
+  role     String   @default("client") @map("role") // "owner" | "client"
   joinedAt DateTime @default(now()) @map("joined_at")
 
-  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Client invite fields
+  inviteToken       String?   @unique @map("invite_token")
+  inviteEmail       String?   @map("invite_email")
+  inviteStatus      String    @default("pending") @map("invite_status") // "pending" | "accepted"
+  invitedAt         DateTime? @map("invited_at")
+  practitionerNotes String?   @map("practitioner_notes") @db.Text
 
-  @@unique([teamId, userId])
+  team Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+  @@index([userId])
   @@map("team_members")
 }
 
