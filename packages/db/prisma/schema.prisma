@@ -30,6 +30,10 @@ model User {
   growthRecommendations          Json?     @map("growth_recommendations")
   recommendationsGeneratedAt     DateTime? @map("recommendations_generated_at")
 
+  // Email digest
+  emailDigestOptIn     Boolean   @default(true) @map("email_digest_opt_in")
+  lastDigestSentAt     DateTime? @map("last_digest_sent_at")
+
   // Auth
   magicLinkTokens MagicLinkToken[]
 

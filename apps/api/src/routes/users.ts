@@ -526,6 +526,40 @@ export async function userRoutes(server: FastifyInstance) {
     },
   )
 
+  // GET /api/users/me/digest-preferences — get email digest opt-in state
+  server.get('/me/digest-preferences', async (req, reply) => {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: { emailDigestOptIn: true, lastDigestSentAt: true },
+    })
+    if (!user) {
+      return reply.status(404).send({ error: 'User not found' })
+    }
+    return reply.send({
+      emailDigestOptIn: user.emailDigestOptIn,
+      lastDigestSentAt: user.lastDigestSentAt,
+    })
+  })
+
+  // PATCH /api/users/me/digest-preferences — toggle email digest opt-in
+  server.patch<{ Body: { emailDigestOptIn: boolean } }>('/me/digest-preferences', async (req, reply) => {
+    const body = req.body as { emailDigestOptIn?: unknown }
+    if (typeof body?.emailDigestOptIn !== 'boolean') {
+      return reply.status(400).send({ error: 'emailDigestOptIn must be a boolean' })
+    }
+
+    const user = await prisma.user.update({
+      where: { id: req.user.userId },
+      data: { emailDigestOptIn: body.emailDigestOptIn },
+      select: { emailDigestOptIn: true, lastDigestSentAt: true },
+    })
+
+    return reply.send({
+      emailDigestOptIn: user.emailDigestOptIn,
+      lastDigestSentAt: user.lastDigestSentAt,
+    })
+  })
+
   // GET /api/users/me/reassessment-status — check if user is due for reassessment
   server.get('/me/reassessment-status', async (req, reply) => {
     // Find the most recent completed session per assessment framework

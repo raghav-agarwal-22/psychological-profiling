@@ -296,6 +296,23 @@ export default function DashboardPage() {
   const [recommendationsLoading, setRecommendationsLoading] = useState(false)
   const [recommendationsError, setRecommendationsError] = useState<string | null>(null)
 
+  // Email digest preferences state
+  const [digestOptIn, setDigestOptIn] = useState<boolean>(true)
+  const [digestToggling, setDigestToggling] = useState(false)
+
+  // Onboarding welcome modal
+  const [showWelcome, setShowWelcome] = useState(false)
+
+  useEffect(() => {
+    const seen = localStorage.getItem('innermind_onboarding_seen')
+    if (!seen) setShowWelcome(true)
+  }, [])
+
+  function dismissWelcome() {
+    localStorage.setItem('innermind_onboarding_seen', '1')
+    setShowWelcome(false)
+  }
+
   // Context tags state: which session has the tag picker open
   const [tagPickerOpenFor, setTagPickerOpenFor] = useState<string | null>(null)
   const [sessionTags, setSessionTags] = useState<Record<string, string[]>>({})
@@ -313,8 +330,9 @@ export default function DashboardPage() {
       api.get<{ entries: JournalEntry[] }>('/api/users/me/journal', token).catch(() => ({ entries: [] as JournalEntry[] })),
       api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
       api.get<DailyPromptData>('/api/users/me/daily-prompt', token).catch(() => null),
+      api.get<{ emailDigestOptIn: boolean }>('/api/users/me/digest-preferences', token).catch(() => null),
     ])
-      .then(([sessionData, journalData, nudgeData, promptData]) => {
+      .then(([sessionData, journalData, nudgeData, promptData, digestPrefs]) => {
         setSessions(sessionData.sessions)
         setJournalEntries(journalData.entries)
         if (nudgeData) setNudgeStatus(nudgeData)
@@ -322,6 +340,7 @@ export default function DashboardPage() {
           setDailyPrompt(promptData)
           if (promptData.response) setDailyPromptSubmitted(true)
         }
+        if (digestPrefs) setDigestOptIn(digestPrefs.emailDigestOptIn)
         // Seed local tags state from fetched sessions
         const tagsMap: Record<string, string[]> = {}
         for (const s of sessionData.sessions) {
@@ -415,6 +434,22 @@ export default function DashboardPage() {
     }
   }
 
+  const handleToggleDigest = async () => {
+    const token = getToken()
+    if (!token || digestToggling) return
+    const next = !digestOptIn
+    setDigestOptIn(next)
+    setDigestToggling(true)
+    try {
+      await api.patch('/api/users/me/digest-preferences', { emailDigestOptIn: next }, token)
+    } catch {
+      // Revert on error
+      setDigestOptIn(!next)
+    } finally {
+      setDigestToggling(false)
+    }
+  }
+
   const latestProfile = sessions.find((s) => s.profile)?.profile ?? null
 
   // Build per-template chart data (sessions oldest-first)
@@ -447,8 +482,108 @@ export default function DashboardPage() {
     }
   }
 
+  const CORE_FRAMEWORKS = [
+    { type: 'BIG_FIVE', shortName: 'Personality', icon: '◎' },
+    { type: 'VALUES_INVENTORY', shortName: 'Values', icon: '◈' },
+    { type: 'ATTACHMENT_STYLE', shortName: 'Attachment', icon: '◉' },
+  ] as const
+
+  const completedTypes = new Set(
+    sessions
+      .filter((s) => s.completedAt)
+      .map((s) => s.templateType),
+  )
+  const completedFrameworks = CORE_FRAMEWORKS.filter((f) => completedTypes.has(f.type)).length
+
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
+      {/* Onboarding welcome modal */}
+      {showWelcome && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="welcome-modal-title"
+        >
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={dismissWelcome}
+            aria-hidden="true"
+          />
+
+          {/* Panel */}
+          <div className="relative z-10 w-full max-w-lg rounded-3xl border border-stone-700 bg-stone-950 p-8 shadow-2xl">
+            {/* Header */}
+            <div className="mb-6 text-center">
+              <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10">
+                <span className="text-2xl">◎</span>
+              </div>
+              <h2
+                id="welcome-modal-title"
+                className="mb-2 font-serif text-3xl text-stone-100"
+              >
+                Welcome to Innermind
+              </h2>
+              <p className="text-sm text-stone-400">
+                Your journey toward self-understanding starts here.
+              </p>
+            </div>
+
+            {/* Step cards */}
+            <div className="mb-7 grid grid-cols-3 gap-3">
+              {[
+                {
+                  icon: '◎',
+                  name: 'Big Five Personality',
+                  desc: 'Map your core traits across openness, conscientiousness, and more.',
+                },
+                {
+                  icon: '◈',
+                  name: 'Schwartz Values',
+                  desc: 'Discover the values that drive your decisions and priorities.',
+                },
+                {
+                  icon: '◉',
+                  name: 'Attachment Style',
+                  desc: 'Understand how you connect and bond in relationships.',
+                },
+              ].map((step) => (
+                <div
+                  key={step.name}
+                  className="rounded-2xl border border-stone-800 bg-stone-900/60 p-4 text-center"
+                >
+                  <div className="mb-2.5 text-2xl text-amber-400">{step.icon}</div>
+                  <p className="mb-1.5 text-xs font-semibold text-stone-200 leading-snug">
+                    {step.name}
+                  </p>
+                  <p className="text-[11px] text-stone-500 leading-relaxed">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="text-center">
+              <Link
+                href="/assessment"
+                onClick={dismissWelcome}
+                className="inline-block rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+              >
+                Start my first assessment →
+              </Link>
+              <div className="mt-3">
+                <button
+                  onClick={dismissWelcome}
+                  className="text-xs text-stone-600 transition-colors hover:text-stone-400"
+                >
+                  Skip for now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mb-10 flex items-center justify-between">
         <h1 className="font-serif text-3xl text-stone-100">Your journey</h1>
         <Link
@@ -570,6 +705,44 @@ export default function DashboardPage() {
           </div>
         )
       })()}
+
+      {/* Onboarding progress banner */}
+      {completedFrameworks < 3 && (
+        <div className="mb-6 rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-sm text-stone-300">Getting started</p>
+            <span className="text-xs text-stone-500">{completedFrameworks} of 3 core assessments</span>
+          </div>
+          <div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-stone-800">
+            <div
+              className="h-full rounded-full bg-amber-500 transition-all duration-500"
+              style={{ width: `${(completedFrameworks / 3) * 100}%` }}
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            {CORE_FRAMEWORKS.map((fw) => (
+              <div
+                key={fw.type}
+                className={`rounded-lg border p-2.5 text-center ${
+                  completedTypes.has(fw.type)
+                    ? 'border-emerald-500/30 bg-emerald-500/5'
+                    : 'border-stone-700 bg-stone-800/50'
+                }`}
+              >
+                <div className="mb-1 text-lg">{fw.icon}</div>
+                <p className="text-xs text-stone-400">{fw.shortName}</p>
+                {completedTypes.has(fw.type) ? (
+                  <p className="text-xs text-emerald-400">&#10003; Done</p>
+                ) : (
+                  <Link href="/assessment" className="text-xs text-amber-400 hover:text-amber-300">
+                    Start →
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Latest profile card */}
       {latestProfile && (
@@ -738,20 +911,17 @@ export default function DashboardPage() {
         <h2 className="mb-4 font-serif text-xl text-stone-200">Assessment history</h2>
 
         {sessions.length === 0 ? (
-          <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-12 text-center">
-            <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10">
-              <span className="text-2xl">◎</span>
-            </div>
-            <h3 className="mb-2 font-serif text-xl text-stone-200">Start your self-discovery</h3>
-            <p className="mb-6 text-stone-400">
-              Your completed assessments will appear here. Take your first to build your
-              psychological profile.
+          <div className="rounded-2xl border border-dashed border-stone-700 p-10 text-center">
+            <div className="mb-4 text-4xl">◎</div>
+            <p className="mb-2 font-serif text-lg text-stone-200">Begin your self-discovery</p>
+            <p className="mb-6 text-sm text-stone-500">
+              Take your first assessment to generate your psychological profile.
             </p>
             <Link
               href="/assessment"
-              className="inline-block rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+              className="inline-block rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
             >
-              Take your first assessment →
+              Start first assessment
             </Link>
           </div>
         ) : (

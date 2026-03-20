@@ -14,6 +14,7 @@ import { userRoutes } from './routes/users.js'
 import { shareRoutes } from './routes/share.js'
 import { compareRoutes } from './routes/compare.js'
 import { coachRoutes } from './routes/coach.js'
+import { digestRoutes } from './routes/digest.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -62,6 +63,7 @@ await server.register(userRoutes, { prefix: '/api/users' })
 await server.register(shareRoutes, { prefix: '/api/share' })
 await server.register(compareRoutes, { prefix: '/api/compare' })
 await server.register(coachRoutes, { prefix: '/api/coach' })
+await server.register(digestRoutes, { prefix: '/api/digest' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 
