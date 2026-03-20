@@ -4,11 +4,11 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Affiliate Program — Innermind',
   description:
-    'Earn 20% recurring commission for every Pro subscriber you refer to Innermind. Built for coaches, therapists, and psychology educators who already recommend self-discovery tools.',
+    'Earn 30% recurring commission for every Pro subscriber you refer to Innermind. Built for coaches, therapists, and psychology educators who already recommend self-discovery tools.',
   openGraph: {
-    title: 'Innermind Affiliate Program — 20% Recurring Commission',
+    title: 'Innermind Affiliate Program — 30% Recurring Commission',
     description:
-      'Earn 20% recurring commission on every Pro subscription you refer. No cap. No expiry. Built for coaches, therapists, and psychology educators.',
+      'Earn 30% recurring commission on every Pro subscription you refer. No cap. No expiry. Built for coaches, therapists, and psychology educators.',
   },
 }
 
@@ -26,7 +26,7 @@ const HOW_IT_WORKS = [
   {
     step: '03',
     title: 'Earn every month',
-    body: 'You earn 20% of every Pro subscription payment from referred users — for as long as they stay subscribed. No caps, no expiry windows.',
+    body: 'You earn 30% of every Pro subscription payment from referred users — for as long as they stay subscribed. No caps, no expiry windows.',
   },
   {
     step: '04',
@@ -38,8 +38,8 @@ const HOW_IT_WORKS = [
 const BENEFITS = [
   {
     icon: '◈',
-    title: '20% recurring commission',
-    body: 'Not a one-time fee — you earn every renewal. A user on annual Pro ($149/yr) earns you $29.80/yr in perpetuity.',
+    title: '30% recurring commission',
+    body: 'Not a one-time fee — you earn every renewal. A user on annual Pro ($149/yr) earns you $44.70/yr in perpetuity.',
   },
   {
     icon: '◎',
@@ -75,7 +75,7 @@ const FAQ = [
   },
   {
     q: 'How much does Pro cost, and what do I earn?',
-    a: 'Innermind Pro is $19/month or $149/year. You earn 30% per payment — that\'s $5.70/month or $44.70/year per active subscriber you referred.',
+    a: "Innermind Pro is $19/month or $149/year. You earn 30% per payment — that's $5.70/month or $44.70/year per active subscriber you referred.",
   },
   {
     q: 'When does the commission start?',
@@ -91,7 +91,7 @@ const FAQ = [
   },
   {
     q: 'Can I use my link for paid advertising?',
-    a: 'You may not run paid ads that directly compete with Innermind\'s own paid keywords or brand terms. General interest psychology content is fine. When in doubt, ask us.',
+    a: "You may not run paid ads that directly compete with Innermind's own paid keywords or brand terms. General interest psychology content is fine. When in doubt, ask us.",
   },
   {
     q: 'How do I track my referrals?',
@@ -113,7 +113,7 @@ export default function AffiliatePage() {
             Affiliate Program
           </p>
           <h1 className="font-serif text-4xl font-medium leading-tight text-stone-100 sm:text-5xl lg:text-6xl">
-            Earn 20% recurring commission
+            Earn 30% recurring commission
             <br />
             <span className="text-amber-400">for every subscriber you refer</span>
           </h1>
@@ -283,7 +283,7 @@ export default function AffiliatePage() {
               },
               {
                 title: 'Newsletter writers & content creators',
-                body: "Your subscribers already care about self-understanding. Innermind has a free trial with no credit card required — a low-barrier recommendation that earns ongoing commission.",
+                body: "Your subscribers already care about self-understanding. Innermind has a free tier with no credit card required — a low-barrier recommendation that earns ongoing commission.",
               },
               {
                 title: 'Podcast hosts & community leaders',

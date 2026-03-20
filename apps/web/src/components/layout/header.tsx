@@ -66,7 +66,7 @@ export function Header() {
                 Sign in
               </Link>
               <Button asChild size="sm">
-                <Link href="/auth/login">Start free →</Link>
+                <Link href="/assessment">Start free →</Link>
               </Button>
             </>
           )}
