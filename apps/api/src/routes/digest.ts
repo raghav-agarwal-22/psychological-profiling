@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma } from '@innermind/db'
 import { sendWeeklyDigest, type DigestEmailData, type GrowthRecommendation } from '../services/email.js'
+import { processMonthlyInsights } from '../lib/monthly-insight.js'
 
 const DIGEST_SECRET = process.env.DIGEST_SECRET ?? 'digest-dev-secret'
 
@@ -123,6 +124,23 @@ export async function digestRoutes(server: FastifyInstance) {
       skipped,
       errors: errors.length > 0 ? errors : undefined,
     })
+  })
+
+  // POST /api/digest/monthly — trigger monthly AI insight emails (protected by DIGEST_SECRET)
+  // Railway cron: 0 9 1 * * (1st of each month, 9am UTC)
+  server.post('/monthly', async (req, reply) => {
+    const authHeader = req.headers['authorization'] ?? ''
+    if (authHeader !== `Bearer ${DIGEST_SECRET}`) {
+      return reply.status(401).send({ error: 'Unauthorized' })
+    }
+
+    try {
+      const result = await processMonthlyInsights()
+      return reply.send({ ok: true, ...result })
+    } catch (err) {
+      server.log.error({ err }, '[digest/monthly] Failed to process monthly insights')
+      return reply.status(500).send({ error: 'Internal error' })
+    }
   })
 }
 
