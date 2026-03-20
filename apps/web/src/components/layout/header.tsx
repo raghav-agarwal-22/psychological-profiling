@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { getToken, clearToken } from '@/lib/auth'
 
@@ -17,10 +17,11 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     setIsLoggedIn(!!getToken())
-  }, [])
+  }, [pathname])
 
   function handleSignOut() {
     clearToken()
