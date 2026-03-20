@@ -414,10 +414,13 @@ model Team {
   seatLimit        Int      @default(3) @map("seat_limit")
   professionalTier String   @default("starter") @map("professional_tier") // "starter" | "unlimited"
 
+  // Trial
+  trialEndsAt DateTime? @map("trial_ends_at")
+
   // Stripe subscription
   stripeCustomerId     String?  @unique @map("stripe_customer_id")
   stripeSubscriptionId String?  @unique @map("stripe_subscription_id")
-  subscriptionStatus   String   @default("inactive") @map("subscription_status")
+  subscriptionStatus   String   @default("inactive") @map("subscription_status") // "inactive" | "trial" | "active" | "cancelled"
 
   @@map("teams")
 }

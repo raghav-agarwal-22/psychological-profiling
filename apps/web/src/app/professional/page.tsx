@@ -12,6 +12,7 @@ interface Workspace {
   professionalTier: string
   seatLimit: number
   subscriptionStatus: string
+  trialEndsAt: string | null
   members: { id: string; inviteStatus: string }[]
 }
 
@@ -20,7 +21,8 @@ export default function ProfessionalPage() {
   const [workspaces, setWorkspaces] = useState<Workspace[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
-  const [showCreate, setShowCreate] = useState(false)
+  const [showTrialCreate, setShowTrialCreate] = useState(false)
+  const [showPaidCreate, setShowPaidCreate] = useState(false)
   const [name, setName] = useState('')
   const [tier, setTier] = useState<'starter' | 'unlimited'>('starter')
   const [interval, setInterval] = useState<'monthly' | 'annual'>('monthly')
@@ -43,7 +45,26 @@ export default function ProfessionalPage() {
       .finally(() => setLoading(false))
   }, [router])
 
-  async function handleCreate(e: React.FormEvent) {
+  async function handleTrialCreate(e: React.FormEvent) {
+    e.preventDefault()
+    const token = getToken()
+    if (!token || !name.trim()) return
+    setCreating(true)
+    setError(null)
+    try {
+      const res = await api.post<{ workspaceId: string }>(
+        '/api/professional/workspaces/trial',
+        { name: name.trim() },
+        token,
+      )
+      router.push(`/professional/${res.workspaceId}?checkout=trial`)
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Failed to create workspace')
+      setCreating(false)
+    }
+  }
+
+  async function handlePaidCreate(e: React.FormEvent) {
     e.preventDefault()
     const token = getToken()
     if (!token || !name.trim()) return
@@ -71,6 +92,12 @@ export default function ProfessionalPage() {
     unlimited: { monthly: '$299', annual: '$2,868' },
   }
 
+  function statusLabel(ws: Workspace) {
+    if (ws.subscriptionStatus === 'active') return { text: 'Active', cls: 'bg-green-500/20 text-green-400' }
+    if (ws.subscriptionStatus === 'trial') return { text: 'Trial', cls: 'bg-amber-500/20 text-amber-400' }
+    return { text: 'Inactive', cls: 'bg-stone-700 text-stone-400' }
+  }
+
   if (loading) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-16">
@@ -81,7 +108,6 @@ export default function ProfessionalPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      {/* Value prop header */}
       <div className="mb-12 text-center">
         <h1 className="mb-4 font-serif text-3xl font-medium text-stone-100">Innermind for Practitioners</h1>
         <p className="text-stone-400">
@@ -91,41 +117,68 @@ export default function ProfessionalPage() {
 
       {workspaces && workspaces.length > 0 ? (
         <div className="space-y-4">
-          {workspaces.map((ws) => (
-            <Link
-              key={ws.id}
-              href={`/professional/${ws.id}`}
-              className="block rounded-xl border border-stone-800 bg-stone-900/60 p-6 transition-colors hover:border-stone-700"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-stone-100">{ws.name}</p>
-                  <p className="mt-0.5 text-sm text-stone-500">{ws.professionalTier === 'starter' ? 'Pro Business' : 'Team'} plan · {ws.members.filter((m) => m.inviteStatus === 'accepted').length} clients</p>
+          {workspaces.map((ws) => {
+            const status = statusLabel(ws)
+            return (
+              <Link
+                key={ws.id}
+                href={`/professional/${ws.id}`}
+                className="block rounded-xl border border-stone-800 bg-stone-900/60 p-6 transition-colors hover:border-stone-700"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-stone-100">{ws.name}</p>
+                    <p className="mt-0.5 text-sm text-stone-500">
+                      {ws.professionalTier === 'starter' ? 'Pro Business' : 'Team'} plan ·{' '}
+                      {ws.members.filter((m) => m.inviteStatus === 'accepted').length} clients
+                    </p>
+                  </div>
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${status.cls}`}>
+                    {status.text}
+                  </span>
                 </div>
-                <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${ws.subscriptionStatus === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-stone-700 text-stone-400'}`}>
-                  {ws.subscriptionStatus === 'active' ? 'Active' : 'Inactive'}
-                </span>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
           <button
-            onClick={() => setShowCreate(true)}
+            onClick={() => { setName(''); setShowTrialCreate(true) }}
             className="mt-4 w-full rounded-xl border border-dashed border-stone-700 py-4 text-sm text-stone-500 transition-colors hover:border-stone-500 hover:text-stone-300"
           >
             + New workspace
           </button>
         </div>
       ) : (
-        /* Pricing / create CTA */
         <div className="space-y-6">
+          {/* Trial CTA — primary */}
+          <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-7 text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-amber-500">Free trial</p>
+            <h2 className="mb-2 font-serif text-2xl text-stone-100">Try Innermind free for 14 days</h2>
+            <p className="mb-6 text-stone-400 text-sm">
+              3 client seats · Full features · No credit card required
+            </p>
+            <button
+              onClick={() => { setName(''); setShowTrialCreate(true) }}
+              className="rounded-lg bg-amber-500 px-8 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+            >
+              Start free trial →
+            </button>
+            <p className="mt-3 text-xs text-stone-600">
+              Want to see it first?{' '}
+              <Link href="/for-professionals/demo" className="text-stone-400 underline hover:text-stone-200">
+                Request a demo
+              </Link>
+            </p>
+          </div>
+
+          {/* Paid plans */}
           <div className="grid gap-4 sm:grid-cols-2">
             {/* Pro Business */}
             <div className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
               <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Pro Business</p>
               <h3 className="mb-1 font-serif text-xl text-stone-100">10 client seats</h3>
-              <p className="mb-3 text-sm text-stone-400">Client management, profile access, PDF reports. For coaches and therapists in private practice.</p>
+              <p className="mb-3 text-sm text-stone-400">Client management, profile access, PDF reports.</p>
               <ul className="mb-5 space-y-1.5 text-sm text-stone-400">
-                {['10 client seats', 'Client assessment dashboard', 'PDF report downloads', 'Practitioner notes (private)'].map((f) => (
+                {['10 client seats', 'Assessment dashboard', 'PDF report downloads', 'Practitioner notes'].map((f) => (
                   <li key={f} className="flex items-center gap-2">
                     <span className="text-amber-500">◎</span> {f}
                   </li>
@@ -133,19 +186,19 @@ export default function ProfessionalPage() {
               </ul>
               <p className="mb-4 text-2xl font-bold text-stone-100">$99<span className="text-sm font-normal text-stone-500"> / month</span></p>
               <button
-                onClick={() => { setTier('starter'); setShowCreate(true) }}
-                className="w-full rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+                onClick={() => { setTier('starter'); setName(''); setShowPaidCreate(true) }}
+                className="w-full rounded-lg border border-stone-700 py-2.5 text-sm font-medium text-stone-300 transition-colors hover:border-stone-500 hover:text-stone-100"
               >
-                Get started →
+                Upgrade directly →
               </button>
             </div>
             {/* Team */}
-            <div className="rounded-xl border border-amber-500/30 bg-stone-900/60 p-6">
+            <div className="rounded-xl border border-stone-800 bg-stone-900/60 p-6">
               <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">Team</p>
               <h3 className="mb-1 font-serif text-xl text-stone-100">50 client seats</h3>
-              <p className="mb-3 text-sm text-stone-400">Everything in Pro Business plus team cohort analytics. For HR teams and OD consultants.</p>
+              <p className="mb-3 text-sm text-stone-400">Everything in Pro Business plus cohort analytics.</p>
               <ul className="mb-5 space-y-1.5 text-sm text-stone-400">
-                {['50 client seats', 'Everything in Pro Business', 'Team cohort Big Five chart', 'Aggregate values/attachment view'].map((f) => (
+                {['50 client seats', 'Everything in Pro Business', 'Team cohort analytics', 'Aggregate values/attachment view'].map((f) => (
                   <li key={f} className="flex items-center gap-2">
                     <span className="text-amber-500">◎</span> {f}
                   </li>
@@ -153,10 +206,10 @@ export default function ProfessionalPage() {
               </ul>
               <p className="mb-4 text-2xl font-bold text-stone-100">$299<span className="text-sm font-normal text-stone-500"> / month</span></p>
               <button
-                onClick={() => { setTier('unlimited'); setShowCreate(true) }}
-                className="w-full rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+                onClick={() => { setTier('unlimited'); setName(''); setShowPaidCreate(true) }}
+                className="w-full rounded-lg border border-stone-700 py-2.5 text-sm font-medium text-stone-300 transition-colors hover:border-stone-500 hover:text-stone-100"
               >
-                Get started →
+                Upgrade directly →
               </button>
             </div>
           </div>
@@ -181,12 +234,52 @@ export default function ProfessionalPage() {
         </div>
       )}
 
-      {/* Create workspace modal */}
-      {showCreate && (
+      {/* Trial create modal */}
+      {showTrialCreate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-950 p-6">
+            <h2 className="mb-2 font-serif text-xl text-stone-100">Start your free trial</h2>
+            <p className="mb-6 text-sm text-stone-500">14 days · 3 client seats · No credit card needed</p>
+            <form onSubmit={handleTrialCreate} className="space-y-4">
+              <div>
+                <label className="mb-1.5 block text-xs font-medium text-stone-400">Workspace name</label>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Dr. Smith's Practice"
+                  className="w-full rounded-lg bg-stone-800 px-4 py-2.5 text-sm text-stone-100 placeholder-stone-600 outline-none focus:ring-2 focus:ring-amber-500"
+                  required
+                  autoFocus
+                />
+              </div>
+              {error && <p className="text-sm text-red-400">{error}</p>}
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowTrialCreate(false)}
+                  className="flex-1 rounded-lg border border-stone-700 py-2.5 text-sm text-stone-400 transition-colors hover:text-stone-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={creating}
+                  className="flex-1 rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
+                >
+                  {creating ? 'Creating…' : 'Start trial →'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Paid create modal */}
+      {showPaidCreate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-950 p-6">
             <h2 className="mb-6 font-serif text-xl text-stone-100">Create workspace</h2>
-            <form onSubmit={handleCreate} className="space-y-4">
+            <form onSubmit={handlePaidCreate} className="space-y-4">
               <div>
                 <label className="mb-1.5 block text-xs font-medium text-stone-400">Workspace name</label>
                 <input
@@ -228,7 +321,7 @@ export default function ProfessionalPage() {
               <div className="flex gap-3">
                 <button
                   type="button"
-                  onClick={() => setShowCreate(false)}
+                  onClick={() => setShowPaidCreate(false)}
                   className="flex-1 rounded-lg border border-stone-700 py-2.5 text-sm text-stone-400 transition-colors hover:text-stone-200"
                 >
                   Cancel

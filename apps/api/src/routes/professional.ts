@@ -30,6 +30,18 @@ const createWorkspaceSchema = z.object({
   interval: z.enum(['monthly', 'annual']).default('monthly'),
 })
 
+const createTrialWorkspaceSchema = z.object({
+  name: z.string().min(1).max(100),
+})
+
+const demoRequestSchema = z.object({
+  fullName: z.string().min(1).max(100),
+  email: z.string().email(),
+  role: z.string().min(1),
+  practiceSize: z.string().min(1),
+  useCase: z.string().min(1),
+})
+
 const inviteClientSchema = z.object({
   email: z.string().email(),
   name: z.string().max(100).optional(),
@@ -63,6 +75,53 @@ async function sendProfessionalInviteEmail(
         <p style="margin-bottom:24px;">They've invited you to complete a short, research-backed psychological assessment. Your responses stay private — you control what you share.</p>
         <a href="${inviteUrl}" style="display:inline-block;background:#fbbf24;color:#1c1917;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Accept invite →</a>
         <p style="color:#78716c;font-size:12px;margin-top:32px;">This invite expires in 7 days. If you didn't expect this, you can safely ignore it.</p>
+      </div>
+    `,
+  })
+}
+
+async function sendTrialWelcomeEmail(to: string, practitionerName: string, workspaceId: string): Promise<void> {
+  const { Resend } = await import('resend')
+  const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
+  const from = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+
+  await resend.emails.send({
+    from,
+    to,
+    subject: 'Your Innermind workspace is ready — invite your first client',
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px;background:#1c1917;color:#e7e5e4;border-radius:12px;">
+        <h2 style="color:#fbbf24;margin-bottom:8px;">Your workspace is ready</h2>
+        <p style="color:#a8a29e;margin-bottom:16px;">Hi ${practitionerName},</p>
+        <p style="margin-bottom:16px;">Your Innermind professional workspace is live. You have <strong style="color:#fbbf24;">14 days</strong> to explore — no credit card needed.</p>
+        <p style="margin-bottom:24px;"><strong>Start here:</strong> Invite your first client and they'll complete 5 validated assessments. You'll have a full psychological portrait waiting before your first session.</p>
+        <a href="${WEB_URL}/professional/${workspaceId}" style="display:inline-block;background:#fbbf24;color:#1c1917;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Go to your workspace →</a>
+        <p style="color:#78716c;font-size:12px;margin-top:32px;">Questions? Reply to this email — we read every message.</p>
+      </div>
+    `,
+  })
+}
+
+async function sendDemoConfirmationEmail(to: string, fullName: string, practiceSize: string): Promise<void> {
+  const { Resend } = await import('resend')
+  const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
+  const from = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+
+  const includeCalendly = ['6–20 practitioners', '20+ practitioners'].includes(practiceSize)
+
+  await resend.emails.send({
+    from,
+    to,
+    subject: "Here's your Innermind demo",
+    html: `
+      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px;background:#1c1917;color:#e7e5e4;border-radius:12px;">
+        <h2 style="color:#fbbf24;margin-bottom:8px;">Thanks, ${fullName}</h2>
+        <p style="color:#a8a29e;margin-bottom:24px;">Here's your walkthrough of Innermind for practitioners.</p>
+        <p style="margin-bottom:8px;"><strong>5-minute product walkthrough:</strong></p>
+        <p style="margin-bottom:24px;color:#a8a29e;">See the client invite flow, assessment dashboard, and PDF report in action. (Video link coming soon — reply to this email for a live walkthrough.)</p>
+        <a href="${WEB_URL}/professional" style="display:inline-block;background:#fbbf24;color:#1c1917;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-bottom:24px;">Start your free 14-day trial →</a>
+        ${includeCalendly ? '<p style="color:#a8a29e;margin-top:16px;">For a live 30-minute walkthrough with our team, reply to this email and we\'ll set up time.</p>' : ''}
+        <p style="color:#78716c;font-size:12px;margin-top:32px;">No credit card required to start your trial.</p>
       </div>
     `,
   })
@@ -130,6 +189,70 @@ export async function professionalRoutes(server: FastifyInstance) {
     return reply.send({ workspaceId: workspace.id, checkoutUrl: session.url })
   })
 
+  // POST /api/professional/workspaces/trial — create trial workspace (no payment required)
+  server.post('/workspaces/trial', { preHandler: requireAuth }, async (req, reply) => {
+    const body = createTrialWorkspaceSchema.safeParse(req.body)
+    if (!body.success) {
+      return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
+    }
+
+    const userId = req.user.userId
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true, name: true },
+    })
+    if (!user) return reply.status(404).send({ error: 'User not found' })
+
+    const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+
+    const workspace = await prisma.team.create({
+      data: {
+        name: body.data.name,
+        slug: slugify(body.data.name),
+        ownerId: userId,
+        type: 'professional',
+        professionalTier: 'starter',
+        seatLimit: 3,
+        subscriptionStatus: 'trial',
+        trialEndsAt,
+        members: {
+          create: {
+            userId,
+            role: 'owner',
+            inviteStatus: 'accepted',
+          },
+        },
+      },
+    })
+
+    try {
+      await sendTrialWelcomeEmail(user.email, user.name ?? user.email, workspace.id)
+    } catch (err) {
+      server.log.error({ err }, '[professional] Failed to send trial welcome email')
+    }
+
+    return reply.status(201).send({ workspaceId: workspace.id })
+  })
+
+  // POST /api/professional/demo-request — async demo request
+  server.post('/demo-request', async (req, reply) => {
+    const body = demoRequestSchema.safeParse(req.body)
+    if (!body.success) {
+      return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
+    }
+
+    const { fullName, email, role, practiceSize, useCase } = body.data
+
+    try {
+      await sendDemoConfirmationEmail(email, fullName, practiceSize)
+    } catch (err) {
+      server.log.error({ err, email }, '[professional] Failed to send demo confirmation email')
+      return reply.status(500).send({ error: 'Failed to send demo email' })
+    }
+
+    return reply.status(201).send({ ok: true })
+  })
+
   // GET /api/professional/workspaces — list practitioner workspaces
   server.get('/workspaces', { preHandler: requireAuth }, async (req, reply) => {
     const workspaces = await prisma.team.findMany({
@@ -173,11 +296,16 @@ export async function professionalRoutes(server: FastifyInstance) {
 
     const clientCount = workspace.members.filter((m) => m.role !== 'owner').length
 
+    const trialDaysLeft = workspace.trialEndsAt
+      ? Math.max(0, Math.ceil((workspace.trialEndsAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+      : null
+
     return reply.send({
       workspace: {
         ...workspace,
         clientCount,
         seatsRemaining: workspace.seatLimit - clientCount,
+        trialDaysLeft,
       },
     })
   })
@@ -198,8 +326,17 @@ export async function professionalRoutes(server: FastifyInstance) {
     })
 
     if (!workspace) return reply.status(404).send({ error: 'Workspace not found' })
-    if (workspace.subscriptionStatus !== 'active') {
-      return reply.status(402).send({ error: 'Active subscription required to invite clients' })
+
+    const isTrial = workspace.subscriptionStatus === 'trial'
+    const isActive = workspace.subscriptionStatus === 'active'
+
+    if (!isTrial && !isActive) {
+      return reply.status(402).send({ error: 'Active subscription or trial required to invite clients' })
+    }
+
+    // Check trial has not expired
+    if (isTrial && workspace.trialEndsAt && workspace.trialEndsAt < new Date()) {
+      return reply.status(402).send({ error: 'Trial has expired. Upgrade to invite more clients.' })
     }
 
     const clientCount = workspace.members.length
