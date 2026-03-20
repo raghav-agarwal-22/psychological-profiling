@@ -477,6 +477,26 @@ model AffiliateCommission {
   @@map("affiliate_commissions")
 }
 
+// ─── AnonymousSession ─────────────────────────────────────────────────────────
+// Temporary store for anonymous assessment flow (before email capture).
+// Expires after 24h. Claimed once user provides their email.
+
+model AnonymousSession {
+  id              String    @id @default(cuid())
+  guestToken      String    @unique @map("guest_token")
+  templateId      String    @map("template_id")
+  templateType    String    @map("template_type")
+  profileJson     Json?     @map("profile_json")     // null until complete
+  archetypeName   String?   @map("archetype_name")   // first archetype for teaser
+  claimedByUserId String?   @unique @map("claimed_by_user_id")
+  referralCode    String?   @map("referral_code")
+  expiresAt       DateTime  @map("expires_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@index([guestToken])
+  @@map("anonymous_sessions")
+}
+
 // ─── Referral ─────────────────────────────────────────────────────────────────
 
 model Referral {

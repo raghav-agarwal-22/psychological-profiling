@@ -37,40 +37,57 @@ const typeDuration: Record<string, string> = {
   LIGHT_DARK_TRIAD: '3–5 min',
 }
 
+const ANON_ALLOWED = ['BIG_FIVE', 'JUNGIAN_ARCHETYPES']
+
 export default function AssessmentPage() {
   const router = useRouter()
   const [templates, setTemplates] = useState<Template[]>([])
   const [loading, setLoading] = useState(true)
   const [starting, setStarting] = useState<string | null>(null)
+  const [isAnon, setIsAnon] = useState(false)
 
   useEffect(() => {
+    const token = getToken()
+    setIsAnon(!token)
+
+    // Templates are public — no auth needed
+    api
+      .get<{ templates: Template[] }>('/api/templates')
+      .then((d) => setTemplates(d.templates))
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
+  async function startAnonymousAssessment(template: Template) {
+    setStarting(template.id)
+    try {
+      const ref = typeof window !== 'undefined' ? (document.cookie.match(/innermind_ref=([^;]+)/)?.[1] ?? undefined) : undefined
+      const { anonSessionId, guestToken } = await api.post<{ anonSessionId: string; guestToken: string }>(
+        '/api/anon/sessions',
+        { templateId: template.id, referralCode: ref },
+      )
+      sessionStorage.setItem(`anonToken_${anonSessionId}`, guestToken)
+      router.push(`/assessment/anon/${anonSessionId}?templateId=${template.id}`)
+    } catch {
+      setStarting(null)
+    }
+  }
+
+  async function startAuthenticatedAssessment(template: Template) {
     const token = getToken()
     if (!token) {
       router.push('/auth/login')
       return
     }
 
-    api
-      .get<{ templates: Template[] }>('/api/templates')
-      .then((d) => setTemplates(d.templates))
-      .catch(() => router.push('/auth/login'))
-      .finally(() => setLoading(false))
-  }, [router])
-
-  async function startAssessment(template: Template) {
-    const token = getToken()
-    if (!token) return router.push('/auth/login')
-
     setStarting(template.id)
     try {
-      // Create session
       const { session } = await api.post<{ session: { id: string } }>(
         '/api/sessions',
         { title: template.title },
         token,
       )
 
-      // Create assessment within session
       await api.post(
         '/api/assessments',
         { sessionId: session.id, type: template.type, title: template.title },
@@ -82,6 +99,18 @@ export default function AssessmentPage() {
       setStarting(null)
     }
   }
+
+  function handleBegin(template: Template) {
+    if (isAnon) {
+      startAnonymousAssessment(template)
+    } else {
+      startAuthenticatedAssessment(template)
+    }
+  }
+
+  const visibleTemplates = isAnon
+    ? templates.filter((t) => ANON_ALLOWED.includes(t.type))
+    : templates
 
   if (loading) {
     return (
@@ -96,12 +125,22 @@ export default function AssessmentPage() {
       <div className="mb-10 text-center">
         <h1 className="font-serif text-4xl text-stone-100">Choose an assessment</h1>
         <p className="mt-3 text-stone-400">
-          Each assessment takes 5–10 minutes and reveals a different facet of your inner life.
+          {isAnon
+            ? 'Start free — no account needed. Your profile is revealed after you finish.'
+            : 'Each assessment takes 5–10 minutes and reveals a different facet of your inner life.'}
         </p>
+        {isAnon && (
+          <p className="mt-2 text-sm text-stone-600">
+            Want access to all 6 frameworks?{' '}
+            <a href="/auth/login" className="text-amber-500 hover:text-amber-400 underline-offset-2 underline">
+              Sign in
+            </a>
+          </p>
+        )}
       </div>
 
       <div className="space-y-4">
-        {templates.map((template) => (
+        {visibleTemplates.map((template) => (
           <div
             key={template.id}
             className="rounded-2xl border border-stone-800 bg-stone-900/50 p-6 transition-colors hover:border-stone-700"
@@ -119,6 +158,11 @@ export default function AssessmentPage() {
                         {typeDuration[template.type]}
                       </span>
                     )}
+                    {isAnon && (
+                      <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-400">
+                        Free
+                      </span>
+                    )}
                   </div>
                   <p className="mt-2 text-sm text-stone-400 leading-relaxed">
                     {template.description ?? typeDescriptions[template.type] ?? ''}
@@ -126,7 +170,7 @@ export default function AssessmentPage() {
                 </div>
               </div>
               <button
-                onClick={() => startAssessment(template)}
+                onClick={() => handleBegin(template)}
                 disabled={starting === template.id}
                 className="shrink-0 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:opacity-50"
               >
@@ -136,9 +180,23 @@ export default function AssessmentPage() {
           </div>
         ))}
 
-        {templates.length === 0 && (
+        {visibleTemplates.length === 0 && (
           <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-8 text-center text-stone-400">
             No assessments available yet.
+          </div>
+        )}
+
+        {isAnon && (
+          <div className="mt-8 rounded-2xl border border-stone-800/60 bg-stone-900/30 p-5 text-center">
+            <p className="text-sm text-stone-500">
+              All 5 frameworks (Values, Attachment, Enneagram, Light/Dark Triad) require a free account.
+            </p>
+            <a
+              href="/auth/login"
+              className="mt-3 inline-flex items-center gap-1 text-sm text-amber-500 hover:text-amber-400"
+            >
+              Create your free account →
+            </a>
           </div>
         )}
       </div>

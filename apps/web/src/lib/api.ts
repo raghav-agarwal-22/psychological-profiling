@@ -12,9 +12,9 @@ export class ApiError extends Error {
 
 async function request<T>(
   path: string,
-  options: RequestInit & { token?: string } = {},
+  options: RequestInit & { token?: string; guestToken?: string } = {},
 ): Promise<T> {
-  const { token, ...init } = options
+  const { token, guestToken, ...init } = options
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -23,6 +23,9 @@ async function request<T>(
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`
+  }
+  if (guestToken) {
+    headers['x-guest-token'] = guestToken
   }
 
   const res = await fetch(`${API_URL}${path}`, { ...init, headers })
@@ -36,14 +39,14 @@ async function request<T>(
 }
 
 export const api = {
-  get: <T>(path: string, token?: string) =>
-    request<T>(path, { method: 'GET', token }),
+  get: <T>(path: string, token?: string, guestToken?: string) =>
+    request<T>(path, { method: 'GET', token, guestToken }),
 
-  post: <T>(path: string, body: unknown, token?: string) =>
-    request<T>(path, { method: 'POST', body: JSON.stringify(body), token }),
+  post: <T>(path: string, body: unknown, token?: string, guestToken?: string) =>
+    request<T>(path, { method: 'POST', body: JSON.stringify(body), token, guestToken }),
 
-  patch: <T>(path: string, body: unknown, token?: string) =>
-    request<T>(path, { method: 'PATCH', body: JSON.stringify(body), token }),
+  patch: <T>(path: string, body: unknown, token?: string, guestToken?: string) =>
+    request<T>(path, { method: 'PATCH', body: JSON.stringify(body), token, guestToken }),
 
   del: <T>(path: string, token?: string) =>
     request<T>(path, { method: 'DELETE', token }),

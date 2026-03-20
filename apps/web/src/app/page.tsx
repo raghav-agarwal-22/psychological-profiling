@@ -40,7 +40,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <Link
-              href="/auth/login"
+              href="/assessment"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
             >
               Take your free assessment →
@@ -119,7 +119,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link
-            href="/auth/login"
+            href="/assessment"
             className="shrink-0 inline-flex items-center justify-center rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold text-stone-950 hover:bg-amber-400"
           >
             Start free →
@@ -251,7 +251,7 @@ export default function HomePage() {
                   {tier.description}
                 </p>
                 <Link
-                  href="/auth/login"
+                  href="/assessment"
                   className={[
                     'inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold',
                     tier.featured
@@ -280,7 +280,7 @@ export default function HomePage() {
             Join 2,000+ people who&apos;ve discovered something true about themselves.
           </p>
           <Link
-            href="/auth/login"
+            href="/assessment"
             className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-sm font-semibold text-stone-950 hover:bg-amber-400"
           >
             Take your free assessment →
