@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import Stripe from 'stripe'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
+import { sendTrialEndingSoonEmail } from '../services/email.js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
   apiVersion: '2026-02-25.clover',
@@ -13,6 +14,10 @@ function getSubPeriodEnd(sub: Stripe.Subscription): number {
   return (sub as unknown as Record<string, number>)['current_period_end'] ?? 0
 }
 
+function getTrialEnd(sub: Stripe.Subscription): number | null {
+  return (sub as unknown as Record<string, number | null>)['trial_end'] ?? null
+}
+
 const PRO_PRICE_ID = process.env.STRIPE_PRO_PRICE_ID ?? 'price_placeholder'
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
@@ -22,7 +27,7 @@ export async function billingRoutes(server: FastifyInstance) {
   server.post('/checkout', { preHandler: requireAuth }, async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { email: true, stripeCustomerId: true, subscriptionTier: true },
+      select: { email: true, stripeCustomerId: true, subscriptionTier: true, stripeSubscriptionId: true },
     })
     if (!user) return reply.status(404).send({ error: 'User not found' })
     if (user.subscriptionTier === 'pro') {
@@ -40,17 +45,21 @@ export async function billingRoutes(server: FastifyInstance) {
       })
     }
 
+    // Trial only for first-time subscribers (no prior subscription)
+    const hasTrial = !user.stripeSubscriptionId
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
       line_items: [{ price: PRO_PRICE_ID, quantity: 1 }],
       mode: 'subscription',
+      subscription_data: hasTrial ? { trial_period_days: 7 } : undefined,
       success_url: `${WEB_URL}/dashboard?upgraded=1`,
       cancel_url: `${WEB_URL}/upgrade?cancelled=1`,
       metadata: { userId: req.user.userId },
     })
 
-    return reply.send({ url: session.url })
+    return reply.send({ url: session.url, hasTrial })
   })
 
   // POST /api/billing/portal — create Stripe Customer Portal session
@@ -93,12 +102,15 @@ export async function billingRoutes(server: FastifyInstance) {
       const userId = session.metadata?.userId
       if (userId && session.subscription) {
         const sub = await stripe.subscriptions.retrieve(session.subscription as string)
+        const isTrialing = sub.status === 'trialing'
+        const trialEnd = getTrialEnd(sub)
         await prisma.user.update({
           where: { id: userId },
           data: {
             subscriptionTier: 'pro',
             stripeSubscriptionId: sub.id,
             subscriptionExpiresAt: new Date(getSubPeriodEnd(sub) * 1000),
+            trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
           },
         })
       }
@@ -112,6 +124,7 @@ export async function billingRoutes(server: FastifyInstance) {
           subscriptionTier: 'free',
           stripeSubscriptionId: null,
           subscriptionExpiresAt: null,
+          trialEndsAt: null,
         },
       })
     }
@@ -119,11 +132,14 @@ export async function billingRoutes(server: FastifyInstance) {
     if (event.type === 'customer.subscription.updated') {
       const sub = event.data.object as Stripe.Subscription
       const active = sub.status === 'active' || sub.status === 'trialing'
+      const isTrialing = sub.status === 'trialing'
+      const trialEnd = getTrialEnd(sub)
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: {
           subscriptionTier: active ? 'pro' : 'free',
           subscriptionExpiresAt: active ? new Date(getSubPeriodEnd(sub) * 1000) : null,
+          trialEndsAt: isTrialing && trialEnd ? new Date(trialEnd * 1000) : null,
         },
       })
     }
@@ -131,16 +147,62 @@ export async function billingRoutes(server: FastifyInstance) {
     return reply.send({ received: true })
   })
 
+  // POST /api/billing/trial-reminders — send day-5 trial ending soon emails (protected by DIGEST_SECRET)
+  server.post('/trial-reminders', async (req, reply) => {
+    const authHeader = req.headers['authorization'] ?? ''
+    const digestSecret = process.env.DIGEST_SECRET ?? 'digest-dev-secret'
+    if (authHeader !== `Bearer ${digestSecret}`) {
+      return reply.status(401).send({ error: 'Unauthorized' })
+    }
+
+    const now = new Date()
+    // Send reminders to users whose trial ends within 1–3 days (catches day 5 of 7-day trial)
+    const windowStart = new Date(now.getTime() + 1 * 24 * 60 * 60 * 1000)
+    const windowEnd = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000)
+
+    const users = await prisma.user.findMany({
+      where: {
+        subscriptionTier: 'pro',
+        trialEndsAt: { gte: windowStart, lte: windowEnd },
+      },
+      select: { id: true, email: true, name: true, trialEndsAt: true },
+    })
+
+    let sent = 0
+    for (const user of users) {
+      const daysRemaining = Math.ceil(
+        (user.trialEndsAt!.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
+      )
+      try {
+        await sendTrialEndingSoonEmail(user.email, user.name, daysRemaining)
+        sent++
+      } catch (err) {
+        console.error(`[billing] Failed to send trial reminder to ${user.email}:`, err)
+      }
+    }
+
+    return reply.send({ sent, total: users.length })
+  })
+
   // GET /api/billing/status — get current subscription status (auth required)
   server.get('/status', { preHandler: requireAuth }, async (req, reply) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
-      select: { subscriptionTier: true, subscriptionExpiresAt: true },
+      select: { subscriptionTier: true, subscriptionExpiresAt: true, trialEndsAt: true },
     })
+    const now = new Date()
+    const trialEndsAt = user?.trialEndsAt ?? null
+    const isOnTrial = !!(trialEndsAt && trialEndsAt > now)
+    const trialDaysRemaining = isOnTrial
+      ? Math.ceil((trialEndsAt!.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+      : null
     return reply.send({
       tier: user?.subscriptionTier ?? 'free',
       isPro: user?.subscriptionTier === 'pro',
       expiresAt: user?.subscriptionExpiresAt ?? null,
+      isOnTrial,
+      trialEndsAt,
+      trialDaysRemaining,
     })
   })
 }

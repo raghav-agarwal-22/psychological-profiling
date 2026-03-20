@@ -35,9 +35,22 @@ function UpgradeContent() {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [hasTrial, setHasTrial] = useState(true) // optimistic: assume trial eligible
 
   useEffect(() => {
     posthog.capture('upgrade_page_viewed')
+    // Check billing status to know if trial is available
+    const token = localStorage.getItem('innermind_token')
+    if (token) {
+      fetch(`${API_URL}/api/billing/status`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((r) => r.json())
+        .then((d: { isPro?: boolean }) => {
+          if (d.isPro) setHasTrial(false)
+        })
+        .catch(() => {/* ignore */})
+    }
   }, [])
 
   useEffect(() => {
@@ -87,6 +100,12 @@ function UpgradeContent() {
         <h1 className="mb-3 font-serif text-4xl text-stone-100">
           Unlock your full psychological profile
         </h1>
+        {hasTrial && (
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5">
+            <span className="text-amber-400 text-sm font-semibold">7-day free trial</span>
+            <span className="text-stone-500 text-xs">· No charge until day 8</span>
+          </div>
+        )}
         <p className="mx-auto max-w-xl text-base text-stone-400 leading-relaxed">
           Go deeper with all five assessment frameworks, AI-powered coaching, and personalised
           growth tools — all for less than a coffee a week.
@@ -157,7 +176,7 @@ function UpgradeContent() {
               <span className="mb-1 text-sm text-stone-500">/ month</span>
             </div>
             <p className="mt-2 text-xs text-stone-500">
-              Cancel anytime. Billed monthly via Stripe.
+              {hasTrial ? '7-day free trial, then $9/mo. Cancel anytime.' : 'Cancel anytime. Billed monthly via Stripe.'}
             </p>
           </div>
 
@@ -175,11 +194,11 @@ function UpgradeContent() {
             disabled={loading}
             className="block w-full rounded-xl bg-amber-500 py-3 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? 'Redirecting to checkout…' : 'Upgrade to Pro →'}
+            {loading ? 'Redirecting to checkout…' : hasTrial ? 'Start 7-day free trial →' : 'Upgrade to Pro →'}
           </button>
 
           <p className="mt-3 text-center text-xs text-stone-600">
-            Secure payment powered by Stripe
+            {hasTrial ? 'No charge for 7 days · ' : ''}Secure payment powered by Stripe
           </p>
         </div>
       </div>
@@ -200,7 +219,9 @@ function UpgradeContent() {
           {
             icon: '◉',
             title: 'Instant access',
-            body: 'Pro features activate immediately after your payment completes.',
+            body: hasTrial
+              ? 'All Pro features unlock immediately. No charge for 7 days.'
+              : 'Pro features activate immediately after your payment completes.',
           },
         ].map((item) => (
           <div

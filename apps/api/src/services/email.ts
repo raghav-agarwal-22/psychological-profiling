@@ -7,6 +7,7 @@ import { AssessmentNudgeEmail } from '../emails/AssessmentNudgeEmail.js'
 import { ProfileRevealEmail } from '../emails/ProfileRevealEmail.js'
 import { DeepDiveNudgeEmail } from '../emails/DeepDiveNudgeEmail.js'
 import { ProUpgradeEmail } from '../emails/ProUpgradeEmail.js'
+import { TrialEndingSoonEmail } from '../emails/TrialEndingSoonEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -281,5 +282,33 @@ export async function sendProUpgradeEmail(email: string, userName: string | null
     subject: `Unlock the full ${PRODUCT_NAME} experience`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYou've been using ${PRODUCT_NAME} for 2 weeks. Ready to unlock the full experience?\n\nUpgrade to Pro: ${WEB_URL}/billing\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendTrialEndingSoonEmail(
+  email: string,
+  userName: string | null,
+  daysRemaining: number,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — trial ending soon for ${email} (${daysRemaining}d)`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(TrialEndingSoonEmail, {
+      userName,
+      daysRemaining,
+      billingUrl: `${WEB_URL}/dashboard/billing`,
+      dashboardUrl: `${WEB_URL}/dashboard`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Your ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour ${PRODUCT_NAME} Pro trial ends in ${daysRemaining} day${daysRemaining === 1 ? '' : 's'}. After that, you'll be charged $9/month.\n\nManage your plan: ${WEB_URL}/dashboard/billing\n\n— The ${PRODUCT_NAME} team`,
   })
 }

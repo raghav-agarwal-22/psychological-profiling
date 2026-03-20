@@ -304,6 +304,7 @@ export default function DashboardPage() {
 
   // Subscription state
   const [isPro, setIsPro] = useState(false)
+  const [trialDaysRemaining, setTrialDaysRemaining] = useState<number | null>(null)
 
   // Onboarding welcome modal
   const [showWelcome, setShowWelcome] = useState(false)
@@ -336,7 +337,7 @@ export default function DashboardPage() {
       api.get<NudgeStatus>('/api/users/me/reassessment-status', token).catch(() => null),
       api.get<DailyPromptData>('/api/users/me/daily-prompt', token).catch(() => null),
       api.get<{ emailDigestOptIn: boolean }>('/api/users/me/digest-preferences', token).catch(() => null),
-      api.get<{ tier: string; isPro: boolean; expiresAt: string | null }>('/api/billing/status', token).catch(() => null),
+      api.get<{ tier: string; isPro: boolean; expiresAt: string | null; isOnTrial: boolean; trialDaysRemaining: number | null }>('/api/billing/status', token).catch(() => null),
     ])
       .then(([sessionData, journalData, nudgeData, promptData, digestPrefs, billingStatus]) => {
         setSessions(sessionData.sessions)
@@ -349,6 +350,9 @@ export default function DashboardPage() {
         if (digestPrefs) setDigestOptIn(digestPrefs.emailDigestOptIn)
         if (billingStatus) {
           setIsPro(billingStatus.isPro)
+          if (billingStatus.isOnTrial && billingStatus.trialDaysRemaining !== null) {
+            setTrialDaysRemaining(billingStatus.trialDaysRemaining)
+          }
         }
         // Seed local tags state from fetched sessions
         const tagsMap: Record<string, string[]> = {}
@@ -664,6 +668,30 @@ export default function DashboardPage() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Trial countdown banner — shown to trialing Pro users */}
+      {isPro && trialDaysRemaining !== null && (
+        <div className={`mb-6 rounded-xl border p-4 ${trialDaysRemaining <= 2 ? 'border-rose-500/30 bg-rose-500/5' : 'border-amber-500/20 bg-amber-500/5'}`}>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-stone-200">
+                {trialDaysRemaining <= 2
+                  ? `Trial ending soon — ${trialDaysRemaining} day${trialDaysRemaining === 1 ? '' : 's'} left`
+                  : `${trialDaysRemaining} days left in your free trial`}
+              </p>
+              <p className="text-xs text-stone-400 mt-0.5">
+                You won&apos;t be charged until your trial ends. Cancel any time before then.
+              </p>
+            </div>
+            <Link
+              href="/dashboard/billing"
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${trialDaysRemaining <= 2 ? 'bg-rose-500 text-white hover:bg-rose-400' : 'bg-amber-500 text-stone-950 hover:bg-amber-400'}`}
+            >
+              Manage plan
+            </Link>
+          </div>
         </div>
       )}
 

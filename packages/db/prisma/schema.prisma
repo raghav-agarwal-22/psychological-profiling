@@ -39,6 +39,7 @@ model User {
   stripeCustomerId      String?   @unique @map("stripe_customer_id")
   stripeSubscriptionId  String?   @map("stripe_subscription_id")
   subscriptionExpiresAt DateTime? @map("subscription_expires_at")
+  trialEndsAt           DateTime? @map("trial_ends_at")
 
   // Auth
   magicLinkTokens MagicLinkToken[]
