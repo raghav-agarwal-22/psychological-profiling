@@ -26,32 +26,37 @@ export async function authRoutes(server: FastifyInstance) {
 
     const { email, name } = body.data
 
-    // Upsert user
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: { email, name },
-    })
+    try {
+      // Upsert user
+      const user = await prisma.user.upsert({
+        where: { email },
+        update: {},
+        create: { email, name },
+      })
 
-    // Generate token (secure random)
-    const token = crypto.randomBytes(32).toString('hex')
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes
+      // Generate token (secure random)
+      const token = crypto.randomBytes(32).toString('hex')
+      const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes
 
-    await prisma.magicLinkToken.create({
-      data: { token, userId: user.id, expiresAt },
-    })
+      await prisma.magicLinkToken.create({
+        data: { token, userId: user.id, expiresAt },
+      })
 
-    const isDev = process.env.NODE_ENV !== 'production'
-    const magicLinkUrl = `${process.env.WEB_URL ?? 'http://localhost:3000'}/auth/verify?token=${token}`
+      const isDev = process.env.NODE_ENV !== 'production'
+      const magicLinkUrl = `${process.env.WEB_URL ?? 'http://localhost:3000'}/auth/verify?token=${token}`
 
-    server.log.info({ email, token: isDev ? token : '[redacted]' }, 'Magic link generated')
+      server.log.info({ email, token: isDev ? token : '[redacted]' }, 'Magic link generated')
 
-    await sendMagicLink(email, magicLinkUrl)
+      await sendMagicLink(email, magicLinkUrl)
 
-    return reply.send({
-      message: 'Magic link sent',
-      ...(isDev ? { devToken: token, devMagicLinkUrl: magicLinkUrl } : {}),
-    })
+      return reply.send({
+        message: 'Magic link sent',
+        ...(isDev ? { devToken: token, devMagicLinkUrl: magicLinkUrl } : {}),
+      })
+    } catch (err) {
+      server.log.error({ err, email }, 'magic-link request failed')
+      return reply.status(500).send({ error: 'Failed to send sign-in link. Please try again.' })
+    }
   })
 
   // POST /api/auth/verify — verify a magic link token

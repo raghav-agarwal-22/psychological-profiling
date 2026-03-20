@@ -44,6 +44,7 @@ export default function AssessmentPage() {
   const [templates, setTemplates] = useState<Template[]>([])
   const [loading, setLoading] = useState(true)
   const [starting, setStarting] = useState<string | null>(null)
+  const [startError, setStartError] = useState<string | null>(null)
   const [isAnon, setIsAnon] = useState(false)
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function AssessmentPage() {
 
   async function startAnonymousAssessment(template: Template) {
     setStarting(template.id)
+    setStartError(null)
     try {
       const ref = typeof window !== 'undefined' ? (document.cookie.match(/innermind_ref=([^;]+)/)?.[1] ?? undefined) : undefined
       const { anonSessionId, guestToken } = await api.post<{ anonSessionId: string; guestToken: string }>(
@@ -68,7 +70,8 @@ export default function AssessmentPage() {
       )
       sessionStorage.setItem(`anonToken_${anonSessionId}`, guestToken)
       router.push(`/assessment/anon/${anonSessionId}?templateId=${template.id}`)
-    } catch {
+    } catch (err) {
+      setStartError(err instanceof Error ? err.message : 'Failed to start assessment. Please try again.')
       setStarting(null)
     }
   }
@@ -138,6 +141,10 @@ export default function AssessmentPage() {
           </p>
         )}
       </div>
+
+      {startError && (
+        <p className="mb-4 rounded-xl border border-red-800/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">{startError}</p>
+      )}
 
       <div className="space-y-4">
         {visibleTemplates.map((template) => (
