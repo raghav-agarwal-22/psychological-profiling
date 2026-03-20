@@ -68,37 +68,37 @@ const TESTIMONIALS = [
 
 const PLANS = [
   {
-    name: 'Pro',
-    price: '$12',
-    period: '/mo per client',
-    description: 'For solo coaches and therapists with up to 20 active clients.',
+    name: 'Pro Business',
+    price: '$99',
+    period: '/mo',
+    description: 'For solo coaches and therapists. 10 client seats included.',
     features: [
-      'Full profile access for all clients',
-      'Shared report links',
+      '10 client seats',
+      'Client assessment dashboard',
+      'PDF report downloads',
+      'Practitioner notes (private)',
+      'Shared profile access',
       'Growth tracking & retakes',
-      'AI deep-dive follow-up questions',
-      'Reflection journal',
-      'AI coach chat',
     ],
-    cta: 'Start free trial',
-    href: '/auth/login',
+    cta: 'Get started',
+    href: '/professional',
     highlight: false,
   },
   {
-    name: 'Teams',
-    price: '$49',
+    name: 'Team',
+    price: '$299',
     period: '/mo',
-    description: 'For group practices and coaching programs with unlimited clients.',
+    description: 'For group practices, HR teams, and OD consultants. 50 client seats.',
     features: [
-      'Everything in Pro',
-      'Unlimited clients',
-      'Team dashboard',
-      'Bulk client invite links',
+      '50 client seats',
+      'Everything in Pro Business',
+      'Team cohort Big Five chart',
+      'Aggregate values & attachment view',
       'Priority support',
       'Custom onboarding',
     ],
-    cta: 'Book a demo',
-    href: 'mailto:professionals@innermind.app',
+    cta: 'Get started',
+    href: '/professional',
     highlight: true,
   },
 ]
@@ -130,10 +130,10 @@ export default function ForProfessionalsPage() {
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <Link
-              href="/auth/login"
+              href="/professional"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
             >
-              Try it free with one client →
+              Get started →
             </Link>
             <a
               href="mailto:professionals@innermind.app"
@@ -339,10 +339,10 @@ export default function ForProfessionalsPage() {
             Try Innermind free with your first client. No credit card required.
           </p>
           <Link
-            href="/auth/login"
+            href="/professional"
             className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-base font-semibold text-stone-950 hover:bg-amber-400"
           >
-            Get started free →
+            Get started →
           </Link>
         </div>
       </section>
