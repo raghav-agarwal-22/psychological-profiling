@@ -3,7 +3,7 @@
 //   POST /api/webhooks/resend — Resend webhook for email open/click tracking → PostHog
 
 import type { FastifyInstance } from 'fastify'
-import { processAllDripEmails } from '../lib/drip-sequence.js'
+import { processAllDripEmails, processAnnualConversionEmails } from '../lib/drip-sequence.js'
 
 const CRON_SECRET = process.env.CRON_SECRET ?? ''
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
@@ -42,7 +42,18 @@ export async function dripRoutes(server: FastifyInstance) {
 
     server.log.info('[drip] Processing drip sequence batch')
 
-    const result = await processAllDripEmails()
+    const [onboardingResult, annualResult] = await Promise.all([
+      processAllDripEmails(),
+      processAnnualConversionEmails(),
+    ])
+
+    const result = {
+      onboarding: onboardingResult,
+      annualConversion: annualResult,
+      processed: onboardingResult.processed + annualResult.processed,
+      sent: onboardingResult.sent + annualResult.sent,
+      errors: onboardingResult.errors + annualResult.errors,
+    }
 
     server.log.info({ result }, '[drip] Batch complete')
     return reply.send({ ok: true, ...result })
