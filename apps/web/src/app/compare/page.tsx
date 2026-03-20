@@ -94,7 +94,7 @@ interface Props {
   searchParams: { a?: string; b?: string }
 }
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata({ searchParams: _searchParams }: Props): Promise<Metadata> {
   return {
     title: 'Profile Compatibility — Innermind',
     description: 'See how two psychological profiles align across personality, values, and attachment dimensions.',

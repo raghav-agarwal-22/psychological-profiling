@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
@@ -25,7 +25,7 @@ const PRO_FEATURES = [
   'Weekly digest email',
 ]
 
-export default function UpgradePage() {
+function UpgradeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const cancelled = searchParams.get('cancelled') === '1'
@@ -207,5 +207,13 @@ export default function UpgradePage() {
         ))}
       </div>
     </div>
+  )
+}
+
+export default function UpgradePage() {
+  return (
+    <Suspense fallback={<div className="flex h-64 items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" /></div>}>
+      <UpgradeContent />
+    </Suspense>
   )
 }
