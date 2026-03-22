@@ -149,8 +149,20 @@ export default function AssessmentPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" />
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        {/* Keep h1 visible during load for better LCP */}
+        <div className="mb-10 text-center">
+          <h1 className="font-serif text-4xl text-stone-100">Choose an assessment</h1>
+          <p className="mt-3 text-stone-400">
+            Each assessment takes 5–10 minutes and reveals a different facet of your inner life.
+          </p>
+        </div>
+        {/* Skeleton cards — explicit height prevents CLS when real cards load */}
+        <div className="space-y-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-28 animate-pulse rounded-2xl border border-stone-800 bg-stone-900/50" />
+          ))}
+        </div>
       </div>
     )
   }

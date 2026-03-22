@@ -5,7 +5,7 @@ import './globals.css'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { PWAInit } from '@/components/pwa/PWAInit'
-import { PostHogProvider } from '@/components/PostHogProvider'
+import { PostHogPageview } from '@/components/PostHogProvider'
 import { GoogleTagManagerHead, GoogleTagManagerBody } from '@/components/GoogleTagManager'
 import { MetaPixelScript } from '@/components/MetaPixel'
 import { ConversionTracking } from '@/components/ConversionTracking'
@@ -14,12 +14,16 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 const lora = Lora({
   subsets: ['latin'],
   variable: '--font-serif',
   display: 'swap',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
 })
 
 export const viewport: Viewport = {
@@ -113,14 +117,14 @@ export default function RootLayout({
           }}
         />
         <PWAInit />
-        <Suspense>
+        {/* Analytics — in own Suspense so they never block main content rendering */}
+        <Suspense fallback={null}>
           <ConversionTracking />
-          <PostHogProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </PostHogProvider>
+          <PostHogPageview />
         </Suspense>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )

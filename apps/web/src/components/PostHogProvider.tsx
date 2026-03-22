@@ -3,7 +3,11 @@ import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { initPostHog, posthog } from '@/lib/posthog'
 
-export function PostHogProvider({ children }: { children: React.ReactNode }) {
+/**
+ * PostHogPageview — tracks pageviews via useSearchParams (must be inside Suspense).
+ * Renders null; does not wrap children so main content renders without blocking.
+ */
+export function PostHogPageview() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -18,5 +22,10 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     posthog.capture('$pageview', { $current_url: url })
   }, [pathname, searchParams])
 
+  return null
+}
+
+/** @deprecated Use PostHogPageview — kept for compatibility */
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
