@@ -36,7 +36,7 @@ type Interval = 'monthly' | 'annual'
 
 const PRICES: Record<Interval, { display: string; monthly: string; save?: string }> = {
   monthly: { display: '$19', monthly: '$19/mo' },
-  annual: { display: '$149', monthly: '$12.42/mo', save: 'Save 34%' },
+  annual: { display: '$149', monthly: '$12.42/mo', save: 'Save $79/yr' },
 }
 
 function UpgradeContent() {
@@ -54,6 +54,9 @@ function UpgradeContent() {
     posthog.capture('upgrade_page_viewed', {
       ab_upgrade_cta_copy: typeof ctaVariant === 'string' ? ctaVariant : 'control',
     })
+    // Default to annual if the feature flag is enabled
+    const intervalDefault = posthog.getFeatureFlag('upgrade-interval-default')
+    if (intervalDefault === 'annual') setInterval('annual')
     const token = localStorage.getItem('innermind_token')
     if (token) {
       fetch(`${API_URL}/api/billing/status`, {
@@ -151,7 +154,7 @@ function UpgradeContent() {
           >
             Annual
             <span className="absolute -top-2.5 -right-1.5 rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/30">
-              −34%
+              Save $79/yr
             </span>
           </button>
         </div>
@@ -249,13 +252,13 @@ function UpgradeContent() {
           >
             {loading
               ? 'Redirecting…'
-              : hasTrial && interval === 'monthly'
-              ? 'Start 7-day free trial →'
+              : hasTrial
+              ? 'Start free trial →'
               : 'Upgrade to Pro →'}
           </button>
 
           <p className="mt-3 text-center text-xs text-stone-600">
-            {hasTrial && interval === 'monthly' ? 'No charge for 7 days · ' : ''}Secure payment via Stripe
+            {hasTrial ? 'No charge until day 8 · ' : ''}Secure payment via Stripe
           </p>
         </div>
       </div>

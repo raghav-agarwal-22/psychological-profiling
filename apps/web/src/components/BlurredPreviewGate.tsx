@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { posthog } from '@/lib/posthog'
 
@@ -15,15 +16,34 @@ interface BlurredPreviewGateProps {
  * Wraps a results section with a blur overlay and upgrade CTA when the A/B
  * test variant is 'blurred' and the user has not upgraded.
  *
+ * The CTA copy itself is controlled by PostHog feature flag 'blurred-gate-cta':
+ *   control   → 'Upgrade to Pro — $19/mo'
+ *   variant-a → 'Start your 7-day free trial →'
+ *   variant-b → 'Try Pro free for 7 days →'
+ *
  * Usage: wrap any section you want to gate. When `active` is false (control
  * variant or paid user) the children render normally with no wrapping DOM.
  */
 export function BlurredPreviewGate({ active, children, section }: BlurredPreviewGateProps) {
+  const [ctaVariant, setCtaVariant] = useState<string>('control')
+
+  useEffect(() => {
+    const flag = posthog.getFeatureFlag('blurred-gate-cta')
+    if (typeof flag === 'string') setCtaVariant(flag)
+  }, [])
+
   if (!active) return <>{children}</>
 
   const handleUpgradeClick = () => {
-    posthog.capture('ab_upgrade_click', { variant: 'blurred', section })
+    posthog.capture('ab_upgrade_click', { variant: 'blurred', section, cta_variant: ctaVariant })
   }
+
+  const ctaLabel =
+    ctaVariant === 'variant-a'
+      ? 'Start your 7-day free trial →'
+      : ctaVariant === 'variant-b'
+      ? 'Try Pro free for 7 days →'
+      : 'Upgrade to Pro — $19/mo'
 
   return (
     <div className="relative mb-8">
@@ -60,9 +80,9 @@ export function BlurredPreviewGate({ active, children, section }: BlurredPreview
           onClick={handleUpgradeClick}
           className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
         >
-          Upgrade to Pro — $19/mo
+          {ctaLabel}
         </Link>
-        <p className="mt-3 text-xs text-stone-600">Cancel anytime · 7-day money-back guarantee</p>
+        <p className="mt-3 text-xs text-stone-600">No charge until day 8 · Cancel anytime</p>
       </div>
     </div>
   )
