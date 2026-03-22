@@ -34,10 +34,8 @@ function AnonProfileContent() {
 
   // Email gate state
   const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
   const [claiming, setClaiming] = useState(false)
   const [claimError, setClaimError] = useState<string | null>(null)
-  const [showNameField, setShowNameField] = useState(false)
 
   useEffect(() => {
     let token: string | null = null
@@ -107,7 +105,7 @@ function AnonProfileContent() {
     try {
       const { token, profileId } = await api.post<{ token: string; profileId: string }>(
         '/api/anon/claim',
-        { anonSessionId: anonId, guestToken, email, name: name || undefined },
+        { anonSessionId: anonId, guestToken, email },
       )
 
       posthog.capture('profile_email_gate_conversion', {
@@ -161,21 +159,24 @@ function AnonProfileContent() {
             : 'Your psychological portrait has been generated.'}
         </p>
 
-        {/* Blurred preview — real content, frosted glass effect */}
-        <div className="relative mt-6 overflow-hidden rounded-2xl border border-stone-800 bg-stone-900/50 p-6 text-left">
-          <p
-            className="select-none text-sm leading-relaxed text-stone-300 blur-[3px]"
-            aria-hidden="true"
-          >
-            {data.summaryTeaser
-              ? `${data.summaryTeaser} Your full portrait explores how these patterns shape the way you relate to others, what drives your decisions, and where your deepest tensions lie. Understanding these layers is the first step toward intentional change.`
-              : 'Your full portrait synthesizes all five frameworks into a coherent narrative — tracing the patterns, tensions, and blind spots that define how you think, relate, and grow. This is the analysis that most personality tools never attempt.'}
-          </p>
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-stone-950/50 backdrop-blur-[1px]">
-            <span className="text-xl">🔒</span>
-            <p className="text-sm font-medium text-stone-200">Unlock your full portrait</p>
-            <p className="text-xs text-stone-500">Free — takes 10 seconds</p>
-          </div>
+        {/* Locked section preview cards */}
+        <div className="mt-6 space-y-3 text-left">
+          {[
+            { title: 'Your Big Five scores', sub: 'Exact percentile positions across all 5 dimensions' },
+            { title: 'Strengths & blind spots', sub: 'Personalized to your archetype' },
+            { title: 'AI growth recommendations', sub: '3 tailored actions based on your profile' },
+          ].map(({ title, sub }) => (
+            <div
+              key={title}
+              className="flex items-center gap-4 rounded-xl border border-stone-800 bg-stone-900/50 px-4 py-3.5"
+            >
+              <span className="text-lg">🔒</span>
+              <div>
+                <p className="text-sm font-medium text-stone-200">{title}</p>
+                <p className="text-xs text-stone-500">{sub}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -185,35 +186,19 @@ function AnonProfileContent() {
           {abEmailGateHeadline === 'treatment'
             ? 'See your AI psychological portrait'
             : data.archetypeName
-            ? `Your ${data.archetypeName} portrait is ready`
-            : 'Reveal your full portrait'}
+            ? `Your ${data.archetypeName} portrait is ready — free forever.`
+            : 'Reveal your full portrait — free forever.'}
         </h2>
-        <p className="mb-6 text-sm text-stone-400">
+        <p className="mb-4 text-sm text-stone-400">
           Free forever. Add more assessments over time to deepen your synthesis.
         </p>
 
-        <form onSubmit={handleClaim} className="space-y-4">
-          {abEmailGateHeadline === 'treatment' && (
-            <div className="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-2">
-              <span className="text-amber-500 text-sm">✦</span>
-              <p className="text-xs text-amber-400/80">2,400+ people unlocked their portrait this month</p>
-            </div>
-          )}
-          {showNameField && (
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-stone-400">
-                Your name (optional)
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
-                className="w-full rounded-xl border border-stone-700 bg-stone-800/50 px-4 py-3 text-sm text-stone-100 placeholder-stone-600 focus:border-amber-500/50 focus:outline-none"
-              />
-            </div>
-          )}
+        <div className="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-2 mb-4">
+          <span className="text-amber-500 text-sm">✦</span>
+          <p className="text-xs text-amber-400/80">2,400+ people unlocked their portrait this month</p>
+        </div>
 
+        <form onSubmit={handleClaim} className="space-y-4">
           <div>
             <label className="mb-1.5 block text-xs font-medium text-stone-400">
               Email address
@@ -221,11 +206,7 @@ function AnonProfileContent() {
             <input
               type="email"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value)
-                // Show name field once email is started
-                if (!showNameField && e.target.value.length > 3) setShowNameField(true)
-              }}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
               autoFocus
