@@ -80,10 +80,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${lora.variable}`}>
       <head>
         <GoogleTagManagerHead />
-        <MetaPixelScript />
+        {/* MetaPixelScript moved to body (uses next/script afterInteractive) */}
+        {/* Resource hints — establish connections to analytics domains early */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://us.i.posthog.com" />
+        <link rel="dns-prefetch" href="https://us.i.posthog.com" />
       </head>
       <body className="flex min-h-screen flex-col bg-stone-950 text-stone-100 antialiased">
         <GoogleTagManagerBody />
+        <MetaPixelScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -1,15 +1,25 @@
 /**
- * Google Tag Manager — injects the GTM script into <head> and <body>.
+ * Google Tag Manager — injects the GTM script deferred after interactivity.
+ * Uses next/script afterInteractive to avoid blocking the main thread (TBT/FID).
  * Only renders if NEXT_PUBLIC_GTM_ID is configured.
  */
+
+import Script from 'next/script'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
 export function GoogleTagManagerHead() {
+  // No longer injects a blocking script — kept for API compatibility.
+  return null
+}
+
+export function GoogleTagManagerBody() {
   if (!GTM_ID) return null
   return (
     <>
-      <script
+      <Script
+        id="gtm-script"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -18,20 +28,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${GTM_ID}');`,
         }}
       />
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+          height="0"
+          width="0"
+          style={{ display: 'none', visibility: 'hidden' }}
+        />
+      </noscript>
     </>
-  )
-}
-
-export function GoogleTagManagerBody() {
-  if (!GTM_ID) return null
-  return (
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-        height="0"
-        width="0"
-        style={{ display: 'none', visibility: 'hidden' }}
-      />
-    </noscript>
   )
 }

@@ -1,7 +1,10 @@
 /**
- * Meta Pixel — injects the fbq base script.
+ * Meta Pixel — injects the fbq base script deferred after interactivity.
+ * Uses next/script afterInteractive to avoid blocking the main thread (TBT/FID).
  * Only renders if NEXT_PUBLIC_META_PIXEL_ID is configured.
  */
+
+import Script from 'next/script'
 
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 
@@ -9,7 +12,9 @@ export function MetaPixelScript() {
   if (!PIXEL_ID) return null
   return (
     <>
-      <script
+      <Script
+        id="meta-pixel"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

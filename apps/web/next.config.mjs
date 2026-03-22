@@ -1,6 +1,11 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
 
   // Cache-Control headers for static/marketing pages — critical for PH traffic spike
   async headers() {
