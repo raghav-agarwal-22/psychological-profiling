@@ -203,6 +203,10 @@ If you want to understand yourself accurately, use the Big Five. If you want to 
 At Innermind, we believe no single test captures who you are. We combine the Big Five with four other validated frameworks — Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes — to create a nuanced, multi-dimensional portrait.
 
 [Take your free Innermind assessment](/auth/login) and see what five frameworks synthesized together reveal that none of them can alone.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test?](/blog/what-is-big-five-personality-test) | [Free MBTI Test: Is It Actually Accurate?](/blog/mbti-test-free) | [Dark Triad Personality Traits Explained](/blog/dark-triad-personality-traits)
 `,
   },
   {
@@ -308,6 +312,10 @@ This is why Innermind combines attachment theory with four other frameworks for 
 ## Discover Your Attachment Style
 
 [Take Innermind's free psychological assessment](/auth/login) to learn your attachment style — and how it interacts with your Big Five personality, Schwartz values, Enneagram type, and Jungian archetypes. Get an AI-synthesized portrait that doesn't just label you, but explains the patterns behind your relationships and how to work with them.
+
+---
+
+**See Also:** [Attachment Style Quiz: Discover Your Style](/blog/attachment-style-quiz) | [Anxious Attachment Style: Signs & Growth Path](/blog/anxious-attachment-style) | [Avoidant Attachment Style: Patterns & Healing](/blog/avoidant-attachment-style)
 `,
   },
   {
@@ -415,6 +423,10 @@ The honest answer: use the Big Five when you need precision and predictive power
 Innermind combines both — along with Schwartz Values, Attachment Style, and Jungian Archetypes — to create a portrait that captures both the *what* and the *why* of your personality.
 
 [Take your free assessment at Innermind](/auth/login) and get an AI-synthesized psychological portrait that integrates all five frameworks into a coherent self-understanding — not just a list of labels.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test? A Complete Guide](/blog/what-is-big-five-personality-test)
 `,
   },
   {
@@ -548,6 +560,10 @@ Unlike MBTI or Enneagram, you don't have *one* archetype. Most people have a dom
 Innermind's Jungian Archetype assessment identifies your dominant and secondary archetypes and integrates them with your Big Five scores, Schwartz values, attachment style, and Enneagram type.
 
 [Take your free assessment](/auth/login) and get an AI-synthesized portrait that reveals not just who you are today, but the patterns and stories that have shaped you — and what they point toward.
+
+---
+
+**See Also:** [Jungian Archetype Test: Discover Your Dominant Archetype](/blog/jungian-archetype-test) | [Shadow Work: A Jung-Inspired Practice Guide](/blog/shadow-work-jung)
 `,
   },
   {
@@ -815,6 +831,10 @@ This is the Innermind approach: we don't tell you to become someone else. We hel
 Innermind's growth tracking feature lets you retake assessments at regular intervals and see how your scores change. Many users find this both validating (seeing real progress) and instructive (noticing what hasn't changed, and why).
 
 [Start tracking your psychological growth at Innermind](/auth/login) — take your first assessment, and let AI help you understand not just where you are now, but how you're evolving.
+
+---
+
+**See Also:** [Jungian Archetype Test: Discover Your Dominant Archetype](/blog/jungian-archetype-test) | [The Best Free Personality Tests in 2026 (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [What Is My Personality Type?](/blog/what-is-my-personality-type)
 `,
   },
   {
@@ -928,6 +948,10 @@ Growth practices should move you toward life, not substitute for it.
 [Take Innermind's free psychological assessment](/auth/login) — not to get a flattering label, but to get an honest map. Five validated frameworks synthesized into one portrait. Then use the AI coach and reflection journal to build a growth practice rooted in who you actually are.
 
 Growth that lasts starts with self-knowledge that's accurate.
+
+---
+
+**See Also:** [The Best Free Personality Tests in 2026 (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [What Is My Personality Type?](/blog/what-is-my-personality-type)
 `,
   },
   {
@@ -1028,6 +1052,10 @@ Understanding both your Enneagram type and attachment style helps you:
 3. **Map your growth edge** — what healing looks like at the intersection of both
 
 [Take Innermind's free psychological assessment](/auth/login) — get both your Enneagram type and attachment style, alongside Big Five, Schwartz values, and Jungian archetypes. Then receive an AI-synthesized portrait that integrates all five frameworks into one coherent picture of your relational psychology.
+
+---
+
+**See Also:** [Attachment Style Quiz: Discover Your Style](/blog/attachment-style-quiz) | [Attachment Styles Explained](/blog/attachment-styles-explained) | [Anxious Attachment Style: Signs & Growth Path](/blog/anxious-attachment-style)
 `,
   },
   {
@@ -1114,6 +1142,10 @@ Understanding these patterns — whether in yourself or in someone you're close 
 ## Take Your Assessment
 
 [Take Innermind's free psychological assessment](/assessment) — your portrait includes Big Five scores (including Agreeableness facets most relevant to these traits), Schwartz Values, Attachment Style, Enneagram type, and Jungian Archetypes. The AI synthesis integrates these five frameworks to give you a grounded, honest picture of who you are — including the aspects that are harder to look at.
+
+---
+
+**See Also:** [Dark Triad Personality Traits: Narcissism, Machiavellianism, Psychopathy](/blog/dark-triad-personality-traits) | [Narcissism in Psychology: Beyond the Buzzword](/blog/narcissism-psychology)
 `,
   },
   {
@@ -1203,6 +1235,10 @@ The combination matters more than any single trait.
 The introvert/extrovert question is a starting point, not a destination. Understanding who you are requires a profile, not a label.
 
 [Take Innermind's free psychological assessment](/assessment) — you'll get your full Extraversion score with facet-level detail, alongside Openness, Conscientiousness, Agreeableness, and Neuroticism — plus your values, attachment style, Enneagram type, and Jungian archetypes. The AI synthesis integrates all five frameworks into a portrait of *you*, not just a data point on one dimension.
+
+---
+
+**See Also:** [Introvert vs. Extrovert: What the Difference Actually Means](/blog/introvert-vs-extrovert) | [Am I an Introvert? Signs and What It Means](/blog/am-i-an-introvert)
 `,
   },
   {
@@ -1299,6 +1335,10 @@ Shadow work starts with honest psychological self-assessment — understanding y
 [Take Innermind's free psychological assessment](/assessment) — your portrait includes Jungian archetypes alongside Big Five, Schwartz Values, Attachment Style, and Enneagram. The AI synthesis identifies the psychological patterns operating in your life and points toward the material that most deserves your attention.
 
 This is just the beginning of the work. But it's the right place to start.
+
+---
+
+**See Also:** [Jungian Archetype Test: Discover Your Dominant Archetype](/blog/jungian-archetype-test) | [The 12 Jungian Archetypes: Which One Are You?](/blog/the-12-jungian-archetypes) | [Jungian Shadow Work: A Practical Guide](/blog/jungian-shadow-work)
 `,
   },
   {
@@ -1397,6 +1437,10 @@ Understanding your full personality profile gives you:
 [Take Innermind's free psychological assessment](/assessment) — your AI-synthesized portrait covers Big Five traits, Schwartz values, attachment style, Enneagram type, and Jungian archetypes. The synthesis identifies your natural career orientations, the environments where you'll thrive, and the patterns most worth developing.
 
 Your personality isn't destiny. But it is a map — and a good map changes everything.
+
+---
+
+**See Also:** [What Is My Personality Type?](/blog/what-is-my-personality-type) | [The Best Free Personality Tests (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [Dark Triad Personality Traits](/blog/dark-triad-personality-traits)
 `,
   },
   {
@@ -1487,6 +1531,10 @@ Understanding that substrate — not to excuse patterns, but to work with them i
 [Take Innermind's free psychological assessment](/assessment) to discover your personality profile across five validated frameworks. The AI-synthesized portrait includes your Big Five traits, Schwartz values, attachment style, Enneagram type, and Jungian archetypes — integrated into a single, coherent portrait of who you are, and what that means for your life.
 
 Your brain has a signature. This is where you start reading it.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test? A Complete Guide](/blog/what-is-big-five-personality-test) | [Dark Triad Personality Traits Explained](/blog/dark-triad-personality-traits)
 `,
   },
   {
@@ -2365,6 +2413,10 @@ Anxious attachment responds well to several approaches:
 Attachment style is one crucial dimension of who you are in relationships — but it doesn't exist in isolation. Your Big Five personality, Enneagram type, and values all interact with your attachment patterns to shape how you show up in relationships.
 
 [Take Innermind's free assessment](/assessment) to understand your attachment style in the context of your full psychological profile.
+
+---
+
+**See Also:** [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz) | [Attachment Styles Explained](/blog/attachment-styles-explained) | [Avoidant Attachment Style: Patterns & Healing](/blog/avoidant-attachment-style)
 `,
   },
   {
@@ -2439,6 +2491,10 @@ The cruelest feature of avoidant attachment: the strategies that protect from pa
 ## Take Your Attachment Style Assessment
 
 [Discover your attachment style with Innermind's free assessment](/assessment) — and see how it integrates with your Big Five personality, Enneagram type, values, and Jungian archetypes for a complete picture of who you are in relationships.
+
+---
+
+**See Also:** [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz) | [Attachment Styles Explained](/blog/attachment-styles-explained) | [Anxious Attachment Style: Signs & Growth Path](/blog/anxious-attachment-style)
 `,
   },
   {
@@ -2513,6 +2569,10 @@ The same "introvert" score can produce a reclusive artist, a quiet scientist who
 Personality quizzes can give you a rough sense of where you fall on the introvert-extrovert spectrum. But the most useful information comes from a validated Big Five assessment that contextualizes your Extraversion score alongside your other traits.
 
 [Take Innermind's free assessment](/assessment) to discover your full Big Five profile — and receive an AI-synthesized portrait that explains what your extraversion score, in the context of all your other traits, actually means for your life.
+
+---
+
+**See Also:** [Introvert vs. Extrovert: What the Difference Actually Means](/blog/introvert-vs-extrovert) | [Introvert, Extrovert, Ambivert: Key Differences](/blog/introvert-extrovert-ambivert-difference)
 `,
   },
   {
@@ -2593,6 +2653,10 @@ None of these are about specific type pairings.
 The most useful compatibility question isn't "are we the right types?" It's "what does my psychological profile reveal about what I need, what I offer, and where I'm likely to struggle — and how does that interact with my partner's profile?"
 
 [Take Innermind's free psychological assessment](/assessment) to discover your Big Five profile, attachment style, Enneagram type, and values — and receive an AI-synthesized portrait of who you are in relationships.
+
+---
+
+**See Also:** [What Is My Personality Type?](/blog/what-is-my-personality-type) | [Introvert vs. Extrovert: What the Difference Actually Means](/blog/introvert-vs-extrovert)
 `,
   },
   {
@@ -2759,6 +2823,10 @@ The most complete answer to "what's my personality type?" isn't a single type �
 Instead of collecting five separate test results and trying to make sense of them yourself, you get an integrated analysis — your patterns, your growth edges, and what the interaction of these frameworks says about you.
 
 It takes about 30-40 minutes and it's free to start. Most people find it the most accurate and insightful personality assessment they've ever done.
+
+---
+
+**See Also:** [The Best Free Personality Tests (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [Free MBTI Test: Is It Actually Accurate?](/blog/mbti-test-free)
 `,
   },
   {
@@ -2996,6 +3064,10 @@ The power of the Big Five isn't in any single dimension — it's in the *profile
 At Innermind, your Big Five profile is synthesized with four other validated frameworks — Enneagram, attachment style, Schwartz values, and Jungian archetypes — to produce a portrait that no single test can generate.
 
 [Take the free assessment](/assessment) to discover your Big Five profile and receive an AI-synthesized portrait that makes sense of what your scores mean together.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test? A Complete Guide](/blog/what-is-big-five-personality-test) | [The Best Free Personality Tests (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [Dark Triad Personality Traits Explained](/blog/dark-triad-personality-traits)
 `,
   },
   {
@@ -3067,6 +3139,10 @@ This is why understanding values alongside personality gives you a more dynamic 
 ## Getting the Full Picture
 
 [Innermind's free assessment](/assessment) includes a Schwartz Values inventory alongside the Big Five, Enneagram, attachment style, and Jungian archetypes — and synthesizes them into a portrait that shows how your values and personality interact to shape your choices, relationships, and growth path.
+
+---
+
+**See Also:** [The Best Free Personality Tests (Ranked by Accuracy)](/blog/free-personality-test-accurate) | [What Is My Personality Type?](/blog/what-is-my-personality-type)
 `,
   },
   {
@@ -3141,6 +3217,10 @@ Free MBTI tests are everywhere because they're engaging content, not because the
 If you've taken a free MBTI test and felt seen — that's your intuition working. But you deserve more than a four-letter label. You deserve a full picture.
 
 [Take Innermind's free psychological assessment](/auth/login) — it's built on five validated frameworks (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) and synthesizes them into an AI-generated portrait. Free to take, scientifically grounded, and considerably more revealing than a free MBTI test.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test? A Complete Guide](/blog/what-is-big-five-personality-test) | [Big Five vs MBTI: Which Is More Valid?](/blog/big-five-vs-mbti) | [What Is My Personality Type?](/blog/what-is-my-personality-type)
 `,
   },
   {
@@ -3217,6 +3297,10 @@ Secure attachment isn't a state you achieve permanently. It's a center of gravit
 The goal is: more often than not, you can self-regulate, connect authentically, and navigate relationship friction without it threatening your foundation.
 
 [Take Innermind's free psychological assessment](/auth/login) to discover your attachment style alongside Big Five traits, Schwartz values, Enneagram type, and Jungian archetypes. Understand your relational baseline — and the specific patterns most worth developing.
+
+---
+
+**See Also:** [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz) | [Attachment Styles Explained](/blog/attachment-styles-explained) | [Anxious Attachment Style](/blog/anxious-attachment-style)
 `,
   },
   {
@@ -3291,6 +3375,10 @@ What seems to matter most: **a sustained experience of being seen, responded to 
 The first step is often simply recognizing the pattern — understanding that the push-pull, the chaos, the way love feels dangerous, has a developmental origin. That understanding doesn't fix everything, but it transforms self-blame into compassion.
 
 [Take Innermind's psychological assessment](/auth/login) to understand your attachment style in depth, alongside Big Five traits, Schwartz values, Enneagram, and Jungian archetypes. Your profile includes specific insights about relational patterns and the developmental work most relevant to your psychology.
+
+---
+
+**See Also:** [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz) | [Attachment Styles Explained](/blog/attachment-styles-explained) | [Anxious Attachment Style](/blog/anxious-attachment-style)
 `,
   },
   {
@@ -3442,6 +3530,10 @@ The risk of strong identification with INFJ is that the label becomes an identit
 The Enneagram adds important depth here: INFJs tend to cluster in Types 1, 4, 5, and 9 — each with fundamentally different motivational structures. Two people who both test as INFJ but are Enneagram Type 4 vs. Type 1 have quite different psychological architectures underneath the surface similarity.
 
 [Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond the MBTI type label to give you a full psychological portrait: Big Five traits with scientific rigor, Enneagram depth, attachment style, values, and archetypes synthesized by AI into a coherent picture of who you actually are.
+
+---
+
+**See Also:** [Free MBTI Test: Is It Actually Accurate?](/blog/mbti-test-free) | [What Is My Personality Type?](/blog/what-is-my-personality-type)
 `,
   },
   {
@@ -3860,6 +3952,10 @@ The ESFP brings energy and joy — spontaneous, fun, warm, and highly attuned to
 The MBTI provides memorable labels and rich narratives — but it categorizes dimensions that are actually continuous, and its test-retest reliability means many people get a different type when retested. For deeper, more reliable self-understanding, the Big Five, Enneagram, and attachment style frameworks provide more scientific rigor and predictive accuracy.
 
 [Take Innermind's free assessment](/auth/login) — five validated frameworks synthesized into a comprehensive psychological portrait that goes well beyond any four-letter type.
+
+---
+
+**See Also:** [Free MBTI Test: Is It Actually Accurate?](/blog/mbti-test-free) | [What Is the Big Five Personality Test?](/blog/what-is-big-five-personality-test) | [INFJ Personality Type: Complete Guide](/blog/infj-personality-type)
 `,
   },
   {
@@ -3942,6 +4038,10 @@ The value of understanding narcissism isn't just to identify it in others. It's 
 Those questions are uncomfortable — which is exactly why they're worth asking.
 
 [Take Innermind's free psychological assessment](/auth/login) to understand your full personality profile, including where your trait patterns create interpersonal strengths and where they generate predictable friction.
+
+---
+
+**See Also:** [Dark Triad Personality Traits: Narcissism, Machiavellianism, Psychopathy](/blog/dark-triad-personality-traits) | [Emotional Intelligence: What the Psychology Actually Says](/blog/emotional-intelligence-psychology)
 `,
   },
   {
@@ -4021,6 +4121,10 @@ Understanding your emotional intelligence in context requires understanding the 
 Your Enneagram type has a characteristic relationship with emotions — some types are emotionally overexpressive, others underexpressive, others disconnected from emotion entirely. Understanding your type helps you identify the specific EQ development work most relevant to you.
 
 [Take Innermind's free psychological assessment](/auth/login) — your psychological portrait includes insights about your emotional regulation patterns, relational tendencies, and the specific developmental dimensions most relevant to your profile.
+
+---
+
+**See Also:** [Dark Triad Personality Traits: Narcissism, Machiavellianism, Psychopathy](/blog/dark-triad-personality-traits)
 `,
   },
   {
@@ -4102,6 +4206,10 @@ No single framework captures everything that matters relationally. The research-
 These three frameworks are complementary. Attachment explains the relational foundation. Big Five describes the trait architecture. Enneagram illuminates the motivation underneath.
 
 [Take Innermind's free psychological assessment](/auth/login) — get your full profile across five frameworks (Big Five, Schwartz values, attachment style, Enneagram, Jungian archetypes) with an AI-synthesized portrait that specifically addresses how your psychology shapes your relationships.
+
+---
+
+**See Also:** [Attachment Styles Explained](/blog/attachment-styles-explained) | [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz)
 `,
   },
   {
@@ -4163,6 +4271,10 @@ Your score might be genuinely in the middle — making "ambivert" accurate. Or i
 Beyond the score: notice where you actually feel energized. After a full day of social interaction, do you feel depleted or energized? After a day alone, do you feel rested or restless? Your pattern of energy gain and depletion is more informative than a quiz result.
 
 [Take Innermind's free psychological assessment](/auth/login) to find your exact position on the Extraversion spectrum alongside all five Big Five traits — plus attachment style, Schwartz values, Enneagram, and Jungian archetypes. Your profile tells you more than introvert/extrovert/ambivert ever could.
+
+---
+
+**See Also:** [Introvert vs. Extrovert: What the Difference Actually Means](/blog/introvert-vs-extrovert) | [Introvert, Extrovert, Ambivert: Key Differences](/blog/introvert-extrovert-ambivert-difference)
 `,
   },
   {
@@ -4245,6 +4357,10 @@ The Enneagram maps onto shadow work naturally. Each type has characteristic shad
 Understanding your Enneagram type directs your shadow inquiry toward the terrain most relevant to your psychological structure.
 
 [Take Innermind's free psychological assessment](/auth/login) — your Jungian archetypes profile includes insights about your shadow content and the integration work most relevant to your psychological profile.
+
+---
+
+**See Also:** [Jungian Archetype Test: Discover Your Dominant Archetype](/blog/jungian-archetype-test) | [The 12 Jungian Archetypes: Which One Are You?](/blog/the-12-jungian-archetypes)
 `,
   },
   {
@@ -5788,6 +5904,10 @@ Specific roles: legal researcher, transactional attorney, compliance counsel, pa
 Introversion in the Big Five is the low end of the Extraversion dimension — and low Extraversion doesn't just mean disliking parties. Low scorers process information more carefully, have stronger working memory, are better at sustaining attention, and are less susceptible to distraction. These are assets in many high-value careers.
 
 [Take Innermind's assessment](/auth/login) to understand your full personality profile including your Big Five traits, values, and psychological portrait.
+
+---
+
+**See Also:** [Introvert vs. Extrovert: What the Difference Actually Means](/blog/introvert-vs-extrovert) | [Best Careers for Introverts (By Personality Type)](/blog/best-careers-for-introverts)
 `,
   },
   {
@@ -6182,6 +6302,10 @@ Williams repeatedly played ENFP archetypes — the teacher in Dead Poets Society
 - Genuine care for others that is deeply personal, not performative
 
 [Take Innermind's assessment](/auth/login) to understand your complete psychological profile.
+
+---
+
+**See Also:** [What Is My Personality Type?](/blog/what-is-my-personality-type) | [Free MBTI Test: Is It Actually Accurate?](/blog/mbti-test-free)
 `,
   },
   {
@@ -6690,6 +6814,10 @@ The most important insight: **attachment style is changeable; personality traits
 Focus on developing secure attachment behaviors while understanding your personality-driven tendencies as context, not constraints.
 
 [Take Innermind's assessment](/auth/login) — we assess both attachment style and personality traits together, giving you a synthesized picture of how they interact in your specific profile.
+
+---
+
+**See Also:** [Attachment Style Quiz: Find Your Style](/blog/attachment-style-quiz) | [Anxious Attachment Style](/blog/anxious-attachment-style) | [Attachment Styles Explained](/blog/attachment-styles-explained)
 `,
   },
   {
@@ -6756,6 +6884,10 @@ High Conscientiousness has a shadow: when it becomes excessive or rigidly applie
 The optimal profile for senior leadership combines high Conscientiousness with high Openness — the ability to execute reliably while remaining adaptive to changing conditions.
 
 [Take Innermind's assessment](/auth/login) to understand your complete Big Five profile including your Conscientiousness score and what it means for your career.
+
+---
+
+**See Also:** [What Is the Big Five Personality Test? A Complete Guide](/blog/what-is-big-five-personality-test) | [Personality and Career: How Big Five Predicts Job Fit](/blog/personality-and-career)
 `,
   },
   {
@@ -6813,6 +6945,10 @@ Jung's insight is that these archetypes don't just exist "out there" in culture.
 People with strong Hero archetype resonance are oriented toward achievement, challenge, and proving themselves. Those drawn to the Sage are oriented toward knowledge and wisdom. Outlaw resonance often indicates unexpressed or unacknowledged rebellion against something in one's life.
 
 [Take Innermind's assessment](/auth/login) — we assess your Jungian archetypes as part of a multi-framework psychological portrait.
+
+---
+
+**See Also:** [Jungian Archetype Test: Discover Your Dominant Archetype](/blog/jungian-archetype-test) | [The 12 Jungian Archetypes: Which One Are You?](/blog/the-12-jungian-archetypes)
 `,
   },
   {
