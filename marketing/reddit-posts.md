@@ -265,3 +265,122 @@ After Reddit posts gain traction (24h), share links (not full content) in:
 3. **GROW Slack** — productivity/self-improvement community
 
 Format for Discord: "Posted this on Reddit, curious what this community thinks: [link]"
+
+---
+
+## Wave 2 Posts
+
+*New posts for r/selfimprovement and r/mbti targeting compatibility + career angles. Post after Wave 1 traction (1–2 weeks later).*
+
+---
+
+### POST 5: r/selfimprovement — "The framework I use to stop repeating the same relationship pattern"
+
+**Target:** r/selfimprovement
+**Format:** Personal insight → actionable framework
+**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2`
+**Best time:** Monday or Wednesday, 8–10am EST
+
+---
+
+**Title:** I kept attracting the same type of person until I understood this about myself
+
+**Body:**
+
+Three relationships, three different people, identical pattern.
+
+It took until the third time for me to stop wondering what was wrong with them and start wondering what I was contributing to the dynamic.
+
+What I found: I have an avoidant attachment style. I unconsciously seek partners who pursue me, and once they're committed, I create distance. Cue their anxiety, cue my avoidance, cue the spiral. Different person, same script.
+
+Understanding this changed how I approached relationships more than any dating advice ever did. Not because I "fixed" myself, but because I could see the pattern in real time and make different choices.
+
+The most useful exercise I've done: map your attachment style against your core values. I'm high in "Self-Direction" values (independence, freedom) — which means my avoidant attachment isn't random, it's actually coherent with something I genuinely prioritize. The growth wasn't to become less independent; it was to differentiate "I value independence" from "I'm scared of real closeness."
+
+If you want to do this yourself, [Innermind](https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2) runs a free attachment style assessment plus a values inventory. The combo is more useful than either alone. (Disclosure: I'm affiliated with the project, but the assessments are genuinely free.)
+
+What patterns have you noticed in yourself that took multiple repetitions to see?
+
+---
+
+### POST 6: r/mbti — "INTJ vs INTP: what actually tells them apart (it's not the J/P)"
+
+**Target:** r/mbti
+**Format:** Type analysis / discussion starter
+**UTM link:** `https://innermind.app/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2`
+**Best time:** Tuesday or Thursday, 7–9pm EST
+
+---
+
+**Title:** INTJ vs INTP: the J/P difference is almost the least useful way to tell them apart
+
+**Body:**
+
+This comes up constantly in typing discussions and the usual answer is "INTJs are organized, INTPs are not." That's both true and kind of useless — it doesn't tell you anything about the underlying *why*.
+
+The more diagnostic distinction is in how each type relates to **certainty**.
+
+INTJs use Introverted Intuition (Ni) — a convergent function. It synthesizes toward singular insights. INTJs feel certain. When they've processed enough information, they reach a conclusion and commit. They find open questions mildly irritating once they've formed a view.
+
+INTPs use Introverted Thinking (Ti) — a framework-building function. It constructs internal logical systems. INTPs are genuinely comfortable with uncertainty — to them, almost every interesting question is still technically open. Premature closure feels epistemically irresponsible.
+
+Practical test: Ask yourself "is it okay to not know the answer yet, even when you need to decide?" If the question makes you anxious and you'd rather commit to a wrong answer than stay open, you're probably leaning INTJ. If staying open feels like intellectual integrity and commitment feels like a trap, INTP.
+
+The Big Five framing: INTJs tend toward higher Conscientiousness than INTPs. Not because INTPs are disorganized people, but because Ti values logical precision over procedural reliability.
+
+This is also why INTJ-INTP relationships have a specific friction point — the INTJ experiences the INTP's openness as wishy-washy; the INTP experiences the INTJ's certainty as arrogant. Both are misreading a genuine cognitive difference.
+
+What's your experience telling INTJ and INTP apart in real people?
+
+*(I wrote a longer version of this on the Innermind blog: [INTJ vs INTP](https://innermind.app/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2) — linked in case it's useful, no signup required)*
+
+---
+
+### POST 7: r/psychology — "Conscientiousness predicts career outcomes better than IQ — but almost nobody talks about it"
+
+**Target:** r/psychology
+**Format:** Evidence-based discussion
+**UTM link:** `https://innermind.app/blog/big-five-conscientiousness-career?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post2`
+**Best time:** Wednesday morning, 9–11am EST
+
+---
+
+**Title:** The Big Five trait that predicts career success more than intelligence (and why nobody talks about it)
+
+**Body:**
+
+Conscientiousness is the most empirically boring name for the most practically useful personality construct.
+
+The meta-analytic evidence:
+- Conscientiousness correlates with job performance across virtually every occupation studied (r ≈ 0.22–0.28 across meta-analyses)
+- It predicts GPA as well as SAT scores in many contexts
+- Longitudinally, high-C individuals earn more even controlling for education and cognitive ability
+- High-C people live longer (health behaviors, accident rates, addiction patterns)
+- It predicts marital stability
+
+No other Big Five trait has this consistency across domains.
+
+Why doesn't this get talked about? A few reasons:
+
+1. **Survivorship bias in who we celebrate.** The most visible successes often belong to high-Openness, high-Extraversion individuals — creative founders, charismatic executives. High-C gets you to "solid career, reliable contributor, consistently outperforms over time." Less Twitter-friendly.
+
+2. **It feels uncomfortable.** Saying "just be more conscientious" sounds like "just try harder" — which ignores the temperamental component. About 40–50% of the trait variance is genetic.
+
+3. **The trait is substantially developable** through behavioral intervention, which makes it less fatalistic than other traits. Habit formation research (Clear, Duhigg) is essentially Conscientiousness technology. This should make it *more* discussed, but instead the psychology and self-help communities rarely connect them explicitly.
+
+The practical implication: if you want to predict your own career trajectory, your Conscientiousness score is probably more predictive than your IQ estimate, your MBTI type, or your LinkedIn network size.
+
+What's the current consensus here on Conscientiousness malleability? Curious whether the behavioral intervention research holds up under scrutiny.
+
+---
+
+## Wave 2 Posting Schedule
+
+| Post | Subreddit | Best Time | Status |
+|------|-----------|-----------|--------|
+| POST 5 | r/selfimprovement | Mon/Wed 8-10am EST | Ready |
+| POST 6 | r/mbti | Tue/Thu 7-9pm EST | Ready |
+| POST 7 | r/psychology | Wed 9-11am EST | Ready |
+
+Post Wave 2 starting 7 days after Wave 1 launches.
+
