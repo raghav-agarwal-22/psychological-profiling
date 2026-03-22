@@ -493,6 +493,102 @@ ${profileContext}`
   }
 }
 
+// ─── Template-based fallback descriptions (used when AI is unavailable) ──────
+
+const BIG_FIVE_DESCRIPTIONS: Record<string, { high: string; moderate: string; low: string }> = {
+  openness: {
+    high: 'intellectually curious, imaginative, and drawn to new ideas and experiences',
+    moderate: 'open to new experiences while also valuing familiar, proven approaches',
+    low: 'practical and grounded, preferring established routines and concrete solutions',
+  },
+  conscientiousness: {
+    high: 'organized, disciplined, and motivated by goals and follow-through',
+    moderate: 'reasonably structured but adaptable when circumstances require flexibility',
+    low: 'spontaneous and flexible, comfortable navigating ambiguity',
+  },
+  extraversion: {
+    high: 'energized by social interaction and drawn toward engagement with others',
+    moderate: 'comfortable in both social and solitary settings depending on context',
+    low: 'reflective and self-sufficient, valuing depth over breadth in social connection',
+  },
+  agreeableness: {
+    high: 'empathetic, cooperative, and motivated by care and harmony in relationships',
+    moderate: 'warm and cooperative while still capable of asserting your own perspective',
+    low: 'direct and independent, comfortable challenging ideas in service of honesty',
+  },
+  neuroticism: {
+    high: 'emotionally sensitive and finely attuned to your inner and outer environment',
+    moderate: 'generally stable with some natural sensitivity to stress and emotional change',
+    low: 'emotionally resilient and steady, remaining calm under pressure',
+  },
+}
+
+const ATTACHMENT_DESCRIPTIONS: Record<string, string> = {
+  secure: 'comfortable with closeness and independence — you navigate intimacy with ease and trust',
+  anxious: 'deeply attuned to relationships, with a strong desire for closeness and reassurance',
+  avoidant: 'self-reliant and independent, tending to value personal space in close relationships',
+  fearful: 'navigating a tension between wanting closeness and feeling guarded about vulnerability',
+}
+
+const VALUES_DESCRIPTIONS: Record<string, string> = {
+  achievement: 'personal accomplishment and demonstrating competence',
+  benevolence: 'care and loyalty to those close to you',
+  conformity: 'harmony through following social norms and expectations',
+  hedonism: 'pleasure and enjoyment in everyday experience',
+  power: 'influence, status, and control over outcomes',
+  security: 'safety, stability, and predictability',
+  self_direction: 'freedom of thought, independence, and self-expression',
+  stimulation: 'novelty, excitement, and varied experience',
+  universalism: 'understanding, tolerance, and care for all people and nature',
+}
+
+/**
+ * Generates a template-based summary from dimension scores when AI is unavailable.
+ * Used as a graceful fallback so users see meaningful content instead of a blank profile.
+ */
+export function generateTemplateSummary(
+  scores: Record<string, { normalized: number }>,
+  templateType: string,
+): string {
+  const entries = Object.entries(scores).sort(([, a], [, b]) => b.normalized - a.normalized)
+  if (entries.length === 0) return 'Profile generated from your assessment responses.'
+
+  if (templateType === 'BIG_FIVE') {
+    const parts: string[] = []
+    for (const [trait, score] of entries) {
+      const desc = BIG_FIVE_DESCRIPTIONS[trait.toLowerCase()]
+      if (!desc) continue
+      const level = score.normalized >= 65 ? 'high' : score.normalized <= 35 ? 'low' : 'moderate'
+      parts.push(desc[level])
+    }
+    const top = parts.slice(0, 3).join('; ')
+    return top
+      ? `Your assessment paints a picture of someone who is ${top}. These dimensions form the foundation of how you engage with the world, approach challenges, and build relationships.`
+      : 'Profile generated from your assessment responses.'
+  }
+
+  if (templateType === 'ATTACHMENT_STYLE') {
+    const anxiety = (scores['anxiety']?.normalized ?? 50)
+    const avoidance = (scores['avoidance']?.normalized ?? 50)
+    const style =
+      anxiety < 45 && avoidance < 45 ? 'secure' :
+      anxiety >= 45 && avoidance < 45 ? 'anxious' :
+      anxiety < 45 && avoidance >= 45 ? 'avoidant' : 'fearful'
+    const desc = ATTACHMENT_DESCRIPTIONS[style] ?? 'navigating your relational patterns with self-awareness'
+    return `Your attachment pattern suggests you are ${desc}. Understanding this blueprint can illuminate how you seek connection and handle closeness in your most important relationships.`
+  }
+
+  if (templateType === 'VALUES_INVENTORY') {
+    const topThree = entries.slice(0, 3).map(([k]) => VALUES_DESCRIPTIONS[k.toLowerCase()] ?? k).filter(Boolean)
+    if (topThree.length === 0) return 'Profile generated from your assessment responses.'
+    return `Your values landscape centers on ${topThree.join(', ')}. These motivational priorities shape the choices you make and what you find meaningful in life.`
+  }
+
+  // Generic fallback for Enneagram, Jungian, etc.
+  const topTraits = entries.slice(0, 3).map(([k, v]) => `${k} (${Math.round(v.normalized)}/100)`)
+  return `Your top dimensions from this assessment: ${topTraits.join(', ')}. A full narrative portrait will be generated once AI synthesis is available.`
+}
+
 function extractJson<T>(text: string): T {
   const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ?? text.match(/(\{[\s\S]*\})/)
   const jsonText = jsonMatch ? jsonMatch[1] ?? jsonMatch[0] : text

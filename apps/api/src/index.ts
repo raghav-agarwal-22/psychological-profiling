@@ -108,6 +108,9 @@ await server.register(professionalRoutes, { prefix: '/api/professional' })
 try {
   await server.listen({ port: PORT, host: HOST })
   server.log.info(`Innermind API running at http://${HOST}:${PORT}`)
+  if (!process.env.ANTHROPIC_API_KEY) {
+    server.log.warn('ANTHROPIC_API_KEY is not set — AI profile synthesis is disabled. Users will receive template-based profiles until the key is provided.')
+  }
 } catch (err) {
   server.log.error(err)
   process.exit(1)

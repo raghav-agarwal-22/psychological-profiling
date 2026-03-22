@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts, type ProfileNarrative, type ValuesNarrative, type AttachmentNarrative, type TriadNarrative, type EnneagramNarrative, type JungianNarrative } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts, generateTemplateSummary, type ProfileNarrative, type ValuesNarrative, type AttachmentNarrative, type TriadNarrative, type EnneagramNarrative, type JungianNarrative } from '../lib/profile-generator.js'
 import { applyReferral } from './referrals.js'
 import { sendProfileRevealEmail } from '../services/email.js'
 import { sendLoopsEvent, upsertLoopsContact } from '../lib/loops.js'
@@ -269,12 +269,15 @@ export async function sessionRoutes(server: FastifyInstance) {
       blindSpots = jungianNarrative.blindSpots
       strengths = jungianNarrative.strengths
     } else {
-      summary = narrative?.summary ?? 'Profile generated from assessment responses.'
+      summary = narrative?.summary ?? generateTemplateSummary(dimensionScores as Record<string, { normalized: number }>, templateType)
       archetypes = narrative?.archetype ? [narrative.archetype] : []
       values = narrative?.values ?? []
       blindSpots = narrative?.blind_spots ?? []
       strengths = narrative?.strengths ?? []
     }
+
+    // Track whether this profile was generated without AI (degraded mode)
+    const aiPending = !hasLlm
 
     const profile = await prisma.profile.create({
       data: {
@@ -293,6 +296,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           templateType,
           narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative ?? jungianNarrative,
           reflectionPrompts,
+          aiPending,
         } as object,
       },
     })

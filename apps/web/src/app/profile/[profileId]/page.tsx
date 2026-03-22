@@ -25,6 +25,7 @@ interface DimensionScore {
 interface RawOutput {
   templateType?: string
   reflectionPrompts?: string[]
+  aiPending?: boolean
   narrative?: {
     // Big Five fields
     archetype?: string
@@ -826,6 +827,17 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {/* Degraded mode: AI portrait pending banner */}
+      {profile.rawOutput?.aiPending && (
+        <div className="mb-8 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 flex items-start gap-3">
+          <span className="mt-0.5 text-lg leading-none">✦</span>
+          <div>
+            <p className="text-sm font-medium text-amber-300">Your AI-generated narrative portrait is being prepared</p>
+            <p className="mt-1 text-xs text-stone-400">The scores above are ready — your personalized AI narrative will appear here once the service is active. Check back soon.</p>
+          </div>
+        </div>
+      )}
 
       {/* Adaptive profile: integration theme */}
       {isCustomProfile && (() => {
