@@ -5269,6 +5269,1870 @@ The Enneagram adds important depth: ISTPs cluster in Types 5, 9, and 8. An ISTP 
 [Take Innermind's free psychological assessment](/auth/login) — our synthesis goes beyond MBTI to give you a full psychological portrait: Big Five traits, Enneagram type, attachment style, values, and archetypes synthesized by AI.
 `,
   },
+  {
+    slug: 'intj-enfp-compatibility',
+    title: 'INTJ and ENFP Compatibility: The Rare Pairing That Actually Works',
+    description: 'INTJ and ENFP are supposed to be opposites — yet this pairing has some of the highest reported relationship satisfaction. Here is why, and what makes it work.',
+    publishedAt: '2026-03-10',
+    readingTime: 9,
+    category: 'Compatibility',
+    keywords: ['INTJ ENFP compatibility', 'INTJ ENFP relationship', 'MBTI compatibility'],
+    content: `
+## INTJ and ENFP: Opposites That Attract
+
+On paper, the INTJ and ENFP look like they should clash. One is introverted, systematic, and strategically cold. The other is extraverted, spontaneous, and emotionally expressive. Yet in practice, INTJ-ENFP pairings show up consistently in surveys as among the most satisfying MBTI relationship combinations.
+
+The explanation is in the cognitive functions. INTJs lead with Introverted Intuition (Ni) and support with Extraverted Thinking (Te). ENFPs lead with Extraverted Intuition (Ne) and support with Introverted Feeling (Fi). Both types are intuition-dominant — they see patterns, possibilities, and meaning in abstract ideas. The difference is execution and emotional style.
+
+## What Each Type Brings
+
+**What the INTJ brings:**
+- Long-range strategic thinking
+- Directness and clarity
+- Reliability and follow-through
+- The capacity to turn the ENFP's ideas into plans
+
+**What the ENFP brings:**
+- Energy and enthusiasm that pulls the INTJ out of their head
+- Emotional warmth and social navigation
+- Breadth of ideas and spontaneity
+- Genuine curiosity about the INTJ's inner world
+
+The ENFP is often one of the few people the INTJ feels truly understood by, because the ENFP's intuition can track the INTJ's conceptual leaps. The INTJ, in turn, offers the ENFP something rare: someone who takes their ideas seriously and can build on them with rigor.
+
+## The Friction Points
+
+No pairing is frictionless. The most common challenges in INTJ-ENFP relationships:
+
+**Planning vs. spontaneity.** INTJs want structure and advance notice. ENFPs treat plans as suggestions and often find rigidity suffocating. This plays out in everything from vacation planning to daily routines.
+
+**Emotional needs.** ENFPs need verbal affirmation and emotional engagement. INTJs show love through acts and loyalty, not words. The ENFP may feel emotionally starved; the INTJ may feel overwhelmed by the ENFP's emotional expressiveness.
+
+**Social energy.** ENFPs want to socialize extensively; INTJs recharge in solitude. This needs explicit negotiation or it becomes a recurring source of resentment.
+
+**Finishing things.** ENFPs generate ideas and lose interest quickly. INTJs can grow frustrated being left to execute plans the ENFP has already moved on from.
+
+## What the Research Actually Says
+
+MBTI compatibility research is limited, but the Big Five offers more rigorous framing. INTJ profiles tend toward low Extraversion, high Conscientiousness, and moderate-to-low Agreeableness. ENFP profiles tend toward high Extraversion, high Openness, and high Agreeableness. The shared high Openness — curiosity, love of ideas, tolerance for complexity — is the actual compatibility engine.
+
+Couples with matched Openness show higher relationship satisfaction in longitudinal studies. The INTJ and ENFP may differ in every other dimension but they share the intellectual restlessness that makes deep conversation possible.
+
+## Making It Work
+
+The INTJ-ENFP pairing thrives when:
+
+1. **The INTJ expresses appreciation verbally**, even when it feels unnecessary. The ENFP needs to hear it.
+2. **The ENFP respects INTJ alone time** without interpreting withdrawal as rejection.
+3. **Both negotiate social calendars explicitly** rather than assuming.
+4. **The INTJ softens directness** in emotional conversations — being right isn't always the point.
+5. **The ENFP follows through** on commitments. Unreliability erodes the INTJ's trust faster than almost anything else.
+
+## Beyond MBTI
+
+MBTI tells you the cognitive style. It doesn't tell you about attachment patterns, emotional regulation capacity, or core values — all of which matter more for long-term relationship success. An INTJ with anxious attachment and an ENFP with avoidant attachment will struggle in ways MBTI cannot predict.
+
+[Take Innermind's free assessment](/auth/login) to get your Big Five profile, attachment style, values, and psychological portrait — the full picture, not just four letters.
+`,
+  },
+  {
+    slug: 'infj-entp-compatibility',
+    title: 'INFJ and ENTP Compatibility: The Intellectual Spark and Its Risks',
+    description: 'INFJ and ENTP are drawn together by a shared love of ideas and depth. But their emotional styles can create lasting tension. Here is a clear-eyed look at this pairing.',
+    publishedAt: '2026-03-10',
+    readingTime: 9,
+    category: 'Compatibility',
+    keywords: ['INFJ ENTP compatibility', 'INFJ ENTP relationship', 'MBTI compatibility'],
+    content: `
+## Why INFJ and ENTP Get Attracted
+
+The INFJ-ENTP pairing starts with intellectual fireworks. Both types lead with intuition — INFJs through Ni (Introverted Intuition) and ENTPs through Ne (Extraverted Intuition). They can see each other's conceptual leaps, track each other's abstract thinking, and have conversations that most people find impenetrable.
+
+ENTPs are often drawn to the INFJ's depth and perceptiveness. INFJs, typically private, find that ENTPs are one of the few types that can pull them into genuine dialogue without it feeling like an interrogation.
+
+## The Core Dynamic
+
+INFJs are guided by their values (Fe — Extraverted Feeling) and need harmony, emotional resonance, and meaning. ENTPs run on logic (Ti — Introverted Thinking) and Ne-driven debate. The ENTP enjoys arguing for sport; the INFJ takes positions personally.
+
+This creates the central tension: **The ENTP debates to explore. The INFJ debates to defend.**
+
+An ENTP who playfully challenges the INFJ's core values will find this lands very differently than they intended. The INFJ doesn't experience this as fun intellectual sparring — they experience it as an attack on something fundamental.
+
+## What Works
+
+- Both love ideas, complexity, and deep conversation
+- ENTPs appreciate the INFJ's rare insight and emotional intelligence
+- INFJs appreciate the ENTP's ability to engage without small talk
+- The ENTP's extraverted energy pulls the INFJ out of their private world
+- The INFJ's emotional attunement helps the ENTP develop their underdeveloped feeling side
+
+## What Doesn't Work
+
+**Debate style.** ENTPs argue to think; INFJs only argue when they mean it. An ENTP who constantly challenges the INFJ will exhaust them.
+
+**Emotional follow-through.** ENTPs can be emotionally avoidant. INFJs have deep emotional needs and require meaningful engagement, not just intellectual connection.
+
+**The ENTP's scattered attention.** ENTPs are often pursuing fifteen projects simultaneously. INFJs want depth and continuity. Feeling like a secondary priority damages the INFJ's sense of security.
+
+**Directness vs. harmony.** ENTPs are blunt. INFJs absorb criticism deeply and need care in delivery.
+
+## Making the Pairing Work
+
+1. ENTPs must recognize when they've crossed from debate into dismissal of the INFJ's values
+2. INFJs need to communicate needs directly rather than hoping the ENTP will intuit them
+3. Regular explicit emotional check-ins help bridge the feeling gap
+4. Both should leverage shared projects — joint intellectual endeavors are this pairing's love language
+
+Understanding attachment styles and values adds more predictive power than MBTI alone. [Take Innermind's assessment](/auth/login) to get your complete psychological profile including attachment style, Big Five, and values.
+`,
+  },
+  {
+    slug: 'infj-vs-infp',
+    title: 'INFJ vs INFP: The Most Commonly Confused Personality Types',
+    description: 'INFJ and INFP share two letters and often share confusion — many people mistype between them. Here is how to tell them apart for real.',
+    publishedAt: '2026-03-11',
+    readingTime: 8,
+    category: 'MBTI Types',
+    keywords: ['INFJ vs INFP', 'INFJ or INFP', 'INFJ INFP difference'],
+    content: `
+## The Most Common MBTI Mistype
+
+INFJ and INFP are probably the most frequently confused MBTI pairing. Both are introverted, intuitive, idealistic, and emotionally deep. Both are drawn to meaning, authenticity, and personal growth. People mistype between them constantly — and not just on assessments.
+
+The distinction is real and important. The two types have fundamentally different cognitive architectures.
+
+## The Core Difference: Feeling
+
+The J/P distinction in MBTI maps to cognitive function differences that go deeper than "organized vs. flexible."
+
+**INFJ:** Introverted Intuition (Ni) + Extraverted Feeling (Fe)
+**INFP:** Introverted Feeling (Fi) + Extraverted Intuition (Ne)
+
+The crucial distinction is **Fe vs. Fi**:
+
+- **Fe (Extraverted Feeling)** orients toward the emotional atmosphere of the group. INFJs are attuned to the feelings in a room, want harmony, and often suppress their own needs to manage the emotional environment around them.
+
+- **Fi (Introverted Feeling)** is deeply personal. INFPs have a rich internal value system and strong sense of personal authenticity. They care deeply about their own emotional truth.
+
+INFJs ask: *How does everyone feel? How can I create harmony?*
+INFPs ask: *How do I feel? Am I being true to who I am?*
+
+## Practical Differences
+
+**In conflict:**
+- INFJs avoid conflict to preserve group harmony, then eventually explode ("INFJ door slam")
+- INFPs withdraw to protect their inner world, and disengage when values are violated
+
+**In decisions:**
+- INFJs make decisions by sensing the group's needs and the most harmonious path forward
+- INFPs make decisions by checking internal alignment with their personal values
+
+**In conversation:**
+- INFJs are often more attuned to the listener — adjusting, mirroring, creating connection
+- INFPs talk from a more personal place, sharing their authentic inner experience
+
+**In their sense of identity:**
+- INFJs can lose themselves in relationships, taking on others' emotional states (Fe mirroring)
+- INFPs maintain a core inner self that is difficult to displace; authenticity is paramount
+
+## How to Tell Which You Are
+
+Ask yourself:
+1. When you're upset, do you suppress it for the sake of everyone else's comfort? (INFJ) Or does your inner emotional world feel most real, even when it's hard to articulate? (INFP)
+2. Do you read rooms and pick up on the emotional atmosphere? (INFJ) Or are you more focused on your own internal states? (INFP)
+3. Do you struggle with knowing your own wants because you're so attuned to others? (INFJ) Or do you know exactly what you value but struggle to express it outwardly? (INFP)
+
+## Why It Matters
+
+Mistypes lead to advice that doesn't fit. An INFP following INFJ growth advice will be told to "stop losing yourself in relationships" when their actual challenge is different. An INFJ following INFP advice will be told to "speak your truth more" when their work is actually about tolerating necessary conflict.
+
+[Take Innermind's assessment](/auth/login) — our multi-framework synthesis helps you understand not just your type, but the underlying traits that drive it.
+`,
+  },
+  {
+    slug: 'intj-vs-intp',
+    title: 'INTJ vs INTP: How to Tell These Two Analytical Types Apart',
+    description: 'Both are introverted systems-thinkers who prefer logic over emotion. But INTJs and INTPs have fundamentally different cognitive styles. Here is how to distinguish them.',
+    publishedAt: '2026-03-11',
+    readingTime: 8,
+    category: 'MBTI Types',
+    keywords: ['INTJ vs INTP', 'INTJ or INTP', 'INTJ INTP difference'],
+    content: `
+## Same Letters, Different Minds
+
+INTJ and INTP share three letters and a stereotype: the cold, analytical, lone-wolf intellectual who prefers systems to people. In practice they are quite distinct — different decision-making engines, different relationships to certainty, and different failure modes.
+
+## The Cognitive Function Difference
+
+**INTJ:** Introverted Intuition (Ni) + Extraverted Thinking (Te)
+**INTP:** Introverted Thinking (Ti) + Extraverted Intuition (Ne)
+
+**INTJs** are driven by Ni — a convergent pattern-recognition function that synthesizes information toward singular insights and long-term visions. They are decisive, strategic, and have a clear sense of where things are heading.
+
+**INTPs** are driven by Ti — a framework-building function that constructs precise internal logical systems. They are analytical, skeptical, and fundamentally interested in understanding for its own sake.
+
+## Decisive vs. Exploratory
+
+The most observable difference: **INTJs decide. INTPs analyze.**
+
+INTJs are comfortable with certainty. Once they've synthesized the available information, they commit to a course of action. They find indecision frustrating and inefficient.
+
+INTPs are comfortable with uncertainty. They see most questions as genuinely open, find premature closure uncomfortable, and can explore a problem indefinitely without needing to reach a conclusion. This makes them excellent theorists and poor executors.
+
+## Relationship with Structure
+
+**INTJs** use Te to impose structure on the external world. They build systems, create plans, and expect them to be followed. They are often the most "J" of the J types — orderly, scheduled, future-oriented.
+
+**INTPs** often look surprisingly disorganized for an introverted thinker. Their Ti is internally precise but their Ne is perpetually generating alternatives. Outwardly, they can appear scattered, late, and ad hoc.
+
+## Under Stress
+
+**INTJ under stress** becomes controlling, harsh, and dismissive of others' competence. Their inferior Se (Extraverted Sensing) can emerge as sensory overindulgence or hypervigilance to physical details.
+
+**INTP under stress** becomes paralyzed by analysis, isolated, and eventually erupts in emotional outbursts that surprise everyone — including themselves. Their inferior Fe emerges explosively.
+
+## How to Tell Which You Are
+
+- Do you have a strong vision for where things are going and find it frustrating when others can't see it? → INTJ
+- Do you enjoy exploring conceptual territory without necessarily arriving anywhere? → INTP
+- Are you organized and future-oriented? → INTJ
+- Are you more accurate than organized? → INTP
+- Do you feel certain more often than not? → INTJ
+- Do you feel like "it depends" is almost always true? → INTP
+
+[Take Innermind's free assessment](/auth/login) for a complete psychological portrait that goes beyond type labels.
+`,
+  },
+  {
+    slug: 'enfj-vs-enfp',
+    title: 'ENFJ vs ENFP: Two Expressive Idealists, Very Different Drivers',
+    description: 'ENFJs and ENFPs both seem warm, enthusiastic, and people-focused. But they operate from different core motivations. Here is what separates them.',
+    publishedAt: '2026-03-11',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ENFJ vs ENFP', 'ENFJ or ENFP', 'ENFJ ENFP difference'],
+    content: `
+## Two Types That Look Similar From the Outside
+
+ENFJs and ENFPs are both charismatic, warm, expressive, and driven by a desire to make a positive difference. They often mistype as each other, especially under healthy conditions. Under stress and in the specifics of how they make decisions, the differences become clear.
+
+## The Cognitive Split
+
+**ENFJ:** Extraverted Feeling (Fe) + Introverted Intuition (Ni)
+**ENFP:** Extraverted Intuition (Ne) + Introverted Feeling (Fi)
+
+ENFJs lead with **Fe** — they are fundamentally group-oriented. Their emotional radar is tuned outward, constantly reading others, maintaining harmony, and motivating people toward shared goals. They are natural mentors, advocates, and community builders.
+
+ENFPs lead with **Ne** — they are primarily idea generators. Their enthusiasm connects to possibility, novelty, and meaning-making. Their feeling side (Fi) is personal and internal, not group-focused.
+
+## Organized vs. Spontaneous
+
+**ENFJs** are organized. They plan ahead, take commitments seriously, and create structure around group goals. They are often described as "natural leaders" in the formal sense — they can project manage, delegate, and follow through.
+
+**ENFPs** are spontaneous. They treat plans as opening bids and routinely overcommit. Their energy is genuine but their follow-through is inconsistent. They are natural inspirers rather than organizers.
+
+## Harmony vs. Authenticity
+
+**ENFJs** prioritize group harmony. They will suppress their own needs, smooth over conflict, and say what's needed to keep things functioning. This can make them prone to people-pleasing and boundary erosion.
+
+**ENFPs** prioritize personal authenticity. They need to feel like they're being real. They're less likely to suppress their own emotional truth for social harmony, though they genuinely care about others.
+
+## Under Pressure
+
+**ENFJs** under stress become controlling and manipulative — using their social acuity to manage outcomes they feel anxious about. They can become resentful of the people they're constantly accommodating.
+
+**ENFPs** under stress scatter — taking on too many things, failing to follow through, then becoming self-critical and isolating.
+
+[Take Innermind's assessment](/auth/login) to get your full psychological profile including attachment style and values.
+`,
+  },
+  {
+    slug: 'best-careers-for-intj',
+    title: 'Best Careers for INTJs: Strategic Roles Where INTJs Excel',
+    description: 'INTJs are rare, strategic, and relentlessly competent. They thrive in specific environments. Here are the careers where INTJ strengths shine — and the ones to avoid.',
+    publishedAt: '2026-03-12',
+    readingTime: 8,
+    category: 'Career',
+    keywords: ['best careers for INTJ', 'INTJ career', 'INTJ jobs'],
+    content: `
+## What INTJs Need in a Career
+
+INTJs are the rarest type (roughly 2% of the population, fewer among women), and their career needs are specific. They require:
+
+- **Intellectual challenge** — repetitive or unchallenging work drains them fast
+- **Autonomy** — excessive oversight and micromanagement are intolerable
+- **Competence culture** — they thrive when surrounded by excellent people and suffer in environments where mediocrity is rewarded
+- **Long-term vision** — INTJs want to work on things that matter and build toward something
+
+What destroys INTJs in careers: bureaucracy, political environments that reward appearances over substance, lack of agency, excessive small talk and relationship-maintenance as a performance requirement.
+
+## Top Career Paths for INTJs
+
+### 1. Software Engineering / Systems Architecture
+INTJs' Ni-Te combination is nearly ideal for software: pattern recognition, systematic thinking, comfort with abstraction, and drive to build robust systems. Senior individual contributor roles or technical architecture positions suit them especially well — enough autonomy, clear success criteria, and continuous intellectual challenge.
+
+### 2. Strategy Consulting
+INTJs excel at synthesizing complex information into clear strategic recommendations. The pressure-and-deadline environment suits their performance-orientation; the constant learning suits their Ni-driven need for insight.
+
+### 3. Research Science
+Academic or applied research rewards the INTJ's long-term pattern recognition and tolerance for working alone. The key is choosing domains where the INTJ finds genuine meaning — the combination of mastery and purpose is essential.
+
+### 4. Law (Litigation or Intellectual Property)
+INTJs' analytical precision, strategic thinking, and comfort with adversarial environments make them effective litigators. IP law also suits their tendency toward technical domains.
+
+### 5. Entrepreneurship / Executive Leadership
+INTJs make strong founders when paired with extroverted operators who handle the relationship-intensive work. As executives, they set clear strategy and high standards — though their weakness is developing others and tolerating incremental progress.
+
+### 6. Data Science / Quantitative Analysis
+Pattern-finding in complex datasets aligns directly with Ni. INTJs who are drawn to numbers often excel here, particularly in model architecture and strategic interpretation.
+
+### 7. Financial Analysis / Investment
+Long-range thinking, analytical rigor, and comfort with uncertainty make INTJs well-suited for asset management, research, and investment strategy.
+
+## Careers INTJs Often Struggle In
+
+- **Sales** (especially relationship-based sales requiring constant social energy)
+- **Teaching young children** (requires high agreeableness and repetition tolerance)
+- **Event coordination** (high logistical detail, lots of people management with little strategic depth)
+- **Customer service** (emotionally taxing, little intellectual reward)
+
+## The Big Five Framing
+
+INTJ career success correlates strongly with their Big Five profile: low Extraversion, high Conscientiousness, high Openness. High Conscientiousness predicts career achievement across virtually every domain studied. Their challenge is that low Agreeableness can create friction in collaborative environments, and they need to consciously develop leadership skills that don't rely purely on competence.
+
+[Take Innermind's assessment](/auth/login) to understand your complete profile — Big Five, values, and a personalized psychological portrait.
+`,
+  },
+  {
+    slug: 'best-careers-for-infj',
+    title: 'Best Careers for INFJs: Where the Rarest Type Thrives',
+    description: 'INFJs need meaning, depth, and autonomy. The right career makes full use of their rare combination of insight and empathy. Here is where they excel.',
+    publishedAt: '2026-03-12',
+    readingTime: 8,
+    category: 'Career',
+    keywords: ['best careers for INFJ', 'INFJ career', 'INFJ jobs'],
+    content: `
+## What INFJs Need From Work
+
+INFJs are the rarest MBTI type (roughly 1-2% of the population). They are driven by a deep need for meaning — work that doesn't connect to something that matters is psychologically draining for them, no matter the compensation.
+
+Key requirements:
+- **Purpose and impact** — contributing to something larger than the job itself
+- **Creative and intellectual depth** — surface-level work feels hollow
+- **Relative autonomy** — they work best with freedom to think independently
+- **Limited conflict** — high-conflict environments with political in-fighting exhaust them
+- **Genuine connection** — they need to feel their work touches real people
+
+What depletes INFJs: environments that feel meaningless, toxic interpersonal dynamics, excessive social performance with no depth, and the feeling that their insights are being ignored or wasted.
+
+## Top Career Paths for INFJs
+
+### 1. Counseling and Psychotherapy
+Perhaps the most natural fit. INFJs' combination of empathy, pattern recognition, and genuine care for individual growth aligns precisely with the therapeutic relationship. Many INFJs find counseling both deeply meaningful and professionally sustainable — provided they maintain strong personal boundaries.
+
+### 2. Writing and Journalism
+INFJs often have a strong writerly voice — precise, layered, and oriented toward meaning. Long-form journalism, literary writing, or content creation in domains they care about allows them to express Ni insights without the relational exhaustion of people-intensive work.
+
+### 3. Teaching (Higher Education)
+At the university level, teaching allows for intellectual depth and genuine mentoring. INFJs often become the professors students remember decades later. The challenge is the administrative layer that increasingly comes with academic roles.
+
+### 4. Human Resources Strategy and Organizational Development
+INFJs' combination of systems thinking and people insight makes them unusually effective in organizational design, culture-building, and strategic HR — as distinct from transactional HR work.
+
+### 5. UX Research
+Understanding what people actually experience and need — and translating that into design insights — suits INFJs' empathetic pattern recognition. The research-oriented nature means depth over breadth.
+
+### 6. Healthcare (Medicine, Nursing, Social Work)
+Many INFJs are drawn to medicine by its combination of direct human impact and intellectual complexity. The risk is burnout from the systemic frustrations of healthcare systems.
+
+### 7. Non-Profit Leadership and Social Enterprise
+INFJs often find their most energized professional selves in mission-driven organizations. The alignment of values and work resolves the meaning gap that troubles them in purely commercial contexts.
+
+## Careers INFJs Often Struggle In
+
+- **High-volume sales** (quantity over depth)
+- **Investment banking** (values and culture often misaligned)
+- **Military command** (direct authority and conflict requirement)
+- **Manufacturing management** (limited meaning, high routine)
+
+## Beyond Type: The Values Layer
+
+The Big Five correlate of an INFJ profile — high Openness, moderate Agreeableness, moderate Conscientiousness, low Extraversion — predicts career in the arts, education, and social services. But the Schwartz Values framework adds more: INFJs typically score high on Benevolence and Universalism, which predicts career satisfaction only in roles where those values are expressed.
+
+[Take Innermind's assessment](/auth/login) to understand what drives you at the values level — not just your personality type.
+`,
+  },
+  {
+    slug: 'best-careers-for-enfp',
+    title: 'Best Careers for ENFPs: Jobs That Match Their Energy and Vision',
+    description: 'ENFPs need variety, meaning, and people. The wrong career stifles them fast. Here are the roles where ENFP strengths create genuine success.',
+    publishedAt: '2026-03-12',
+    readingTime: 8,
+    category: 'Career',
+    keywords: ['best careers for ENFP', 'ENFP career', 'ENFP jobs'],
+    content: `
+## The ENFP Career Problem
+
+ENFPs are gifted at almost everything when they're engaged — creative, people-smart, idea-generating, and infectiously enthusiastic. The problem isn't finding something they can do. It's finding something that holds their interest long enough to become career-defining.
+
+ENFPs are among the most likely types to change careers multiple times, start projects they don't finish, and feel guilty about their inability to sustain engagement with things that once excited them. This is a Ne-dominant pattern, not a character flaw.
+
+The solution isn't finding the one perfect career. It's structuring work that has enough variety, meaning, and human connection built in that the natural Ne restlessness doesn't become corrosive.
+
+## What ENFPs Need at Work
+
+- **Novelty and variety** — repetitive, routine work kills their engagement
+- **Meaningful impact** — they need to feel the work matters
+- **People interaction** — genuine human connection, not just transactions
+- **Creative freedom** — being boxed into rigid processes drains them
+- **Appreciation and recognition** — ENFPs need to feel their contributions are valued
+
+## Top Career Paths
+
+### 1. Marketing and Brand Strategy
+ENFPs' combination of creative thinking, people insight, and enthusiasm makes them strong marketers — especially in strategy, brand, and creative direction. The variety and social dimension keep them engaged.
+
+### 2. Entrepreneurship
+Many ENFPs' ideal career is their own company. They generate ideas constantly, connect with people naturally, and can be charismatic leaders. The challenge is building the operational infrastructure around their vision — which typically means partnering with a strong operator.
+
+### 3. Journalism and Writing
+ENFPs are natural storytellers. Feature journalism, investigative reporting, content creation, and literary work all suit their ability to find angles, interview people, and synthesize disparate information into compelling narrative.
+
+### 4. Coaching and Consulting
+Individual or executive coaching allows ENFPs to use their insight, empathy, and enthusiasm in direct service of people's growth. The variety of clients keeps the work fresh; the genuine impact provides meaning.
+
+### 5. Teaching and Training
+At any level, ENFPs tend to be the teachers students love — energetic, creative, and genuinely invested in people. Corporate training and L&D roles can provide the people-focus without the institutional constraints of traditional education.
+
+### 6. Product Management
+ENFPs who develop analytical rigor make excellent PMs. The role requires user empathy, strategic thinking, cross-functional communication, and comfort with ambiguity — all natural ENFP strengths.
+
+### 7. Non-Profit and Social Impact
+When ENFPs find a cause they believe in, they are tireless advocates. Development, program management, and leadership roles in mission-driven organizations suit them well.
+
+## Structural Tips
+
+ENFPs often benefit from:
+- **Accountability structures** — a business partner, coach, or strong second-in-command
+- **Periodic sabbaticals** within a career — taking on different roles or projects every 2-3 years
+- **Clear metrics** they care about — having visible, meaningful goals counteracts the tendency to drift
+
+[Take Innermind's assessment](/auth/login) to understand your values and psychological profile — the foundation for career choices that actually stick.
+`,
+  },
+  {
+    slug: 'best-careers-for-introverts',
+    title: 'Best Careers for Introverts: High-Income Roles That Don\'t Require Constant Socializing',
+    description: 'Introversion is not a liability in the workforce. Many of the most respected and well-paid careers favor introverts. Here is the definitive guide.',
+    publishedAt: '2026-03-13',
+    readingTime: 9,
+    category: 'Career',
+    keywords: ['best careers for introverts', 'introvert jobs', 'career for introverts'],
+    content: `
+## Introversion Is Not a Career Handicap
+
+The popular narrative that introverts must "overcome" their introversion to succeed professionally is wrong. Many of the most respected, high-income, and intellectually demanding careers strongly favor introverted traits: comfort with solitary focus, depth over breadth, careful observation, and the ability to think independently without needing external validation.
+
+The issue isn't introversion. It's finding environments that leverage introversion rather than penalize it.
+
+## What Introverts Need in a Career
+
+- **Deep work opportunities** — extended focus without interruption
+- **Manageable social load** — meaningful interactions, not constant noise
+- **Autonomy and independence** — freedom to work at their own pace and style
+- **Depth and expertise** — contexts where mastery is rewarded over constant networking
+- **Respect for their work** — recognition that comes from output quality, not self-promotion
+
+## The Best Career Categories for Introverts
+
+### Technology
+Software engineering, data science, security research, and systems architecture are among the most introvert-friendly careers. Deep technical work is rewarded; you can build an entire career on contribution without becoming a constant social presence.
+
+Specific roles: software engineer, backend developer, data scientist, machine learning engineer, cybersecurity analyst, database administrator.
+
+### Research and Academia
+The university research environment — despite its politics — fundamentally rewards the ability to think deeply, read voraciously, and generate original ideas. Introverts dominate in research roles across every scientific domain.
+
+Specific roles: research scientist, university professor, lab researcher, policy analyst, economist.
+
+### Writing and Editing
+Journalists, novelists, technical writers, editors, and content strategists can build successful careers around output that doesn't require constant social performance. Long-form writing especially rewards the introvert's tendency toward depth and precision.
+
+Specific roles: technical writer, editor, science writer, UX writer, author.
+
+### Finance and Analysis
+Financial modeling, investment research, quantitative analysis, and accounting all reward precision, independent thinking, and the ability to work with data. Many elite investment professionals are deeply introverted.
+
+Specific roles: financial analyst, portfolio manager, actuary, accountant, risk analyst.
+
+### Design
+UX/UI design, architecture, industrial design, and graphic design all allow creative work that happens largely solo. Client-facing design work exists but can be structured and bounded.
+
+Specific roles: UX designer, architect, industrial designer, interior designer, graphic designer.
+
+### Legal
+Transactional law, research-heavy practice areas, and judicial roles favor the introvert's capacity for careful analysis. Litigation is mixed — it requires courtroom presence but extensive solo preparation.
+
+Specific roles: legal researcher, transactional attorney, compliance counsel, patent attorney, judge.
+
+## Myths to Let Go Of
+
+**Myth: Introverts can't be leaders.** Plenty of successful leaders are introverted — they typically lead through expertise and measured judgment rather than charisma and energy.
+
+**Myth: Introverts should push themselves toward extroverted careers for growth.** Growth comes from developing flexibility, not from abandoning your fundamental nature.
+
+**Myth: Remote work is always better for introverts.** Some introverts find remote work isolating; they need some social structure. The goal is the right amount of interaction, not zero.
+
+## The Big Five Framing
+
+Introversion in the Big Five is the low end of the Extraversion dimension — and low Extraversion doesn't just mean disliking parties. Low scorers process information more carefully, have stronger working memory, are better at sustaining attention, and are less susceptible to distraction. These are assets in many high-value careers.
+
+[Take Innermind's assessment](/auth/login) to understand your full personality profile including your Big Five traits, values, and psychological portrait.
+`,
+  },
+  {
+    slug: 'isfj-vs-isfp',
+    title: 'ISFJ vs ISFP: Two Gentle Types With Very Different Inner Worlds',
+    description: 'ISFJs and ISFPs are both quiet, caring, and private. But their inner emotional worlds and motivations are entirely different. Here is how to distinguish them.',
+    publishedAt: '2026-03-13',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ISFJ vs ISFP', 'ISFJ or ISFP', 'ISFJ ISFP difference'],
+    content: `
+## Two Quiet Types That Seem Similar
+
+ISFJs and ISFPs are both introverted, feeling-oriented types known for warmth, care, and a quiet presence. They're easy to confuse — especially from the outside, where both appear gentle, reserved, and accommodating.
+
+The internal difference is significant.
+
+## The Cognitive Function Split
+
+**ISFJ:** Introverted Sensing (Si) + Extraverted Feeling (Fe)
+**ISFP:** Introverted Feeling (Fi) + Extraverted Sensing (Se)
+
+**ISFJs** are anchored in memory and tradition (Si) and oriented outward toward others' needs (Fe). They maintain stability, honor commitments, and care for others in practical, reliable ways.
+
+**ISFPs** are anchored in personal values (Fi) and present-moment sensation (Se). They care deeply, but from an intensely personal inner world. Their care is authentic and free-spirited rather than structured and service-oriented.
+
+## Duty vs. Authenticity
+
+The clearest distinction: **ISFJs feel obligated; ISFPs feel authentic.**
+
+ISFJs often do things because they feel they *should* — they have a strong sense of duty, commitment, and care for what others expect from them. This is Si-Fe in action: comparing the present to past experience and adjusting toward others' needs.
+
+ISFPs do things because they feel true to who they are. Their behavior tracks their internal values, not external expectations. They are less likely to help from a sense of obligation and more likely to help because it genuinely aligns with what they care about.
+
+## Organized vs. Flexible
+
+**ISFJs** are among the most organized and reliable J types. They maintain routines, remember important dates, and plan around others' needs.
+
+**ISFPs**, despite being caring and sensitive, are highly flexible and spontaneous. They resist rigid structure and prefer to respond to life as it unfolds.
+
+## What They Share
+
+- A need for quiet and private space
+- Genuine warmth and care for those close to them
+- Difficulty with abstract theorizing — both are grounded in the concrete
+- Tendency to avoid direct conflict
+
+## How to Tell Which You Are
+
+- Do you feel strong obligations to help others and maintain traditions? → ISFJ
+- Do you follow your own internal compass, even when it diverges from expectations? → ISFP
+- Are you organized and reliable? → ISFJ
+- Are you flexible and spontaneous, even if you're quiet? → ISFP
+
+[Take Innermind's assessment](/auth/login) for a complete psychological portrait.
+`,
+  },
+  {
+    slug: 'istj-vs-istp',
+    title: 'ISTJ vs ISTP: Systematic and Precise — But in Different Ways',
+    description: 'ISTJs and ISTPs are both introverted, logical, and practical. The difference is in how they use that logic and how much they respect structure.',
+    publishedAt: '2026-03-13',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ISTJ vs ISTP', 'ISTJ or ISTP', 'ISTJ ISTP difference'],
+    content: `
+## Two Logical Introverts, Different Orientations
+
+ISTJs and ISTPs share a reputation for being quiet, practical, and logical. They're both task-focused and emotionally reserved. But they operate from entirely different cognitive architectures, leading to very different approaches to work, structure, and problem-solving.
+
+## The Cognitive Split
+
+**ISTJ:** Introverted Sensing (Si) + Extraverted Thinking (Te)
+**ISTP:** Introverted Thinking (Ti) + Extraverted Sensing (Se)
+
+**ISTJs** are anchored in memory and past experience (Si) and execute through organized external systems (Te). They rely on established methods, respect procedures, and honor commitments. They are the most reliable and organized of the introverted types.
+
+**ISTPs** are anchored in internal logical analysis (Ti) and present-moment physical reality (Se). They troubleshoot from first principles, often bypassing established procedures if they see a more direct solution. They are highly adaptable but resist unnecessary structure.
+
+## The Role of Rules
+
+This is the clearest behavioral difference:
+
+**ISTJs** tend to respect rules and procedures. They follow established processes because experience has shown that systems work — even if the reason isn't immediately apparent in a given case.
+
+**ISTPs** respect logic, not rules. They will follow a procedure if it makes sense; they'll bypass it efficiently if it doesn't. This makes them excellent troubleshooters and frustrating rule-followers.
+
+## Under Pressure
+
+**ISTJs** under stress become rigid, detail-obsessed, and catastrophizing. They double down on procedure when the environment becomes chaotic.
+
+**ISTPs** under stress detach. They withdraw into themselves, become hyperlogical, and can seem cold or dismissive when they're actually processing.
+
+## Career Overlap and Divergence
+
+Both types do well in technical fields. ISTJs excel in accounting, law, project management, and operations — roles with defined procedures and clear standards. ISTPs excel in engineering, mechanical work, surgery, and crisis response — roles that require rapid, accurate diagnosis and physical or technical mastery.
+
+[Take Innermind's assessment](/auth/login) to go beyond MBTI and understand your complete psychological profile.
+`,
+  },
+  {
+    slug: 'enneagram-type-5-career',
+    title: 'Enneagram Type 5 Career Guide: Where Investigators Thrive',
+    description: 'Type 5s are rare analytical minds who need independence and mastery. Here are the careers where they do their best work — and the environments to avoid.',
+    publishedAt: '2026-03-14',
+    readingTime: 8,
+    category: 'Career',
+    keywords: ['enneagram type 5 career', 'enneagram 5 jobs', 'investigator personality career'],
+    content: `
+## The Type 5 Career Challenge
+
+Enneagram Type 5s — the Investigators — are among the most intellectually powerful types. They observe, analyze, and construct comprehensive mental models. They are often the most expert person in the room on their specialty.
+
+Their career challenge is different from other types. It's not finding something intellectually stimulating. It's finding something that doesn't require more social energy than they can sustain — and that gives them enough privacy, mastery, and independence to function at their best.
+
+## What Type 5s Need at Work
+
+- **Depth of expertise** — the opportunity to become genuinely excellent in their domain
+- **Privacy and space** — time to think and work without constant interruption
+- **Minimal performative social requirements** — they can handle interactions but not constant ones
+- **Intellectual peers** — colleagues they respect and can learn from
+- **Clear role boundaries** — knowing where their responsibility starts and ends
+
+What Type 5s cannot tolerate: micromanagement, emotionally chaotic environments, politics over substance, or pressure to be "on" socially.
+
+## Top Career Paths
+
+**Research Science.** The natural home for many Type 5s. The expectation of solitude, depth, and domain mastery aligns with their core drives. Any scientific domain works if the Type 5 has genuine curiosity about it.
+
+**Software Engineering.** Building and understanding systems is quintessential Type 5 work. Senior individual contributor tracks, architecture roles, and research engineering positions offer autonomy and intellectual challenge.
+
+**Philosophy, History, and Humanities Academia.** Type 5s often gravitate toward the humanities as much as sciences — particularly when the field involves careful analysis of complex bodies of knowledge.
+
+**Financial Analysis and Economics.** Pattern-finding in markets, constructing economic models, and managing research portfolios suit the Type 5's analytical orientation.
+
+**Medical Specialties.** Pathology, radiology, psychiatry (the analytical side), and research medicine all suit Type 5s — areas where expertise is paramount and patient-facing demands are manageable.
+
+**Security and Intelligence Analysis.** Threat analysis, OSINT, and intelligence work reward the Type 5's comfort with assembling information from dispersed sources.
+
+## Growth Edge
+
+Type 5s often need to consciously push against their tendency to withdraw into preparation instead of action. The belief that they need "just a little more information" before engaging is the Type 5 defense mechanism. In careers, this can look like:
+
+- Staying in research indefinitely rather than publishing or acting
+- Overqualifying for roles they could do now
+- Avoiding leadership positions they are ready for
+
+The healthy Type 5 engages with adequate preparation, not perfect preparation.
+
+[Take Innermind's assessment](/auth/login) to understand your Enneagram type and the Big Five traits that shape how it expresses in your life.
+`,
+  },
+  {
+    slug: 'infp-enfj-compatibility',
+    title: 'INFP and ENFJ Compatibility: The Idealist and the Mentor',
+    description: 'INFPs and ENFJs both care deeply about meaning and people. But their different function stacks create surprising compatibility — and specific tensions.',
+    publishedAt: '2026-03-14',
+    readingTime: 8,
+    category: 'Compatibility',
+    keywords: ['INFP ENFJ compatibility', 'INFP ENFJ relationship', 'MBTI compatibility'],
+    content: `
+## A Pairing Built on Shared Idealism
+
+INFPs and ENFJs share a core orientation: they both care deeply about authenticity, meaning, and human flourishing. From the outside, they look like natural partners — both sensitive, values-driven, and oriented toward personal growth.
+
+The difference is in how they relate to other people's emotions.
+
+## The Cognitive Difference That Matters
+
+**INFP:** Introverted Feeling (Fi) + Extraverted Intuition (Ne)
+**ENFJ:** Extraverted Feeling (Fe) + Introverted Intuition (Ni)
+
+The crucial pair: **Fi vs. Fe**.
+
+INFPs process feelings internally. Their emotional world is personal and deep, but it's theirs — they don't naturally broadcast it or try to manage the emotional atmosphere around them.
+
+ENFJs process feelings externally. They read the room constantly, adjust their behavior to optimize group harmony, and instinctively try to improve others' emotional states. This is an active, outward function.
+
+## What Works
+
+- Shared commitment to personal growth and meaning
+- ENFJs' warmth and investment in people gives INFPs a sense of being genuinely cared for
+- INFPs' authenticity challenges ENFJs to be more honest rather than just harmonious
+- Both appreciate deep conversation and dislike superficiality
+- ENFJs provide structure and social navigation the INFP often lacks
+
+## The Core Tension
+
+**ENFJs try to fix emotions. INFPs need space to feel them.**
+
+When the INFP is processing something difficult, the ENFJ's natural response is to help — offer solutions, reframe, provide comfort. But INFPs often need to sit with their feelings privately before they're ready to engage. The ENFJ's well-meaning intervention can feel intrusive or like pressure to resolve something the INFP isn't ready to resolve.
+
+**INFPs prioritize personal authenticity. ENFJs prioritize relational harmony.** This creates conflict when the INFP's honest self-expression disrupts the harmony the ENFJ is maintaining.
+
+## Making It Work
+
+- ENFJs should learn to ask "do you want me to help or just listen?" before jumping to solutions
+- INFPs should communicate their processing needs explicitly rather than withdrawing without explanation
+- ENFJs need to allow space for the INFP to be emotionally honest without rushing to smooth it over
+- INFPs should recognize that the ENFJ's need for relational warmth is genuine, not performative
+
+[Take Innermind's assessment](/auth/login) for your full psychological portrait including attachment style, values, and a personalized AI synthesis.
+`,
+  },
+  {
+    slug: 'intp-entj-compatibility',
+    title: 'INTP and ENTJ Compatibility: Logic Meets Command',
+    description: 'INTPs and ENTJs share a love of systems and strategy but clash on execution and emotional style. Here is an honest look at this pairing.',
+    publishedAt: '2026-03-14',
+    readingTime: 8,
+    category: 'Compatibility',
+    keywords: ['INTP ENTJ compatibility', 'INTP ENTJ relationship', 'MBTI compatibility'],
+    content: `
+## The Shared Foundation
+
+INTPs and ENTJs both operate from a logic-first framework. They value competence, strategic thinking, and intellectual rigor. They can have the kind of direct, argument-based conversations that both find refreshing — where ideas are challenged on their merits, not dismissed for political reasons.
+
+Both types are capable of sustained focus on complex problems and share a general impatience with superficiality.
+
+## The Cognitive Split
+
+**INTP:** Introverted Thinking (Ti) + Extraverted Intuition (Ne)
+**ENTJ:** Extraverted Thinking (Te) + Introverted Intuition (Ni)
+
+**INTPs** build internal logical frameworks (Ti) and explore possibilities (Ne). They are analytical, exploratory, and slow to commit. They value precision over speed.
+
+**ENTJs** execute via external structure (Te) and synthesize toward singular strategic visions (Ni). They are decisive, ambitious, and fast-moving. They value efficiency and results.
+
+## The Friction
+
+**Pace.** ENTJs move fast. INTPs move carefully. The ENTJ's decisiveness feels premature to the INTP; the INTP's thoroughness feels like stalling to the ENTJ.
+
+**Emotional expression.** Neither type is naturally warm, but they have different failure modes. ENTJs can become domineering under stress; INTPs become withdrawn and emotionally inaccessible. Neither has a strong infrastructure for relational vulnerability.
+
+**Control.** ENTJs like to be in charge. INTPs resist authority and bristle when someone else is setting the direction — especially if the INTP thinks the direction is suboptimal.
+
+**Recognition.** ENTJs often need external achievement and recognition; INTPs are more internally motivated and can find the ENTJ's drive for status slightly alien.
+
+## What Works
+
+- Intellectual respect: when both see the other as a genuine peer, this works
+- Complementary strengths: the ENTJ executes what the INTP designs
+- Shared standards: both hold themselves and others to high competence standards
+- Directness: neither needs to work around honesty
+
+## The Key to Making It Work
+
+The ENTJ needs to resist dominating decision-making. The INTP needs to avoid passive-aggressive withdrawal when overruled. Explicit agreements about who decides what in which contexts reduce chronic friction.
+
+[Take Innermind's assessment](/auth/login) to understand your psychological profile beyond four-letter types.
+`,
+  },
+  {
+    slug: 'fictional-characters-infj',
+    title: 'Famous INFJ Fictional Characters: Psychology Behind the Archetypes',
+    description: 'INFJs show up in fiction as visionary, principled, and quietly intense. These fictional characters reveal what the INFJ inner world actually looks like in practice.',
+    publishedAt: '2026-03-15',
+    readingTime: 8,
+    category: 'MBTI Types',
+    keywords: ['INFJ fictional characters', 'INFJ characters', 'INFJ examples'],
+    content: `
+## Why Fiction Gets INFJs Right
+
+Fictional characters, unconstrained by social performance, often express personality types more purely than real people. INFJs in fiction tend to show up in a consistent pattern: strategic vision combined with deep emotional attunement, quiet intensity, unwavering principles, and a complex relationship with the external world.
+
+Here are iconic INFJ fictional characters — and what they reveal about the type.
+
+## Atticus Finch (To Kill a Mockingbird)
+
+Atticus embodies the INFJ's core: principled conviction combined with genuine empathy. He doesn't fight racism because it's popular. He fights it because he has seen through the surface of his society to something deeper — and his Ni-driven vision of moral reality compels him to act even when it's futile.
+
+His Fe shows in his deep attunement to his children, his community, and the humanity of Tom Robinson. He is not emotionally cold; he is emotionally precise.
+
+## Aragorn (The Lord of the Rings)
+
+Aragorn represents the INFJ's relationship with destiny and duty. He has spent decades in exile, denying the leadership role he was born into because he fears corrupting it. This is Ni-Fe: the weight of vision combined with the moral sensitivity to the consequences of power.
+
+When he acts, it is with strategic precision and personal sacrifice. He leads from depth rather than charisma.
+
+## Hermione Granger (Harry Potter)
+
+Later-book Hermione shows mature INFJ traits more than her early ISTJ presentation: the shift from rule-following toward principled action when the rules become unjust. Her advocacy for house elves (SPEW) is quintessential INFJ — seeing something morally intolerable that everyone else is comfortable ignoring.
+
+## Will Graham (Hannibal)
+
+Will Graham is the INFJ shadow made explicit. His empathic ability to inhabit others' perspectives (Ni + Fe taken to an extreme) is his greatest strength and his unraveling. The INFJ's ability to understand people completely can become psychologically destabilizing when taken to its limit.
+
+## Jon Snow (Game of Thrones)
+
+Jon Snow's arc tracks INFJ development: internal certainty about what is right, difficulty communicating it to others, willingness to make personal sacrifices for principles, and the isolation that comes from seeing what others don't see.
+
+## What These Characters Share
+
+- A vision of how things should be that they're willing to sacrifice for
+- Empathy that extends to enemies and outcasts
+- Difficulty being fully understood by those close to them
+- Periods of intense isolation
+- Action driven by internal conviction, not external pressure
+
+[Take Innermind's assessment](/auth/login) to get your complete psychological portrait — you might see yourself in unexpected places.
+`,
+  },
+  {
+    slug: 'fictional-characters-intj',
+    title: 'Famous INTJ Fictional Characters: The Strategist in Story',
+    description: 'INTJs in fiction are the chess masters, the masterminds, the architects of long-term plans. These characters illuminate what INTJ psychology actually looks like.',
+    publishedAt: '2026-03-15',
+    readingTime: 8,
+    category: 'MBTI Types',
+    keywords: ['INTJ fictional characters', 'INTJ characters', 'INTJ examples'],
+    content: `
+## The INTJ in Fiction
+
+Writers love INTJs. The strategic, cold, independently-minded mastermind who sees further than everyone else is one of fiction's most compelling archetypes. The best INTJ characters don't just plot strategically — they show the costs of a mind that prioritizes vision over connection.
+
+## Sherlock Holmes
+
+Holmes is the archetype. Brilliant, independent, contemptuous of sentimentality, possessed of a pattern-recognition ability that borders on supernatural — he is everything the INTJ stereotype contains. What makes the Conan Doyle original interesting is the loneliness underneath: Holmes is one of the few types who might genuinely prefer solitude, but Watson reveals that he needs genuine partnership more than he admits.
+
+The modern BBC Sherlock extends this: Sherlock repeatedly demonstrates that his cold exterior isn't emotional absence but emotional defense.
+
+## Walter White (Breaking Bad)
+
+Walter White is the INTJ's shadow — brilliance, strategic execution, and Ni-Te working in perfect service of ego rather than vision. He doesn't just cook meth; he builds a criminal empire with architectural precision. The tragedy is that the same traits that could have made him exceptional in legitimate contexts are catastrophic when uncoupled from moral restraint.
+
+His I'm-the-one-who-knocks speech is pure INTJ decompensation: Ni vision metastasizing into grandiosity.
+
+## Petyr Baelish (Game of Thrones)
+
+Littlefinger plans three moves ahead of everyone else and has the patience to execute over decades. His downfall — overconfidence in his ability to predict and manipulate Sansa Stark — is also classically INTJ: the assumption that their model of the board is more complete than it is.
+
+## Ender Wiggin (Ender's Game)
+
+Ender is a more sympathetic archetype: the INTJ burden of seeing the most efficient path forward while the cost of that path is the destruction of something innocent. His strategic genius is inseparable from his moral sensitivity — which is what makes him an unusual INTJ, one in whom the Fe is visible.
+
+## Hannibal Lecter
+
+Lecter represents the INTJ aesthetic — the intellectual who surrounds himself with beauty, precision, and mastery. His evil is less compulsive than calculated. He kills the rude because rudeness offends his vision of how things should be. The vision without ethics is the INTJ's darkest potential.
+
+## What These Characters Share
+
+- Long-range strategic thinking others can't track
+- Independence from social pressure
+- A preference for competence that can shade into contempt
+- Solitude as genuine preference, not just circumstance
+- The particular INTJ vulnerability: the plan that depends on others behaving rationally
+
+[Take Innermind's assessment](/auth/login) for your complete psychological portrait.
+`,
+  },
+  {
+    slug: 'fictional-characters-enfp',
+    title: 'Famous ENFP Fictional Characters: The Visionary Free Spirit in Story',
+    description: 'ENFPs in fiction bring energy, idealism, and a infectious belief in possibilities. These characters reveal the ENFP inner world — including the darker undercurrents.',
+    publishedAt: '2026-03-15',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ENFP fictional characters', 'ENFP characters', 'ENFP examples'],
+    content: `
+## ENFPs on the Page
+
+ENFPs bring something distinctive to fiction: an energy that illuminates the stories of others. They're often supporting characters who become the heart of a story, or protagonists whose journey is about learning to channel their limitless enthusiasm into sustainable commitment.
+
+## Anne Shirley (Anne of Green Gables)
+
+Anne is perhaps fiction's most beloved ENFP: imagination, warmth, enthusiasm for ideas, a deep sense of personal values, and a gift for connection. Her inner world is rich to the point of overflowing. She transforms everything she touches with meaning and narrative.
+
+Her growth arc is specifically ENFP: learning that the world will not always match her imagination, and that this is survivable.
+
+## Don Quixote
+
+Don Quixote is the ENFP extreme — Ne divorced from reality, generating meaning and possibility in everything, transforming windmills into giants. It's played as comedy and tragedy, but the underlying movement is recognizable: the cost of living entirely in the world of possibility rather than accepting the world as it is.
+
+## Phoebe Buffay (Friends)
+
+Phoebe is the ENFP idealized: cheerfully independent, creative, values-driven, and willing to follow her inner compass regardless of what others think. Her eccentric worldview is treated as charming, which shows how the ENFP's authentic self-expression is received when the environment is safe.
+
+## Nymphadora Tonks (Harry Potter)
+
+Tonks embodies the ENFP qualities: spontaneous, warm, unconventional, gifted at connecting with people across differences. Her transformation magic is a literal representation of the ENFP's adaptability.
+
+## Robin Williams characters (across films)
+
+Williams repeatedly played ENFP archetypes — the teacher in Dead Poets Society, the therapist in Good Will Hunting, the father in Mrs. Doubtfire. These roles share the ENFP's combination of warmth, enthusiasm, and the need to help others find their own authentic voice.
+
+## What These Characters Share
+
+- An internal world of meanings and possibilities
+- Infectious enthusiasm that draws others in
+- Strong personal values (Fi), not just social warmth
+- The ENFP's signature challenge: committing when life keeps offering new possibilities
+- Genuine care for others that is deeply personal, not performative
+
+[Take Innermind's assessment](/auth/login) to understand your complete psychological profile.
+`,
+  },
+  {
+    slug: 'personality-type-job-fit',
+    title: 'Personality Type and Job Fit: What the Research Actually Shows',
+    description: 'The relationship between personality and career fit is real — but more nuanced than type-lists suggest. Here is what the evidence says about personality-career matching.',
+    publishedAt: '2026-03-16',
+    readingTime: 9,
+    category: 'Career',
+    keywords: ['personality type job fit', 'personality career match', 'Big Five career research'],
+    content: `
+## Does Personality Predict Career Success?
+
+The short answer: yes, but imperfectly, and in specific ways. The longer answer involves understanding which personality dimensions predict what — and why single-framework typing misses most of the story.
+
+## What Big Five Research Shows
+
+The most rigorous personality-career research uses the Big Five, not MBTI, because the Big Five has continuous dimensions that produce statistically tractable predictions. Key findings:
+
+**Conscientiousness is the single most consistent predictor of job performance across almost every occupation studied.** It predicts performance in professional, trade, and manual roles alike. The effect size is modest but reliable. High Conscientiousness people show up, follow through, and consistently outperform lower scorers over time.
+
+**Extraversion predicts performance in roles with high social demands** — sales, management, and team-intensive environments. The effect is domain-specific, not universal.
+
+**Openness predicts performance in creative and complex roles** — research, creative work, entrepreneurship, and roles requiring adaptation. It also predicts training performance and the ability to learn new skills.
+
+**Neuroticism (emotional instability) is a consistent negative predictor** across most domains. High Neuroticism is associated with lower performance, more counterproductive work behaviors, and higher turnover. The relationship is not deterministic — many high-Neuroticism individuals are high performers — but the trend is robust.
+
+**Agreeableness** has mixed career implications. High Agreeableness is associated with better teamwork and lower counterproductive behavior, but lower Agreeableness is associated with higher earnings in competitive fields.
+
+## Why MBTI Type Lists Are Incomplete
+
+"INTJs are suited for engineering and law" is not a finding — it's a generalization that combines several underlying traits that predict career success independently.
+
+What actually predicts:
+- High Conscientiousness: performance across all domains
+- High Openness: creative and complex domains
+- High Extraversion: socially demanding roles
+- The specific trait pattern matters more than the overall type label
+
+Two INTJs with different Big Five profiles (especially on Conscientiousness and Neuroticism) will have very different career trajectories.
+
+## The Values Layer
+
+Beyond traits, Schwartz Values theory adds important predictive power. Career satisfaction requires alignment between your work environment's reward structure and your core values. A person high in Benevolence values will be chronically dissatisfied in highly competitive, zero-sum environments — regardless of their MBTI type or Big Five traits.
+
+## Practical Implications
+
+When evaluating career fit, ask:
+1. Does this environment reward the traits I actually have (Extraversion, Conscientiousness, Openness) rather than ones I wish I had?
+2. Does this environment's reward structure (power, achievement, affiliation, service) align with my core values?
+3. Am I choosing this for growth or comfort? Both are valid, but they require different career strategies.
+
+[Take Innermind's assessment](/auth/login) to understand your Big Five traits, values, and psychological portrait — the full picture for career planning.
+`,
+  },
+  {
+    slug: 'esfj-vs-esfp',
+    title: 'ESFJ vs ESFP: Warm and Social — But Very Different Underneath',
+    description: 'ESFJs and ESFPs are both warm, friendly, and socially adept. But one is organized and duty-driven, the other spontaneous and sensation-seeking. Here is the real difference.',
+    publishedAt: '2026-03-16',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ESFJ vs ESFP', 'ESFJ or ESFP', 'ESFJ ESFP difference'],
+    content: `
+## Two Social Types That Look Similar
+
+ESFJs and ESFPs are both warm, people-oriented, and extraverted. They're often described in similar terms: caring, social, fun to be around. The meaningful differences emerge when you look at how they structure their lives and what they're actually optimizing for in social situations.
+
+## The Cognitive Split
+
+**ESFJ:** Extraverted Feeling (Fe) + Introverted Sensing (Si)
+**ESFP:** Extraverted Sensing (Se) + Introverted Feeling (Fi)
+
+**ESFJs** lead with Fe — they're fundamentally group-oriented and harmony-focused. Their Si backs this up with memory for people's preferences, established traditions, and reliable routine.
+
+**ESFPs** lead with Se — they're present-moment, sensation-oriented, and responsive to immediate reality. Their Fi provides a personal values foundation that makes their warmth genuine rather than social.
+
+## Organized vs. Spontaneous
+
+**ESFJs** are among the most organized and structured of all types. They plan gatherings, remember anniversaries, maintain traditions, and coordinate people around shared activities. Their Fe-Si combination is wired for this.
+
+**ESFPs** are spontaneous and present-focused. They're as likely to turn a Tuesday into an adventure as they are to cancel plans if something more interesting comes up. Structure feels constraining.
+
+## Harmony vs. Experience
+
+**ESFJs** prioritize relational harmony. They notice tension in a group and move to smooth it over. They adjust their behavior to make others comfortable and can become skilled social managers.
+
+**ESFPs** prioritize immediate experience and authenticity. They're less driven to maintain harmony and more driven by what feels genuine and alive right now.
+
+## Under Stress
+
+**ESFJs** under stress become anxious, controlling, and worried about what others think. They double down on planning and people-pleasing.
+
+**ESFPs** under stress become impulsive, seek distraction, and avoid difficult conversations by staying in perpetual motion.
+
+[Take Innermind's assessment](/auth/login) to understand your type in the context of your full psychological profile.
+`,
+  },
+  {
+    slug: 'estj-vs-estp',
+    title: 'ESTJ vs ESTP: Leadership-Minded Types With Different Engines',
+    description: 'ESTJs and ESTPs are both assertive, practical, and results-oriented. But one operates by rules and the other by results. Here is how they differ.',
+    publishedAt: '2026-03-16',
+    readingTime: 7,
+    category: 'MBTI Types',
+    keywords: ['ESTJ vs ESTP', 'ESTJ or ESTP', 'ESTJ ESTP difference'],
+    content: `
+## Two Assertive Practical Types
+
+ESTJs and ESTPs share a practical, action-oriented energy. Both are decisive, straightforward, and willing to take charge. The difference is in their relationship to structure, rules, and how they lead.
+
+## The Cognitive Split
+
+**ESTJ:** Extraverted Thinking (Te) + Introverted Sensing (Si)
+**ESTP:** Extraverted Sensing (Se) + Introverted Thinking (Ti)
+
+**ESTJs** lead with Te — structured, organized external thinking. Their Si grounds them in established procedures, precedent, and proven methods. They are the classic organizational manager: reliable, methodical, and accountability-driven.
+
+**ESTPs** lead with Se — immediate, present-moment physical and social reality. Their Ti provides real-time logical analysis. They are the classic improviser and troubleshooter: fast, flexible, and experience-driven.
+
+## Rules vs. Results
+
+**ESTJs** tend to operate by established rules and procedures. Systems exist for good reasons; deviating from them creates risk. They often create and enforce standards.
+
+**ESTPs** operate by results. If a rule helps them get there, fine. If it doesn't, they'll work around it. They're classic pragmatists — outcome-oriented rather than process-oriented.
+
+## Management Style
+
+**ESTJs** manage through structure: clear expectations, accountability metrics, defined processes. They are consistent, fair, and dependable.
+
+**ESTPs** manage through action and crisis: they excel in fast-moving, high-stakes situations that require rapid diagnosis and decisive response. They're often less effective in steady-state management where nothing needs to be fixed.
+
+## Career Overlap
+
+Both types appear frequently in military, business, and leadership roles. ESTJs dominate in operations, management, law enforcement, and administration. ESTPs dominate in sales, entrepreneurship, emergency services, and trades.
+
+[Take Innermind's assessment](/auth/login) for a complete psychological profile beyond type labels.
+`,
+  },
+  {
+    slug: 'isfj-estp-compatibility',
+    title: 'ISFJ and ESTP Compatibility: The Nurturer and the Adventurer',
+    description: 'ISFJs and ESTPs are opposites in nearly every dimension. Is the attraction real, and can it sustain? An honest look at this pairing.',
+    publishedAt: '2026-03-17',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ISFJ ESTP compatibility', 'ISFJ ESTP relationship', 'MBTI compatibility'],
+    content: `
+## Opposites in Every Dimension
+
+ISFJ and ESTP share no cognitive functions in their primary four. They approach life from entirely different orientations: one is introverted, stable, tradition-oriented, and care-driven; the other is extraverted, action-seeking, present-moment, and logic-driven.
+
+Classic opposite-attract territory — which means both high initial fascination and high friction potential.
+
+## What Draws Them Together
+
+**ISFJs are drawn to the ESTP's energy.** ESTPs are exciting, confident, and fully present. For the ISFJ, who tends toward careful, predictable routine, the ESTP feels alive in a way that's genuinely compelling.
+
+**ESTPs are drawn to the ISFJ's warmth and steadiness.** The ESTP's inner world is often more emotionally undernourished than they appear. The ISFJ offers genuine care, reliability, and a sense of being truly known — things the ESTP doesn't often find in their high-energy social circle.
+
+## The Friction
+
+**Stability vs. stimulation.** ISFJs need predictability and routine. ESTPs grow restless in routine. This is a genuine structural incompatibility that requires conscious management.
+
+**Emotional expression.** ISFJs need verbal and relational emotional engagement. ESTPs express care through action and presence, not words. The ISFJ may feel emotionally neglected; the ESTP may feel suffocated.
+
+**Planning.** ISFJs plan carefully. ESTPs decide spontaneously. Every shared event involves navigating this difference.
+
+**Social energy.** ESTPs want to be out, social, active. ISFJs want meaningful small-group or one-on-one connection. Managing their different social needs requires explicit agreement.
+
+## Making It Work
+
+This pairing works when the ESTP genuinely matures into their emotional side (which often happens in their 30s and beyond) and the ISFJ develops enough flexibility to tolerate spontaneity without anxiety. Both need to explicitly appreciate what the other brings rather than treating their differences as problems.
+
+[Take Innermind's assessment](/auth/login) — understanding attachment styles and values matters more than type for predicting relationship success.
+`,
+  },
+  {
+    slug: 'istj-esfp-compatibility',
+    title: 'ISTJ and ESFP Compatibility: Structure Meets Spontaneity',
+    description: 'ISTJs and ESFPs are another classic opposite pairing. Can the most organized type find lasting harmony with the most spontaneous? Here is the honest assessment.',
+    publishedAt: '2026-03-17',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ISTJ ESFP compatibility', 'ISTJ ESFP relationship', 'MBTI compatibility'],
+    content: `
+## When Order Meets Energy
+
+ISTJs and ESFPs occupy opposite corners of the MBTI type table. The ISTJ is introverted, systematic, duty-bound, and reliable. The ESFP is extraverted, spontaneous, sensation-seeking, and present-moment. In the right configuration, this is deeply complementary. In the wrong one, it's chronically frustrating.
+
+## The Attraction
+
+**ESFPs bring ISTJs out of their heads.** The ISTJ's world can become very internal — focused on obligations, procedures, and reliability. The ESFP pulls them into immediate experience, fun, and genuine present-moment enjoyment.
+
+**ISTJs give ESFPs a stable anchor.** ESFPs are often living in a state of beautiful chaos. The ISTJ's reliability, follow-through, and groundedness provides something the ESFP needs but rarely cultivates themselves.
+
+## The Friction Points
+
+**Planning and spontaneity.** ISTJs plan everything; ESFPs are last-minute decision-makers. This difference ripples through every shared decision, from dinner to vacations.
+
+**Emotional directness.** ESFPs express emotions freely and want the same in return. ISTJs are reserved and often feel uncomfortable with emotional expressiveness. The ESFP may feel shut out; the ISTJ may feel flooded.
+
+**Social energy.** ESFPs want constant activity and social engagement. ISTJs need downtime and quiet. This requires explicit negotiation rather than assumption.
+
+**Reliability.** ISTJs are deeply reliability-oriented. When the ESFP doesn't follow through — even on small things — the ISTJ's trust erodes in ways that are hard to rebuild.
+
+## Success Factors
+
+Long-term success requires the ISTJ to develop genuine appreciation for the ESFP's gifts (not just tolerating their spontaneity) and the ESFP to develop genuine respect for the ISTJ's need for structure and follow-through.
+
+[Take Innermind's assessment](/auth/login) — attachment style compatibility matters more than personality type for predicting long-term relationship health.
+`,
+  },
+  {
+    slug: 'isfp-estj-compatibility',
+    title: 'ISFP and ESTJ Compatibility: The Artist and the Administrator',
+    description: 'ISFPs and ESTJs see the world through different lenses. One is guided by personal values and present experience; the other by systems and standards. Can they meet in the middle?',
+    publishedAt: '2026-03-17',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ISFP ESTJ compatibility', 'ISFP ESTJ relationship', 'MBTI compatibility'],
+    content: `
+## A Structural Mismatch — and Its Gifts
+
+ISFPs and ESTJs share no cognitive functions and approach life from opposite frameworks. The ISFP is values-driven, present-focused, and emotionally private. The ESTJ is system-driven, procedure-oriented, and externally expressive.
+
+The attraction often starts with the ESTJ's competence and reliability appealing to the ISFP's need for a stable partner, and the ISFP's authenticity and aesthetic sensitivity appealing to something the ESTJ doesn't often find.
+
+## What Each Brings
+
+**ISFP brings:**
+- Warmth and genuine care
+- Aesthetic sensitivity and creativity
+- Living fully in the present
+- Authenticity that cuts through the ESTJ's tendency toward social performance
+
+**ESTJ brings:**
+- Organization and reliability
+- Willingness to take charge in practical matters
+- Financial and logistical competence
+- Consistency — the ISFP always knows where they stand
+
+## The Friction
+
+**Values vs. standards.** ISFPs make decisions based on personal values; ESTJs make decisions based on established standards and procedures. These can produce radically different conclusions that neither type understands from the other's perspective.
+
+**Emotional style.** ISFPs have a rich inner emotional world they rarely share directly. ESTJs are externally expressive and can be blunt. The ESTJ may see the ISFP as passive; the ISFP may see the ESTJ as overbearing.
+
+**Autonomy.** ISFPs need freedom to follow their inner compass. ESTJs tend toward structure and can become controlling. This is the central tension.
+
+**Criticism.** ESTJs are direct and often critical; ISFPs internalize criticism deeply and may withdraw rather than responding.
+
+## Making It Work
+
+The ESTJ needs to understand that the ISFP's inner world is not a problem to organize. The ISFP needs to communicate needs directly rather than withdrawing when unhappy.
+
+[Take Innermind's assessment](/auth/login) to understand the full picture — values, attachment, and Big Five.
+`,
+  },
+  {
+    slug: 'istp-esfj-compatibility',
+    title: 'ISTP and ESFJ Compatibility: The Lone Wolf and the Social Nurturer',
+    description: 'ISTPs and ESFJs have almost nothing in common on paper. In practice, this pairing creates a specific dynamic that can work — if both understand what they actually need.',
+    publishedAt: '2026-03-17',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ISTP ESFJ compatibility', 'ISTP ESFJ relationship', 'MBTI compatibility'],
+    content: `
+## The Most Opposite Pairing
+
+ISTP and ESFJ share no cognitive functions. The ISTP is logical, detached, present-moment, and deeply private. The ESFJ is emotional, harmonious, tradition-oriented, and socially active. They are the prototypical mismatch.
+
+And yet, this pairing is among the more common in practice. The complementarity is real — each offers what the other most lacks.
+
+## The Attraction
+
+**ESFJs are drawn to ISTPs' self-sufficiency.** Most people in the ESFJ's life need emotional management and maintenance. The ISTP doesn't need this and isn't asking for it. This can be deeply attractive to an ESFJ who is emotionally exhausted from caring for others.
+
+**ISTPs are drawn to ESFJs' warmth and social competence.** ISTPs are often aware that social navigation is their weak point. ESFJs handle this effortlessly. There's something genuinely appealing about someone who makes the social world feel manageable.
+
+## The Friction
+
+**Emotional availability.** ESFJs need regular verbal expression of care, appreciation, and emotional engagement. ISTPs express care through action and presence — not words. The ESFJ will chronically feel emotionally neglected unless this is explicitly addressed.
+
+**Social load.** ESFJs want a rich, active social life. ISTPs recharge in solitude and find large social engagements draining. Navigating this requires genuine compromise.
+
+**Communication style.** ISTPs are direct to the point of bluntness. ESFJs are sensitive to tone and delivery. What the ISTP says as a fact, the ESFJ receives as a criticism.
+
+**Spontaneity vs. planning.** ESFJs plan and maintain traditions. ISTPs respond to the present and resist unnecessary structure. Every shared decision involves this difference.
+
+## The Path Forward
+
+This pairing works best when the ESFJ develops genuine respect for the ISTP's independence (not just tolerating it) and the ISTP makes explicit effort to provide the verbal affirmation the ESFJ needs.
+
+[Take Innermind's assessment](/auth/login) for your psychological portrait including attachment style — which predicts relationship patterns even more accurately than MBTI.
+`,
+  },
+  {
+    slug: 'intj-intp-compatibility',
+    title: 'INTJ and INTP Compatibility: Two Analytical Introverts in Relationship',
+    description: 'INTJs and INTPs are both logical introverts who value competence. But they have different emotional profiles and relationship needs that create specific dynamics.',
+    publishedAt: '2026-03-18',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['INTJ INTP compatibility', 'INTJ INTP relationship', 'MBTI compatibility'],
+    content: `
+## Same Quadrant, Different Engines
+
+INTJs and INTPs share the introverted intuition-plus-logic combination. They can have the kind of deep, precise, wide-ranging intellectual conversations that neither easily finds with other types. The match looks good on paper.
+
+The friction is less about style clash and more about the specific gaps in both types' emotional infrastructure.
+
+## What Works
+
+- Deep intellectual respect and the ability to track each other's thinking
+- Mutual preference for directness over social performance
+- Shared need for alone time and low-stimulation environments
+- Neither type is emotionally demanding in the conventional sense
+- Shared high standards and low tolerance for incompetence
+
+## The Friction
+
+**Decisiveness vs. exploration.** INTJs have made up their mind; INTPs are still considering alternatives. The INTJ finds the INTP's perpetual openness frustrating and inefficient. The INTP finds the INTJ's certainty premature and potentially arrogant.
+
+**Control.** INTJs like to establish a clear plan and execute it. INTPs resist direction and have their own internal logic. The INTJ's tendency toward control reads to the INTP as unwelcome constraint.
+
+**Emotional expression.** Neither type naturally initiates emotional conversation. Both can go long periods without direct emotional engagement. This can create genuine disconnection that neither notices until it's significant.
+
+**Inferior functions in crisis.** INTJ's inferior Se creates sensory overindulgence and physical anxiety under stress. INTP's inferior Fe creates emotional flooding and unexpected expressions of insecurity. Neither handles the other's stress mode well.
+
+## Making It Work
+
+This pairing often works when both are sufficiently self-aware to recognize they're avoiding the emotional dimension of their relationship, and when neither is using the other as their only social connection (they each need some social variety).
+
+Regular explicit check-ins — emotional, not just project-based — keep the relationship from becoming a comfortable intellectual partnership that lacks intimacy.
+
+[Take Innermind's assessment](/auth/login) to understand your attachment style and values alongside your MBTI-like traits.
+`,
+  },
+  {
+    slug: 'enfj-enfp-compatibility',
+    title: 'ENFJ and ENFP Compatibility: When Two Idealists Share a Life',
+    description: 'ENFJs and ENFPs are both warm, values-driven, and people-focused. This pairing has real strengths — and specific tensions around organization, emotional needs, and follow-through.',
+    publishedAt: '2026-03-18',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ENFJ ENFP compatibility', 'ENFJ ENFP relationship', 'MBTI compatibility'],
+    content: `
+## Two Warm Idealists Together
+
+ENFJ and ENFP are often each other's type. Both are warm, enthusiastic, people-focused, and driven by meaning. In social contexts, they are magnetically compatible. The complexity emerges in the sustained reality of a relationship.
+
+## What Works Beautifully
+
+- Shared enthusiasm for ideas, meaning, and human potential
+- Mutual warmth and genuine care for each other
+- Both types bring energy to the relationship — it never feels stale
+- Shared discomfort with coldness or emotional distance
+- Depth of conversation that both find nourishing
+
+## The Friction Points
+
+**Organization.** ENFJs are organized; ENFPs are not. The ENFJ's Fe-Si combination builds and maintains systems. The ENFP's Ne drives constant idea generation and spontaneous pivots. Over time, the ENFJ may feel like they're doing all the planning.
+
+**Emotional needs.** ENFJs need to feel appreciated for their caregiving (which is extensive). ENFPs need to feel free to be authentically themselves. If the ENFP is receiving the ENFJ's care without sufficiently reflecting it back, the ENFJ accumulates quiet resentment.
+
+**Follow-through.** ENFPs are notorious for enthusiastic starts and incomplete finishes. ENFJs care about completion and commitment. This can become a pattern of ENFJ frustration.
+
+**Boundary collapse.** Both types tend to take on others' emotional states. Two ENFx types together can create a feedback loop of emotional contagion that exhausts both without either realizing what's happening.
+
+## What This Pairing Needs
+
+Explicit agreements about who is responsible for what (so the ENFJ doesn't default to carrying everything). Regular check-ins that include genuine appreciation for the ENFJ's contributions. And both types practicing their own emotional regulation rather than depending entirely on the relationship.
+
+[Take Innermind's assessment](/auth/login) to get your attachment style profile — the hidden foundation of all relationship dynamics.
+`,
+  },
+  {
+    slug: 'entj-entp-compatibility',
+    title: 'ENTJ and ENTP Compatibility: The Commander and the Debater',
+    description: 'ENTJs and ENTPs are both extraverted, strategic, and direct. Their relationship is intellectually stimulating — and sometimes a battle of wills.',
+    publishedAt: '2026-03-18',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['ENTJ ENTP compatibility', 'ENTJ ENTP relationship', 'MBTI compatibility'],
+    content: `
+## Two High-Octane NT Types
+
+ENTJ and ENTP are natural peers — both extraverted, both strategic, both direct, and both capable of sustained intellectual engagement. This pairing has high energy, high stimulation, and the potential for both profound respect and chronic power struggle.
+
+## The Shared Foundation
+
+- Intellectual respect: both types can actually keep up with each other
+- Direct communication: no social performance, no hinting, no passive aggression
+- High standards: both want to be around excellence and hold themselves to it
+- Strategic orientation: both think in systems and futures
+- Comfort with conflict: neither type avoids it, which means disagreements get resolved rather than festering
+
+## The Friction
+
+**Control.** ENTJs want to lead. ENTPs resist being led. This is the central dynamic. ENTJs are comfortable asserting authority; ENTPs will intellectually dismantle any authority that isn't justified. In a peer relationship, this is energizing. In a hierarchical dynamic, it's war.
+
+**Decisiveness.** ENTJs are convergers — they synthesize information toward a decision. ENTPs are divergers — they generate alternatives and find premature closure uncomfortable. The ENTJ finds the ENTP's exploration exhausting after a point; the ENTP finds the ENTJ's certainty arrogant.
+
+**Follow-through.** ENTPs are famous for starting more than they finish. ENTJs find this genuinely frustrating — they plan and execute. If the ENTJ is left completing the ENTP's projects, resentment builds.
+
+**Emotional connection.** Both types lead with thinking. Feeling is tertiary or inferior for both. This can create a relationship that is intellectually excellent and emotionally underwatered.
+
+## Success Factors
+
+This pairing works best when both types consciously develop their feeling sides and when they create explicit agreements about who leads in which domains — eliminating the constant competition for direction.
+
+[Take Innermind's assessment](/auth/login) for your complete psychological profile.
+`,
+  },
+  {
+    slug: 'famous-people-personality-types',
+    title: 'Famous People and Their Personality Types: What History\'s Most Influential Figures Reveal',
+    description: 'From Einstein to Oprah, historical and contemporary figures can illuminate what different personality types look like at their best — and most complicated.',
+    publishedAt: '2026-03-19',
+    readingTime: 9,
+    category: 'MBTI Types',
+    keywords: ['famous people personality types', 'celebrity MBTI', 'famous MBTI types'],
+    content: `
+## The Limits — and Value — of Typing Famous People
+
+Personality typing public figures is inherently uncertain. We observe behavior through curated media, not direct interaction. Famous people are often playing roles, performing for audiences, and managing public perception. With those caveats, the patterns in how historically documented people thought, communicated, and made decisions can offer genuine insight into what types look like in practice.
+
+## Introverted Intuitive (INxJ) Examples
+
+**Abraham Lincoln** is frequently typed as INTJ or INFJ. The evidence: deliberate, strategic, capable of holding long-term vision (Emancipation Proclamation as a strategic move, not just a moral statement), combined with remarkable emotional intelligence — he retained political rivals in his cabinet and understood public sentiment in ways purely logical operators don't.
+
+**Carl Jung himself** showed classic INTJ or INFJ patterns — decades-long theoretical projects, intense introspection, a vision of the psyche that he pursued independently of mainstream psychology, combined with a therapeutic practice that required genuine empathic attunement.
+
+## Extraverted Intuitive (ENxP) Examples
+
+**Walt Disney** — ENFP signatures: relentless idea generation, inspiring others toward his vision, ability to make emotional connection through story, combined with the ENFP's characteristic difficulty sustaining practical operations (he needed Roy Disney for that).
+
+**Richard Feynman** is often typed as ENTP: the delight in taking apart ideas, the irreverence toward authority, the teaching ability that came from genuine curiosity rather than formal pedagogy, and the playful-serious combination that characterizes high-functioning ENTPs.
+
+## High Conscientiousness Leaders
+
+**Angela Merkel** — repeatedly typed INTJ, and the career evidence supports it: methodical decision-making, preference for evidence over rhetoric, long time horizons, and a management style based on competence rather than charisma. Her Big Five profile almost certainly includes high Conscientiousness alongside low Extraversion.
+
+## Extraverted Feeling (ExFJ) Examples
+
+**Oprah Winfrey** — ENFJ: the ability to create emotional connection at scale, the platform built entirely on empathic attunement, the explicit orientation toward growth and meaning, combined with organizational competence and long-term vision.
+
+**Nelson Mandela** — ENFJ: principled beyond what mere political calculation would explain, capable of genuine empathy for his oppressors (rare), and a natural unifier whose leadership style was about inclusion rather than control.
+
+## What This Actually Tells Us
+
+The value of these typings isn't in the four-letter label. It's in understanding the combination of traits that produce certain kinds of achievement. Lincoln's emotional intelligence is what separated him from other strategic operators. Disney's Ne was what made his vision compelling. Merkel's Ni-Te combination was what made her governance reliable.
+
+These are trait-level effects, not type-determined destinies. Many people share these traits and achieve very different things based on values, context, and circumstances.
+
+[Take Innermind's assessment](/auth/login) to understand your trait profile — not just as a type label but as a multi-framework portrait.
+`,
+  },
+  {
+    slug: 'attachment-style-and-personality-type',
+    title: 'Attachment Style and Personality Type: How They Interact',
+    description: 'Attachment style and personality type are separate systems — but they interact in predictable ways. Understanding both gives you a much richer picture of your relationship patterns.',
+    publishedAt: '2026-03-19',
+    readingTime: 9,
+    category: 'Personality Science',
+    keywords: ['attachment style personality type', 'MBTI attachment style', 'personality and attachment'],
+    content: `
+## Two Different Systems
+
+Attachment style and personality type come from entirely different theoretical traditions and measure different things. Attachment theory (Bowlby, Ainsworth) focuses on how your early relationship with caregivers shaped your fundamental approach to intimacy, safety, and emotional regulation. Personality type (Big Five, MBTI) describes stable trait dimensions that shape how you think, feel, and behave across contexts.
+
+They're not the same thing — but they interact in ways that are important to understand.
+
+## The Four Attachment Styles
+
+- **Secure**: comfortable with intimacy and independence, able to regulate emotions in relationships, trusts partners without excessive anxiety
+- **Anxious (preoccupied)**: craves closeness, fears abandonment, tends toward hyperactivation of attachment needs
+- **Avoidant (dismissing)**: discomforts with closeness, values independence, tends toward deactivation of attachment needs
+- **Disorganized (fearful-avoidant)**: wants closeness but fears it, often from trauma, oscillates between approach and withdrawal
+
+## How They Interact With Type
+
+**Introverted types** are slightly more common with avoidant attachment — but this is a correlation, not a rule. Many introverts have secure attachment; they simply need more alone time than extraverts, which is a trait difference, not an attachment pattern.
+
+**Anxious attachment + Feeling types (xNFx, xSFx)** is a particularly intense combination. The feeling function already orients these types toward relationships as central, and anxious attachment amplifies this — creating people who find relationships both deeply meaningful and terrifying.
+
+**Avoidant attachment + Thinking types (xNTx, xSTx)** creates a compound pattern where intellectual detachment as a cognitive style combines with emotional deactivation as an attachment strategy. These individuals can be particularly hard to reach emotionally.
+
+**ENFJ with anxious attachment** is a common and difficult combination: the Fe-driven compulsion to maintain others' happiness, combined with deep anxiety about abandonment, creates a person who over-functions in relationships until they collapse.
+
+**INTJ with avoidant attachment** creates someone who is genuinely comfortable with solitude (introverted Ni work is self-sufficient) and also uses avoidance as a defensive strategy — making it very hard to build real intimacy.
+
+## Why Both Matter
+
+Knowing only your personality type gives you the cognitive architecture. Knowing only your attachment style gives you the relational pattern. Together, they explain:
+- *Why* you react the way you do in relationships (attachment)
+- *How* you tend to process and express those reactions (personality type and traits)
+
+An anxiously attached INFJ processes relationship anxiety very differently than an anxiously attached ESTJ. The attachment dynamics are similar; the expression and cognitive engagement with those dynamics are type-shaped.
+
+## What to Do With This
+
+The most important insight: **attachment style is changeable; personality traits are relatively stable.** Therapeutic work on attachment security produces real results in relationship patterns. Working on your "type" in the sense of trying to become less introverted or less analytical is a different kind of work — and generally less effective.
+
+Focus on developing secure attachment behaviors while understanding your personality-driven tendencies as context, not constraints.
+
+[Take Innermind's assessment](/auth/login) — we assess both attachment style and personality traits together, giving you a synthesized picture of how they interact in your specific profile.
+`,
+  },
+  {
+    slug: 'big-five-conscientiousness-career',
+    title: 'Conscientiousness and Career: Why This Trait Predicts Success More Than IQ',
+    description: 'Conscientiousness is the single most predictive personality trait for career success across virtually every domain studied. Here is what the research shows and what it means for you.',
+    publishedAt: '2026-03-19',
+    readingTime: 8,
+    category: 'Career',
+    keywords: ['conscientiousness career success', 'Big Five conscientiousness', 'personality and work performance'],
+    content: `
+## The Unsexy Trait That Predicts Everything
+
+If you could only know one thing about someone's personality to predict their career success, the research is clear: measure their Conscientiousness.
+
+Not their IQ. Not their Extraversion. Not their Openness to Experience. Conscientiousness — the tendency toward organization, reliability, self-discipline, and goal-directedness — is the single most consistent predictor of job performance across virtually every domain studied by organizational psychologists.
+
+## What Conscientiousness Actually Is
+
+The Big Five Conscientiousness dimension includes several facets:
+- **Competence**: sense of self-efficacy and capability
+- **Order**: preference for organization and structure
+- **Dutifulness**: adherence to obligations and ethical principles
+- **Achievement striving**: ambition and drive toward goals
+- **Self-discipline**: ability to begin and complete tasks
+- **Deliberation**: tendency to think carefully before acting
+
+People high in Conscientiousness are not just "neat" or "organized." They are reliable, they follow through, they do what they say they'll do, they manage their attention, and they persist when things get hard.
+
+## The Research
+
+The meta-analytic evidence is striking:
+
+**Job performance**: Conscientiousness correlates with job performance at r ≈ 0.22-0.28 across studies — modest in absolute terms but large in practical significance. No other Big Five trait has this consistency across occupations.
+
+**Academic achievement**: Conscientiousness predicts GPA as well as, and sometimes better than, SAT scores. Self-regulation is a more powerful academic predictor than raw cognitive ability in many contexts.
+
+**Income**: Over long time horizons, Conscientiousness predicts income, even controlling for education and cognitive ability. The reliability-and-follow-through pattern compounds over careers.
+
+**Health and longevity**: High Conscientiousness people live longer. They maintain better health behaviors, have fewer accidents, and are less likely to develop addiction patterns.
+
+**Relationship stability**: Conscientiousness predicts marital stability and lower divorce rates. Reliability matters in relationships.
+
+## Why This Isn't Well-Known
+
+Conscientiousness suffers from a branding problem. It's not glamorous. Openness gets the creativity narrative; Extraversion gets the leadership narrative. Conscientiousness is the accountant at the party — not exciting to discuss, but doing most of the actual work.
+
+The underappreciation also comes from survivorship bias. The most visible career successes often belong to high-Openness, high-Extraversion individuals — creative founders, charismatic executives. Less visible are the millions of people with high Conscientiousness building solid, well-compensated careers through sheer reliability.
+
+## Conscientiousness Can Be Developed
+
+Unlike most Big Five traits, which are substantially heritable and stable, Conscientiousness shows meaningful development through deliberate practice:
+- Habit formation that builds the neural pathways for routine
+- Commitment devices that reduce the friction of follow-through
+- Breaking large goals into specific sub-tasks with defined timelines
+- Creating accountability structures with people you respect
+
+The evidence for personality change through behavioral intervention is strongest for Conscientiousness.
+
+## The Derailers
+
+High Conscientiousness has a shadow: when it becomes excessive or rigidly applied, it turns into perfectionism, micromanagement, and the inability to tolerate ambiguity. High-Conscientiousness executives sometimes destroy organizations by over-controlling them.
+
+The optimal profile for senior leadership combines high Conscientiousness with high Openness — the ability to execute reliably while remaining adaptive to changing conditions.
+
+[Take Innermind's assessment](/auth/login) to understand your complete Big Five profile including your Conscientiousness score and what it means for your career.
+`,
+  },
+  {
+    slug: 'jungian-archetypes-in-culture',
+    title: 'Jungian Archetypes in Modern Culture: From Star Wars to Brand Marketing',
+    description: 'Jung\'s archetypes aren\'t just psychology — they structure our stories, brands, and cultural myths. Here is how the 12 archetypes show up everywhere.',
+    publishedAt: '2026-03-19',
+    readingTime: 9,
+    category: 'Personality Science',
+    keywords: ['Jungian archetypes culture', 'archetypes in stories', 'brand archetypes'],
+    content: `
+## Why Archetypes Are Everywhere
+
+Carl Jung proposed that the human psyche is structured around universal patterns — archetypes — that emerge in dreams, myths, religion, and creative work across all human cultures. These patterns aren't learned; they're inherited as part of the deep structure of the human mind.
+
+If Jung was right, we'd expect to see the same archetypal patterns recurring independently across unconnected cultures. We do. We'd also expect them to appear in contemporary popular culture created without explicit archetypal intention. They do — and understanding this helps explain why certain stories grip us while others feel hollow.
+
+## Star Wars as Archetypal Drama
+
+George Lucas consciously drew on Joseph Campbell's *The Hero With a Thousand Faces* (itself a synthesis of Jungian and comparative mythology). The result is one of the most archetypal narratives in contemporary culture:
+
+- **Luke Skywalker**: the Hero — called to adventure, mentored, tested, transformed
+- **Obi-Wan Kenobi**: the Sage/Mentor — wisdom without attachment
+- **Han Solo**: the Outlaw/Rebel — freedom, pragmatism, eventual loyalty
+- **Darth Vader**: the Shadow — the Hero's dark reflection, the unexpressed potential for evil
+- **Yoda**: the Wise Old Man — pure Sage archetype
+- **Princess Leia**: the Ruler/Hero hybrid — agency and authority
+
+The Force itself is the archetypal Self — the transpersonal totality that the Hero must align with to transcend ego limits.
+
+## Brand Archetypes
+
+Marketing practitioners began applying Jungian archetypes to brand identity in the 1990s and 2000s, with Carol Pearson and Margaret Mark's *The Hero and the Outlaw* becoming an influential framework.
+
+**Apple** as the Creator/Rebel: empowering individual creativity and challenging establishment
+**Nike** as the Hero: achievement, aspiration, the test of the self against its limits
+**Harley-Davidson** as the Outlaw: freedom, nonconformity, the road against the ordinary
+**Disney** as the Innocent/Magician: wonder, transformation, the possibility that dreams come true
+**Amazon** as the Everyman/Caregiver: serving everyone, reliable, democratizing access
+
+The reason archetypes work in branding: humans respond to stories and patterns encoded at the level of the collective unconscious. A brand that successfully occupies an archetypal identity becomes something more than a product — it becomes a character in the consumer's psychological life.
+
+## Archetypes in Literature
+
+**The Trickster** (Loki, Hermes, Coyote) recurs in virtually every culture's mythology. In contemporary literature: Tyrion Lannister, Jack Sparrow, the Joker. The Trickster disrupts order to expose its falseness — neither hero nor villain, but catalyst.
+
+**The Great Mother** recurs as both nurturing and devouring — Gaia, Kali, Mary, the Wicked Witch. Contemporary: Cersei Lannister (devouring), Molly Weasley (nurturing). The same archetype, different poles.
+
+**The Wise Old Man** (Merlin, Gandalf, Dumbledore, Yoda) emerges in every heroic narrative. He possesses knowledge the Hero lacks but cannot simply give it — the Hero must earn it through experience.
+
+## Your Personal Archetypes
+
+Jung's insight is that these archetypes don't just exist "out there" in culture. They're structures within each psyche. The specific archetypes you're drawn to, the stories that move you most deeply, can be windows into your own psychological structure.
+
+People with strong Hero archetype resonance are oriented toward achievement, challenge, and proving themselves. Those drawn to the Sage are oriented toward knowledge and wisdom. Outlaw resonance often indicates unexpressed or unacknowledged rebellion against something in one's life.
+
+[Take Innermind's assessment](/auth/login) — we assess your Jungian archetypes as part of a multi-framework psychological portrait.
+`,
+  },
+  {
+    slug: 'enneagram-type-8-leadership',
+    title: 'Enneagram Type 8 Leadership: The Challenger as Visionary and Protector',
+    description: 'Type 8s are natural leaders — direct, powerful, and willing to take charge. But their leadership has a specific shadow that can undermine everything they build.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personal Growth',
+    keywords: ['enneagram type 8 leadership', 'enneagram 8 leader', 'challenger personality leadership'],
+    content: `
+## The Type 8 Leader
+
+Enneagram Type 8s — the Challengers — are among the most naturally commanding personalities in any framework. They project authority, take decisive action, and are genuinely comfortable with power in ways most types are not. In leadership roles, they can be transformative: protecting their people fiercely, driving ambitious goals, and refusing to tolerate the organizational timidity that prevents real change.
+
+They also have a specific failure mode that destroys organizations and relationships: the conflation of control with protection.
+
+## The Type 8 Leadership Strengths
+
+**Decisive under pressure.** Type 8s don't freeze when stakes are high. They are energized by challenge and cut through ambiguity with directness that calmer types struggle to maintain.
+
+**Protection as core value.** Healthy Type 8s lead from a genuine desire to protect their team, their organization, and the people who depend on them. This produces intense loyalty — 8s will fight for their people.
+
+**Comfort with confrontation.** Type 8s don't avoid difficult conversations. They address problems directly, which prevents the slow rot of unspoken issues.
+
+**Anti-political orientation.** Type 8s have low tolerance for politics, appearance management, and bullshit. They often strip away organizational pretense and create environments where substance wins.
+
+**Ambition and energy.** Type 8s bring enormous energy to their goals. They push hard and expect the same from others.
+
+## The Type 8 Leadership Shadow
+
+**Control as protection.** The core Type 8 belief is that vulnerability leads to harm. This can make healthy protection tip into controlling behavior that smothers the people the 8 is trying to protect. When a Type 8 leader unconsciously believes "I must control this situation to keep everyone safe," they stop empowering and start suffocating.
+
+**Intimidation.** The Type 8's directness and intensity is not experienced the same way they intend it. What the 8 experiences as honest and energetic, others often experience as threatening. This creates an environment where no one tells the 8 what they don't want to hear — the worst possible feedback loop for a high-stakes leader.
+
+**Vulnerability aversion.** Type 8s' deepest work in leadership is learning that showing vulnerability — admitting uncertainty, asking for help, acknowledging failure — is itself an act of strength. Leaders who are never vulnerable don't build trust; they inspire fear.
+
+**Hardness toward human limits.** Type 8s can lose patience with what they perceive as weakness — emotional needs, physical limits, reasonable fear. This can produce environments where people perform but never thrive.
+
+## Type 8 in Integration and Stress
+
+In growth (integration toward Type 2), Type 8 leaders develop genuine warmth and the ability to lead through care rather than through power. The protective impulse becomes unconditional love rather than territorial control.
+
+In stress (disintegration toward Type 5), Type 8 leaders become secretive, withdrawn, and paranoid — cutting off information and becoming castle-builders rather than empire-builders.
+
+## Historical Examples
+
+**Winston Churchill** shows classic Type 8 leadership: refusing to capitulate when every rational calculation said to, protecting his people with a ferocity that borders on irrational, and the shadow side of his controlling, domineering interpersonal style.
+
+**Steve Jobs** shows both the strength (visionary intensity, world-class product organization) and the shadow (contempt for human limits, control as management style, the devastation left in his interpersonal wake).
+
+[Take Innermind's assessment](/auth/login) to understand your Enneagram type, its growth path, and how it interacts with your Big Five traits and attachment style.
+`,
+  },
+  {
+    slug: 'infj-infp-compatibility',
+    title: 'INFJ and INFP Compatibility: Two Idealists Who See Each Other Clearly',
+    description: 'INFJs and INFPs share deep values and emotional sensitivity. This pairing has real compatibility — and some specific tensions around how each processes emotion.',
+    publishedAt: '2026-03-20',
+    readingTime: 7,
+    category: 'Compatibility',
+    keywords: ['INFJ INFP compatibility', 'INFJ INFP relationship', 'MBTI compatibility'],
+    content: `
+## Two Deeply Feeling Types
+
+INFJ and INFP are often each other's closest friends and partners. Both are introspective, values-driven, emotionally deep, and committed to authenticity and meaning. They understand each other in ways most people don't.
+
+The relationship tends to have a specific quality: genuine emotional resonance and mutual recognition, with occasional tension around how each processes and expresses that inner life.
+
+## What Works
+
+- Both types value depth, meaning, and genuine emotional authenticity
+- INFJs feel less need to manage the INFP's emotions than they do with other types
+- INFPs appreciate being with someone who takes their inner world seriously
+- Neither type is content with superficiality — conversations go places
+- Shared idealism about relationships and the world
+
+## The Core Difference: Fe vs. Fi
+
+**INFJs** use Extraverted Feeling (Fe) — they're attuned to the emotional atmosphere and naturally respond to others' needs. In a relationship, this means the INFJ often senses the INFP's emotional state before the INFP has expressed it.
+
+**INFPs** use Introverted Feeling (Fi) — they're attuned to their own emotional truth. Their feelings are personal and deeply held, but not broadcast.
+
+This creates a subtle dynamic: the INFJ may feel they're constantly reading the INFP's states while their own go unnoticed. INFPs need to practice asking about and responding to the INFJ's emotional world, even though Fi doesn't orient them that direction naturally.
+
+## The Conflict Difference
+
+**INFJs** avoid conflict to maintain harmony — sometimes for too long — then deliver the INFJ door slam (sudden complete withdrawal).
+
+**INFPs** avoid conflict to protect their inner world. They disengage when their values feel violated.
+
+Both types can create relationships where conflict is perpetually avoided, leading to slow emotional distance rather than productive engagement.
+
+## Making It Last
+
+This pairing benefits from explicit agreement to address conflict before it builds. Both types are capable of deep repair after conflict — the skill needed is initiating the conversation earlier rather than after prolonged suffering.
+
+[Take Innermind's assessment](/auth/login) for your complete profile including attachment style — the variable that matters most for relationship longevity.
+`,
+  },
+  {
+    slug: 'schwartz-values-relationships',
+    title: 'Schwartz Values and Relationships: How Core Values Predict Compatibility',
+    description: 'Shared values predict relationship satisfaction better than shared personality type. The Schwartz Values framework shows you which values matter — and why.',
+    publishedAt: '2026-03-20',
+    readingTime: 8,
+    category: 'Personality Science',
+    keywords: ['values compatibility relationships', 'Schwartz values', 'values and relationship satisfaction'],
+    content: `
+## Why Values Predict Compatibility
+
+Research consistently shows that value similarity — more than personality similarity, more than interest similarity — predicts long-term relationship satisfaction. People with similar core values navigate the significant decisions of a shared life with fundamentally less friction: where to live, how to raise children, how to allocate money, what to prioritize when everything competes.
+
+The Schwartz Values Inventory identifies ten universal value types organized along two motivational dimensions. Understanding your profile, and your partner's, reveals the value-level architecture of your compatibility.
+
+## The Ten Schwartz Values
+
+**Self-Direction**: independent thought and action, freedom, creativity
+**Stimulation**: excitement, novelty, challenge
+**Hedonism**: pleasure, enjoyment, gratification
+**Achievement**: personal success through demonstrating competence
+**Power**: social status, prestige, control over people and resources
+**Security**: safety, stability, order, and harmony in society
+**Conformity**: restraint of impulses, obedience to social expectations
+**Tradition**: respect for and commitment to cultural and religious customs
+**Benevolence**: preserving and enhancing the welfare of those close to you
+**Universalism**: understanding, appreciation, tolerance for all people and nature
+
+## The Compatibility Structure
+
+The values are arranged on a circular continuum. **Adjacent values are compatible** (tend to co-occur and create similar motivational profiles). **Opposite values are in tension** (their simultaneous pursuit creates motivational conflict).
+
+Key tensions:
+- **Achievement/Power vs. Benevolence/Universalism**: the classic career-vs-care tension
+- **Self-Direction/Stimulation vs. Security/Conformity**: freedom-seeking vs. stability-seeking
+- **Hedonism vs. Tradition**: present pleasure vs. cultural continuity
+
+## How This Plays Out in Relationships
+
+**Achievement + Power (high) with Benevolence + Universalism (low)**: This profile prioritizes competitive success, status, and personal advancement. Paired with someone high in Benevolence and Universalism (oriented toward care, community, and the world), the value conflict plays out in every shared decision about time, money, and priority.
+
+**Security + Conformity (high) with Self-Direction + Stimulation (low)**: This profile needs stability, predictability, and social belonging. Paired with someone high in Self-Direction who craves freedom and novelty, the relationship becomes a chronic negotiation between adventure and home.
+
+**Benevolence (high) bilaterally**: Two people who both prioritize the welfare of those close to them tend to have harmonious relationships. This shared value lubricates almost everything else.
+
+## What This Tells You About Your Relationship
+
+The most valuable exercise is not finding someone with identical values — it's understanding where your profiles are compatible, where they diverge, and how those divergences play out in actual decisions.
+
+Value conflicts that feel personal ("you don't care about family") are often actually structural ("our Benevolence vs. Achievement weighting is reversed"). Naming the value-level dynamic makes it workable rather than a character indictment.
+
+[Take Innermind's assessment](/auth/login) — we assess your complete Schwartz Values profile and synthesize it with your personality traits and attachment style.
+`,
+  },
+  {
+    slug: 'mbti-types-in-fiction',
+    title: 'All 16 MBTI Types in Fiction: A Complete Archetypal Guide',
+    description: 'Every MBTI type has a distinctive presence in fiction. Here is how each of the 16 types shows up across literature and film — the patterns, the tropes, and the surprises.',
+    publishedAt: '2026-03-20',
+    readingTime: 10,
+    category: 'MBTI Types',
+    keywords: ['MBTI types in fiction', 'personality types characters', '16 types fictional examples'],
+    content: `
+## Why Fiction Illuminates Type
+
+Fiction allows personality types to be expressed without the social performance that real people maintain. Characters don't manage impressions — they act from their core. This makes fiction valuable for understanding what types actually look like in operation.
+
+## The Analysts (NT Types)
+
+**INTJ — The Architect/Mastermind**: The strategic loner. In fiction: Sherlock Holmes, Hannibal Lecter, Petyr Baelish. Pattern: long-term vision, independence, contempt for mediocrity, emotional distance that conceals depth.
+
+**INTP — The Logician**: The intellectual explorer. In fiction: The Doctor (Doctor Who), Bruce Banner, Mr. Spock (partially). Pattern: analysis for its own sake, discomfort with emotional demands, brilliance that can't be turned off.
+
+**ENTJ — The Commander**: The natural leader who must dominate. In fiction: Miranda Priestly (The Devil Wears Prada), Harvey Specter (Suits), Cersei Lannister. Pattern: strategic authority, high standards, willingness to make painful decisions.
+
+**ENTP — The Debater**: The idea generator who loves to push. In fiction: Tony Stark, the Joker (some interpretations), Tyrion Lannister. Pattern: playful intelligence, rebellious against structure, talks their way through every situation.
+
+## The Diplomats (NF Types)
+
+**INFJ — The Advocate/Counselor**: The visionary idealist. In fiction: Atticus Finch, Aragorn, Jon Snow. Pattern: principled beyond self-interest, empathic to the point of suffering, quiet intensity, rare.
+
+**INFP — The Mediator**: The deeply personal idealist. In fiction: Frodo Baggins, Anne Shirley, Romeo. Pattern: inner world as primary reality, values over practicality, creativity from deep personal wells.
+
+**ENFJ — The Protagonist**: The leader who leads through care. In fiction: Oprah Winfrey (real), Mufasa, Professor X. Pattern: inspiring and organizing others toward a collective good, sacrificing self for the group.
+
+**ENFP — The Campaigner**: The passionate idealist with endless ideas. In fiction: Don Quixote, Phoebe Buffay, Dorian Gray. Pattern: energy, possibility-orientation, difficulty committing, genuine warmth.
+
+## The Sentinels (SJ Types)
+
+**ISTJ — The Inspector/Logistician**: The reliable upholder. In fiction: Captain America, Eddard Stark, Samwise Gamgee. Pattern: duty, reliability, honor, discomfort with change that violates established principle.
+
+**ISFJ — The Defender**: The dedicated protector. In fiction: Molly Weasley, Watson (Conan Doyle), Samwise Gamgee (Fi variant). Pattern: devoted service, quiet sacrifice, strong community bonds.
+
+**ESTJ — The Executive**: The administrator who enforces standards. In fiction: Dolores Umbridge (dark shadow), Boromir, Jack Donaghy (30 Rock). Pattern: authority, procedure, standards, resistance to non-conformity.
+
+**ESFJ — The Consul**: The social organizer. In fiction: Monica Geller (Friends), Amy March (Little Women). Pattern: community maintenance, hosting, social sensitivity, approval-seeking.
+
+## The Explorers (SP Types)
+
+**ISTP — The Virtuoso**: The hands-on analyst. In fiction: Arya Stark, James Bond (certain portrayals), Boba Fett. Pattern: quiet competence, technical mastery, economy with words, immediate response to threat.
+
+**ISFP — The Adventurer**: The present-moment artist. In fiction: Bilbo Baggins, Bella Swan, characters defined by sensory beauty. Pattern: aesthetic sensitivity, personal authenticity, quiet depth.
+
+**ESTP — The Entrepreneur**: The action-taker. In fiction: Scarlett O'Hara, Tom Sawyer, James Bond (other portrayals). Pattern: energy, charm, manipulation without guilt, focus on immediate results.
+
+**ESFP — The Entertainer**: The performer who brings joy. In fiction: Falstaff, Donkey (Shrek), Peregrin Took. Pattern: spontaneity, infectious energy, present-moment living, emotional generosity.
+
+## What the Patterns Tell Us
+
+Every type appears in both heroic and villainous configurations. The type doesn't determine virtue — it shapes the manner of either. Understanding types in fiction helps you see the cognitive architecture behind behavior, which is ultimately more useful than memorizing type descriptions.
+
+[Take Innermind's assessment](/auth/login) for your complete psychological portrait — not just your MBTI type, but the full synthesis of all five frameworks.
+`,
+  },
+  {
+    slug: 'enneagram-stress-response',
+    title: 'Enneagram and Stress: How Each Type Responds When Pushed',
+    description: 'Stress reveals personality. Each Enneagram type has a characteristic stress response — and a disintegration path that looks nothing like their healthy self.',
+    publishedAt: '2026-03-21',
+    readingTime: 9,
+    category: 'Personal Growth',
+    keywords: ['enneagram stress', 'enneagram disintegration', 'personality under stress'],
+    content: `
+## Why Stress Matters for Type
+
+The Enneagram is uniquely useful for understanding stress because it maps two directions of movement: **integration** (growth toward another type's healthy qualities) and **disintegration** (stress toward another type's unhealthy qualities). Knowing your type's disintegration pattern lets you recognize it before it becomes destructive.
+
+## Each Type Under Stress
+
+**Type 1 (Perfectionist) → disintegrates toward Type 4**: The normally controlled, principled Type 1 becomes moody, self-pitying, and withdrawn. Their inner critic amplifies. They lose access to their organized competence and become consumed by negative self-regard.
+
+**Type 2 (Helper) → disintegrates toward Type 8**: The normally caring, other-focused Type 2 becomes aggressive, domineering, and vengeful. The resentment from years of unacknowledged giving finally erupts. They become controlling and manipulative.
+
+**Type 3 (Achiever) → disintegrates toward Type 9**: The normally driven, productive Type 3 becomes disengaged, apathetic, and dissociated. They lose their goal-orientation and drift into numbness. The identity they've built on achievement becomes impossible to maintain.
+
+**Type 4 (Individualist) → disintegrates toward Type 2**: The normally independent, self-focused Type 4 becomes clinging, people-pleasing, and emotionally manipulative. They compromise their authenticity to avoid abandonment.
+
+**Type 5 (Investigator) → disintegrates toward Type 7**: The normally withdrawn, careful Type 5 becomes scattered, impulsive, and escapist. They avoid the emptiness they fear by filling every moment with new stimulation. Their characteristic focus and depth disappear.
+
+**Type 6 (Loyalist) → disintegrates toward Type 3**: The normally cautious, group-oriented Type 6 becomes competitive, image-conscious, and arrogant. Their anxiety about security converts into aggressive self-promotion.
+
+**Type 7 (Enthusiast) → disintegrates toward Type 1**: The normally optimistic, pleasure-seeking Type 7 becomes critical, perfectionistic, and narrow. They lose access to their characteristic joy and become rigidly judgmental.
+
+**Type 8 (Challenger) → disintegrates toward Type 5**: The normally dominant, action-oriented Type 8 becomes withdrawn, secretive, and paranoid. They retreat from engagement and begin castle-building — cutting off information and isolating.
+
+**Type 9 (Peacemaker) → disintegrates toward Type 6**: The normally accepting, conflict-avoidant Type 9 becomes anxious, compliant, and reactive to perceived threats. Their inner peace evaporates and they become reactive in uncharacteristic ways.
+
+## What Integration Looks Like
+
+**Type 1 → integrates to Type 7**: From rigidity to spontaneity and joy. The Perfectionist learns to enjoy the present without correcting it.
+
+**Type 2 → integrates to Type 4**: From other-focus to self-awareness. The Helper discovers their own needs and creative depth.
+
+**Type 3 → integrates to Type 6**: From achievement-focus to genuine commitment. The Achiever discovers loyalty and community over performance.
+
+The integration directions are not about becoming a different type — they're about accessing the healthy qualities that type has developed that you've been avoiding.
+
+## Using This Practically
+
+When you recognize your disintegration pattern in yourself:
+1. **Name it**: "I'm in stress disintegration, not my usual self"
+2. **Slow down the trigger behavior** rather than fighting the underlying state
+3. **Seek your integration direction** — find what that type's healthy expression would look like for you right now
+
+[Take Innermind's assessment](/auth/login) to get your Enneagram type and understand your specific growth and stress patterns in the context of your full psychological portrait.
+`,
+  },
+  {
+    slug: 'personality-change-research',
+    title: 'Can Your Personality Actually Change? What Decades of Research Say',
+    description: 'We are told personality is fixed. The research is more nuanced — and more hopeful. Here is what we actually know about personality stability and change.',
+    publishedAt: '2026-03-21',
+    readingTime: 9,
+    category: 'Personality Science',
+    keywords: ['can personality change', 'personality change research', 'Big Five personality change'],
+    content: `
+## The Standard Story Is Wrong
+
+The standard claim about personality is that it's largely fixed after about age 30. This view, influential throughout the 20th century, is not quite right. Decades of longitudinal research have produced a more nuanced picture: personality is both remarkably stable and genuinely changeable, with the relative balance depending on the trait, the age, the method of change, and the time horizon.
+
+## What Is Stable
+
+**Rank-order stability** — whether you're more extraverted than your peers — is substantial by early adulthood and increases through middle age. If you're in the top third of extraversion at 25, you're likely still in the top third at 55. The relative standing is what's stable.
+
+The Big Five traits show the following stability patterns in longitudinal studies:
+- Conscientiousness increases through early and mid-adulthood ("the maturity principle")
+- Agreeableness increases with age
+- Neuroticism decreases slightly with age
+- Openness is relatively stable with a slight decline after midlife
+- Extraversion shows some decrease with age
+
+## What Changes
+
+**Absolute levels change** more than rank order. You can become generally more conscientious across your life without your rank relative to peers shifting dramatically.
+
+More importantly: **directed change through deliberate intervention is possible**, though modest.
+
+Evidence for deliberate change:
+- **Therapy**: Multiple meta-analyses show therapy produces meaningful changes in Neuroticism and Extraversion over time, with effects persisting post-treatment
+- **Behavioral intervention**: Acting "as if" you have a different trait level for sustained periods produces actual trait changes. You don't have to feel extraverted to behave extravertedly — and the behavior can shift the trait.
+- **Major life transitions**: marriage, having children, major career shifts, and geographic moves all produce modest trait changes
+- **Psychiatric treatment**: antidepressants reliably reduce Neuroticism in clinically relevant populations
+
+## The Conscientiousness Exception
+
+Conscientiousness appears to be the most amenable to deliberate development. Habit formation research (Duhigg, Clear) documents reliable processes for building the behavioral patterns that constitute high Conscientiousness. Unlike traits rooted in deep temperamental differences, the behavioral components of Conscientiousness can be built systematically.
+
+## What This Means For You
+
+1. **Your personality is not your destiny.** Even if traits are substantially heritable and stable, the variance left unexplained by genetics and early experience is available for development.
+
+2. **The most important interventions target behavior, not insight.** Understanding your Neuroticism doesn't reduce it. Therapeutic approaches that develop better emotional regulation skills do.
+
+3. **Growth happens at the edges, not the core.** You probably won't move from extreme introversion to extreme extraversion. You may meaningfully expand your range and flexibility — which is usually sufficient.
+
+4. **Tracking change matters.** Most people underestimate their own personality change because they don't have baseline measurements. Longitudinal self-assessment lets you see what's actually shifting.
+
+[Take Innermind's assessment](/auth/login) — our growth tracking feature lets you retake assessments and see how your scores change over time. The longitudinal view is where the real insight lives.
+`,
+  },
 ]
 
 export function getPost(slug: string): BlogPost | undefined {
