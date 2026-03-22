@@ -660,3 +660,55 @@ export async function sendMilestoneShareEmail(
     text: `Hi${userName ? ` ${userName}` : ''},\n\nYour psychological portrait is now public. Top traits: ${topTraits.slice(0, 3).join(', ')}.\n\nExplore more assessments: ${assessmentUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }
+
+// ─── Referral: Reward granted notification ────────────────────────────────────
+
+export async function sendReferralRewardNotificationEmail(
+  toEmail: string,
+  referrerName: string | null,
+  refereeName: string | null,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — referral reward notification to ${toEmail}`)
+    return
+  }
+
+  const webUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
+  const dashboardUrl = `${webUrl}/dashboard`
+  const hi = referrerName ? `Hi ${referrerName},` : 'Hi,'
+  const friendLabel = refereeName ?? 'Your friend'
+
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="background:#1c1917;color:#d6d3d1;font-family:Georgia,serif;margin:0;padding:40px 24px;">
+  <div style="max-width:520px;margin:0 auto;">
+    <div style="margin-bottom:32px;">
+      <span style="font-size:24px;color:#f59e0b;">◎</span>
+      <span style="font-size:13px;color:#78716c;letter-spacing:0.08em;margin-left:10px;">innermind</span>
+    </div>
+    <h1 style="font-size:26px;font-weight:700;color:#f5f5f4;margin:0 0 16px;">${hi}</h1>
+    <p style="font-size:16px;color:#a8a29e;line-height:1.6;margin:0 0 24px;">
+      ${friendLabel} just completed their psychological assessment using your referral link.
+      You've earned <strong style="color:#f59e0b;">1 month of Pro free</strong> — added to your account automatically.
+    </p>
+    <a href="${dashboardUrl}" style="display:inline-block;background:#f59e0b;color:#1c1917;font-family:sans-serif;font-size:14px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;">
+      View your dashboard →
+    </a>
+    <p style="font-size:13px;color:#57534e;margin-top:32px;line-height:1.5;">
+      Keep sharing your referral link — you can earn up to 12 months free Pro per year.<br>
+      Find your link at <a href="${dashboardUrl}" style="color:#78716c;">${dashboardUrl}</a>
+    </p>
+    <p style="font-size:12px;color:#44403c;margin-top:24px;">— The ${PRODUCT_NAME} team</p>
+  </div>
+</body>
+</html>`
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: toEmail,
+    subject: `${friendLabel} completed their assessment — you earned 1 month Pro free`,
+    html,
+    text: `${hi}\n\n${friendLabel} just completed their psychological assessment using your referral link. You've earned 1 month of Pro free — added to your account automatically.\n\nView your dashboard: ${dashboardUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}

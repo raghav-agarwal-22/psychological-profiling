@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { sendReferralInviteEmail } from '../services/email.js'
+import { sendReferralInviteEmail, sendReferralRewardNotificationEmail } from '../services/email.js'
 
 const applyReferralBodySchema = z.object({
   code: z.string().min(1).max(100),
@@ -31,18 +31,58 @@ export async function applyReferral(userId: string, referralCode: string, log?: 
     return
   }
 
+  // Check yearly referral cap (12 rewarded referrals per year)
+  const yearAgo = new Date()
+  yearAgo.setFullYear(yearAgo.getFullYear() - 1)
+  const rewardedThisYear = await prisma.referral.count({
+    where: { referrerId: referrer.id, status: 'rewarded', completedAt: { gte: yearAgo } },
+  })
+  if (rewardedThisYear >= 12) return
+
   // Create the referral record
   await prisma.referral.create({
     data: {
       referrerId: referrer.id,
       referredUserId: userId,
-      status: 'completed',
+      status: 'rewarded',
       rewardGranted: true,
       completedAt: new Date(),
     },
   })
 
-  const message = `1 month Pro credit granted to referrer ${referrer.id} and referred user ${userId}`
+  // Grant 1 month free Pro to the referrer
+  const referrerUser = await prisma.user.findUnique({
+    where: { id: referrer.id },
+    select: { email: true, name: true, subscriptionTier: true, subscriptionExpiresAt: true },
+  })
+  if (referrerUser) {
+    const base =
+      referrerUser.subscriptionExpiresAt && referrerUser.subscriptionExpiresAt > new Date()
+        ? referrerUser.subscriptionExpiresAt
+        : new Date()
+    const newExpiry = new Date(base)
+    newExpiry.setDate(newExpiry.getDate() + 30)
+    await prisma.user.update({
+      where: { id: referrer.id },
+      data: {
+        subscriptionTier: 'pro',
+        subscriptionExpiresAt: newExpiry,
+      },
+    })
+
+    // Fetch referred user's name for the notification
+    const referredUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { name: true },
+    })
+
+    // Fire-and-forget reward notification email
+    sendReferralRewardNotificationEmail(referrerUser.email, referrerUser.name, referredUser?.name ?? null).catch(
+      (err) => console.error('[referral] reward notification email error:', err),
+    )
+  }
+
+  const message = `Referral reward: 1 month Pro granted to referrer ${referrer.id} (referred user ${userId} completed assessment)`
   if (log) {
     log(message)
   } else {

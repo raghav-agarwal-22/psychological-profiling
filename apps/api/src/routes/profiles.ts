@@ -119,7 +119,7 @@ export async function profileRoutes(server: FastifyInstance) {
       })
 
       const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
-      const shareUrl = updated.shareToken ? `${webUrl}/p/${updated.shareToken}` : null
+      const shareUrl = updated.shareToken ? `${webUrl}/s/${updated.shareToken}` : null
 
       // Fire milestone email on first share (fire-and-forget)
       if (makePublic && updated.shareToken) {
