@@ -44,16 +44,33 @@ export async function authRoutes(server: FastifyInstance) {
         },
       })
 
-      // Generate token (secure random)
-      const token = crypto.randomBytes(32).toString('hex')
+      const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
       const expiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes
 
+      // Degraded mode: no RESEND_API_KEY — show OTP directly in UI
+      if (!process.env.RESEND_API_KEY) {
+        const otpCode = Math.floor(100000 + Math.random() * 900000).toString()
+        await prisma.magicLinkToken.create({
+          data: { token: otpCode, userId: user.id, expiresAt },
+        })
+        const otpUrl = `${webUrl}/auth/verify?token=${otpCode}`
+        server.log.info({ email, otpCode }, '[auth] RESEND_API_KEY not set — OTP generated for degraded mode')
+        return reply.send({
+          mode: 'otp',
+          otpCode,
+          otpUrl,
+          message: 'Email delivery is being configured. Use the code shown to continue.',
+        })
+      }
+
+      // Normal mode: generate secure token and send magic link email
+      const token = crypto.randomBytes(32).toString('hex')
       await prisma.magicLinkToken.create({
         data: { token, userId: user.id, expiresAt },
       })
 
       const isDev = process.env.NODE_ENV !== 'production'
-      const magicLinkUrl = `${process.env.WEB_URL ?? 'http://localhost:3000'}/auth/verify?token=${token}`
+      const magicLinkUrl = `${webUrl}/auth/verify?token=${token}`
 
       server.log.info({ email, token: isDev ? token : '[redacted]' }, 'Magic link generated')
 

@@ -77,10 +77,16 @@ function BlurredProfilePreview() {
   )
 }
 
+interface OtpState {
+  code: string
+  url: string
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const [otp, setOtp] = useState<OtpState | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -106,6 +112,12 @@ export default function LoginPage() {
 
       posthog.capture('magic_link_requested')
 
+      // Degraded mode: RESEND_API_KEY not configured — show OTP in UI
+      if (data.mode === 'otp') {
+        setOtp({ code: data.otpCode as string, url: data.otpUrl as string })
+        return
+      }
+
       // In dev, the API returns devMagicLinkUrl — auto-redirect
       if (data.devMagicLinkUrl) {
         window.location.href = data.devMagicLinkUrl
@@ -118,6 +130,34 @@ export default function LoginPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (otp) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center px-6 py-24">
+        <div className="w-full max-w-md text-center">
+          <div className="mb-6 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3">
+            <p className="text-sm font-medium text-amber-400">
+              Email delivery is being configured. Use this temporary code to continue.
+            </p>
+          </div>
+          <h1 className="font-serif text-3xl text-stone-100">Your login code</h1>
+          <p className="mt-2 text-stone-400">Enter this code on the next screen</p>
+          <div className="mt-6 rounded-2xl border border-stone-700 bg-stone-900/80 px-8 py-6">
+            <span className="font-mono text-5xl font-bold tracking-widest text-amber-400">
+              {otp.code}
+            </span>
+          </div>
+          <a
+            href={otp.url}
+            className="mt-6 inline-block w-full rounded-xl bg-amber-500 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          >
+            Continue with this code →
+          </a>
+          <p className="mt-4 text-xs text-stone-500">This code expires in 15 minutes.</p>
+        </div>
+      </div>
+    )
   }
 
   if (sent) {
