@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { LaunchBanner } from '@/components/LaunchBanner'
 import { LandingAnalytics } from '@/components/LandingAnalytics'
 import { TestimonialGrid, type TestimonialItem } from '@/components/TestimonialGrid'
+import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -318,6 +319,16 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Testimonial carousel — above final CTA */}
+      {dbTestimonials.length > 0 && (
+        <section className="border-b border-stone-800/60 bg-stone-900/20 px-6 py-12">
+          <p className="mb-2 text-center text-[10px] uppercase tracking-widest text-stone-600">
+            From people doing the inner work
+          </p>
+          <TestimonialCarousel testimonials={dbTestimonials} />
+        </section>
+      )}
 
       {/* Final CTA */}
       <section className="px-6 py-32 text-center">

@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { posthog } from '@/lib/posthog'
+import { TestimonialSnippet } from '@/components/TestimonialSnippet'
 
 const FREE_FEATURES = [
   'Big Five personality assessment',
@@ -294,51 +295,22 @@ function UpgradeContent() {
 
       {/* Social proof — testimonials near CTA */}
       <div className="mt-14">
-        <p className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-stone-600">
+        <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-stone-600">
           Loved by people doing the inner work
         </p>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {[
-            {
-              name: 'Sarah M.',
-              tag: 'High Openness · Sage',
-              quote: 'Finally an app that takes psychological depth seriously. The AI narrative alone is worth it.',
-              rating: 5,
-            },
-            {
-              name: 'James K.',
-              tag: 'Therapist',
-              quote: "I've done MBTI, Enneagram, everything — Innermind went deeper. I now recommend it to clients.",
-              rating: 5,
-            },
-            {
-              name: 'Priya L.',
-              tag: 'INFJ · Enneagram 4',
-              quote: 'The Jungian archetypes section made me pause for an hour. I filled two journal pages.',
-              rating: 5,
-            },
-          ].map((t) => (
-            <div
-              key={t.name}
-              className="rounded-xl border border-stone-800 bg-stone-900/50 p-5"
-            >
-              <div className="mb-2 flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="text-amber-400 text-xs">★</span>
-                ))}
-              </div>
-              <p className="mb-3 text-xs text-stone-400 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-stone-800 text-[10px] font-medium text-stone-400">
-                  {t.name[0]}
-                </div>
-                <div>
-                  <p className="text-[11px] font-medium text-stone-300">{t.name}</p>
-                  <p className="text-[10px] text-stone-600">{t.tag}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <TestimonialSnippet
+            firstName="James"
+            quote="I've done MBTI, Enneagram, everything — Innermind went deeper. I now recommend it to clients."
+            rating={5}
+            personalityTag="Therapist"
+          />
+          <TestimonialSnippet
+            firstName="Priya"
+            quote="The Jungian archetypes section made me pause for an hour. I filled two journal pages."
+            rating={5}
+            personalityTag="INFJ · Enneagram 4"
+          />
         </div>
       </div>
 

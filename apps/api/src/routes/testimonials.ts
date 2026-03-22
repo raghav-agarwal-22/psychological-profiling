@@ -22,6 +22,26 @@ export async function testimonialRoutes(server: FastifyInstance) {
     return reply.send({ testimonials })
   })
 
+  // GET /api/testimonials/approved — alias for /public (spec-named endpoint)
+  server.get('/approved', async (_req, reply) => {
+    const testimonials = await prisma.testimonial.findMany({
+      where: { isApproved: true },
+      orderBy: [{ isFeatured: 'desc' }, { rating: 'desc' }, { createdAt: 'asc' }],
+      take: 10,
+      select: {
+        id: true,
+        firstName: true,
+        personalityTag: true,
+        rating: true,
+        quote: true,
+        createdAt: true,
+      },
+    })
+    return reply
+      .header('Cache-Control', 'public, max-age=300, stale-while-revalidate=60')
+      .send({ testimonials })
+  })
+
   // POST /api/testimonials — submit a testimonial (auth required, once per user)
   server.post('/', { preHandler: requireAuth }, async (req, reply) => {
     const { firstName, personalityTag, rating, quote, consent } = req.body as {

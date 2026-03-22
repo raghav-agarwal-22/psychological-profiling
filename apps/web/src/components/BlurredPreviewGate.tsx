@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { posthog } from '@/lib/posthog'
+import { TestimonialSnippet } from './TestimonialSnippet'
 
 interface BlurredPreviewGateProps {
   /** Whether the user is on the blurred variant and is a free-tier user */
@@ -84,7 +85,14 @@ export function BlurredPreviewGate({ active, children, section, archetypeName }:
           <li className="text-xs text-stone-400">✦ Your specific growth edges and blind spots</li>
           <li className="text-xs text-stone-400">✦ Coaching tailored to your {profileLabel} patterns</li>
         </ul>
-        <p className="mb-3 text-xs text-stone-500">Over 4,200 users have unlocked their full portrait</p>
+        <div className="mb-4 w-full max-w-xs">
+          <TestimonialSnippet
+            firstName="Maya"
+            quote="The blind spots section hit me hard — in the best way. I shared it with my therapist and we spent the whole session on it."
+            rating={5}
+            personalityTag="ENFP"
+          />
+        </div>
         <Link
           href="/upgrade"
           onClick={handleUpgradeClick}
