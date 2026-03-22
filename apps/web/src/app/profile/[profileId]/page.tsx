@@ -1102,7 +1102,7 @@ export default function ProfilePage() {
       )}
 
       {/* AI Synthesis */}
-      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="synthesis">
+      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="synthesis" archetypeName={profile.archetypes[0]}>
       <div ref={synthesisRef} className="mb-8 rounded-2xl border border-stone-700 bg-gradient-to-br from-stone-900 to-stone-900/50 p-6">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
@@ -1198,7 +1198,7 @@ export default function ProfilePage() {
       })()}
 
       {/* Reflection Journal */}
-      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="journal">
+      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="journal" archetypeName={profile.archetypes[0]}>
       {(() => {
         const prompts = profile.rawOutput?.reflectionPrompts ?? []
         const profileEntries = savedEntries.filter((e) =>
@@ -1289,7 +1289,7 @@ export default function ProfilePage() {
       </BlurredPreviewGate>
 
       {/* Growth Recommendations */}
-      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="recommendations">
+      <BlurredPreviewGate active={abVariant === 'blurred' && !isPaidUser} section="recommendations" archetypeName={profile.archetypes[0]}>
       {(() => {
         const CATEGORY_COLORS: Record<string, string> = {
           relationships: 'border-rose-500/20 bg-rose-500/5 text-rose-300',
