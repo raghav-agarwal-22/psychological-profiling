@@ -26,11 +26,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       type: 'article',
       publishedTime: post.publishedAt,
+      url: `https://innermind.app/blog/${post.slug}`,
+      siteName: 'Innermind',
+      images: [
+        {
+          url: 'https://innermind.app/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
+      images: ['https://innermind.app/og-image.png'],
     },
   }
 }
