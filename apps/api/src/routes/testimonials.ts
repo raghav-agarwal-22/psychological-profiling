@@ -24,11 +24,12 @@ export async function testimonialRoutes(server: FastifyInstance) {
 
   // POST /api/testimonials — submit a testimonial (auth required, once per user)
   server.post('/', { preHandler: requireAuth }, async (req, reply) => {
-    const { firstName, personalityTag, rating, quote } = req.body as {
+    const { firstName, personalityTag, rating, quote, consent } = req.body as {
       firstName?: string
       personalityTag?: string
       rating?: number
       quote?: string
+      consent?: boolean
     }
 
     if (!firstName || typeof firstName !== 'string' || firstName.trim().length === 0) {
@@ -40,10 +41,13 @@ export async function testimonialRoutes(server: FastifyInstance) {
     if (!rating || typeof rating !== 'number' || rating < 1 || rating > 5) {
       return reply.status(400).send({ error: 'Rating must be between 1 and 5.' })
     }
+    if (!consent) {
+      return reply.status(400).send({ error: 'Consent is required to display your review.' })
+    }
 
     // Check if user already submitted
     const existing = await prisma.testimonial.findUnique({
-      where: { userId: req.user.userId },
+      where: { userId: req.user.userId ?? undefined },
     })
     if (existing) {
       return reply.status(409).send({ error: 'You have already submitted a testimonial.' })

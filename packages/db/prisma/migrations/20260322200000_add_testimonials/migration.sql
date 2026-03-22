@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "testimonials" (
     "id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "user_id" TEXT,
     "first_name" TEXT NOT NULL,
     "personality_tag" TEXT,
     "rating" INTEGER NOT NULL,

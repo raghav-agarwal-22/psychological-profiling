@@ -243,6 +243,7 @@ export default function ProfilePage() {
   const [testimonialHoverRating, setTestimonialHoverRating] = useState(0)
   const [testimonialQuote, setTestimonialQuote] = useState('')
   const [testimonialFirstName, setTestimonialFirstName] = useState('')
+  const [testimonialConsent, setTestimonialConsent] = useState(false)
   const [testimonialSubmitting, setTestimonialSubmitting] = useState(false)
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false)
   const [testimonialError, setTestimonialError] = useState<string | null>(null)
@@ -251,13 +252,16 @@ export default function ProfilePage() {
     // Show testimonial prompt once, after user has seen their profile (delay 10s)
     const key = 'innermind_testimonial_prompted'
     if (typeof window !== 'undefined' && !localStorage.getItem(key)) {
-      const timer = setTimeout(() => setShowTestimonialPrompt(true), 10_000)
+      const timer = setTimeout(() => {
+        setShowTestimonialPrompt(true)
+        posthog.capture('testimonial_modal_shown')
+      }, 60_000)
       return () => clearTimeout(timer)
     }
   }, [])
 
   async function handleTestimonialSubmit() {
-    if (!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0) return
+    if (!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0 || !testimonialConsent) return
     setTestimonialSubmitting(true)
     setTestimonialError(null)
     try {
@@ -272,6 +276,7 @@ export default function ProfilePage() {
           firstName: testimonialFirstName,
           quote: testimonialQuote,
           rating: testimonialRating,
+          consent: testimonialConsent,
         }),
       })
       if (!res.ok && res.status !== 409) {
@@ -281,6 +286,7 @@ export default function ProfilePage() {
       if (typeof window !== 'undefined') {
         localStorage.setItem('innermind_testimonial_prompted', '1')
       }
+      posthog.capture('testimonial_submitted', { stars: testimonialRating })
       setTestimonialSubmitted(true)
     } catch (err) {
       setTestimonialError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -1627,6 +1633,7 @@ export default function ProfilePage() {
                   if (typeof window !== 'undefined') {
                     localStorage.setItem('innermind_testimonial_prompted', '1')
                   }
+                  posthog.capture('testimonial_modal_dismissed')
                 }}
                 className="text-stone-600 transition-colors hover:text-stone-400"
                 aria-label="Dismiss"
@@ -1676,13 +1683,27 @@ export default function ProfilePage() {
               </>
             )}
 
+            {testimonialRating > 0 && (
+              <label className="mb-4 flex cursor-pointer items-start gap-2.5">
+                <input
+                  type="checkbox"
+                  checked={testimonialConsent}
+                  onChange={(e) => setTestimonialConsent(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-amber-500"
+                />
+                <span className="text-xs text-stone-400">
+                  I agree to display my review on Innermind
+                </span>
+              </label>
+            )}
+
             {testimonialError && (
               <p className="mb-3 text-xs text-rose-400">{testimonialError}</p>
             )}
 
             <button
               onClick={handleTestimonialSubmit}
-              disabled={!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0 || testimonialSubmitting}
+              disabled={!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0 || !testimonialConsent || testimonialSubmitting}
               className="w-full rounded-xl bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {testimonialSubmitting ? 'Sending…' : 'Share my reaction →'}

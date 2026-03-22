@@ -548,7 +548,7 @@ model Referral {
 
 model Testimonial {
   id             String   @id @default(cuid())
-  userId         String   @unique @map("user_id")   // one per user
+  userId         String?  @unique @map("user_id")   // null for admin-seeded testimonials
   firstName      String   @map("first_name")        // first name only for privacy
   personalityTag String?  @map("personality_tag")   // e.g. "INFJ • Enneagram 4"
   rating         Int                                 // 1–5
@@ -557,7 +557,7 @@ model Testimonial {
   isFeatured     Boolean  @default(false) @map("is_featured")
   createdAt      DateTime @default(now()) @map("created_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([isApproved, rating])
   @@map("testimonials")
