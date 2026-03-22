@@ -52,6 +52,21 @@ export default function AssessmentPage() {
   const [dimensionProgress, setDimensionProgress] = useState<DimensionProgressData | null>(null)
 
   useEffect(() => {
+    // Clean up expired anon tokens
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i)
+      if (key?.startsWith('anonToken_')) {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(key) ?? '') as { expiresAt: number }
+          if (parsed.expiresAt <= Date.now()) localStorage.removeItem(key)
+        } catch {
+          localStorage.removeItem(key!)
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     const token = getToken()
     setIsAnon(!token)
 
@@ -82,7 +97,7 @@ export default function AssessmentPage() {
         '/api/anon/sessions',
         { templateId: template.id, referralCode: ref },
       )
-      sessionStorage.setItem(`anonToken_${anonSessionId}`, guestToken)
+      localStorage.setItem(`anonToken_${anonSessionId}`, JSON.stringify({ token: guestToken, expiresAt: Date.now() + 24 * 60 * 60 * 1000 }))
       router.push(`/assessment/anon/${anonSessionId}?templateId=${template.id}`)
     } catch (err) {
       setStartError(err instanceof Error ? err.message : 'Failed to start assessment. Please try again.')

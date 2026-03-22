@@ -73,10 +73,23 @@ function AnonAssessmentFlow() {
       return
     }
 
-    // Retrieve guest token from sessionStorage
-    const token = sessionStorage.getItem(`anonToken_${anonId}`)
+    // Retrieve guest token from localStorage with TTL check
+    let token: string | null = null
+    const raw = localStorage.getItem(`anonToken_${anonId}`)
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw) as { token: string; expiresAt: number }
+        if (parsed.expiresAt > Date.now()) {
+          token = parsed.token
+        } else {
+          localStorage.removeItem(`anonToken_${anonId}`)
+        }
+      } catch {
+        localStorage.removeItem(`anonToken_${anonId}`)
+      }
+    }
     if (!token) {
-      // Token missing — user may have navigated directly, send to assessment picker
+      // Token missing or expired — user may have navigated directly, send to assessment picker
       router.push('/assessment')
       return
     }

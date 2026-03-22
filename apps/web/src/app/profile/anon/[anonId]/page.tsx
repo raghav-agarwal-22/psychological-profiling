@@ -40,7 +40,20 @@ function AnonProfileContent() {
   const [showNameField, setShowNameField] = useState(false)
 
   useEffect(() => {
-    const token = sessionStorage.getItem(`anonToken_${anonId}`)
+    let token: string | null = null
+    const raw = localStorage.getItem(`anonToken_${anonId}`)
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw) as { token: string; expiresAt: number }
+        if (parsed.expiresAt > Date.now()) {
+          token = parsed.token
+        } else {
+          localStorage.removeItem(`anonToken_${anonId}`)
+        }
+      } catch {
+        localStorage.removeItem(`anonToken_${anonId}`)
+      }
+    }
     if (!token) {
       router.push('/assessment')
       return
@@ -104,8 +117,8 @@ function AnonProfileContent() {
       })
 
       setToken(token)
-      // Clean up the anon token from sessionStorage
-      sessionStorage.removeItem(`anonToken_${anonId}`)
+      // Clean up the anon token from localStorage
+      localStorage.removeItem(`anonToken_${anonId}`)
 
       router.push(`/profile/${profileId}?reveal=true`)
     } catch (err: unknown) {
