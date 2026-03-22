@@ -182,10 +182,10 @@ function AnonProfileContent() {
       {/* Email gate form */}
       <div className="rounded-2xl border border-amber-500/20 bg-stone-900/80 p-7">
         <h2 className="mb-1 font-serif text-xl text-stone-100">
-          {data.archetypeName
-            ? `Your ${data.archetypeName} portrait is ready`
-            : abEmailGateHeadline === 'treatment'
+          {abEmailGateHeadline === 'treatment'
             ? 'See your AI psychological portrait'
+            : data.archetypeName
+            ? `Your ${data.archetypeName} portrait is ready`
             : 'Reveal your full portrait'}
         </h2>
         <p className="mb-6 text-sm text-stone-400">
@@ -193,6 +193,12 @@ function AnonProfileContent() {
         </p>
 
         <form onSubmit={handleClaim} className="space-y-4">
+          {abEmailGateHeadline === 'treatment' && (
+            <div className="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-2">
+              <span className="text-amber-500 text-sm">✦</span>
+              <p className="text-xs text-amber-400/80">2,400+ people unlocked their portrait this month</p>
+            </div>
+          )}
           {showNameField && (
             <div>
               <label className="mb-1.5 block text-xs font-medium text-stone-400">
