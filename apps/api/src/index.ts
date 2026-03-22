@@ -27,6 +27,7 @@ import { anonymousRoutes } from './routes/anonymous.js'
 import { dripRoutes, resendWebhookRoutes } from './routes/drip.js'
 import { notifyRoutes } from './routes/notify.js'
 import { professionalRoutes } from './routes/professional.js'
+import { testimonialRoutes } from './routes/testimonials.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -102,6 +103,7 @@ await server.register(dripRoutes, { prefix: '/api/drip' })
 await server.register(resendWebhookRoutes, { prefix: '/api/webhooks' })
 await server.register(notifyRoutes, { prefix: '/api/users' })
 await server.register(professionalRoutes, { prefix: '/api/professional' })
+await server.register(testimonialRoutes, { prefix: '/api/testimonials' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

@@ -652,6 +652,101 @@ async function main() {
   })
   console.log(`✓ Insight: ${insight.title} (${insight.id})`)
 
+  // ── 7. Seed testimonials ───────────────────────────────────────────────────
+  const testimonialData = [
+    {
+      firstName: 'Sarah',
+      personalityTag: 'High Openness · Sage',
+      rating: 5,
+      quote: "Finally an app that takes psychological depth seriously. I've tried every personality tool out there and nothing has given me the quality of self-reflection that Innermind has. The AI narrative alone is worth it.",
+      isApproved: true,
+      isFeatured: true,
+    },
+    {
+      firstName: 'James',
+      personalityTag: 'Therapist',
+      rating: 5,
+      quote: "I've done MBTI, Enneagram, everything — Innermind went deeper than any of them. As a therapist I'm skeptical of these tools, but the synthesis here is genuinely sophisticated. I now recommend it to clients.",
+      isApproved: true,
+      isFeatured: true,
+    },
+    {
+      firstName: 'Priya',
+      personalityTag: 'INFJ · Enneagram 4',
+      rating: 5,
+      quote: "Taking the Jungian archetypes assessment was genuinely moving. The shadow archetype section made me pause for an hour. I filled two pages in my journal afterward. I didn't expect a web app to do that.",
+      isApproved: true,
+      isFeatured: true,
+    },
+    {
+      firstName: 'Marcus',
+      personalityTag: 'Secure Attachment · Enneagram 3',
+      rating: 5,
+      quote: "The cross-framework synthesis is what sets Innermind apart. Seeing how my Enneagram 3 patterns connect to my attachment style was an 'aha' moment I've been chasing for years in therapy.",
+      isApproved: true,
+      isFeatured: false,
+    },
+    {
+      firstName: 'Elena',
+      personalityTag: 'Values-driven · High Conscientiousness',
+      rating: 5,
+      quote: "I appreciated the Values Inventory most. It surfaced a tension between security and self-direction I'd never articulated before. That single insight changed how I think about my career.",
+      isApproved: true,
+      isFeatured: false,
+    },
+    {
+      firstName: 'David',
+      personalityTag: 'Coach',
+      rating: 4,
+      quote: "The growth recommendations are genuinely actionable — not generic self-help. I run a coaching practice and I now have every client take the Big Five before our first session. It's a real time-saver.",
+      isApproved: true,
+      isFeatured: false,
+    },
+    {
+      firstName: 'Aisha',
+      personalityTag: 'Anxious Attachment · Enneagram 6',
+      rating: 5,
+      quote: "The attachment style results were hard to read but exactly what I needed. The growth guidance was compassionate, not clinical. I've gone back to it three times already.",
+      isApproved: true,
+      isFeatured: false,
+    },
+    {
+      firstName: 'Tom',
+      personalityTag: 'High Openness · Creator',
+      rating: 4,
+      quote: "Innermind made the abstract concrete. I've known I'm creative and sensitive, but seeing it mapped across five frameworks at once gave me language for things I'd struggled to explain to people.",
+      isApproved: true,
+      isFeatured: false,
+    },
+  ]
+
+  // Create seed users for testimonials (separate from the dev user above)
+  for (let i = 0; i < testimonialData.length; i++) {
+    const t = testimonialData[i]
+    const seedUser = await prisma.user.upsert({
+      where: { email: `testimonial-seed-${i}@innermind.internal` },
+      update: {},
+      create: {
+        email: `testimonial-seed-${i}@innermind.internal`,
+        name: t.firstName,
+      },
+    })
+    await prisma.testimonial.upsert({
+      where: { userId: seedUser.id },
+      update: {},
+      create: {
+        userId: seedUser.id,
+        firstName: t.firstName,
+        personalityTag: t.personalityTag,
+        rating: t.rating,
+        quote: t.quote,
+        isApproved: t.isApproved,
+        isFeatured: t.isFeatured,
+      },
+    })
+    console.log(`✓ Testimonial: ${t.firstName} (${t.rating}★)`)
+  }
+
   console.log('\n✅ Seed complete.')
   console.log(`   • 1 AssessmentTemplate (Big Five v1.0, ${BIG_FIVE_QUESTIONS.length} questions)`)
   console.log('   • 1 User, 1 Session, 1 Assessment, 1 Profile, 1 Insight')

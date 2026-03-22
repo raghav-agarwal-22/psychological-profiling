@@ -237,6 +237,58 @@ export default function ProfilePage() {
   const [journalError, setJournalError] = useState<string | null>(null)
   const [savedEntries, setSavedEntries] = useState<Array<{ id: string; body: string; prompt: string | null; createdAt: string }>>([])
 
+  // Testimonial prompt state
+  const [showTestimonialPrompt, setShowTestimonialPrompt] = useState(false)
+  const [testimonialRating, setTestimonialRating] = useState(0)
+  const [testimonialHoverRating, setTestimonialHoverRating] = useState(0)
+  const [testimonialQuote, setTestimonialQuote] = useState('')
+  const [testimonialFirstName, setTestimonialFirstName] = useState('')
+  const [testimonialSubmitting, setTestimonialSubmitting] = useState(false)
+  const [testimonialSubmitted, setTestimonialSubmitted] = useState(false)
+  const [testimonialError, setTestimonialError] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Show testimonial prompt once, after user has seen their profile (delay 10s)
+    const key = 'innermind_testimonial_prompted'
+    if (typeof window !== 'undefined' && !localStorage.getItem(key)) {
+      const timer = setTimeout(() => setShowTestimonialPrompt(true), 10_000)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
+  async function handleTestimonialSubmit() {
+    if (!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0) return
+    setTestimonialSubmitting(true)
+    setTestimonialError(null)
+    try {
+      const token = getToken()
+      const res = await fetch(`${API_URL}/api/testimonials`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          firstName: testimonialFirstName,
+          quote: testimonialQuote,
+          rating: testimonialRating,
+        }),
+      })
+      if (!res.ok && res.status !== 409) {
+        const d = await res.json().catch(() => ({}))
+        throw new Error((d as { error?: string }).error ?? 'Failed to submit.')
+      }
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('innermind_testimonial_prompted', '1')
+      }
+      setTestimonialSubmitted(true)
+    } catch (err) {
+      setTestimonialError(err instanceof Error ? err.message : 'Something went wrong.')
+    } finally {
+      setTestimonialSubmitting(false)
+    }
+  }
+
   useEffect(() => {
     const token = getToken()
     if (!token) {
@@ -1560,6 +1612,99 @@ export default function ProfilePage() {
               Revoke sharing
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Testimonial prompt modal */}
+      {showTestimonialPrompt && !testimonialSubmitted && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-stone-950/60 p-4 backdrop-blur-sm sm:items-center">
+          <div className="w-full max-w-md rounded-2xl border border-stone-800 bg-stone-900 p-6 shadow-2xl">
+            <div className="mb-1 flex items-start justify-between">
+              <h3 className="font-serif text-lg text-stone-100">Love your profile?</h3>
+              <button
+                onClick={() => {
+                  setShowTestimonialPrompt(false)
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('innermind_testimonial_prompted', '1')
+                  }
+                }}
+                className="text-stone-600 transition-colors hover:text-stone-400"
+                aria-label="Dismiss"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="mb-5 text-sm text-stone-500">
+              Share your reaction — it helps others discover Innermind.
+            </p>
+
+            {/* Star rating */}
+            <div className="mb-4 flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  onMouseEnter={() => setTestimonialHoverRating(star)}
+                  onMouseLeave={() => setTestimonialHoverRating(0)}
+                  onClick={() => setTestimonialRating(star)}
+                  className="text-2xl transition-colors"
+                >
+                  <span className={(testimonialHoverRating || testimonialRating) >= star ? 'text-amber-400' : 'text-stone-700'}>
+                    ★
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {testimonialRating > 0 && (
+              <>
+                <input
+                  type="text"
+                  placeholder="First name"
+                  value={testimonialFirstName}
+                  onChange={(e) => setTestimonialFirstName(e.target.value)}
+                  maxLength={50}
+                  className="mb-3 w-full rounded-xl border border-stone-700 bg-stone-800 px-3 py-2 text-sm text-stone-200 placeholder-stone-600 outline-none focus:border-amber-500/50"
+                />
+                <textarea
+                  placeholder="What did you find most valuable? (1–2 sentences)"
+                  value={testimonialQuote}
+                  onChange={(e) => setTestimonialQuote(e.target.value)}
+                  rows={3}
+                  maxLength={500}
+                  className="mb-4 w-full resize-none rounded-xl border border-stone-700 bg-stone-800 px-3 py-2 text-sm text-stone-200 placeholder-stone-600 outline-none focus:border-amber-500/50"
+                />
+              </>
+            )}
+
+            {testimonialError && (
+              <p className="mb-3 text-xs text-rose-400">{testimonialError}</p>
+            )}
+
+            <button
+              onClick={handleTestimonialSubmit}
+              disabled={!testimonialFirstName.trim() || !testimonialQuote.trim() || testimonialRating === 0 || testimonialSubmitting}
+              className="w-full rounded-xl bg-amber-500 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {testimonialSubmitting ? 'Sending…' : 'Share my reaction →'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Testimonial thank-you */}
+      {testimonialSubmitted && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-2xl border border-stone-700 bg-stone-900 px-5 py-3 shadow-2xl">
+          <span className="text-lg text-amber-400">★</span>
+          <div>
+            <p className="text-sm font-medium text-stone-200">Thank you!</p>
+            <p className="text-xs text-stone-500">Your review helps others find Innermind.</p>
+          </div>
+          <button
+            onClick={() => setTestimonialSubmitted(false)}
+            className="ml-2 text-stone-600 hover:text-stone-400"
+          >
+            ✕
+          </button>
         </div>
       )}
 

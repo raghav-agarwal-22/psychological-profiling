@@ -73,6 +73,9 @@ model User {
   // Onboarding email tracking
   onboardingEmails OnboardingEmail[]
 
+  // Testimonial
+  testimonial Testimonial?
+
   @@map("users")
 }
 
@@ -537,6 +540,27 @@ model Referral {
 
   @@index([referrerId])
   @@map("referrals")
+}
+
+// ─── Testimonial ──────────────────────────────────────────────────────────────
+// User-submitted testimonials collected after they view their full profile.
+// Auto-approved for 4+ star ratings. Featured testimonials appear on landing + upgrade pages.
+
+model Testimonial {
+  id             String   @id @default(cuid())
+  userId         String   @unique @map("user_id")   // one per user
+  firstName      String   @map("first_name")        // first name only for privacy
+  personalityTag String?  @map("personality_tag")   // e.g. "INFJ • Enneagram 4"
+  rating         Int                                 // 1–5
+  quote          String
+  isApproved     Boolean  @default(false) @map("is_approved")
+  isFeatured     Boolean  @default(false) @map("is_featured")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([isApproved, rating])
+  @@map("testimonials")
 }
 
 // ─── NotifyList ───────────────────────────────────────────────────────────────

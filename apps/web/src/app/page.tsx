@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { LaunchBanner } from '@/components/LaunchBanner'
 import { LandingAnalytics } from '@/components/LandingAnalytics'
+import { TestimonialGrid, type TestimonialItem } from '@/components/TestimonialGrid'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -28,7 +29,22 @@ const websiteSchema = {
   },
 }
 
-export default function HomePage() {
+async function fetchTestimonials(): Promise<TestimonialItem[]> {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
+    const res = await fetch(`${apiUrl}/api/testimonials/public`, {
+      next: { revalidate: 3600 },
+    })
+    if (!res.ok) return []
+    const data = (await res.json()) as { testimonials: TestimonialItem[] }
+    return data.testimonials ?? []
+  } catch {
+    return []
+  }
+}
+
+export default async function HomePage() {
+  const dbTestimonials = await fetchTestimonials()
   return (
     <div className="flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
@@ -216,30 +232,34 @@ export default function HomePage() {
           <p className="mb-16 text-center text-sm text-stone-500">
             Real experiences from people doing the inner work.
           </p>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <div
-                key={t.name}
-                className="flex flex-col rounded-2xl border border-stone-800 bg-stone-900/60 p-7"
-              >
-                <span className="mb-4 font-serif text-3xl text-amber-500/40 leading-none">
-                  &ldquo;
-                </span>
-                <p className="mb-6 flex-1 font-serif text-sm text-stone-300 leading-relaxed italic">
-                  {t.quote}
-                </p>
-                <div className="flex items-center gap-3 border-t border-stone-800 pt-5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-800 text-xs font-medium text-stone-400">
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-stone-300">{t.name}</p>
-                    <p className="text-xs text-stone-600">{t.role}</p>
+          {dbTestimonials.length > 0 ? (
+            <TestimonialGrid testimonials={dbTestimonials} limit={6} />
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-3">
+              {TESTIMONIALS.map((t) => (
+                <div
+                  key={t.name}
+                  className="flex flex-col rounded-2xl border border-stone-800 bg-stone-900/60 p-7"
+                >
+                  <span className="mb-4 font-serif text-3xl text-amber-500/40 leading-none">
+                    &ldquo;
+                  </span>
+                  <p className="mb-6 flex-1 font-serif text-sm text-stone-300 leading-relaxed italic">
+                    {t.quote}
+                  </p>
+                  <div className="flex items-center gap-3 border-t border-stone-800 pt-5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-800 text-xs font-medium text-stone-400">
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-stone-300">{t.name}</p>
+                      <p className="text-xs text-stone-600">{t.role}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
