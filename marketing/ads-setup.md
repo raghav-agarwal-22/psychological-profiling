@@ -4,6 +4,7 @@
 
 | Channel | Account | Pixel / Tag | First Campaign |
 |---------|---------|-------------|----------------|
+| Reddit Ads | ❌ Needs creation | UTM only (no pixel needed) | ❌ Pending — see founder-requests/reddit-ads-setup.md |
 | Google Ads | ❌ Needs creation | GTM container — env var needed | ❌ Pending |
 | Meta (Facebook/Instagram) | ❌ Needs creation | Meta Pixel — env var needed | ❌ Pending |
 
@@ -198,10 +199,77 @@ Optimize toward $10 CPA for Google Search once conversion data accumulates.
 
 ---
 
+## Step 5 — Reddit Ads (First Paid Test)
+
+Reddit Ads are the **first** channel to activate — lowest setup friction, highest audience concentration.
+
+**Full setup guide:** `agents/ceo/founder-requests/reddit-ads-setup.md`
+
+### Campaign Summary
+
+| Field | Value |
+|-------|-------|
+| Objective | Traffic (→ Conversions after warm-up) |
+| Budget | $50/day × 5 days = $250 total |
+| Scale trigger | CPM < $5 and CTR > 0.5% → $100/day |
+| UTM | `utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test` |
+
+### Ad Groups
+
+**Group 1 — MBTI Communities:** r/MBTI, r/intj, r/infp, r/entp, r/enfp, r/isfp, r/infj
+**Group 2 — Psychology/Self-Improvement:** r/psychology, r/selfimprovement, r/personalitytypes, r/Jung
+
+### Ad Copy
+
+**Ad 1 (Quiz Hook):**
+> **Headline:** Most MBTI tests get you wrong. Here's why.
+> **Body:** 4-letter codes miss 90% of your psychology. Innermind combines Big Five, Jungian archetypes, attachment styles, Enneagram, and Schwartz values into one free profile.
+> **URL:** `https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=quiz-hook`
+
+**Ad 2 (Insight Hook):**
+> **Headline:** Discover your actual cognitive patterns — not just a letter code
+> **Body:** Full psychological profile across 5 science-backed dimensions. Takes 20 minutes. Free. AI-synthesized portrait that actually explains your behavior.
+> **URL:** `https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=insight-hook`
+
+### Tracking (No pixel needed)
+
+UTM parameters are captured automatically via `LandingAnalytics` component and sent to PostHog as `landing_page_viewed` events with `source`, `medium`, `campaign`, and `content` fields.
+
+To verify after launch: PostHog → Events → `landing_page_viewed` → filter `utm_source = reddit`
+
+### UTM Tracking Reference (Updated)
+
+| Campaign | utm_source | utm_medium | utm_campaign | utm_content |
+|----------|-----------|------------|--------------|-------------|
+| Reddit MBTI | `reddit` | `paid` | `mbti-test` | `quiz-hook` |
+| Reddit Psychology | `reddit` | `paid` | `mbti-test` | `insight-hook` |
+| Google Search | `google` | `cpc` | `search-personality` | — |
+| Google Search Brand | `google` | `cpc` | `search-brand` | — |
+| Meta Feed | `meta` | `paid-social` | `social-awareness` | — |
+| Meta Retargeting | `meta` | `paid-social` | `retarget-signup` | — |
+
+---
+
+## Budget Allocation (Month 1)
+
+| Channel | Monthly Budget | Goal |
+|---------|---------------|------|
+| Reddit (Test) | $250 one-time | Validate CAC; 15–20 signups expected |
+| Google Search | $600 | 40 signups @ $15 CPA |
+| Meta Awareness | $400 | Brand awareness + retargeting pixel warm-up |
+| **Total** | **$1,250** | **Breakeven at 8 Pro conversions** |
+
+At $19/mo Pro pricing, 8 conversions = $152 MRR. CAC payback: ~7 months.
+Optimize toward $10 CPA for Google Search once conversion data accumulates.
+
+---
+
 ## Reporting
 
 Check weekly:
+- Reddit Ads Manager → Campaigns → Clicks + CTR
+- PostHog → Events → `landing_page_viewed` (filter `utm_source=reddit`)
+- PostHog → Events → `signup_complete`, `purchase` (deduplicated)
 - Google Ads → Campaigns → Conversions column
 - Meta Ads Manager → Reporting → Conversions
-- PostHog → Events → `signup_complete`, `purchase` (deduplicated)
 - Revenue dashboard: `marketing/revenue-dashboard.md`
