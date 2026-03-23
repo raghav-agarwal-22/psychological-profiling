@@ -18,6 +18,7 @@ import { AnnualUpgradeEmail } from '../emails/AnnualUpgradeEmail.js'
 import { Day30ReAssessmentEmail } from '../emails/Day30ReAssessmentEmail.js'
 import { MilestoneJournalEmail } from '../emails/MilestoneJournalEmail.js'
 import { MilestoneShareEmail } from '../emails/MilestoneShareEmail.js'
+import { WaitlistLaunchEmail } from '../emails/WaitlistLaunchEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -710,5 +711,18 @@ export async function sendReferralRewardNotificationEmail(
     subject: `${friendLabel} completed their assessment — you earned 1 month Pro free`,
     html,
     text: `${hi}\n\n${friendLabel} just completed their psychological assessment using your referral link. You've earned 1 month of Pro free — added to your account automatically.\n\nView your dashboard: ${dashboardUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Waitlist Launch ──────────────────────────────────────────────────────────
+
+export async function sendWaitlistLaunchEmail(toEmail: string, startUrl: string): Promise<void> {
+  const html = await render(React.createElement(WaitlistLaunchEmail, { startUrl }))
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: toEmail,
+    subject: 'Your AI personality profile is ready — complete your assessment now',
+    html,
+    text: `Your AI profile is ready!\n\nYou joined the Innermind waitlist for AI-powered psychological profiles. It's here.\n\nComplete your assessment now: ${startUrl}\n\n— The ${PRODUCT_NAME} team`,
   })
 }

@@ -9,6 +9,7 @@ import { archetypeNameToSlug } from '@/lib/archetypes'
 import { posthog } from '@/lib/posthog'
 import { initABTest, getABVariant, type ABVariant } from '@/lib/ab-test'
 import { BlurredPreviewGate } from '@/components/BlurredPreviewGate'
+import { WaitlistCapture } from '@/components/WaitlistCapture'
 import { GrowthChart } from '@/components/GrowthChart'
 import { DimensionsProgress, type DimensionProgressData } from '@/components/DimensionsProgress'
 import { LockedDimensionSection } from '@/components/LockedDimensionSection'
@@ -886,16 +887,8 @@ export default function ProfilePage() {
         )}
       </div>
 
-      {/* Degraded mode: AI portrait pending banner */}
-      {profile.rawOutput?.aiPending && (
-        <div className="mb-8 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 flex items-start gap-3">
-          <span className="mt-0.5 text-lg leading-none">✦</span>
-          <div>
-            <p className="text-sm font-medium text-amber-300">Your AI-generated narrative portrait is being prepared</p>
-            <p className="mt-1 text-xs text-stone-400">The scores above are ready — your personalized AI narrative will appear here once the service is active. Check back soon.</p>
-          </div>
-        </div>
-      )}
+      {/* Degraded mode: AI portrait pending — waitlist capture */}
+      {profile.rawOutput?.aiPending && <WaitlistCapture />}
 
       {/* Adaptive profile: integration theme */}
       {isCustomProfile && (() => {

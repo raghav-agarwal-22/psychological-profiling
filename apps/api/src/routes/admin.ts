@@ -6,6 +6,7 @@ import {
   sendDay3InsightTeaserEmail,
   sendDay5SocialProofEmail,
   sendDay7ProOfferEmail,
+  sendWaitlistLaunchEmail,
 } from '../services/email.js'
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET ?? 'admin-dev-secret'
@@ -582,5 +583,50 @@ export async function adminRoutes(server: FastifyInstance) {
       .header('Content-Type', 'text/csv')
       .header('Content-Disposition', 'attachment; filename="notify-list.csv"')
       .send(csv)
+  })
+
+  // GET /api/admin/waitlist.csv — CSV export of degraded_synthesis waitlist
+  server.get('/waitlist.csv', async (_req, reply) => {
+    const rows = await prisma.notifyList.findMany({
+      where: { source: 'degraded_synthesis' },
+      orderBy: { createdAt: 'asc' },
+      select: { email: true, createdAt: true },
+    })
+
+    const csv = [
+      'email,joined_at',
+      ...rows.map((r) => `${r.email},${r.createdAt.toISOString()}`),
+    ].join('\n')
+
+    return reply
+      .header('Content-Type', 'text/csv')
+      .header('Content-Disposition', 'attachment; filename="waitlist.csv"')
+      .send(csv)
+  })
+
+  // POST /api/admin/waitlist/blast — send launch email to all degraded_synthesis waitlist entries
+  server.post('/waitlist/blast', async (req, reply) => {
+    const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
+    const startUrl = `${WEB_URL}/assessment`
+
+    const entries = await prisma.notifyList.findMany({
+      where: { source: 'degraded_synthesis' },
+      select: { email: true },
+    })
+
+    let sent = 0
+    let failed = 0
+
+    for (const entry of entries) {
+      try {
+        await sendWaitlistLaunchEmail(entry.email, startUrl)
+        sent++
+      } catch (err) {
+        req.log.warn({ err, email: entry.email }, 'Waitlist blast email failed')
+        failed++
+      }
+    }
+
+    return reply.send({ ok: true, sent, failed, total: entries.length })
   })
 }
