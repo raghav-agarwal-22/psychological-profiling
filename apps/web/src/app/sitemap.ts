@@ -18,6 +18,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/for-professionals`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/for-coaches`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/compare`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    ...([
+      'innermind-vs-16personalities',
+      'innermind-vs-crystal-knows',
+      'innermind-vs-truity',
+      'innermind-vs-human-design',
+      'innermind-vs-personalitydb',
+    ].map((slug) => ({
+      url: `${baseUrl}/compare/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    }))),
     { url: `${baseUrl}/affiliates`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/upgrade`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/reviews`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
