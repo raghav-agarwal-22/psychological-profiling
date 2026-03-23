@@ -74,6 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${archetype} — Psychological Profile`,
     description: firstSentence,
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${archetype} — Psychological Profile`,
       description: firstSentence,

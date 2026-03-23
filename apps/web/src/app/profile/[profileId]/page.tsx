@@ -563,10 +563,30 @@ export default function ProfilePage() {
   const handleShare = async () => {
     const token = getToken()
     if (!token || !profile) return
-    // If share link was pre-generated (e.g. on ?new=1 arrival), show modal immediately
-    if (shareUrl) {
+    const archetype = profile.archetypes?.[0] ?? 'Psychological Profile'
+
+    const doShare = async (url: string) => {
+      // On mobile, use native share sheet
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        try {
+          await navigator.share({
+            title: `${archetype} — My Psychological Profile`,
+            text: `I just discovered my psychological profile on Innermind — I'm a ${archetype}. What are you?`,
+            url,
+          })
+          posthog.capture('share_native', { profileId: profile.id, archetype })
+          return
+        } catch {
+          // User cancelled or share failed — fall through to modal
+        }
+      }
       setShowShareModal(true)
-      posthog.capture('share_modal_opened', { profileId: profile.id, archetype: profile.archetypes?.[0] })
+      posthog.capture('share_modal_opened', { profileId: profile.id, archetype })
+    }
+
+    // If share link was pre-generated (e.g. on ?new=1 arrival), share immediately
+    if (shareUrl) {
+      await doShare(shareUrl)
       return
     }
     setSharing(true)
@@ -578,8 +598,7 @@ export default function ProfilePage() {
       )
       setShareUrl(data.profile.shareUrl)
       setShareToken(data.profile.shareToken)
-      setShowShareModal(true)
-      posthog.capture('share_modal_opened', { profileId: profile?.id, archetype: profile?.archetypes?.[0] })
+      await doShare(data.profile.shareUrl)
     } finally {
       setSharing(false)
     }
