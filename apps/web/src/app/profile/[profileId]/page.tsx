@@ -340,6 +340,19 @@ export default function ProfilePage() {
         // Show share nudge when arriving fresh from assessment completion
         if (searchParams?.get('new') === '1') {
           setShowNewProfileBanner(true)
+          // Pre-generate share link so "Share your archetype" button is instant
+          if (token && d.profile?.id) {
+            api.patch<{ profile: { isPublic: boolean; shareToken: string; shareUrl: string } }>(
+              `/api/profiles/${d.profile.id}/share`,
+              {},
+              token,
+            )
+              .then((r) => {
+                setShareUrl(r.profile.shareUrl)
+                setShareToken(r.profile.shareToken)
+              })
+              .catch(() => {})
+          }
           // Fetch referral URL for incentive display (best-effort)
           if (token) {
             api.get<{ referralUrl: string }>('/api/referrals/my-link', token)
@@ -525,6 +538,12 @@ export default function ProfilePage() {
   const handleShare = async () => {
     const token = getToken()
     if (!token || !profile) return
+    // If share link was pre-generated (e.g. on ?new=1 arrival), show modal immediately
+    if (shareUrl) {
+      setShowShareModal(true)
+      posthog.capture('share_modal_opened', { profileId: profile.id, archetype: profile.archetypes?.[0] })
+      return
+    }
     setSharing(true)
     try {
       const data = await api.patch<{ profile: { isPublic: boolean; shareToken: string; shareUrl: string } }>(
@@ -535,6 +554,7 @@ export default function ProfilePage() {
       setShareUrl(data.profile.shareUrl)
       setShareToken(data.profile.shareToken)
       setShowShareModal(true)
+      posthog.capture('share_modal_opened', { profileId: profile?.id, archetype: profile?.archetypes?.[0] })
     } finally {
       setSharing(false)
     }
@@ -578,7 +598,7 @@ export default function ProfilePage() {
   const handleShareTwitter = () => {
     if (!shareUrl || !profile) return
     const archetype = profile.archetypes?.[0] ?? 'my archetype'
-    const tweet = `I am a "${archetype}". Discover yours at innermind.app → ${shareUrl}`
+    const tweet = `Just discovered I'm "${archetype}" according to AI psychological profiling by @innermind_ai. What's yours? → ${shareUrl}`
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank', 'noopener,noreferrer')
     posthog.capture('share_twitter', { profileId: profile.id, archetype })
   }
@@ -1570,6 +1590,25 @@ export default function ProfilePage() {
                 ✕
               </button>
             </div>
+
+            {/* OG card preview — shows what appears when pasted on Twitter/iMessage/Slack */}
+            {shareUrl && (() => {
+              const token = shareUrl.split('/p/')[1]
+              return token ? (
+                <div className="mb-4 overflow-hidden rounded-xl border border-stone-700">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/p/${token}/opengraph-image`}
+                    alt="Share card preview"
+                    className="w-full"
+                    style={{ aspectRatio: '1200/630' }}
+                  />
+                  <div className="bg-stone-800/60 px-3 py-1.5">
+                    <p className="text-xs text-stone-500">This card appears when you share the link</p>
+                  </div>
+                </div>
+              ) : null
+            })()}
 
             {/* Social share buttons */}
             <div className="mb-4 grid grid-cols-2 gap-3">
