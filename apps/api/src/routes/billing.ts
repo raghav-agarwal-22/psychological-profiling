@@ -5,6 +5,7 @@ import { requireAuth } from '../lib/auth.js'
 import { sendTrialEndingSoonEmail } from '../services/email.js'
 import { logAffiliateCommission } from './affiliates.js'
 import { suppressDripSequence } from '../lib/drip-sequence.js'
+import { sendAndRecordProWelcome } from '../lib/pro-onboarding.js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
   apiVersion: '2026-02-25.clover',
@@ -185,7 +186,7 @@ export async function billingRoutes(server: FastifyInstance) {
 
         const userRecord = await prisma.user.findUnique({
           where: { id: userId },
-          select: { email: true, firstPaidAt: true, utmSource: true },
+          select: { email: true, name: true, firstPaidAt: true, utmSource: true },
         })
 
         await prisma.user.update({
@@ -205,6 +206,13 @@ export async function billingRoutes(server: FastifyInstance) {
         suppressDripSequence(userId).catch((err) =>
           server.log.warn({ err }, '[drip] Failed to suppress drip sequence on upgrade'),
         )
+
+        // Kick off Pro onboarding sequence — send welcome immediately
+        if (userRecord?.email) {
+          sendAndRecordProWelcome(userId, userRecord.email, userRecord.name ?? null).catch((err) =>
+            server.log.warn({ err }, '[pro-onboarding] Failed to send pro_welcome'),
+          )
+        }
 
         if (isTrialing) {
           await capturePosthogEvent(userId, 'trial_started', {

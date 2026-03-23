@@ -4,6 +4,7 @@
 
 import type { FastifyInstance } from 'fastify'
 import { processAllDripEmails, processAnnualConversionEmails } from '../lib/drip-sequence.js'
+import { processProOnboardingEmails } from '../lib/pro-onboarding.js'
 
 const CRON_SECRET = process.env.CRON_SECRET ?? ''
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
@@ -42,17 +43,19 @@ export async function dripRoutes(server: FastifyInstance) {
 
     server.log.info('[drip] Processing drip sequence batch')
 
-    const [onboardingResult, annualResult] = await Promise.all([
+    const [onboardingResult, annualResult, proOnboardingResult] = await Promise.all([
       processAllDripEmails(),
       processAnnualConversionEmails(),
+      processProOnboardingEmails(),
     ])
 
     const result = {
       onboarding: onboardingResult,
       annualConversion: annualResult,
-      processed: onboardingResult.processed + annualResult.processed,
-      sent: onboardingResult.sent + annualResult.sent,
-      errors: onboardingResult.errors + annualResult.errors,
+      proOnboarding: proOnboardingResult,
+      processed: onboardingResult.processed + annualResult.processed + proOnboardingResult.processed,
+      sent: onboardingResult.sent + annualResult.sent + proOnboardingResult.sent,
+      errors: onboardingResult.errors + annualResult.errors + proOnboardingResult.errors,
     }
 
     server.log.info({ result }, '[drip] Batch complete')

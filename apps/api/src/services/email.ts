@@ -19,6 +19,10 @@ import { Day30ReAssessmentEmail } from '../emails/Day30ReAssessmentEmail.js'
 import { MilestoneJournalEmail } from '../emails/MilestoneJournalEmail.js'
 import { MilestoneShareEmail } from '../emails/MilestoneShareEmail.js'
 import { WaitlistLaunchEmail } from '../emails/WaitlistLaunchEmail.js'
+import { ProWelcomeEmail } from '../emails/ProWelcomeEmail.js'
+import { ProDeepDiveEmail } from '../emails/ProDeepDiveEmail.js'
+import { ProSocialProofEmail } from '../emails/ProSocialProofEmail.js'
+import { ProReEngagementEmail } from '../emails/ProReEngagementEmail.js'
 import * as React from 'react'
 
 let _resend: Resend | null = null
@@ -711,6 +715,116 @@ export async function sendReferralRewardNotificationEmail(
     subject: `${friendLabel} completed their assessment — you earned 1 month Pro free`,
     html,
     text: `${hi}\n\n${friendLabel} just completed their psychological assessment using your referral link. You've earned 1 month of Pro free — added to your account automatically.\n\nView your dashboard: ${dashboardUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Pro Onboarding Sequence ──────────────────────────────────────────────────
+
+export async function sendProWelcomeEmail(email: string, userName: string | null): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — pro_welcome for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ProWelcomeEmail, {
+      userName,
+      dashboardUrl: `${WEB_URL}/dashboard`,
+      assessmentsUrl: `${WEB_URL}/assessment`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `You're now Pro — here's your roadmap`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYou're now a Pro member. Start by completing all 5 frameworks, then read your AI synthesis and start a session with your coach.\n\nBegin: ${WEB_URL}/assessment\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendProDeepDiveEmail(
+  email: string,
+  userName: string | null,
+  profileId: string | null,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — pro_day2 for ${email}`)
+    return
+  }
+
+  const profileUrl = profileId ? `${WEB_URL}/profile/${profileId}` : `${WEB_URL}/dashboard`
+
+  const html = await render(
+    React.createElement(ProDeepDiveEmail, {
+      userName,
+      dashboardUrl: `${WEB_URL}/dashboard`,
+      profileUrl,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `How to read your psychological profile (the part most people miss)`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nYour profile isn't a label — it's a map. Here's how to extract 10x more from it.\n\nRead your synthesis: ${profileUrl}\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendProSocialProofEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string | null,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — pro_day5 for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ProSocialProofEmail, {
+      userName,
+      archetypeName,
+      dashboardUrl: `${WEB_URL}/dashboard`,
+      assessmentsUrl: `${WEB_URL}/assessment`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `What Pro members with your profile discovered in week one`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nPeople with your profile are uncovering patterns they've never understood before. Here's what they found — and what you should try next.\n\nExplore: ${WEB_URL}/assessment\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+export async function sendProReEngagementEmail(
+  email: string,
+  userName: string | null,
+  archetypeName: string | null,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — pro_day14 for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(ProReEngagementEmail, {
+      userName,
+      archetypeName,
+      dashboardUrl: `${WEB_URL}/dashboard`,
+      assessmentsUrl: `${WEB_URL}/assessment`,
+    }),
+  )
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject: `Your profile evolves — it's time for a check-in`,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nTwo weeks in, your psychology has likely shifted. Retake the Big Five to see what changed — and ask your AI coach what it means.\n\nRetake now: ${WEB_URL}/assessment\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 
