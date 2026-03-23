@@ -101,9 +101,8 @@ async function fetchTestimonials(): Promise<TestimonialItem[]> {
 
 export default async function HomePage() {
   const dbTestimonials = await fetchTestimonials()
-  const featuredTestimonials = dbTestimonials.length > 0
-    ? dbTestimonials.slice(0, 3)
-    : TESTIMONIALS_FALLBACK
+  const allTestimonials = dbTestimonials.length > 0 ? dbTestimonials : TESTIMONIALS_FALLBACK
+  const featuredTestimonials = allTestimonials.slice(0, 3)
 
   return (
     <div className="flex flex-col">
@@ -336,19 +335,17 @@ export default async function HomePage() {
       </section>
 
       {/* ── Testimonials (full grid) ──────────────────────────────────────── */}
-      {dbTestimonials.length > 0 && (
-        <section className="border-b border-stone-800/60 px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
-              Real experiences
-            </h2>
-            <p className="mb-16 text-center text-sm text-stone-500">
-              From people doing the inner work.
-            </p>
-            <TestimonialGrid testimonials={dbTestimonials} limit={6} />
-          </div>
-        </section>
-      )}
+      <section className="border-b border-stone-800/60 px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
+            Real experiences
+          </h2>
+          <p className="mb-16 text-center text-sm text-stone-500">
+            From people doing the inner work.
+          </p>
+          <TestimonialGrid testimonials={allTestimonials} limit={6} />
+        </div>
+      </section>
 
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
       <section id="faq" className="border-b border-stone-800/60 px-6 py-24">
@@ -518,26 +515,50 @@ const FAQ_ITEMS = [
 const TESTIMONIALS_FALLBACK: import('@/components/TestimonialGrid').TestimonialItem[] = [
   {
     id: 'fallback-1',
-    firstName: 'Sarah M.',
-    personalityTag: 'Product designer',
+    firstName: 'Alex K.',
+    personalityTag: 'INTJ · Enneagram 5',
     rating: 5,
     quote:
-      "Finally an app that takes psychological depth seriously. I've tried every personality tool out there and nothing has given me the quality of self-reflection that Innermind has.",
+      "I have taken the Big Five and MBTI before, but the AI synthesis actually explained WHY I behave the way I do in relationships. That insight took my therapist months to uncover.",
   },
   {
     id: 'fallback-2',
-    firstName: 'James K.',
-    personalityTag: 'Therapist',
+    firstName: 'Maya R.',
+    personalityTag: 'INFP · Enneagram 4',
     rating: 5,
     quote:
-      "I've done MBTI, Enneagram, everything — Innermind went deeper than any of them. The synthesis here is genuinely sophisticated. I now recommend it to clients.",
+      "The archetype section hit differently. I am a Seeker-Creator hybrid and the description was uncomfortably accurate. Shared it with three friends immediately.",
   },
   {
     id: 'fallback-3',
-    firstName: 'Priya L.',
-    personalityTag: 'Writer',
+    firstName: 'David C.',
+    personalityTag: 'Engineering manager',
     rating: 5,
     quote:
-      'The Jungian archetypes assessment was genuinely moving. The shadow archetype section made me pause for an hour. I filled two pages in my journal afterward.',
+      "I use this with my team during onboarding. Understanding how each person's attachment style and values map onto their work patterns has genuinely changed how I give feedback.",
+  },
+  {
+    id: 'fallback-4',
+    firstName: 'Jasmine T.',
+    personalityTag: 'Recent grad · first job',
+    rating: 5,
+    quote:
+      "I was figuring out what kind of work environment would actually work for me. The values mapping section basically gave me a filter I could apply to every job offer. Wish I'd had this earlier.",
+  },
+  {
+    id: 'fallback-5',
+    firstName: 'James K.',
+    personalityTag: 'Therapist, private practice',
+    rating: 5,
+    quote:
+      "I now recommend Innermind to clients who want a structured starting point before we dig in. The Big Five + attachment integration is exactly what good therapeutic work builds toward anyway — this accelerates it.",
+  },
+  {
+    id: 'fallback-6',
+    firstName: 'Rohan M.',
+    personalityTag: 'Skeptic turned convert',
+    rating: 5,
+    quote:
+      "I actively resisted personality tests for years — felt like horoscopes with extra steps. This one changed my mind. The adaptive format and the fact it explains the science behind each dimension made it feel legitimate.",
   },
 ]

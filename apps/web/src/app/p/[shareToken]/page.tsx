@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { archetypeNameToSlug } from '@/lib/archetypes'
+import { ShareProfileButton } from '@/components/ShareProfileButton'
 
 interface DimensionScore {
   normalized: number
@@ -107,11 +108,12 @@ export default async function PublicProfilePage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      {/* View-only badge */}
-      <div className="mb-6 flex justify-center">
+      {/* View-only badge + share */}
+      <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <span className="rounded-full border border-stone-700 bg-stone-900 px-4 py-1.5 text-xs text-stone-400">
           View only — shared profile
         </span>
+        <ShareProfileButton archetype={profile.archetypes[0] ?? 'Innermind Profile'} />
       </div>
 
       {/* Archetype header */}
