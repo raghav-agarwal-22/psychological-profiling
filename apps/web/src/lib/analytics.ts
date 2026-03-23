@@ -24,6 +24,10 @@ export type FunnelEvent =
   | 'referral_page_viewed'
   | 'referral_signup'
   | 'referral_converted'
+  | 'exit_intent_triggered'
+  | 'exit_intent_cta_clicked'
+  | 'annual_auto_flip'
+  | 'annual_nudge_clicked'
 
 interface EventProperties {
   landing_page_viewed: {
@@ -51,6 +55,10 @@ interface EventProperties {
   referral_page_viewed: { referrer_name?: string; code: string }
   referral_signup: { code: string }
   referral_converted: { code: string }
+  exit_intent_triggered: Record<string, never>
+  exit_intent_cta_clicked: Record<string, never>
+  annual_auto_flip: Record<string, never>
+  annual_nudge_clicked: Record<string, never>
 }
 
 export function track<E extends FunnelEvent>(

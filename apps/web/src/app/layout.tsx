@@ -9,6 +9,7 @@ import { PostHogPageview } from '@/components/PostHogProvider'
 import { GoogleTagManagerHead, GoogleTagManagerBody } from '@/components/GoogleTagManager'
 import { MetaPixelScript } from '@/components/MetaPixel'
 import { ConversionTracking } from '@/components/ConversionTracking'
+import { ExitIntentModal } from '@/components/ExitIntentModal'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -125,6 +126,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ExitIntentModal />
       </body>
     </html>
   )

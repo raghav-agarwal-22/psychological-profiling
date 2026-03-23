@@ -38,7 +38,7 @@ type Interval = 'monthly' | 'annual'
 
 const PRICES: Record<Interval, { display: string; monthly: string; save?: string }> = {
   monthly: { display: '$19', monthly: '$19/mo' },
-  annual: { display: '$149', monthly: '$12.42/mo', save: 'Save $79/yr' },
+  annual: { display: '$144', monthly: '$12/mo', save: 'Save $84/yr' },
 }
 
 function UpgradeContent() {
@@ -53,6 +53,9 @@ function UpgradeContent() {
   const [paywallVariant, setPaywallVariant] = useState<'control' | 'urgency_cta'>('control')
   const [countdown, setCountdown] = useState(15 * 60) // 15 minutes in seconds
   const countdownRef = useRef<number | null>(null)
+  const [annualNudgeDismissed, setAnnualNudgeDismissed] = useState(false)
+  const autoFlippedRef = useRef(false)
+  const monthlyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const ctaVariant = posthog.getFeatureFlag('upgrade-cta-copy')
@@ -94,6 +97,27 @@ function UpgradeContent() {
   useEffect(() => {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')
   }, [cancelled])
+
+  // Auto-flip to annual after 10s on monthly view
+  useEffect(() => {
+    if (interval === 'monthly' && !autoFlippedRef.current) {
+      monthlyTimerRef.current = setTimeout(() => {
+        if (!autoFlippedRef.current) {
+          autoFlippedRef.current = true
+          setInterval('annual')
+          track('annual_auto_flip', {})
+        }
+      }, 10_000)
+    } else {
+      if (monthlyTimerRef.current) {
+        clearTimeout(monthlyTimerRef.current)
+        monthlyTimerRef.current = null
+      }
+    }
+    return () => {
+      if (monthlyTimerRef.current) clearTimeout(monthlyTimerRef.current)
+    }
+  }, [interval])
 
   async function handleUpgrade() {
     setLoading(true)
@@ -168,7 +192,7 @@ function UpgradeContent() {
             Monthly
           </button>
           <button
-            onClick={() => setInterval('annual')}
+            onClick={() => { setInterval('annual'); autoFlippedRef.current = true }}
             className={`relative rounded-lg px-5 py-2 text-sm font-semibold transition-colors ${
               interval === 'annual'
                 ? 'bg-stone-700 text-stone-100'
@@ -177,11 +201,36 @@ function UpgradeContent() {
           >
             Annual
             <span className="absolute -top-2.5 -right-1.5 rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/30">
-              Save $79/yr
+              SAVE 37%
             </span>
           </button>
         </div>
       </div>
+
+      {/* Annual nudge sticky banner — shown when monthly is selected */}
+      {interval === 'monthly' && !annualNudgeDismissed && (
+        <div className="sticky top-4 z-10 mb-8 flex items-center justify-between rounded-xl border border-emerald-500/30 bg-emerald-500/8 px-5 py-3 shadow-lg shadow-emerald-900/20 transition-all">
+          <div>
+            <p className="text-sm font-semibold text-emerald-300">Switch to annual and save $84/year</p>
+            <p className="mt-0.5 text-xs text-stone-400">$19/mo vs <span className="font-semibold text-emerald-400">$12/mo</span> billed annually</p>
+          </div>
+          <div className="ml-4 flex shrink-0 items-center gap-3">
+            <button
+              onClick={() => { setInterval('annual'); autoFlippedRef.current = true; track('annual_nudge_clicked', {}) }}
+              className="rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-emerald-400"
+            >
+              Switch
+            </button>
+            <button
+              onClick={() => setAnnualNudgeDismissed(true)}
+              className="text-stone-600 hover:text-stone-400 transition-colors text-xs"
+              aria-label="Dismiss"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Urgency CTA — paywall_variant: urgency_cta */}
       {paywallVariant === 'urgency_cta' && (
