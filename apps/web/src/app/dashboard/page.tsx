@@ -334,6 +334,11 @@ export default function DashboardPage() {
     if (searchParams.get('upgraded') === '1') {
       track('upgrade_completed')
       track('payment_success', { tier: 'pro' })
+      const referredByCode = localStorage.getItem('innermind_was_referred')
+      if (referredByCode) {
+        track('referral_converted', { code: referredByCode })
+        localStorage.removeItem('innermind_was_referred')
+      }
       if (!localStorage.getItem('innermind_invite_banner_dismissed')) {
         setShowInviteBanner(true)
       }

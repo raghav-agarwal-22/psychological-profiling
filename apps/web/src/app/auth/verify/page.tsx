@@ -44,9 +44,11 @@ function VerifyContent() {
           localStorage.setItem('innermind_token', data.token)
           if (userReferralCode) {
             track('referral_signup', { code: userReferralCode })
+            localStorage.setItem('innermind_was_referred', userReferralCode)
           }
           localStorage.removeItem('innermind_referral_code')
           posthog.capture('auth_completed')
+          track('signup_completed', { method: 'magic_link' })
           trackSignup()
           setStatus('success')
           setTimeout(() => router.push('/dashboard'), 800)

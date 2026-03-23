@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { archetypeNameToSlug } from '@/lib/archetypes'
 import { posthog } from '@/lib/posthog'
+import { track } from '@/lib/analytics'
 import { initABTest, getABVariant, type ABVariant } from '@/lib/ab-test'
 import { BlurredPreviewGate } from '@/components/BlurredPreviewGate'
 import { WaitlistCapture } from '@/components/WaitlistCapture'
@@ -384,7 +385,7 @@ export default function ProfilePage() {
               .catch(() => {})
           }
         }
-        posthog.capture('profile_viewed', { profileId: d.profile?.id })
+        track('profile_viewed', { profile_id: d.profile?.id, is_anonymous: false })
       })
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load profile'))
       .finally(() => setLoading(false))
