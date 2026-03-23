@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { LaunchBanner } from '@/components/LaunchBanner'
 import { LandingAnalytics } from '@/components/LandingAnalytics'
 import { TestimonialGrid, type TestimonialItem } from '@/components/TestimonialGrid'
+import { EmailCaptureBlock } from '@/components/EmailCaptureBlock'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -368,6 +369,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Newsletter ────────────────────────────────────────────────────── */}
+      <EmailCaptureBlock variant="homepage" />
 
       {/* ── Final CTA ─────────────────────────────────────────────────────── */}
       <section className="px-6 py-32 text-center">

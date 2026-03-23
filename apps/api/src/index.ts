@@ -28,6 +28,7 @@ import { dripRoutes, resendWebhookRoutes } from './routes/drip.js'
 import { notifyRoutes } from './routes/notify.js'
 import { professionalRoutes } from './routes/professional.js'
 import { testimonialRoutes } from './routes/testimonials.js'
+import { newsletterRoutes } from './routes/newsletter.js'
 
 const PORT = Number(process.env.API_PORT ?? 3001)
 const HOST = process.env.API_HOST ?? '0.0.0.0'
@@ -104,6 +105,7 @@ await server.register(resendWebhookRoutes, { prefix: '/api/webhooks' })
 await server.register(notifyRoutes, { prefix: '/api/users' })
 await server.register(professionalRoutes, { prefix: '/api/professional' })
 await server.register(testimonialRoutes, { prefix: '/api/testimonials' })
+await server.register(newsletterRoutes, { prefix: '/api/newsletter' })
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

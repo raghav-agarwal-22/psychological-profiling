@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllSlugs, getPost, getRelatedPosts } from '../posts'
+import { EmailCaptureBlock } from '@/components/EmailCaptureBlock'
 
 // Blog posts are statically generated at build time; revalidate daily for new posts
 export const revalidate = 86400
@@ -251,6 +252,9 @@ export default function BlogPostPage({ params }: Props) {
         className="prose-invert"
         dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
       />
+
+      {/* Email capture */}
+      <EmailCaptureBlock variant="blog" />
 
       {/* Related assessment CTA */}
       {related && (
