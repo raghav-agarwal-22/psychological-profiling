@@ -317,6 +317,14 @@ export default function DashboardPage() {
     setShowWelcome(false)
   }
 
+  // Referral invite banner
+  const [showInviteBanner, setShowInviteBanner] = useState(false)
+
+  function dismissInviteBanner() {
+    localStorage.setItem('innermind_invite_banner_dismissed', '1')
+    setShowInviteBanner(false)
+  }
+
   // Context tags state: which session has the tag picker open
   const [tagPickerOpenFor, setTagPickerOpenFor] = useState<string | null>(null)
   const [sessionTags, setSessionTags] = useState<Record<string, string[]>>({})
@@ -325,6 +333,9 @@ export default function DashboardPage() {
   useEffect(() => {
     if (searchParams.get('upgraded') === '1') {
       track('upgrade_completed')
+      if (!localStorage.getItem('innermind_invite_banner_dismissed')) {
+        setShowInviteBanner(true)
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -520,6 +531,24 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
+      {/* Referral invite banner — shown after upgrade */}
+      {showInviteBanner && (
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4">
+          <p className="text-sm text-stone-200">
+            🎁 You&apos;re on Pro! Share with friends and earn 1 month free for each signup →{' '}
+            <Link href="/invite" className="font-semibold text-amber-400 underline underline-offset-2 hover:text-amber-300">
+              Invite friends
+            </Link>
+          </p>
+          <button
+            onClick={dismissInviteBanner}
+            className="shrink-0 text-stone-500 hover:text-stone-300 transition-colors"
+            aria-label="Dismiss banner"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       {/* Onboarding welcome modal */}
       {showWelcome && (
         <div

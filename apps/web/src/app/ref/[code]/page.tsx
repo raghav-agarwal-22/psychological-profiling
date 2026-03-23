@@ -21,7 +21,7 @@ export default function ReferralRedirectPage() {
         body: JSON.stringify({ code }),
       }).catch(() => {/* ignore tracking errors */})
     }
-    router.replace(`/auth/login?ref=${encodeURIComponent(code ?? '')}`)
+    router.replace(`/invite/${encodeURIComponent(code ?? '')}`)
   }, [code, router])
 
   return (

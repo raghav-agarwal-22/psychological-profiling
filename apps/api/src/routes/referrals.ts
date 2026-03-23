@@ -116,7 +116,7 @@ export async function referralRoutes(server: FastifyInstance) {
 
     const code = user.referralCode!
     const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
-    const referralUrl = `${webUrl}/ref/${encodeURIComponent(code)}`
+    const referralUrl = `${webUrl}/invite/${encodeURIComponent(code)}`
 
     const referralsCount = await prisma.referral.count({
       where: { referrerId: user.id },
@@ -154,7 +154,7 @@ export async function referralRoutes(server: FastifyInstance) {
     }
 
     const webUrl = process.env.WEB_URL ?? 'http://localhost:3000'
-    const referralUrl = `${webUrl}/ref/${encodeURIComponent(referralCode)}`
+    const referralUrl = `${webUrl}/invite/${encodeURIComponent(referralCode)}`
 
     await sendReferralInviteEmail(parsed.data.email, user.name, referralUrl)
 

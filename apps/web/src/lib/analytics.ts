@@ -14,6 +14,9 @@ export type FunnelEvent =
   | 'upgrade_initiated'
   | 'upgrade_completed'
   | 'b2b_upgrade_completed'
+  | 'referral_link_copied'
+  | 'referral_page_viewed'
+  | 'referral_signup'
 
 interface EventProperties {
   landing_page_viewed: {
@@ -31,6 +34,9 @@ interface EventProperties {
   upgrade_initiated: { tier: string; interval: string }
   upgrade_completed: { tier?: string; interval?: string }
   b2b_upgrade_completed: { workspace_id?: string; tier?: string }
+  referral_link_copied: { code: string; source: string }
+  referral_page_viewed: { referrer_name?: string; code: string }
+  referral_signup: { code: string }
 }
 
 export function track<E extends FunnelEvent>(
