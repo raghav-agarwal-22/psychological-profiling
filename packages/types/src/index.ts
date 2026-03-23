@@ -10,6 +10,9 @@ export type AssessmentType =
   | 'LIFE_SATISFACTION'
   | 'STRENGTHS'
   | 'ATTACHMENT_STYLE'
+  | 'ENNEAGRAM'
+  | 'LIGHT_DARK_TRIAD'
+  | 'MORAL_FOUNDATIONS'
   | 'CUSTOM'
 
 export type AssessmentStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'SKIPPED'

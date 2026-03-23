@@ -227,6 +227,7 @@ enum AssessmentType {
   ATTACHMENT_STYLE      // Attachment style
   ENNEAGRAM             // Enneagram 9 types with wing identification
   LIGHT_DARK_TRIAD      // Light Triad (humanism, Kantianism, faith) + Dark Triad (narcissism, Machiavellianism, psychopathy)
+  MORAL_FOUNDATIONS     // Moral Foundations Theory — 6 dimensions (care, fairness, loyalty, authority, sanctity, liberty)
   CUSTOM                // AI-generated adaptive assessment
 }
 

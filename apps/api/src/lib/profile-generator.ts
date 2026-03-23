@@ -138,6 +138,7 @@ export async function generateReflectionPrompts(
     templateType === 'JUNGIAN_ARCHETYPES' ? 'Jungian Archetypes' :
     templateType === 'ENNEAGRAM' ? 'Enneagram' :
     templateType === 'LIGHT_DARK_TRIAD' ? 'Light & Dark Triad' :
+    templateType === 'MORAL_FOUNDATIONS' ? 'Moral Foundations Theory' :
     'Big Five Personality'
 
   const response = await client.messages.create({
@@ -901,6 +902,78 @@ export async function generateJungianNarrative(
   const block = response.content[0]
   const text = block?.type === 'text' ? block.text : ''
   return extractJson<JungianNarrative>(text)
+}
+
+export interface MoralFoundationsNarrative {
+  summary: string              // 2-3 paragraph overview of moral foundations profile
+  dominantFoundations: string[]  // top 2-3 foundation names
+  foundationNarratives: Record<string, string>  // narrative for each of the 6 foundations
+  moralProfile: string         // 1-2 sentence characterization (e.g. "Progressive Individualist", "Communitarian Conservative")
+  coreVirtues: string[]        // 3 virtues that emerge from the profile
+  blindSpots: string[]         // 2 potential blind spots or tensions
+  integrationGuidance: string  // 1-2 sentences on integrating competing foundations
+}
+
+const MORAL_FOUNDATIONS_SYSTEM_PROMPT = `You are a thoughtful guide versed in Moral Foundations Theory, as developed by Jonathan Haidt and colleagues.
+
+Your role is to help someone understand their moral landscape — which foundations they prioritize, what this reveals about their values, and how these foundations shape their moral intuitions.
+
+The six moral foundations are:
+- care_harm: compassion for suffering, protecting the vulnerable (0–100)
+- fairness_cheating: justice, equality, reciprocity, anti-cheating (0–100)
+- loyalty_betrayal: group loyalty, patriotism, team solidarity (0–100)
+- authority_subversion: respect for hierarchy, tradition, legitimate authority (0–100)
+- sanctity_degradation: purity, disgust sensitivity, sacredness (0–100)
+- liberty_oppression: autonomy, freedom from domination, anti-tyranny (0–100)
+
+Research note: Liberals typically score higher on care and fairness; conservatives typically score higher on all six foundations more evenly. Do not frame this as political commentary — frame it as moral intuition patterns.
+
+Your tone should be:
+- Curious and non-judgmental — all foundation profiles are valid moral orientations
+- Psychologically nuanced — connect foundations to underlying intuitions and values
+- Grounded in Haidt's research — reference MFT where natural
+- Insightful about how these foundations create both strengths and blind spots
+
+You must respond with valid JSON matching exactly this structure:
+{
+  "summary": "A 2–3 paragraph narrative overview of this person's moral landscape",
+  "dominantFoundations": ["foundation1", "foundation2"],
+  "foundationNarratives": {
+    "care_harm": "1 paragraph on how this person expresses care/harm intuitions",
+    "fairness_cheating": "1 paragraph on their fairness orientation",
+    "loyalty_betrayal": "1 paragraph on their loyalty patterns",
+    "authority_subversion": "1 paragraph on their relationship to authority",
+    "sanctity_degradation": "1 paragraph on their purity/sanctity intuitions",
+    "liberty_oppression": "1 paragraph on their liberty orientation"
+  },
+  "moralProfile": "A brief 2-4 word characterization (e.g. 'Compassionate Universalist', 'Communitarian Traditionalist', 'Liberty-First Progressive')",
+  "coreVirtues": ["virtue1", "virtue2", "virtue3"],
+  "blindSpots": ["tension or blind spot 1", "tension or blind spot 2"],
+  "integrationGuidance": "1–2 sentences on how to integrate their strongest foundations with their weaker ones for moral growth"
+}
+
+dominantFoundations should list the top 2–3 foundations by score. Do not invent information not supported by the scores.`
+
+export async function generateMoralFoundationsNarrative(
+  scores: AssessmentScores,
+): Promise<MoralFoundationsNarrative> {
+  const ranked = Object.entries(scores)
+    .sort(([, a], [, b]) => b.normalized - a.normalized)
+    .map(([dim, s]) => `- ${dim}: ${s.normalized}/100`)
+    .join('\n')
+
+  const userMessage = `Here are the Moral Foundations Theory scores for this person (sorted highest to lowest):\n\n${ranked}\n\nGenerate a moral foundations profile narrative based on these scores.`
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    system: MORAL_FOUNDATIONS_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const block = response.content[0]
+  const text = block?.type === 'text' ? block.text : ''
+  return extractJson<MoralFoundationsNarrative>(text)
 }
 
 export interface GrowthRecommendation {

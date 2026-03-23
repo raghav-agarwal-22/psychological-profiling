@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { prisma, SessionStatus, AssessmentStatus, AssessmentType, computeScores, type ScoringConfig } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateDeltaObservation, generateReflectionPrompts, generateTemplateSummary, type ProfileNarrative, type ValuesNarrative, type AttachmentNarrative, type TriadNarrative, type EnneagramNarrative, type JungianNarrative } from '../lib/profile-generator.js'
+import { generateProfileNarrative, generateValuesNarrative, generateAttachmentNarrative, generateTriadNarrative, generateEnneagramNarrative, generateJungianNarrative, generateMoralFoundationsNarrative, generateDeltaObservation, generateReflectionPrompts, generateTemplateSummary, type ProfileNarrative, type ValuesNarrative, type AttachmentNarrative, type TriadNarrative, type EnneagramNarrative, type JungianNarrative, type MoralFoundationsNarrative } from '../lib/profile-generator.js'
 import { applyReferral } from './referrals.js'
 import { sendProfileRevealEmail } from '../services/email.js'
 import { sendLoopsEvent, upsertLoopsContact } from '../lib/loops.js'
@@ -201,6 +201,7 @@ export async function sessionRoutes(server: FastifyInstance) {
     let triadNarrative: TriadNarrative | null = null
     let enneagramNarrative: EnneagramNarrative | null = null
     let jungianNarrative: JungianNarrative | null = null
+    let moralFoundationsNarrative: MoralFoundationsNarrative | null = null
 
     if (hasLlm) {
       try {
@@ -214,6 +215,8 @@ export async function sessionRoutes(server: FastifyInstance) {
           enneagramNarrative = await generateEnneagramNarrative(dimensionScores)
         } else if (templateType === AssessmentType.JUNGIAN_ARCHETYPES) {
           jungianNarrative = await generateJungianNarrative(dimensionScores)
+        } else if (templateType === AssessmentType.MORAL_FOUNDATIONS) {
+          moralFoundationsNarrative = await generateMoralFoundationsNarrative(dimensionScores)
         } else {
           narrative = await generateProfileNarrative(dimensionScores)
         }
@@ -268,6 +271,12 @@ export async function sessionRoutes(server: FastifyInstance) {
       values = jungianNarrative.growthAreas
       blindSpots = jungianNarrative.blindSpots
       strengths = jungianNarrative.strengths
+    } else if (templateType === AssessmentType.MORAL_FOUNDATIONS && moralFoundationsNarrative) {
+      summary = moralFoundationsNarrative.summary
+      archetypes = [moralFoundationsNarrative.moralProfile]
+      values = moralFoundationsNarrative.coreVirtues
+      blindSpots = moralFoundationsNarrative.blindSpots
+      strengths = moralFoundationsNarrative.coreVirtues
     } else {
       summary = narrative?.summary ?? generateTemplateSummary(dimensionScores as Record<string, { normalized: number }>, templateType)
       archetypes = narrative?.archetype ? [narrative.archetype] : []
@@ -294,7 +303,7 @@ export async function sessionRoutes(server: FastifyInstance) {
           sessionId: session.id,
           scores: dimensionScores,
           templateType,
-          narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative ?? jungianNarrative,
+          narrative: narrative ?? valuesNarrative ?? attachmentNarrative ?? triadNarrative ?? enneagramNarrative ?? jungianNarrative ?? moralFoundationsNarrative,
           reflectionPrompts,
           aiPending,
         } as object,

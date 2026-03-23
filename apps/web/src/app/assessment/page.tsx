@@ -22,6 +22,7 @@ const typeDescriptions: Record<string, string> = {
   ATTACHMENT_STYLE: 'Understand your relational blueprint — how you connect, trust, and seek closeness in relationships. Based on Bowlby and Ainsworth\'s attachment theory.',
   ENNEAGRAM: 'Discover your core Enneagram type and wing — the motivational system that drives your fears, desires, and patterns of growth. Based on the nine-type personality model.',
   LIGHT_DARK_TRIAD: 'Explore where you fall on the light-dark personality spectrum. Measures three prosocial virtues (Kantianism, Humanism, Faith in Humanity) alongside three antagonistic tendencies (Narcissism, Machiavellianism, Psychopathy). Based on Kaufman et al.',
+  MORAL_FOUNDATIONS: 'Discover how you prioritize the six moral foundations: Care, Fairness, Loyalty, Authority, Sanctity, and Liberty. Based on Jonathan Haidt\'s Moral Foundations Theory.',
 }
 
 const typeIcons: Record<string, string> = {
@@ -30,6 +31,7 @@ const typeIcons: Record<string, string> = {
   ATTACHMENT_STYLE: '◉',
   ENNEAGRAM: '◑',
   LIGHT_DARK_TRIAD: '◐',
+  MORAL_FOUNDATIONS: '⬡',
 }
 
 const typeDuration: Record<string, string> = {
@@ -38,6 +40,7 @@ const typeDuration: Record<string, string> = {
   ATTACHMENT_STYLE: '3–5 min',
   ENNEAGRAM: '8–12 min',
   LIGHT_DARK_TRIAD: '3–5 min',
+  MORAL_FOUNDATIONS: '6–9 min',
 }
 
 const ANON_ALLOWED = ['BIG_FIVE', 'JUNGIAN_ARCHETYPES']

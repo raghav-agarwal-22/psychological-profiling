@@ -65,6 +65,12 @@ interface RawOutput {
     stressArrow?: number
     securityArrow?: number
     atWorst?: string[]
+    // Moral Foundations fields
+    dominantFoundations?: string[]
+    foundationNarratives?: Record<string, string>
+    moralProfile?: string
+    coreVirtues?: string[]
+    integrationGuidance?: string
   }
 }
 
@@ -171,6 +177,24 @@ const TRIAD_COLORS: Record<string, string> = {
   narcissism: 'bg-rose-500',
   machiavellianism: 'bg-orange-500',
   psychopathy: 'bg-red-700',
+}
+
+const MORAL_FOUNDATIONS_LABELS: Record<string, string> = {
+  care_harm: 'Care',
+  fairness_cheating: 'Fairness',
+  loyalty_betrayal: 'Loyalty',
+  authority_subversion: 'Authority',
+  sanctity_degradation: 'Sanctity',
+  liberty_oppression: 'Liberty',
+}
+
+const MORAL_FOUNDATIONS_COLORS: Record<string, string> = {
+  care_harm: 'bg-emerald-500',
+  fairness_cheating: 'bg-blue-500',
+  loyalty_betrayal: 'bg-amber-500',
+  authority_subversion: 'bg-purple-500',
+  sanctity_degradation: 'bg-rose-500',
+  liberty_oppression: 'bg-indigo-500',
 }
 
 export default function ProfilePage() {
@@ -706,11 +730,13 @@ export default function ProfilePage() {
   const isAttachmentProfile = profile.rawOutput?.templateType === 'ATTACHMENT_STYLE'
   const isTriadProfile = profile.rawOutput?.templateType === 'LIGHT_DARK_TRIAD'
   const isEnneagramProfile = profile.rawOutput?.templateType === 'ENNEAGRAM'
+  const isMoralFoundationsProfile = profile.rawOutput?.templateType === 'MORAL_FOUNDATIONS'
   const valuesNarrative = profile.rawOutput?.narrative
   const attachmentStyle = isAttachmentProfile ? (profile.archetypes[0] ?? null) : null
   const attachmentNarrative = isAttachmentProfile ? profile.rawOutput?.narrative : null
   const triadNarrative = isTriadProfile ? profile.rawOutput?.narrative : null
   const enneagramNarrative = isEnneagramProfile ? profile.rawOutput?.narrative : null
+  const moralFoundationsNarrative = isMoralFoundationsProfile ? profile.rawOutput?.narrative : null
   const dimensionEntries = Object.entries(profile.dimensions)
 
   // For values profiles: sort dimensions by score descending
@@ -1071,8 +1097,52 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Moral Foundations dimensions */}
+      {isMoralFoundationsProfile && dimensionEntries.length > 0 && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-1 font-serif text-xl text-stone-200">Moral foundations</h2>
+          <p className="mb-5 text-xs text-stone-500">Your six moral foundation scores (sorted highest to lowest)</p>
+          <div className="space-y-4">
+            {[...dimensionEntries]
+              .sort(([, a], [, b]) => {
+                const aScore = typeof a === 'object' ? a.normalized : Number(a)
+                const bScore = typeof b === 'object' ? b.normalized : Number(b)
+                return bScore - aScore
+              })
+              .map(([key, score]) => {
+                const label = MORAL_FOUNDATIONS_LABELS[key.toLowerCase()] ?? key
+                const color = MORAL_FOUNDATIONS_COLORS[key.toLowerCase()] ?? 'bg-stone-400'
+                const pct = typeof score === 'object' ? score.normalized : Number(score)
+                const foundationNarrative = moralFoundationsNarrative?.foundationNarratives?.[key.toLowerCase()]
+                return (
+                  <div key={key}>
+                    <div className="mb-1.5 flex items-center justify-between">
+                      <span className="text-sm text-stone-300">{label}</span>
+                      <span className="text-sm font-medium text-stone-400">{pct}</span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-stone-800">
+                      <div className={`h-full rounded-full transition-all duration-500 ${color}`} style={{ width: `${pct}%` }} />
+                    </div>
+                    {foundationNarrative && (
+                      <p className="mt-2 text-xs text-stone-500 leading-relaxed">{foundationNarrative}</p>
+                    )}
+                  </div>
+                )
+              })}
+          </div>
+        </div>
+      )}
+
+      {/* Moral Foundations integration guidance */}
+      {isMoralFoundationsProfile && moralFoundationsNarrative?.integrationGuidance && (
+        <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
+          <h2 className="mb-3 font-serif text-xl text-stone-200">Integration guidance</h2>
+          <p className="text-stone-400 leading-relaxed">{moralFoundationsNarrative.integrationGuidance}</p>
+        </div>
+      )}
+
       {/* Big Five scores */}
-      {!isValuesProfile && !isAttachmentProfile && !isTriadProfile && !isEnneagramProfile && dimensionEntries.length > 0 && (
+      {!isValuesProfile && !isAttachmentProfile && !isTriadProfile && !isEnneagramProfile && !isMoralFoundationsProfile && dimensionEntries.length > 0 && (
         <div className="mb-8 rounded-2xl border border-stone-800 bg-stone-900/50 p-6">
           <h2 className="mb-5 font-serif text-xl text-stone-200">Personality dimensions</h2>
           <div className="space-y-4">

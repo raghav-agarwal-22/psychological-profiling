@@ -64,12 +64,13 @@ export async function assessmentRoutes(server: FastifyInstance) {
       return reply.status(400).send({ error: 'Invalid request', issues: body.error.issues })
     }
 
-    // Essential+ assessment types (Values, Attachment, Enneagram, Light & Dark Triad)
+    // Essential+ assessment types (Values, Attachment, Enneagram, Light & Dark Triad, Moral Foundations)
     const ESSENTIAL_TYPES: AssessmentType[] = [
       AssessmentType.VALUES_INVENTORY,
       AssessmentType.ATTACHMENT_STYLE,
       AssessmentType.ENNEAGRAM,
       AssessmentType.LIGHT_DARK_TRIAD,
+      AssessmentType.MORAL_FOUNDATIONS,
     ]
     if (ESSENTIAL_TYPES.includes(body.data.type)) {
       const user = await prisma.user.findUnique({

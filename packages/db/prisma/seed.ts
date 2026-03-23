@@ -439,6 +439,72 @@ const JUNGIAN_SCORING_CONFIG: ScoringConfig = {
   the_innocent:  { questionIds: ['JA_INNO_1','JA_INNO_2','JA_INNO_3'],   reverseIds: [], formula: 'average', normalize: true },
 }
 
+// ─── Moral Foundations Theory Question Bank (36 items, 6 per dimension) ──────
+//
+// Based on the Moral Foundations Questionnaire (MFQ30) by Graham, Haidt et al.
+// Dimensions: care_harm, fairness_cheating, loyalty_betrayal,
+//             authority_subversion, sanctity_degradation, liberty_oppression
+// 1 = Strongly Disagree, 5 = Strongly Agree
+
+const MORAL_FOUNDATIONS_QUESTIONS = [
+  // ── Care / Harm ────────────────────────────────────────────────────────────
+  { id: 'MF_CARE_01', text: 'Compassion for those who are suffering is one of the most crucial virtues a person can have.', dimension: 'care_harm', reverse_scored: false },
+  { id: 'MF_CARE_02', text: 'It troubles me when I see someone being cruel to another person.', dimension: 'care_harm', reverse_scored: false },
+  { id: 'MF_CARE_03', text: 'I feel a strong obligation to protect vulnerable people from being harmed.', dimension: 'care_harm', reverse_scored: false },
+  { id: 'MF_CARE_04', text: 'The suffering of animals concerns me deeply.', dimension: 'care_harm', reverse_scored: false },
+  { id: 'MF_CARE_05', text: 'When I hear about someone experiencing hardship, I feel a strong urge to help.', dimension: 'care_harm', reverse_scored: false },
+  { id: 'MF_CARE_06', text: 'One of the worst things a person can do is hurt a defenseless animal or child.', dimension: 'care_harm', reverse_scored: false },
+
+  // ── Fairness / Cheating ─────────────────────────────────────────────────────
+  { id: 'MF_FAIR_01', text: 'I believe justice and equality are the most important foundations for a good society.', dimension: 'fairness_cheating', reverse_scored: false },
+  { id: 'MF_FAIR_02', text: 'It bothers me when people gain an advantage by cutting corners or breaking rules.', dimension: 'fairness_cheating', reverse_scored: false },
+  { id: 'MF_FAIR_03', text: 'I think it is important that people are rewarded in proportion to what they contribute.', dimension: 'fairness_cheating', reverse_scored: false },
+  { id: 'MF_FAIR_04', text: 'When I see someone cheat and get away with it, I feel a strong sense of wrongness.', dimension: 'fairness_cheating', reverse_scored: false },
+  { id: 'MF_FAIR_05', text: 'I believe everyone deserves to be treated equally under the same set of rules.', dimension: 'fairness_cheating', reverse_scored: false },
+  { id: 'MF_FAIR_06', text: 'It angers me when people are unfairly discriminated against.', dimension: 'fairness_cheating', reverse_scored: false },
+
+  // ── Loyalty / Betrayal ──────────────────────────────────────────────────────
+  { id: 'MF_LOYA_01', text: 'I consider loyalty to my group to be one of the most important virtues.', dimension: 'loyalty_betrayal', reverse_scored: false },
+  { id: 'MF_LOYA_02', text: 'It is deeply wrong to betray your team or community, even if it means acting against a rule.', dimension: 'loyalty_betrayal', reverse_scored: false },
+  { id: 'MF_LOYA_03', text: 'I feel a strong bond with the groups and communities I belong to.', dimension: 'loyalty_betrayal', reverse_scored: false },
+  { id: 'MF_LOYA_04', text: 'I believe people who sacrifice for their community deserve great respect.', dimension: 'loyalty_betrayal', reverse_scored: false },
+  { id: 'MF_LOYA_05', text: 'It is important to me to stand by the people who are on my side.', dimension: 'loyalty_betrayal', reverse_scored: false },
+  { id: 'MF_LOYA_06', text: 'Someone who betrays their friends or family is one of the worst kinds of people.', dimension: 'loyalty_betrayal', reverse_scored: false },
+
+  // ── Authority / Subversion ──────────────────────────────────────────────────
+  { id: 'MF_AUTH_01', text: 'I believe it is important to respect and obey authority figures.', dimension: 'authority_subversion', reverse_scored: false },
+  { id: 'MF_AUTH_02', text: 'Traditions and social hierarchies serve important purposes in maintaining order.', dimension: 'authority_subversion', reverse_scored: false },
+  { id: 'MF_AUTH_03', text: 'I think children should be taught to respect and defer to their parents and elders.', dimension: 'authority_subversion', reverse_scored: false },
+  { id: 'MF_AUTH_04', text: 'Showing proper deference to leaders is a sign of good character.', dimension: 'authority_subversion', reverse_scored: false },
+  { id: 'MF_AUTH_05', text: 'I believe maintaining traditional customs and social roles is important for society.', dimension: 'authority_subversion', reverse_scored: false },
+  { id: 'MF_AUTH_06', text: 'It bothers me when people disrespect or undermine legitimate authority.', dimension: 'authority_subversion', reverse_scored: false },
+
+  // ── Sanctity / Degradation ──────────────────────────────────────────────────
+  { id: 'MF_SANC_01', text: 'I believe certain acts are morally wrong even if they don\'t directly harm anyone.', dimension: 'sanctity_degradation', reverse_scored: false },
+  { id: 'MF_SANC_02', text: 'The human body is sacred and should be treated with dignity and purity.', dimension: 'sanctity_degradation', reverse_scored: false },
+  { id: 'MF_SANC_03', text: 'I feel a deep sense of wrongness when people violate traditional moral codes around purity.', dimension: 'sanctity_degradation', reverse_scored: false },
+  { id: 'MF_SANC_04', text: 'There are acts I find morally disgusting even when no one is being hurt.', dimension: 'sanctity_degradation', reverse_scored: false },
+  { id: 'MF_SANC_05', text: 'I care about living in a morally clean way, beyond just avoiding harm to others.', dimension: 'sanctity_degradation', reverse_scored: false },
+  { id: 'MF_SANC_06', text: 'Some things in life are sacred or spiritually significant and should be treated accordingly.', dimension: 'sanctity_degradation', reverse_scored: false },
+
+  // ── Liberty / Oppression ────────────────────────────────────────────────────
+  { id: 'MF_LIB_01', text: 'People should be free to live their lives as they choose, as long as they don\'t harm others.', dimension: 'liberty_oppression', reverse_scored: false },
+  { id: 'MF_LIB_02', text: 'I strongly object to those who try to dominate or control others for their own ends.', dimension: 'liberty_oppression', reverse_scored: false },
+  { id: 'MF_LIB_03', text: 'It angers me when powerful groups oppress weaker ones.', dimension: 'liberty_oppression', reverse_scored: false },
+  { id: 'MF_LIB_04', text: 'I believe protecting individual autonomy and freedom is a core moral priority.', dimension: 'liberty_oppression', reverse_scored: false },
+  { id: 'MF_LIB_05', text: 'I resist anyone who tries to control or restrict my freedom without good reason.', dimension: 'liberty_oppression', reverse_scored: false },
+  { id: 'MF_LIB_06', text: 'It is important that no single group holds disproportionate power over others.', dimension: 'liberty_oppression', reverse_scored: false },
+]
+
+const MORAL_FOUNDATIONS_SCORING_CONFIG: ScoringConfig = {
+  care_harm:              { questionIds: ['MF_CARE_01','MF_CARE_02','MF_CARE_03','MF_CARE_04','MF_CARE_05','MF_CARE_06'], reverseIds: [], formula: 'average', normalize: true },
+  fairness_cheating:      { questionIds: ['MF_FAIR_01','MF_FAIR_02','MF_FAIR_03','MF_FAIR_04','MF_FAIR_05','MF_FAIR_06'], reverseIds: [], formula: 'average', normalize: true },
+  loyalty_betrayal:       { questionIds: ['MF_LOYA_01','MF_LOYA_02','MF_LOYA_03','MF_LOYA_04','MF_LOYA_05','MF_LOYA_06'], reverseIds: [], formula: 'average', normalize: true },
+  authority_subversion:   { questionIds: ['MF_AUTH_01','MF_AUTH_02','MF_AUTH_03','MF_AUTH_04','MF_AUTH_05','MF_AUTH_06'], reverseIds: [], formula: 'average', normalize: true },
+  sanctity_degradation:   { questionIds: ['MF_SANC_01','MF_SANC_02','MF_SANC_03','MF_SANC_04','MF_SANC_05','MF_SANC_06'], reverseIds: [], formula: 'average', normalize: true },
+  liberty_oppression:     { questionIds: ['MF_LIB_01','MF_LIB_02','MF_LIB_03','MF_LIB_04','MF_LIB_05','MF_LIB_06'], reverseIds: [], formula: 'average', normalize: true },
+}
+
 async function main() {
   console.log('🌱 Seeding database...')
 
@@ -552,6 +618,25 @@ async function main() {
     },
   })
   console.log(`✓ AssessmentTemplate: ${jungianTemplate.title} v${jungianTemplate.version} (${JUNGIAN_QUESTIONS.length} items)`)
+
+  // ── 1g. Upsert Moral Foundations Theory template ────────────────────────────
+  const moralFoundationsTemplate = await prisma.assessmentTemplate.upsert({
+    where: { type_version: { type: AssessmentType.MORAL_FOUNDATIONS, version: '1.0' } },
+    update: {
+      questionBank: MORAL_FOUNDATIONS_QUESTIONS as object[],
+      scoringConfig: MORAL_FOUNDATIONS_SCORING_CONFIG as object,
+    },
+    create: {
+      type: AssessmentType.MORAL_FOUNDATIONS,
+      version: '1.0',
+      title: 'Moral Foundations Theory',
+      description: 'Discover how you prioritize the six moral foundations: Care, Fairness, Loyalty, Authority, Sanctity, and Liberty. Based on Jonathan Haidt\'s Moral Foundations Theory (MFQ30). 36 items, Likert 1–5.',
+      questionBank: MORAL_FOUNDATIONS_QUESTIONS as object[],
+      scoringConfig: MORAL_FOUNDATIONS_SCORING_CONFIG as object,
+      isActive: true,
+    },
+  })
+  console.log(`✓ AssessmentTemplate: ${moralFoundationsTemplate.title} v${moralFoundationsTemplate.version} (${MORAL_FOUNDATIONS_QUESTIONS.length} items)`)
 
   // ── 2. Upsert demo user ────────────────────────────────────────────────────
   const user = await prisma.user.upsert({
