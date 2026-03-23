@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { LaunchBanner } from '@/components/LaunchBanner'
 import { LandingAnalytics } from '@/components/LandingAnalytics'
 import { TestimonialGrid, type TestimonialItem } from '@/components/TestimonialGrid'
-import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 
 // ISR: regenerate at most once per hour — serves cached HTML under PH traffic spike
 export const revalidate = 3600
@@ -30,6 +29,61 @@ const websiteSchema = {
   },
 }
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How is Innermind different from 16Personalities or MBTI?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Innermind uses six peer-reviewed psychology frameworks — Big Five (OCEAN), Schwartz Values, Attachment Theory, Enneagram, Jungian Archetypes, and Light Triad — and synthesizes them into one AI-written portrait. 16Personalities reduces you to a four-letter type. We give you depth, not labels.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is this scientifically valid?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Every framework in Innermind is grounded in peer-reviewed research. Big Five is the gold standard in personality psychology. Schwartz Values is used in cross-cultural research. Attachment Theory is foundational in clinical psychology. We take rigor seriously.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How long does the assessment take?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Each individual assessment takes 8–15 minutes. You can take them one at a time across multiple sessions. There are 6 assessments in total — you can do one free, and unlock the rest with Pro.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What do I get for free vs. Pro?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Free gives you one full assessment plus a basic profile — a real look at yourself at no cost. Pro ($19/month) unlocks all 6 assessments, the full AI-synthesized portrait that weaves all frameworks together, the AI coach, growth recommendations, and daily reflection prompts.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I share my profile with others?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Pro members can generate a shareable profile link and use the compatibility map to compare their psychological profile with partners, friends, and collaborators.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does the AI work?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'We use Claude (by Anthropic) to read your raw assessment results and write a personal narrative — a psychological portrait that synthesizes all your results into a coherent, honest picture of who you are. It reads your results the way a thoughtful therapist would.',
+      },
+    },
+  ],
+}
+
 async function fetchTestimonials(): Promise<TestimonialItem[]> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
@@ -46,15 +100,21 @@ async function fetchTestimonials(): Promise<TestimonialItem[]> {
 
 export default async function HomePage() {
   const dbTestimonials = await fetchTestimonials()
+  const featuredTestimonials = dbTestimonials.length > 0
+    ? dbTestimonials.slice(0, 3)
+    : TESTIMONIALS_FALLBACK
+
   return (
     <div className="flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Suspense fallback={null}><LandingAnalytics /></Suspense>
       <LaunchBanner />
-      {/* Hero */}
+
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 py-32 text-center">
-        {/* Faint radial circle pattern */}
+        {/* Background radial glow */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -71,70 +131,87 @@ export default async function HomePage() {
         />
 
         <div className="relative z-10 flex flex-col items-center">
-          {/* Social proof badge — above headline */}
+          {/* Social proof badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-stone-700/60 bg-stone-900/60 px-4 py-1.5 text-xs text-stone-400">
             <span className="flex gap-0.5">
-              {['◎','◎','◎','◎','◎'].map((s, i) => (
-                <span key={i} className="text-amber-400 text-[10px]">{s}</span>
+              {['★','★','★','★','★'].map((s, i) => (
+                <span key={i} className="text-amber-400 text-[11px]">{s}</span>
               ))}
             </span>
-            <span>Trusted by 2,000+ people doing the inner work</span>
+            <span>Trusted by 1,200+ people doing the inner work</span>
           </div>
+
           <h1 className="mb-6 font-serif text-5xl font-medium tracking-tight text-stone-100 sm:text-6xl lg:text-7xl">
             Know yourself deeply.
           </h1>
           <p className="mb-10 max-w-2xl text-lg text-stone-400 leading-relaxed sm:text-xl">
-            Five validated psychology frameworks — Big Five, Schwartz Values, Attachment Style,
-            Enneagram, and Jungian Archetypes — synthesized by AI into one portrait of who you are.
+            Six validated psychology frameworks — Big Five, Schwartz Values, Attachment Style,
+            Enneagram, Jungian Archetypes, and Light Triad — synthesized by AI into one portrait of who you are.
           </p>
-          <div className="flex flex-col items-center gap-4 sm:flex-row">
-            <Link
-              href="/assessment"
-              className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400"
-            >
-              Take your free assessment →
-            </Link>
-            <a
-              href="#how-it-works"
-              className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-8 py-3.5 text-sm font-medium text-stone-300 hover:border-stone-500 hover:text-stone-100"
-            >
-              See how it works ↓
-            </a>
-          </div>
-          {/* Friction reducers */}
-          <p className="mt-4 text-[11px] text-stone-600">
-            Takes 8–15 minutes &nbsp;·&nbsp; Free to start &nbsp;·&nbsp; No credit card required
+
+          {/* Single primary CTA */}
+          <Link
+            href="/assessment"
+            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-base font-semibold text-stone-950 hover:bg-amber-400 transition-colors"
+          >
+            Take the free assessment →
+          </Link>
+
+          <p className="mt-4 text-sm text-stone-500">
+            Join 1,200+ people who discovered their psychological profile
+          </p>
+          <p className="mt-2 text-[11px] text-stone-600">
+            8–15 minutes &nbsp;·&nbsp; Free to start &nbsp;·&nbsp; No credit card required
           </p>
         </div>
       </section>
 
-      {/* Trust bar */}
-      <section className="border-y border-stone-800/60 bg-stone-900/40 px-6 py-6">
+      {/* ── Social Proof — immediately below fold ─────────────────────────── */}
+      <section className="border-y border-stone-800/60 bg-stone-900/30 px-6 py-14">
         <div className="mx-auto max-w-6xl">
-          <p className="mb-5 text-center text-[10px] uppercase tracking-widest text-stone-600">
-            Built on peer-reviewed psychology
+          <p className="mb-8 text-center text-[10px] uppercase tracking-widest text-stone-600">
+            What people are saying
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {FRAMEWORKS_TRUST.map((name) => (
-              <span key={name} className="text-xs font-medium text-stone-500">
-                {name}
-              </span>
+          <div className="grid gap-5 sm:grid-cols-3">
+            {featuredTestimonials.map((t, i) => (
+              <div
+                key={i}
+                className="flex flex-col rounded-2xl border border-stone-800 bg-stone-900/60 p-6"
+              >
+                {/* Stars */}
+                <div className="mb-3 flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <span key={j} className={j < t.rating ? 'text-amber-400 text-xs' : 'text-stone-700 text-xs'}>★</span>
+                  ))}
+                </div>
+                <p className="mb-5 flex-1 font-serif text-sm text-stone-300 leading-relaxed italic">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-2.5 border-t border-stone-800 pt-4">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-800 text-xs font-medium text-stone-400">
+                    {t.firstName[0]?.toUpperCase() ?? '?'}
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-stone-300">{t.firstName}</p>
+                    {t.personalityTag && (
+                      <p className="text-[11px] text-stone-600">{t.personalityTag}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-          <p className="mt-5 text-center text-[10px] text-stone-700">
-            Used by therapists, coaches, and people serious about self-understanding
-          </p>
         </div>
       </section>
 
-      {/* How it works */}
+      {/* ── How it works ──────────────────────────────────────────────────── */}
       <section id="how-it-works" className="border-b border-stone-800/60 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
             How it works
           </h2>
           <p className="mb-16 text-center text-sm text-stone-500">
-            Three steps to a richer understanding of who you are.
+            From first question to full psychological portrait.
           </p>
           <div className="grid gap-10 sm:grid-cols-3">
             {HOW_IT_WORKS.map((step, i) => (
@@ -153,127 +230,58 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Mid-funnel CTA — after how it works */}
-      <section className="border-b border-stone-800/60 bg-stone-900/30 px-6 py-12">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
-          <div>
-            <p className="mb-1 font-serif text-lg text-stone-200">
-              Ready to see your portrait?
-            </p>
-            <p className="text-sm text-stone-500">
-              One free assessment. No account setup. Results in minutes.
-            </p>
+          <div className="mt-14 text-center">
+            <Link
+              href="/assessment"
+              className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400 transition-colors"
+            >
+              Start your assessment →
+            </Link>
           </div>
-          <Link
-            href="/assessment"
-            className="shrink-0 inline-flex items-center justify-center rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold text-stone-950 hover:bg-amber-400"
-          >
-            Start free →
-          </Link>
         </div>
       </section>
 
-      {/* Features grid */}
+      {/* ── Frameworks Grid ───────────────────────────────────────────────── */}
       <section className="border-b border-stone-800/60 px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
-            Everything you need to understand yourself
-          </h2>
-          <p className="mb-16 text-center text-sm text-stone-500">
-            Depth, clarity, and growth — all in one place.
+          <p className="mb-3 text-center text-[10px] uppercase tracking-widest text-stone-600">
+            Built on peer-reviewed psychology
           </p>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map((feature) => (
+          <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
+            Six frameworks. One portrait.
+          </h2>
+          <p className="mb-14 text-center text-sm text-stone-500 max-w-xl mx-auto">
+            Most personality tests give you one lens. Innermind uses all six — then synthesizes them into a coherent picture of who you actually are.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {FRAMEWORKS.map((f) => (
               <div
-                key={feature.title}
-                className="flex flex-col rounded-2xl border border-stone-800 bg-stone-900/50 p-6"
+                key={f.name}
+                className="flex gap-4 rounded-2xl border border-stone-800 bg-stone-900/50 p-5"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-xl text-amber-400 ring-1 ring-amber-500/20">
-                  {feature.icon}
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-xl text-amber-400 ring-1 ring-amber-500/20">
+                  {f.icon}
                 </div>
-                <h3 className="mb-2 font-serif text-base text-stone-100">{feature.title}</h3>
-                <p className="flex-1 text-sm text-stone-500 leading-relaxed">
-                  {feature.description}
-                </p>
+                <div>
+                  <h3 className="mb-1 font-serif text-sm font-medium text-stone-100">{f.name}</h3>
+                  <p className="text-xs text-stone-500 leading-relaxed">{f.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured pull quote — social proof before testimonials section */}
-      <section className="border-b border-stone-800/60 px-6 py-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-4 block font-serif text-4xl text-amber-500/30 leading-none">&ldquo;</span>
-          <p className="mb-6 font-serif text-xl text-stone-300 leading-relaxed italic sm:text-2xl">
-            I&apos;ve done MBTI, Enneagram, everything — Innermind went deeper than any of them.
-            The synthesis here is genuinely sophisticated. I now recommend it to clients.
-          </p>
-          <div className="flex items-center justify-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-800 text-sm font-medium text-stone-400">
-              J
-            </div>
-            <div className="text-left">
-              <p className="text-sm font-medium text-stone-300">James K.</p>
-              <p className="text-xs text-stone-600">Therapist</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="border-b border-stone-800/60 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
-            What people are saying
-          </h2>
-          <p className="mb-16 text-center text-sm text-stone-500">
-            Real experiences from people doing the inner work.
-          </p>
-          {dbTestimonials.length > 0 ? (
-            <TestimonialGrid testimonials={dbTestimonials} limit={6} />
-          ) : (
-            <div className="grid gap-6 sm:grid-cols-3">
-              {TESTIMONIALS.map((t) => (
-                <div
-                  key={t.name}
-                  className="flex flex-col rounded-2xl border border-stone-800 bg-stone-900/60 p-7"
-                >
-                  <span className="mb-4 font-serif text-3xl text-amber-500/40 leading-none">
-                    &ldquo;
-                  </span>
-                  <p className="mb-6 flex-1 font-serif text-sm text-stone-300 leading-relaxed italic">
-                    {t.quote}
-                  </p>
-                  <div className="flex items-center gap-3 border-t border-stone-800 pt-5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-800 text-xs font-medium text-stone-400">
-                      {t.name[0]}
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-stone-300">{t.name}</p>
-                      <p className="text-xs text-stone-600">{t.role}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Pricing preview */}
-      <section className="border-b border-stone-800/60 px-6 py-24">
+      {/* ── Pricing ───────────────────────────────────────────────────────── */}
+      <section id="pricing" className="border-b border-stone-800/60 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
             Simple, honest pricing
           </h2>
           <p className="mb-16 text-center text-sm text-stone-500">
-            Start free. Upgrade when you&apos;re ready to go deeper.
+            Start free. Go deeper when you&apos;re ready.
           </p>
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">
             {PRICING.map((tier) => (
               <div
                 key={tier.name}
@@ -294,19 +302,25 @@ export default async function HomePage() {
                 <p className="mb-1 text-[10px] uppercase tracking-widest text-stone-500">
                   {tier.name}
                 </p>
-                <div className="mb-5 flex items-baseline gap-1">
+                <div className="mb-2 flex items-baseline gap-1">
                   <span className="font-serif text-3xl text-stone-100">{tier.price}</span>
                   {tier.period && (
                     <span className="text-xs text-stone-500">{tier.period}</span>
                   )}
                 </div>
-                <p className="mb-6 flex-1 text-sm text-stone-400 leading-relaxed">
-                  {tier.description}
-                </p>
+                <p className="mb-6 text-sm text-stone-400">{tier.tagline}</p>
+                <ul className="mb-7 flex-1 space-y-2.5">
+                  {tier.features.map((feat) => (
+                    <li key={feat} className="flex items-start gap-2 text-sm text-stone-400">
+                      <span className="mt-0.5 text-amber-400 text-[11px]">✓</span>
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
                 <Link
                   href="/assessment"
                   className={[
-                    'inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold',
+                    'inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors',
                     tier.featured
                       ? 'bg-amber-500 text-stone-950 hover:bg-amber-400'
                       : 'border border-stone-700 text-stone-300 hover:border-stone-500 hover:text-stone-100',
@@ -320,33 +334,55 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Testimonial carousel — above final CTA */}
+      {/* ── Testimonials (full grid) ──────────────────────────────────────── */}
       {dbTestimonials.length > 0 && (
-        <section className="border-b border-stone-800/60 bg-stone-900/20 px-6 py-12">
-          <p className="mb-2 text-center text-[10px] uppercase tracking-widest text-stone-600">
-            From people doing the inner work
-          </p>
-          <TestimonialCarousel testimonials={dbTestimonials} />
+        <section className="border-b border-stone-800/60 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
+              Real experiences
+            </h2>
+            <p className="mb-16 text-center text-sm text-stone-500">
+              From people doing the inner work.
+            </p>
+            <TestimonialGrid testimonials={dbTestimonials} limit={6} />
+          </div>
         </section>
       )}
 
-      {/* Final CTA */}
+      {/* ── FAQ ───────────────────────────────────────────────────────────── */}
+      <section id="faq" className="border-b border-stone-800/60 px-6 py-24">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-3 text-center font-serif text-3xl text-stone-200 sm:text-4xl">
+            Frequently asked questions
+          </h2>
+          <p className="mb-14 text-center text-sm text-stone-500">
+            Honest answers about what Innermind is and how it works.
+          </p>
+          <div className="divide-y divide-stone-800/60">
+            {FAQ_ITEMS.map((item) => (
+              <div key={item.q} className="py-7">
+                <h3 className="mb-3 font-serif text-base text-stone-200">{item.q}</h3>
+                <p className="text-sm text-stone-500 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Final CTA ─────────────────────────────────────────────────────── */}
       <section className="px-6 py-32 text-center">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-3xl">
           <h2 className="mb-4 font-serif text-4xl text-stone-100 sm:text-5xl">
             Your psychological portrait is waiting.
           </h2>
-          <p className="mb-3 text-stone-400">
-            Start with one free assessment. No credit card. Results in minutes.
-          </p>
-          <p className="mb-10 text-sm text-stone-600">
-            Join 2,000+ people who&apos;ve discovered something true about themselves.
+          <p className="mb-10 text-stone-400 leading-relaxed">
+            One free assessment. No account setup required. Results in minutes.
           </p>
           <Link
             href="/assessment"
-            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-sm font-semibold text-stone-950 hover:bg-amber-400"
+            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-sm font-semibold text-stone-950 hover:bg-amber-400 transition-colors"
           >
-            Take your free assessment →
+            Take the free assessment →
           </Link>
           <p className="mt-4 text-[11px] text-stone-700">
             Takes 8–15 minutes &nbsp;·&nbsp; Free forever &nbsp;·&nbsp; No credit card
@@ -357,81 +393,59 @@ export default async function HomePage() {
   )
 }
 
-const FRAMEWORKS_TRUST = [
-  'Big Five (OCEAN)',
-  'Schwartz Values',
-  'Attachment Theory',
-  'Enneagram',
-  'Light Triad',
-  'Jungian Archetypes',
-]
+// ── Static data ────────────────────────────────────────────────────────────────
 
 const HOW_IT_WORKS = [
   {
     icon: '◎',
-    title: 'Take an assessment',
+    title: 'Take the assessment',
     description:
-      '5–50 questions, scientifically validated and carefully worded to capture the true complexity of who you are.',
-  },
-  {
-    icon: '◈',
-    title: 'Get your profile',
-    description:
-      'AI synthesizes your results into a personal narrative — nuanced, honest, and worth returning to.',
-  },
-  {
-    icon: '◉',
-    title: 'Grow over time',
-    description:
-      'Track changes across reassessments, get coached through real challenges, and compare with the people in your life.',
-  },
-]
-
-const FEATURES = [
-  {
-    icon: '◎',
-    title: 'Deep Assessments',
-    description:
-      '6 validated frameworks — from Big Five to Jungian archetypes — each going far deeper than pop psychology.',
+      'Answer validated questions across one or more psychology frameworks. Honest, thoughtful, and designed to reveal real patterns — not flatter you.',
   },
   {
     icon: '✦',
-    title: 'AI Synthesis',
+    title: 'Get your AI profile',
     description:
-      "Claude reads your results and writes a personal narrative you'll want to re-read.",
-  },
-  {
-    icon: '◈',
-    title: 'Growth Coaching',
-    description:
-      'Your AI coach knows your full profile and can guide you through real challenges with psychological depth.',
+      'Claude reads your raw results and writes a personal narrative — synthesizing all your frameworks into one psychological portrait.',
   },
   {
     icon: '◉',
-    title: 'Compatibility Maps',
+    title: 'Understand yourself',
     description:
-      'Share your profile and see how you relate to the people in your life — partners, collaborators, friends.',
+      'Explore your full profile, track changes over time, and work with your AI coach through real challenges with psychological depth.',
   },
 ]
 
-const TESTIMONIALS = [
+const FRAMEWORKS = [
   {
-    name: 'Sarah M.',
-    role: 'Product designer',
-    quote:
-      'Finally an app that takes psychological depth seriously. I have tried every personality tool out there and nothing has given me the quality of self-reflection that Innermind has. The AI narrative alone is worth it.',
+    icon: '◉',
+    name: 'Big Five (OCEAN)',
+    description: 'The gold standard in personality research. Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism — measured with rigor.',
   },
   {
-    name: 'James K.',
-    role: 'Therapist',
-    quote:
-      'I\'ve done MBTI, Enneagram, everything — Innermind went deeper than any of them. As a therapist I\'m skeptical of these tools, but the synthesis here is genuinely sophisticated. I now recommend it to clients.',
+    icon: '◈',
+    name: 'Schwartz Values',
+    description: 'What do you actually care about? 19 universal values, peer-reviewed across 70+ countries, reveal what drives your decisions.',
   },
   {
-    name: 'Priya L.',
-    role: 'Writer',
-    quote:
-      'Taking the Jungian archetypes assessment was genuinely moving. The shadow archetype section made me pause for an hour. I filled two pages in my journal afterward. I didn\'t expect a web app to do that.',
+    icon: '◎',
+    name: 'Attachment Style',
+    description: 'How you connect, trust, and seek security in relationships. Foundational to therapy and relationship psychology.',
+  },
+  {
+    icon: '✦',
+    name: 'Enneagram',
+    description: 'Nine patterns of attention and motivation. Identifies your core fear, core desire, and the emotional patterns that run your life.',
+  },
+  {
+    icon: '◇',
+    name: 'Jungian Archetypes',
+    description: 'Explore your persona, shadow, anima/animus, and self. Based on Carl Jung\'s depth psychology — the most introspective framework we offer.',
+  },
+  {
+    icon: '○',
+    name: 'Light Triad',
+    description: 'Measures Kantianism, Humanism, and Faith in Humanity — the prosocial counterpart to the Dark Triad, developed by Scott Barry Kaufman.',
   },
 ]
 
@@ -440,17 +454,86 @@ const PRICING = [
     name: 'Free',
     price: '$0',
     period: '',
-    description: '1 assessment + basic profile. A real look at yourself — at no cost.',
-    cta: 'Get started',
+    tagline: 'A real look at yourself — at no cost.',
+    features: [
+      '1 full assessment (your choice)',
+      'Basic profile with scores and traits',
+      'Framework overview and interpretation',
+      'No credit card required',
+    ],
+    cta: 'Get started free',
     featured: false,
   },
   {
     name: 'Pro',
     price: '$19',
     period: '/ month',
-    description:
-      'All 6 assessments, AI coach, growth recommendations, and daily reflection prompts.',
+    tagline: 'The full picture — all frameworks, fully synthesized.',
+    features: [
+      'All 6 validated assessments',
+      'Full AI-synthesized psychological portrait',
+      'AI coach trained on your profile',
+      'Growth recommendations & journal prompts',
+      'Compatibility maps with others',
+      'Unlimited reassessments',
+    ],
     cta: 'Start free →',
     featured: true,
+  },
+]
+
+const FAQ_ITEMS = [
+  {
+    q: 'How is Innermind different from 16Personalities or MBTI?',
+    a: 'Innermind uses six peer-reviewed psychology frameworks and synthesizes them into one AI-written portrait. 16Personalities gives you a four-letter type based on a simplified model. We give you depth, nuance, and a narrative — not a label.',
+  },
+  {
+    q: 'Is this scientifically valid?',
+    a: 'Every framework in Innermind is grounded in peer-reviewed research. Big Five is the gold standard in personality psychology. Schwartz Values has been validated across 70+ countries. Attachment Theory is foundational in clinical psychology. We take rigor seriously.',
+  },
+  {
+    q: 'How long does the assessment take?',
+    a: 'Each individual assessment takes 8–15 minutes. You can take them one at a time. There are 6 assessments total — one is free, the rest unlock with Pro.',
+  },
+  {
+    q: 'What do I get for free vs. Pro?',
+    a: 'Free gives you one full assessment plus a basic profile — a real look at yourself at no cost. Pro ($19/month) unlocks all 6 assessments, the full AI-synthesized portrait, the AI coach, growth recommendations, and daily reflection prompts.',
+  },
+  {
+    q: 'How does the AI work?',
+    a: "We use Claude (by Anthropic) to read your raw assessment results and write a personal narrative. It synthesizes all your results the way a thoughtful therapist would — into a coherent, honest picture of who you are.",
+  },
+  {
+    q: 'Can I share my profile with others?',
+    a: 'Yes. Pro members can generate a shareable profile link and use the compatibility map to compare their psychological profile with partners, friends, and collaborators.',
+  },
+]
+
+// Fallback testimonials shown when DB is empty (e.g. first deploy)
+// Matches TestimonialItem shape from TestimonialGrid
+const TESTIMONIALS_FALLBACK: import('@/components/TestimonialGrid').TestimonialItem[] = [
+  {
+    id: 'fallback-1',
+    firstName: 'Sarah M.',
+    personalityTag: 'Product designer',
+    rating: 5,
+    quote:
+      "Finally an app that takes psychological depth seriously. I've tried every personality tool out there and nothing has given me the quality of self-reflection that Innermind has.",
+  },
+  {
+    id: 'fallback-2',
+    firstName: 'James K.',
+    personalityTag: 'Therapist',
+    rating: 5,
+    quote:
+      "I've done MBTI, Enneagram, everything — Innermind went deeper than any of them. The synthesis here is genuinely sophisticated. I now recommend it to clients.",
+  },
+  {
+    id: 'fallback-3',
+    firstName: 'Priya L.',
+    personalityTag: 'Writer',
+    rating: 5,
+    quote:
+      'The Jungian archetypes assessment was genuinely moving. The shadow archetype section made me pause for an hour. I filled two pages in my journal afterward.',
   },
 ]
