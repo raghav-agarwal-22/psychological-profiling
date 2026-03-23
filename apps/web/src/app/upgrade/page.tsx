@@ -1,9 +1,10 @@
 'use client'
 
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { posthog } from '@/lib/posthog'
+import { track } from '@/lib/analytics'
 import { TestimonialSnippet } from '@/components/TestimonialSnippet'
 
 const FREE_FEATURES = [
@@ -49,12 +50,20 @@ function UpgradeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hasTrial, setHasTrial] = useState(true)
+  const [paywallVariant, setPaywallVariant] = useState<'control' | 'urgency_cta'>('control')
+  const [countdown, setCountdown] = useState(15 * 60) // 15 minutes in seconds
+  const countdownRef = useRef<number | null>(null)
 
   useEffect(() => {
     const ctaVariant = posthog.getFeatureFlag('upgrade-cta-copy')
+    const pwVariant = posthog.getFeatureFlag('paywall_variant')
+    const resolvedPwVariant = pwVariant === 'urgency_cta' ? 'urgency_cta' : 'control'
+    setPaywallVariant(resolvedPwVariant)
     posthog.capture('upgrade_page_viewed', {
       ab_upgrade_cta_copy: typeof ctaVariant === 'string' ? ctaVariant : 'control',
+      ab_paywall_variant: resolvedPwVariant,
     })
+    track('paywall_hit', { section: 'upgrade_page', source: 'upgrade_page', ab_variant: resolvedPwVariant })
     // Default to annual if the feature flag is enabled
     const intervalDefault = posthog.getFeatureFlag('upgrade-interval-default')
     if (intervalDefault === 'annual') setInterval('annual')
@@ -71,6 +80,17 @@ function UpgradeContent() {
     }
   }, [])
 
+  // Countdown timer for urgency_cta variant
+  useEffect(() => {
+    if (paywallVariant !== 'urgency_cta') return
+    countdownRef.current = window.setInterval(() => {
+      setCountdown((s) => (s > 0 ? s - 1 : 0))
+    }, 1000)
+    return () => {
+      if (countdownRef.current) clearInterval(countdownRef.current)
+    }
+  }, [paywallVariant])
+
   useEffect(() => {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')
   }, [cancelled])
@@ -78,7 +98,8 @@ function UpgradeContent() {
   async function handleUpgrade() {
     setLoading(true)
     setError(null)
-    posthog.capture('upgrade_cta_clicked', { tier: 'pro', interval })
+    posthog.capture('upgrade_cta_clicked', { tier: 'pro', interval, ab_paywall_variant: paywallVariant })
+    track('upgrade_clicked', { tier: 'pro', interval, ab_variant: paywallVariant })
     try {
       const token = localStorage.getItem('innermind_token')
       if (!token) {
@@ -102,6 +123,7 @@ function UpgradeContent() {
 
       const data = (await res.json()) as { url: string }
       if (data.url) {
+        track('checkout_started', { tier: 'pro', interval, ab_variant: paywallVariant })
         window.location.href = data.url
       }
     } catch (err) {
@@ -160,6 +182,22 @@ function UpgradeContent() {
           </button>
         </div>
       </div>
+
+      {/* Urgency CTA — paywall_variant: urgency_cta */}
+      {paywallVariant === 'urgency_cta' && (
+        <div className="mb-8 flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/8 px-5 py-4">
+          <div>
+            <p className="text-sm font-semibold text-amber-300">Limited time: 40% off your first month</p>
+            <p className="mt-0.5 text-xs text-stone-400">Discount auto-applied at checkout. No code needed.</p>
+          </div>
+          <div className="ml-4 shrink-0 text-right">
+            <p className="font-mono text-lg font-bold text-amber-400">
+              {String(Math.floor(countdown / 60)).padStart(2, '0')}:{String(countdown % 60).padStart(2, '0')}
+            </p>
+            <p className="text-[10px] text-stone-500">remaining</p>
+          </div>
+        </div>
+      )}
 
       {/* Cancelled banner */}
       {cancelled && (

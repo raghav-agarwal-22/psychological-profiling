@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { posthog } from '@/lib/posthog'
+import { track } from '@/lib/analytics'
 import { TestimonialSnippet } from './TestimonialSnippet'
 
 interface BlurredPreviewGateProps {
@@ -29,16 +30,27 @@ interface BlurredPreviewGateProps {
  */
 export function BlurredPreviewGate({ active, children, section, archetypeName }: BlurredPreviewGateProps) {
   const [ctaVariant, setCtaVariant] = useState<string>('control')
+  const [paywallVariant, setPaywallVariant] = useState<string>('control')
 
   useEffect(() => {
     const flag = posthog.getFeatureFlag('blurred-gate-cta')
     if (typeof flag === 'string') setCtaVariant(flag)
+    const pwFlag = posthog.getFeatureFlag('paywall_variant')
+    if (typeof pwFlag === 'string') setPaywallVariant(pwFlag)
   }, [])
+
+  useEffect(() => {
+    if (active) {
+      track('paywall_hit', { section, source: 'blurred_gate', ab_variant: paywallVariant })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, paywallVariant])
 
   if (!active) return <>{children}</>
 
   const handleUpgradeClick = () => {
     posthog.capture('ab_upgrade_click', { variant: 'blurred', section, cta_variant: ctaVariant })
+    track('upgrade_clicked', { tier: 'pro', interval: 'monthly', ab_variant: paywallVariant })
   }
 
   const ctaLabel =

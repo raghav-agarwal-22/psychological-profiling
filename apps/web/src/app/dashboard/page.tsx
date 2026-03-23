@@ -333,6 +333,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (searchParams.get('upgraded') === '1') {
       track('upgrade_completed')
+      track('payment_success', { tier: 'pro' })
       if (!localStorage.getItem('innermind_invite_banner_dismissed')) {
         setShowInviteBanner(true)
       }

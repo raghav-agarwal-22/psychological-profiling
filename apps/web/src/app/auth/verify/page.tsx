@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { posthog } from '@/lib/posthog'
+import { track } from '@/lib/analytics'
 import { trackSignup } from '@/lib/ads'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
@@ -41,6 +42,9 @@ function VerifyContent() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('innermind_token', data.token)
+          if (userReferralCode) {
+            track('referral_signup', { code: userReferralCode })
+          }
           localStorage.removeItem('innermind_referral_code')
           posthog.capture('auth_completed')
           trackSignup()
