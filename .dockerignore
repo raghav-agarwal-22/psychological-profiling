@@ -1,0 +1,10 @@
+node_modules
+.git
+.next
+apps/web
+marketing
+agents
+*.md
+!README.md
+.env*
+dist
