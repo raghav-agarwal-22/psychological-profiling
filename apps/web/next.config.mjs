@@ -5,6 +5,11 @@ const nextConfig = {
   compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 86400,
+  },
+  experimental: {
+    // Tree-shake large packages to reduce bundle size
+    optimizePackageImports: ['recharts', 'lucide-react'],
   },
 
   // Cache-Control headers for static/marketing pages — critical for PH traffic spike

@@ -3,16 +3,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { archetypeNameToSlug } from '@/lib/archetypes'
 import { posthog } from '@/lib/posthog'
 import { track } from '@/lib/analytics'
 import { initABTest, getABVariant, type ABVariant } from '@/lib/ab-test'
+import dynamic from 'next/dynamic'
 import { BlurredPreviewGate } from '@/components/BlurredPreviewGate'
 import { WaitlistCapture } from '@/components/WaitlistCapture'
-import { GrowthChart } from '@/components/GrowthChart'
 import { DimensionsProgress, type DimensionProgressData } from '@/components/DimensionsProgress'
+
+const GrowthChart = dynamic(() => import('@/components/GrowthChart').then(m => m.GrowthChart), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse rounded-lg bg-stone-800" />,
+})
 import { LockedDimensionSection } from '@/components/LockedDimensionSection'
 import { DimensionUnlockCelebration } from '@/components/DimensionUnlockCelebration'
 
@@ -71,7 +77,7 @@ interface RawOutput {
     foundationNarratives?: Record<string, string>
     moralProfile?: string
     coreVirtues?: string[]
-    integrationGuidance?: string
+    moralIntegrationGuidance?: string
   }
 }
 
@@ -1686,12 +1692,13 @@ export default function ProfilePage() {
               const token = shareUrl.split('/p/')[1]
               return token ? (
                 <div className="mb-4 overflow-hidden rounded-xl border border-stone-700">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={`/p/${token}/opengraph-image`}
                     alt="Share card preview"
+                    width={1200}
+                    height={630}
                     className="w-full"
-                    style={{ aspectRatio: '1200/630' }}
+                    unoptimized
                   />
                   <div className="bg-stone-800/60 px-3 py-1.5">
                     <p className="text-xs text-stone-500">This card appears when you share the link</p>
