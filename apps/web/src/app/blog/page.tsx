@@ -39,8 +39,33 @@ export default function BlogPage() {
   const featured = sorted[0]
   const rest = sorted.slice(1)
 
+  const collectionPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Innermind Blog — Psychology, Self-Understanding & Personal Growth',
+    description: 'Science-backed writing on personality psychology, self-understanding, relationships, and personal growth. Evidence-based guides to understanding yourself more deeply.',
+    url: 'https://innermind.app/blog',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Innermind',
+      url: 'https://innermind.app',
+      logo: 'https://innermind.app/icon.png',
+    },
+    hasPart: sorted.map((post) => ({
+      '@type': 'Article',
+      headline: post.title,
+      description: post.description,
+      url: `https://innermind.app/blog/${post.slug}`,
+      datePublished: post.publishedAt,
+      author: { '@type': 'Organization', name: 'Innermind' },
+      articleSection: post.category,
+      timeRequired: `PT${post.readingTime}M`,
+    })),
+  }
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }} />
       {/* Header */}
       <div className="mb-14 text-center">
         <h1 className="mb-4 font-serif text-4xl font-medium text-stone-100 sm:text-5xl">

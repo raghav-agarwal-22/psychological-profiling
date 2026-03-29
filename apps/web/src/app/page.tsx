@@ -18,6 +18,33 @@ const organizationSchema = {
   sameAs: [],
 }
 
+const webApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Innermind',
+  url: 'https://innermind.app',
+  description: 'AI-powered psychological profiling — six validated frameworks synthesized into one personal portrait. Take free personality assessments and receive an AI-written analysis of who you are.',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'All',
+  browserRequirements: 'Requires JavaScript',
+  offers: [
+    {
+      '@type': 'Offer',
+      name: 'Free',
+      price: '0',
+      priceCurrency: 'USD',
+      description: 'One full assessment and a basic profile. No credit card required.',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Pro',
+      price: '19',
+      priceCurrency: 'USD',
+      description: 'All 6 assessments, full AI-synthesized portrait, AI coach, and growth recommendations.',
+    },
+  ],
+}
+
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -108,6 +135,7 @@ export default async function HomePage() {
     <div className="flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Suspense fallback={null}><LandingAnalytics /></Suspense>
       <LaunchBanner />
