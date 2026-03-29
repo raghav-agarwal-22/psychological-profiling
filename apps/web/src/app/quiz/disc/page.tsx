@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type Dimension = 'D' | 'I' | 'S' | 'C'
 
@@ -376,7 +377,9 @@ export default function DISCQuiz() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  autoComplete="email"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -406,9 +409,27 @@ export default function DISCQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="DISC"
+            teaserText="Your DISC profile shows your behavioral style — but your personality traits, values, and attachment patterns reveal the deeper psychology driving those behaviors. See the complete picture."
+            freeItems={[
+              'Your primary and secondary DISC style',
+              'Behavioral tendencies list',
+              'Static snapshot — no stress or growth context',
+            ]}
+            proItems={[
+              'How your DISC style adapts (or breaks down) under pressure',
+              'DISC × Enneagram motivation map for your combination',
+              'Team dynamics, leadership strengths, and blind spots',
+              'Communication recommendations tailored to your style',
+              'Behavioral strategy for your specific D-I-S-C profile',
+              'Full 7-framework AI portrait with coach access',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
-            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
           >
             Retake the test
           </button>
@@ -423,7 +444,7 @@ export default function DISCQuiz() {
   const progress = (currentQ / QUESTIONS.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">
@@ -431,9 +452,9 @@ export default function DISCQuiz() {
             <span>Question {currentQ + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <div
-              className="bg-violet-500 h-1.5 rounded-full transition-all duration-300"
+              className="bg-violet-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

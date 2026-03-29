@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type AttachmentType = 'secure' | 'anxious' | 'avoidant' | 'disorganized'
 
@@ -269,7 +270,8 @@ export default function AttachmentStyleQuiz() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
                   autoComplete="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -299,6 +301,24 @@ export default function AttachmentStyleQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="Attachment Style"
+            teaserText="Your attachment style shapes how you connect in relationships — but it's only part of the story. See how your attachment patterns interact with your personality traits, values, and deeper motivations in a full AI-synthesized portrait."
+            freeItems={[
+              'Your attachment category (Secure/Anxious/Avoidant/Disorganized)',
+              'A paragraph explanation of your type',
+              'No connection to your personality, values, or Enneagram',
+            ]}
+            proItems={[
+              'Why you attach this way — traced to core wound and early patterns',
+              'How your attachment shapes every relationship in your life',
+              'Attachment × Enneagram interaction for your specific combination',
+              'Communication and conflict style recommendations',
+              'Your relationship growth path, personalized to your style',
+              'Full 7-framework AI portrait with unlimited coach access',
+            ]}
+          />
+
           <button
             onClick={() => {
               setStarted(false)
@@ -322,7 +342,7 @@ export default function AttachmentStyleQuiz() {
   const progress = (currentQ / QUESTIONS.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type Dimension = 'EI' | 'SN' | 'TF' | 'JP'
 
@@ -467,7 +468,8 @@ export default function SixteenTypesQuiz() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
                   autoComplete="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -497,6 +499,24 @@ export default function SixteenTypesQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="16 Types"
+            teaserText="Your cognitive function stack is just one dimension. See how your type connects to your Big Five traits, attachment style, Enneagram motivations, and core values in a full AI-synthesized portrait."
+            freeItems={[
+              'Your 4-letter type (e.g. INFJ)',
+              'Cognitive function stack overview',
+              'Generic type description',
+            ]}
+            proItems={[
+              'How your type shows up differently under stress',
+              'Your inferior function — the source of most blind spots',
+              'Type × attachment style: your relational wiring',
+              'Leadership gaps and communication recommendations',
+              'Career alignment beyond the generic list',
+              'Full 7-framework AI portrait with unlimited coach access',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
             className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
@@ -514,7 +534,7 @@ export default function SixteenTypesQuiz() {
   const dim = DIMENSION_INFO[question.dimension]
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type Trait = 'narcissism' | 'machiavellianism' | 'psychopathy'
 
@@ -355,7 +356,8 @@ export default function DarkTriadQuiz() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
                   autoComplete="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-rose-500"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-rose-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -385,6 +387,24 @@ export default function DarkTriadQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="Dark Triad"
+            teaserText="Your Dark Triad scores reveal your shadow traits — but how do they interact with your Big Five personality, attachment style, and core values? The full AI portrait reveals the complete picture of your psychological makeup."
+            freeItems={[
+              '3 dark trait percentages (N, M, P)',
+              'Your archetype label',
+              'No context on what drives these traits',
+            ]}
+            proItems={[
+              'What fuels your dark traits — the psychology beneath the scores',
+              'Shadow integration: how to channel these traits productively',
+              'Dark triad × attachment style interaction analysis',
+              'Behavioral patterns and triggers under stress',
+              'Personalized self-awareness and growth map',
+              'Full 7-framework AI portrait with coach access',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
             className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
@@ -402,7 +422,7 @@ export default function DarkTriadQuiz() {
   const t = TRAITS[question.trait]
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">

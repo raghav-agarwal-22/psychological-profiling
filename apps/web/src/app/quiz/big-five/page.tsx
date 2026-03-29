@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type Trait = 'openness' | 'conscientiousness' | 'extraversion' | 'agreeableness' | 'neuroticism'
 
@@ -284,7 +285,8 @@ export default function BigFiveQuiz() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
                   autoComplete="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -314,6 +316,24 @@ export default function BigFiveQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="Big Five"
+            teaserText="Your OCEAN scores reveal your trait profile — but how do they interact with your attachment style, core values, and deeper motivations? The full AI portrait connects the dots across 7 frameworks to show you the complete picture."
+            freeItems={[
+              '5 trait scores (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)',
+              'Single-sentence trait descriptions',
+              'One framework — no cross-model context',
+            ]}
+            proItems={[
+              'How your Big Five traits drive career and relationship patterns',
+              'Trait conflict analysis (e.g. high Openness + high Neuroticism)',
+              'Cross-framework synthesis: Enneagram, Attachment, DISC + 4 more',
+              'Shadow traits and psychological blind spots',
+              'Personalized growth path based on your specific trait profile',
+              'AI portrait written in your own psychological language',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
             className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
@@ -331,7 +351,7 @@ export default function BigFiveQuiz() {
   const t = TRAITS[question.trait]
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">

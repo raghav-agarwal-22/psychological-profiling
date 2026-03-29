@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type LoveLanguage = 'words' | 'acts' | 'gifts' | 'time' | 'touch'
 
@@ -307,7 +308,9 @@ export default function LoveLanguageQuiz() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  autoComplete="email"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -337,9 +340,27 @@ export default function LoveLanguageQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="Love Languages"
+            teaserText="Your love language explains how you give and receive love — but your attachment style, personality traits, and Enneagram type explain why. Get the full picture with an AI-powered psychological portrait."
+            freeItems={[
+              'Your primary love language',
+              'A brief explanation',
+              'No connection to your attachment or relationship history',
+            ]}
+            proItems={[
+              'Why you have this love language — traced to attachment history',
+              'Love language × attachment style: your relational needs map',
+              'Compatibility patterns with other types and Enneagram combinations',
+              'Communication guide for your specific combination',
+              'Relationship growth recommendations personalized to you',
+              'Full 7-framework AI portrait with unlimited coach access',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
-            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
           >
             Retake the quiz
           </button>
@@ -354,7 +375,7 @@ export default function LoveLanguageQuiz() {
   const progress = (currentQ / QUESTIONS.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
 
         {/* Progress */}
@@ -363,9 +384,9 @@ export default function LoveLanguageQuiz() {
             <span>Question {currentQ + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <div
-              className="bg-violet-500 h-1.5 rounded-full transition-all duration-300"
+              className="bg-violet-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

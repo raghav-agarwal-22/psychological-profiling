@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 
 type EnneaType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -331,7 +332,8 @@ export default function EnneagramQuiz() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
                   autoComplete="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
+                  inputMode="email"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
                 />
                 <button
                   type="submit"
@@ -361,6 +363,24 @@ export default function EnneagramQuiz() {
             </Link>
           </div>
 
+          <QuizUpgradeCard
+            quizName="Enneagram"
+            teaserText="Your Enneagram type reveals your core motivations — but your full psychological portrait shows how those motivations interact with your personality traits, attachment patterns, and value system across 7 frameworks."
+            freeItems={[
+              'Your dominant Enneagram type + wing',
+              'Type description and core desire/fear',
+              'No integration or disintegration paths',
+            ]}
+            proItems={[
+              'Your integration & disintegration paths (growth and stress)',
+              'Core wound and childhood pattern analysis',
+              'Enneagram × Big Five trait interaction',
+              'Your type\'s relationship and communication blind spots',
+              'Career and purpose alignment for your type',
+              'Full 7-framework AI portrait with tritype analysis',
+            ]}
+          />
+
           <button
             onClick={handleRetake}
             className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
@@ -378,7 +398,7 @@ export default function EnneagramQuiz() {
   const progress = (currentQ / QUESTIONS.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center px-4 pt-10 pb-16">
       <div className="max-w-xl w-full space-y-8">
         {/* Progress */}
         <div className="space-y-2">
