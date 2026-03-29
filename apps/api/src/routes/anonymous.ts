@@ -358,7 +358,7 @@ export async function anonymousRoutes(server: FastifyInstance) {
       data: {
         userId: user.id,
         sessionId: session.id,
-        type: profileData.templateType as AssessmentType,
+        type: profileData.templateType as (typeof AssessmentType)[keyof typeof AssessmentType],
         title: profileData.templateType.replace(/_/g, ' '),
         status: AssessmentStatus.COMPLETED,
         templateId: template?.id ?? null,

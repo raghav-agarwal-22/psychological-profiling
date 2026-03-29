@@ -1,7 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import pkg from '@prisma/client'
+const { PrismaClient } = pkg
+type PrismaClientInstance = InstanceType<typeof PrismaClient>
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+  prisma: PrismaClientInstance | undefined
 }
 
 // Build database URL with explicit connection pool settings for production.
@@ -34,6 +36,25 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-export * from '@prisma/client'
-export * from './scoring'
+// Re-export Prisma types and enums explicitly (CJS interop workaround)
+const {
+  SessionStatus,
+  AssessmentType,
+  AssessmentStatus,
+  InsightType,
+  LifeDomain,
+  Prisma,
+} = pkg
+
+export {
+  SessionStatus,
+  AssessmentType,
+  AssessmentStatus,
+  InsightType,
+  LifeDomain,
+  Prisma,
+  PrismaClient,
+}
+export type { ScoringConfig, AssessmentScores } from './scoring.js'
+export { computeScores } from './scoring.js'
 export default prisma
