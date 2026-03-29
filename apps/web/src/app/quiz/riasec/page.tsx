@@ -277,7 +277,7 @@ export default function RIASECQuiz() {
       <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
         <div className="max-w-xl w-full text-center space-y-8">
           <div className="space-y-2">
-            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Free Career Test</p>
+            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Free Quiz</p>
             <h1 className="text-4xl font-bold tracking-tight">Free Holland Code Career Test</h1>
             <p className="text-white/60 text-lg mt-4">
               36 questions. Instant results. Discover your RIASEC career type.
@@ -289,11 +289,11 @@ export default function RIASECQuiz() {
               const t = TYPE_INFO[type]
               return (
                 <div key={type} className={`rounded-xl border p-4 flex items-center gap-4 ${t.bg}`}>
-                  <div className={`w-10 h-10 rounded-full ${t.bar} flex items-center justify-center text-white font-black text-base flex-shrink-0`}>
-                    {t.emoji}
+                  <div className={`w-10 h-10 rounded-full ${t.bar} flex items-center justify-center text-white font-black text-lg flex-shrink-0`}>
+                    {type}
                   </div>
                   <div>
-                    <p className={`font-semibold text-sm ${t.color}`}>{t.full} ({type})</p>
+                    <p className={`font-semibold text-sm ${t.color}`}>{t.full}</p>
                     <p className="text-white/50 text-xs mt-0.5">{t.tagline}</p>
                   </div>
                 </div>
@@ -355,7 +355,6 @@ export default function RIASECQuiz() {
                 <div key={type} className={`rounded-xl border p-5 ${t.bg}`}>
                   <div className="flex justify-between items-baseline mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-base">{t.emoji}</span>
                       <span className={`font-bold text-base ${t.color}`}>{t.full}</span>
                       {isPrimary && (
                         <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${t.bg} ${t.color}`}>
@@ -551,7 +550,7 @@ export default function RIASECQuiz() {
         {/* Type badge */}
         <div className="flex justify-center">
           <span className={`text-xs font-medium tracking-widest uppercase ${typeInfo.color} px-3 py-1 rounded-full border ${typeInfo.bg}`}>
-            {typeInfo.emoji} {typeInfo.full}
+            {question.type} &middot; {typeInfo.full}
           </span>
         </div>
 
