@@ -210,6 +210,173 @@ Human Design's type assignments have not been shown to predict any of these outc
     ],
   },
 
+  'innermind-vs-humandesign': {
+    slug: 'innermind-vs-humandesign',
+    competitor: 'Human Design',
+    tagline: 'vs Human Design',
+    metaTitle: 'Innermind vs Human Design: Science-Based Psychology vs Esoteric Typing',
+    metaDescription:
+      'Compare Innermind and Human Design on scientific validity, practical utility, and depth of personal insight. An honest look at what each system actually offers.',
+    intro: `Human Design is a synthesis of astrology, the I Ching, Kabbalah, and the chakra system, created in 1987. It classifies people into five "types" — Manifestor, Generator, Manifesting Generator, Projector, Reflector — based entirely on birth date, time, and location. It has earned a devoted following in wellness and coaching circles.
+
+We want to be straightforward: Human Design is not an empirical psychological science. Its type assignments are determined by celestial data, not by anything you report about your own behavior, preferences, or inner life. That doesn't mean people don't find it meaningful — many do. But it means the comparison with Innermind requires acknowledging what each system is actually doing.`,
+    inDepth: [
+      `**Evidence and epistemology.** Innermind is built on three frameworks that have been validated across thousands of peer-reviewed studies: the Big Five trait model, attachment theory, and the Schwartz values model. When Innermind says you score high on neuroticism, that score predicts anxiety vulnerability, relationship conflict, and health outcomes — because those predictions have been tested empirically across diverse populations.
+
+Human Design's type assignments have not been shown to predict any of these outcomes. There are no peer-reviewed studies validating Human Design as a psychological assessment. The system's founder described it as a received "mystical revelation," not a scientific theory. This isn't a dismissal of the system's cultural value — it's a factual description of its epistemic status.`,
+      `**What Human Design offers.** Human Design gives users a rich symbolic vocabulary for self-exploration: centers, channels, authorities, profiles. Many people find this language genuinely useful for examining their decision-making patterns, energy management, and relational tendencies. A Projector who is told not to initiate may find useful permission to rest and wait — even if the origin of that advice is astrological rather than psychological.
+
+The Human Design community also fosters genuine introspection and rich conversations about personality. These are real benefits, independent of whether the underlying framework is scientifically valid.`,
+      `**What Human Design cannot provide.** Human Design cannot tell you where you actually fall on conscientiousness, openness, or neuroticism — traits that predict career performance, mental health, and relationship quality. It cannot measure your attachment anxiety or avoidance, or show how your values hierarchy drives your decisions. These are measurable characteristics with genuine predictive power, and they require a self-report assessment to surface.
+
+Because your Human Design type is entirely determined by your birth data, two people born at the same place and time would receive identical charts — regardless of how differently their actual personalities developed. Psychological research shows personality emerges from a complex interaction of genetics and lived experience, not from celestial positions.`,
+      `**The actionability gap.** Innermind's AI-synthesized profile connects your specific score pattern to behavioral predictions: how you're likely to perform under stress, what environments you thrive in, how your attachment style shapes conflict. This specificity is possible because the underlying frameworks have been studied in relation to real outcomes.
+
+Human Design readings tend toward archetypal description — qualities associated with a type rather than predictions grounded in outcome data. Both can be useful for reflection, but only one provides the kind of empirically grounded self-knowledge that supports concrete decisions about career, relationships, or mental health.`,
+    ],
+    tableRows: [
+      { feature: 'Scientific validation', innermind: 'Yes — peer-reviewed frameworks', competitor: 'None — not empirically validated', innermindWins: true },
+      { feature: 'Assessment method', innermind: 'Adaptive self-report questionnaire', competitor: 'Birth date, time, and location only', innermindWins: true },
+      { feature: 'Predictive validity', innermind: 'Yes — outcomes research exists', competitor: 'None established', innermindWins: true },
+      { feature: 'Trait measurement', innermind: 'Big Five, Attachment, Values', competitor: 'Types, Centers, Channels (non-empirical)', innermindWins: true },
+      { feature: 'AI-synthesized narrative', innermind: 'Yes — personalized to your scores', competitor: 'No — chart interpretation', innermindWins: true },
+      { feature: 'Spiritual / esoteric framework', innermind: 'No', competitor: 'Yes — central to the system', innermindWins: false },
+      { feature: 'Free core results', innermind: 'Yes', competitor: 'Free basic chart, paid readings vary', innermindWins: true },
+      { feature: 'Community and culture', innermind: 'Growing', competitor: 'Large, passionate community', innermindWins: false },
+    ],
+    verdict: `Human Design and Innermind are not competing for the same goal. Human Design is a symbolic self-exploration system that many people find meaningful and community-forming. Innermind is a scientific psychological assessment with empirically validated frameworks and genuine predictive power. If you use Human Design for spiritual exploration and personal narrative, that is a legitimate use. If you want a rigorous, evidence-based profile of your actual psychology, Innermind is built for exactly that.`,
+    faq: [
+      {
+        q: 'Can I use Human Design and Innermind together?',
+        a: 'Yes — they operate in different registers and don\'t contradict each other. Human Design provides a symbolic framework and community language. Innermind provides empirically grounded trait data. Many people find value in both: the narrative depth of Human Design alongside the scientific rigor of Big Five and attachment theory.',
+      },
+      {
+        q: 'Is there scientific research validating Human Design?',
+        a: 'There is no peer-reviewed research validating Human Design\'s core claims. The system was not developed through the scientific method and has not been tested against outcome data. Its founder described it as a mystical revelation rather than an empirical theory.',
+      },
+      {
+        q: 'Why does birth data alone not determine personality?',
+        a: 'Decades of behavioral genetics research show that personality emerges from a combination of genetic factors and lived experience — family environment, culture, formative events, and individual development. Celestial positions at birth have not been found to predict personality outcomes in controlled studies.',
+      },
+      {
+        q: 'What does Innermind measure that Human Design does not?',
+        a: 'Innermind measures your Big Five trait scores (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism), attachment style (secure, anxious, avoidant, disorganized), and core values hierarchy. These have been shown to predict career performance, relationship quality, mental health outcomes, and behavioral tendencies — none of which Human Design addresses empirically.',
+      },
+    ],
+  },
+
+  'innermind-vs-enneagraminstitute': {
+    slug: 'innermind-vs-enneagraminstitute',
+    competitor: 'The Enneagram Institute',
+    tagline: 'vs The Enneagram Institute',
+    metaTitle: 'Innermind vs The Enneagram Institute: Multi-Framework AI vs Enneagram Specialist',
+    metaDescription:
+      'Compare Innermind and The Enneagram Institute on depth, scientific validity, AI synthesis, and practical utility. Is a specialist better than a multi-framework platform?',
+    intro: `The Enneagram Institute is the most authoritative Enneagram resource available. Founded by Don Riso and Russ Hudson, it offers the RHETI (Riso-Hudson Enneagram Type Indicator) — the most rigorously developed Enneagram assessment in existence — along with deep written profiles, levels of development theory, and a rich library of teaching materials. If you want the best possible Enneagram experience, the Enneagram Institute delivers it.
+
+The question isn't whether the Enneagram Institute does what it does well — it does. The question is whether a single-framework specialist or a multi-framework platform with AI synthesis better serves your goal of understanding yourself. Here's an honest breakdown.`,
+    inDepth: [
+      `**The Enneagram's scientific standing.** The Enneagram Institute's RHETI is the most psychometrically developed Enneagram instrument available, and the Enneagram's nine-type model has genuine face validity — its descriptions resonate deeply with many people. However, the Enneagram as a framework has weaker empirical support than the Big Five. Its origins are unclear (the typology does not have a clear scientific lineage), test-retest reliability is lower than Big Five instruments, and fewer peer-reviewed studies have validated its predictive claims.
+
+This is not to dismiss the Enneagram — experienced therapists, coaches, and educators find it genuinely useful. But Innermind's choice to center on Big Five, attachment theory, and Schwartz values reflects where the strongest scientific consensus sits.`,
+      `**Depth within one framework vs synthesis across three.** The Enneagram Institute goes exceptionally deep on a single framework. Its levels of development model, wing theory, and integration/disintegration paths create a rich, nuanced system for self-study. If you find the Enneagram deeply resonant, the Institute's materials represent years of serious engagement with the model.
+
+Innermind's approach is different: it integrates Big Five trait psychology, attachment theory, and values mapping into a single adaptive assessment, then uses Claude to synthesize the results into a coherent profile. The value is in the cross-framework synthesis — understanding how your trait expression, relational patterns, and core values interact, rather than going as deep as possible within one lens. These are genuinely different approaches, and which serves you better depends on what you're looking for.`,
+      `**AI synthesis vs written profiles.** The Enneagram Institute's profiles are expertly crafted by human authors and reflect decades of accumulated wisdom. They are detailed, psychologically sophisticated, and rich with clinical observation. Their value is in the depth and quality of the writing.
+
+Innermind's AI synthesis generates a profile specific to your actual score pattern across three frameworks. Two people who both score as Enneagram Type 4 would receive the same Institute profile — but they might have very different Big Five trait profiles, attachment patterns, and values hierarchies. Innermind's approach reflects those differences, generating a narrative that is specific to the individual rather than the type.`,
+      `**Pricing and access.** The Enneagram Institute's RHETI costs $12. The detailed written profiles for each type and wing are available free on the website. The Institute is not a subscription service — it's a one-time assessment plus reference library. Innermind's core assessment is free, with a Pro subscription for advanced features. The cost comparison is modest, but Innermind's free tier delivers the full AI-synthesized profile.`,
+    ],
+    tableRows: [
+      { feature: 'Primary framework', innermind: 'Big Five + Attachment + Values (integrated)', competitor: 'Enneagram (nine types)', innermindWins: false },
+      { feature: 'Scientific validation', innermind: 'High — Big Five is gold standard', competitor: 'Moderate — RHETI is best-in-class Enneagram', innermindWins: true },
+      { feature: 'Adaptive assessment', innermind: 'Yes', competitor: 'No — fixed item RHETI', innermindWins: true },
+      { feature: 'AI-synthesized narrative', innermind: 'Yes — personalized to your scores', competitor: 'No — expert-written type profiles', innermindWins: true },
+      { feature: 'Cross-framework synthesis', innermind: 'Yes — three integrated frameworks', competitor: 'No — Enneagram only', innermindWins: true },
+      { feature: 'Depth within one framework', innermind: 'Moderate', competitor: 'Very deep — levels, wings, arrows', innermindWins: false },
+      { feature: 'Free core results', innermind: 'Yes', competitor: 'RHETI $12, type profiles free', innermindWins: true },
+      { feature: 'Written teaching library', innermind: 'Limited', competitor: 'Extensive — books, videos, courses', innermindWins: false },
+    ],
+    verdict: `The Enneagram Institute is the definitive resource if you want to go as deep as possible within the Enneagram framework specifically. Innermind is the better choice if you want a comprehensive, multi-framework psychological profile with AI synthesis that connects Big Five traits, attachment patterns, and values into a single coherent narrative. The ideal approach for serious self-knowledge may be both: use Innermind for your empirically grounded baseline profile, and the Enneagram Institute if the nine-type model resonates deeply and you want to explore it further.`,
+    faq: [
+      {
+        q: 'Is the RHETI the most accurate Enneagram test?',
+        a: 'The RHETI is the most psychometrically developed Enneagram assessment available, with published reliability and validity data. It is significantly more rigorous than free online Enneagram tests. If you\'re going to take an Enneagram test, the RHETI is the right choice.',
+      },
+      {
+        q: 'Does Innermind include an Enneagram assessment?',
+        a: 'Currently Innermind focuses on Big Five, attachment style, and values — three frameworks with the strongest scientific validation. The Enneagram is not currently included because its empirical foundations are less robust than the Big Five. Future additions to the framework set are possible.',
+      },
+      {
+        q: 'Can the Enneagram and Big Five be used together?',
+        a: 'Yes — they measure overlapping but distinct aspects of personality. Research has found correlations between Enneagram types and Big Five scores (for example, Type 5 correlates with high openness and low extraversion), but the frameworks are not redundant. Using both can provide complementary perspectives.',
+      },
+      {
+        q: 'What does "levels of development" mean in Enneagram theory?',
+        a: 'The Levels of Development is a model developed by Don Riso and Russ Hudson that describes nine levels of psychological health within each type — from healthy and integrated to unhealthy and disintegrated. It\'s one of the most sophisticated contributions of the Enneagram Institute\'s work and has no direct equivalent in the Big Five framework.',
+      },
+      {
+        q: 'Which is better for therapy or coaching — Enneagram or Big Five?',
+        a: 'Both are used in clinical and coaching contexts. The Enneagram is popular in coaching because its narrative richness and motivational language resonate with clients. The Big Five is more common in clinical research because of its validated predictive relationships with psychological outcomes. Many practitioners use both.',
+      },
+    ],
+  },
+
+  'innermind-vs-bigfivetest': {
+    slug: 'innermind-vs-bigfivetest',
+    competitor: 'BigFiveTest.com',
+    tagline: 'vs BigFiveTest.com',
+    metaTitle: 'Innermind vs BigFiveTest.com: Which Big Five Assessment Goes Further?',
+    metaDescription:
+      'Compare Innermind and BigFiveTest.com on depth, AI synthesis, additional frameworks, and actionability. Both use Big Five — find out what separates them.',
+    intro: `BigFiveTest.com is a free, straightforward Big Five personality assessment. It measures the five core OCEAN traits — Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — and returns percentage scores with brief descriptions. For someone who wants a quick, free Big Five score, it does the job.
+
+Innermind also uses the Big Five as its primary framework. But the comparison between the two illustrates what happens when you build on the same scientific foundation and take it much further: adding attachment theory, values mapping, adaptive assessment methodology, and AI synthesis. Here's a detailed look at where they diverge.`,
+    inDepth: [
+      `**The same foundation, very different execution.** Both tools are grounded in the Big Five — the scientific standard in personality research. This means both are working from a valid framework, which is more than can be said for many personality tools. Where they diverge is in depth, methodology, and what they do with the data.
+
+BigFiveTest.com returns five percentage scores with brief written descriptions of what each score means. This is useful and accurate as far as it goes. Innermind treats those same five scores as the starting point for a much more extensive analysis — synthesizing them alongside attachment and values data into a personal narrative that addresses how your trait profile plays out behaviorally, relationally, and vocationally.`,
+      `**Adaptive vs fixed assessment.** BigFiveTest.com uses a fixed-item questionnaire — every user answers the same questions in the same order. This is a perfectly valid approach and is how most Big Five tools work. Innermind's assessment is adaptive: the question sequence adjusts based on your earlier responses. This allows the system to allocate more questions to trait dimensions where your responses are ambiguous and fewer where your profile is clear — improving measurement precision without increasing test length unnecessarily.`,
+      `**Going beyond the Big Five.** The Big Five measures traits — stable tendencies in how you think, feel, and behave. But personality psychology has other important dimensions that the Big Five doesn't capture directly. Attachment theory describes how your early relational experiences shape your default patterns in close relationships — whether you tend toward security, anxiety, avoidance, or disorganization in intimate contexts. The Schwartz values model maps your core motivational priorities — what you're fundamentally oriented toward, from self-direction and achievement to benevolence and tradition.
+
+These dimensions are not redundant with the Big Five. Someone can score identically on all five OCEAN traits and still have meaningfully different attachment patterns or values hierarchies. Innermind's integrated assessment captures all three dimensions in a single session.`,
+      `**AI synthesis vs static descriptions.** BigFiveTest.com's descriptions explain what each score means for that trait. They're accurate but necessarily generic — the same description applies to everyone who scores in the 70th percentile on openness. Innermind's AI synthesis generates a profile that reflects the interaction of all your scores: how your specific combination of openness, conscientiousness, extraversion, agreeableness, and neuroticism — plus your attachment style and values — produces your particular psychology. This interaction effect is where genuine self-knowledge lives.`,
+    ],
+    tableRows: [
+      { feature: 'Big Five assessment', innermind: 'Yes — adaptive', competitor: 'Yes — fixed item', innermindWins: true },
+      { feature: 'Attachment style', innermind: 'Yes — included', competitor: 'No', innermindWins: true },
+      { feature: 'Values mapping', innermind: 'Yes — Schwartz model', competitor: 'No', innermindWins: true },
+      { feature: 'Adaptive assessment', innermind: 'Yes', competitor: 'No — fixed question set', innermindWins: true },
+      { feature: 'AI-synthesized narrative', innermind: 'Yes — personalized profile', competitor: 'No — static trait descriptions', innermindWins: true },
+      { feature: 'Cross-framework integration', innermind: 'Yes — unified analysis', competitor: 'No — Big Five only', innermindWins: true },
+      { feature: 'Free access', innermind: 'Yes — full profile free', competitor: 'Yes — fully free', innermindWins: false },
+      { feature: 'Simplicity and speed', innermind: 'Moderate — 15–25 min', competitor: 'Fast — basic results quickly', innermindWins: false },
+    ],
+    verdict: `BigFiveTest.com is a good choice if you want a quick, free Big Five score with no frills. Innermind is the better choice if you want to understand what those Big Five scores actually mean for your life — supplemented by attachment theory and values data, synthesized by AI into a coherent personal profile rather than five separate trait descriptions. Both start from the right scientific foundation; Innermind builds significantly further from there.`,
+    faq: [
+      {
+        q: 'Is BigFiveTest.com a legitimate personality test?',
+        a: 'Yes — it uses the validated Big Five framework and provides accurate trait scores. It is a straightforward implementation of a well-established model. Where it differs from Innermind is in depth: it measures the five traits without the additional frameworks (attachment, values) or AI synthesis that Innermind provides.',
+      },
+      {
+        q: 'Why does Innermind include attachment style alongside Big Five?',
+        a: 'Attachment theory captures something the Big Five does not: your relational security patterns — how you behave in close relationships when trust, intimacy, or conflict are involved. Attachment style is partially correlated with Big Five traits (high neuroticism correlates with anxious attachment, for example) but is not redundant. Knowing both gives a more complete picture of your psychology.',
+      },
+      {
+        q: 'What is the Schwartz values model?',
+        a: 'The Schwartz Basic Human Values model identifies ten universal motivational values — including self-direction, achievement, benevolence, and tradition — that describe what people fundamentally pursue and protect. It has been validated across 80+ countries and predicts behavior in ways that complement rather than duplicate trait measurement.',
+      },
+      {
+        q: 'How long does the Innermind assessment take compared to BigFiveTest.com?',
+        a: 'BigFiveTest.com\'s assessment takes roughly 5–10 minutes. Innermind\'s adaptive assessment takes 15–25 minutes, reflecting the additional frameworks (attachment, values) and the adaptive question logic. The additional time produces a significantly more comprehensive profile.',
+      },
+      {
+        q: 'Can I use BigFiveTest.com to prepare for Innermind?',
+        a: 'You can, though it\'s not necessary. If you\'re curious about your Big Five scores before committing to a longer assessment, BigFiveTest.com is a reasonable way to get a preview. Your Innermind results will be more precise due to the adaptive methodology, but the overall trait profile should be broadly consistent.',
+      },
+    ],
+  },
+
   'innermind-vs-personalitydb': {
     slug: 'innermind-vs-personalitydb',
     competitor: 'PersonalityDatabase (PDB)',

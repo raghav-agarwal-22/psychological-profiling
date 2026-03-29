@@ -23,7 +23,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       'innermind-vs-crystal-knows',
       'innermind-vs-truity',
       'innermind-vs-human-design',
+      'innermind-vs-humandesign',
       'innermind-vs-personalitydb',
+      'innermind-vs-enneagraminstitute',
+      'innermind-vs-bigfivetest',
     ].map((slug) => ({
       url: `${baseUrl}/compare/${slug}`,
       lastModified: new Date(),
@@ -41,6 +44,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/quiz/16-types`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/quiz/disc`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/quiz/love-language`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/quiz/eq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/faq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
     ...archetypeSlugs.map((slug) => ({
