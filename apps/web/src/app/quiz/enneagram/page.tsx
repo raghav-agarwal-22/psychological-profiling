@@ -206,8 +206,23 @@ export default function EnneagramQuiz() {
 
   // Landing screen
   if (!started) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Quiz',
+      name: 'Free Enneagram Personality Test',
+      description: 'A free 36-question Enneagram test. Find your Enneagram type and wing from the 9-type model. Instant results with full type descriptions. No signup required.',
+      url: 'https://innermind.app/quiz/enneagram',
+      educationalLevel: 'beginner',
+      timeRequired: 'PT5M',
+      numberOfQuestions: 36,
+      about: { '@type': 'Thing', name: 'Enneagram' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+    }
+
     return (
       <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="max-w-xl w-full text-center space-y-8">
           <div className="space-y-2">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Free Quiz</p>
@@ -217,7 +232,7 @@ export default function EnneagramQuiz() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 text-left">
+          <div className="grid grid-cols-1 gap-2 text-left max-h-64 overflow-y-auto pr-1">
             {(Object.entries(TYPE_INFO) as [string, typeof TYPE_INFO[EnneaType]][]).map(([num, t]) => (
               <div key={num} className={`rounded-xl border p-3 flex items-center gap-4 ${t.bg}`}>
                 <div className={`w-8 h-8 rounded-full ${t.bar} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
@@ -262,7 +277,7 @@ export default function EnneagramQuiz() {
         <div className="max-w-xl w-full space-y-8">
           <div className="text-center space-y-2">
             <p className="text-white/40 text-sm uppercase tracking-widest">Your Enneagram Type</p>
-            <h1 className="text-5xl font-black">
+            <h1 className="text-4xl sm:text-5xl font-black">
               <span className={info.color}>Type {dominantType}</span>
               <span className="text-white/40 text-3xl font-light">w{wing}</span>
             </h1>
@@ -315,6 +330,7 @@ export default function EnneagramQuiz() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
+                  autoComplete="email"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
                 />
                 <button
@@ -347,7 +363,7 @@ export default function EnneagramQuiz() {
 
           <button
             onClick={handleRetake}
-            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
           >
             Retake the test
           </button>
@@ -370,9 +386,9 @@ export default function EnneagramQuiz() {
             <span>Question {currentQ + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <div
-              className="bg-violet-500 h-1.5 rounded-full transition-all duration-300"
+              className="bg-violet-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

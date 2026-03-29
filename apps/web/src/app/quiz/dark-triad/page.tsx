@@ -203,8 +203,23 @@ export default function DarkTriadQuiz() {
 
   // Landing screen
   if (!started) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Quiz',
+      name: 'Dark Triad Personality Test',
+      description: 'A free 21-question Dark Triad test measuring Narcissism, Machiavellianism, and Psychopathy. Based on subclinical research (Paulhus & Williams, 2002). Non-judgmental and research-based. No signup required.',
+      url: 'https://innermind.app/quiz/dark-triad',
+      educationalLevel: 'beginner',
+      timeRequired: 'PT3M',
+      numberOfQuestions: 21,
+      about: { '@type': 'Thing', name: 'Dark Triad (Narcissism, Machiavellianism, Psychopathy)' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+    }
+
     return (
       <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="max-w-xl w-full text-center space-y-8">
           <div className="space-y-3">
             <p className="text-rose-400 text-sm font-medium tracking-widest uppercase">Free Quiz</p>
@@ -339,6 +354,7 @@ export default function DarkTriadQuiz() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
+                  autoComplete="email"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-rose-500"
                 />
                 <button
@@ -371,7 +387,7 @@ export default function DarkTriadQuiz() {
 
           <button
             onClick={handleRetake}
-            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
           >
             Retake the test
           </button>
@@ -394,9 +410,9 @@ export default function DarkTriadQuiz() {
             <span>Question {currentQ + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <div
-              className="bg-rose-500 h-1.5 rounded-full transition-all duration-300"
+              className="bg-rose-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

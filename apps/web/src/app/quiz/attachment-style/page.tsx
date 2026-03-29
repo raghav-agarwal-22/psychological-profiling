@@ -187,8 +187,23 @@ export default function AttachmentStyleQuiz() {
 
   // Landing screen
   if (!started) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Quiz',
+      name: 'Free Attachment Style Test',
+      description: 'A free 10-question attachment style quiz. Discover whether you are Secure, Anxious-Preoccupied, Dismissive-Avoidant, or Disorganized. Instant results, no signup required.',
+      url: 'https://innermind.app/quiz/attachment-style',
+      educationalLevel: 'beginner',
+      timeRequired: 'PT2M',
+      numberOfQuestions: 10,
+      about: { '@type': 'Thing', name: 'Attachment Theory' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+    }
+
     return (
       <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="max-w-xl w-full text-center space-y-8">
           <div className="space-y-2">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Free Quiz</p>
@@ -198,7 +213,7 @@ export default function AttachmentStyleQuiz() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
             {(Object.values(RESULTS)).map((r) => (
               <div key={r.label} className={`rounded-xl border p-4 ${r.bg}`}>
                 <p className={`font-semibold text-sm ${r.color}`}>{r.label}</p>
@@ -253,6 +268,7 @@ export default function AttachmentStyleQuiz() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email me my full results"
+                  autoComplete="email"
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500"
                 />
                 <button
@@ -292,7 +308,7 @@ export default function AttachmentStyleQuiz() {
               setEmail('')
               setEmailSubmitted(false)
             }}
-            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="w-full text-white/40 hover:text-white/60 text-sm transition-colors py-3 min-h-[44px]"
           >
             Retake the quiz
           </button>
@@ -314,9 +330,9 @@ export default function AttachmentStyleQuiz() {
             <span>Question {currentQ + 1} of {QUESTIONS.length}</span>
             <span>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-2">
             <div
-              className="bg-violet-500 h-1.5 rounded-full transition-all duration-300"
+              className="bg-violet-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
