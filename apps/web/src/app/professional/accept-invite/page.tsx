@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { api, ApiError } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 
-export default function AcceptInvitePage() {
+function AcceptInviteInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
@@ -86,5 +86,13 @@ export default function AcceptInvitePage() {
         Take assessment →
       </button>
     </main>
+  )
+}
+
+export default function AcceptInvitePage() {
+  return (
+    <Suspense fallback={<main className="flex min-h-[60vh] items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" /></main>}>
+      <AcceptInviteInner />
+    </Suspense>
   )
 }

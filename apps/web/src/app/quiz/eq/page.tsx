@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type Dimension =
   | 'selfAwareness'
@@ -506,6 +507,8 @@ export default function EQQuiz() {
               'Full 7-framework AI portrait with unlimited coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="eq" />
 
           <button
             onClick={handleRetake}

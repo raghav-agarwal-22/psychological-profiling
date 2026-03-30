@@ -173,8 +173,8 @@ function UpgradeContent() {
           </div>
         )}
         <p className="mx-auto max-w-xl text-base text-stone-400 leading-relaxed">
-          Go deeper with all six assessment frameworks, AI-powered coaching, and personalised
-          growth tools.
+          Six science-backed assessments. One AI-synthesised portrait. Unlimited coaching,
+          journaling, and growth tracking — everything you need to truly know yourself.
         </p>
       </div>
 
@@ -351,6 +351,57 @@ function UpgradeContent() {
         </div>
       </div>
 
+      {/* Feature comparison table */}
+      <div className="mt-16">
+        <p className="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-stone-500">
+          Side-by-side
+        </p>
+        <h2 className="mb-8 text-center font-serif text-2xl text-stone-100">
+          Free vs Pro — what you get
+        </h2>
+        <div className="overflow-hidden rounded-2xl border border-stone-800">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-stone-800 bg-stone-900/80">
+                <th className="px-5 py-3 text-xs font-semibold uppercase tracking-widest text-stone-500">Feature</th>
+                <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-widest text-stone-500">Free</th>
+                <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-widest text-amber-400">Pro</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-800/60">
+              {[
+                ['Big Five personality assessment', true, true],
+                ['Basic psychological profile', true, true],
+                ['Personal dashboard', true, true],
+                ['Public profile share link', true, true],
+                ['Values Inventory assessment', false, true],
+                ['Attachment Style assessment', false, true],
+                ['Enneagram assessment', false, true],
+                ['Light & Dark Triad assessment', false, true],
+                ['Full archetype breakdown', false, true],
+                ['AI-synthesised portrait', false, true],
+                ['AI coach chat (unlimited)', false, true],
+                ['Adaptive deep-dive assessment', false, true],
+                ['Compatibility mapping', false, true],
+                ['Journal (unlimited)', false, true],
+                ['PDF export of your report', false, true],
+                ['Weekly digest email', false, true],
+              ].map(([feature, free, pro]) => (
+                <tr key={feature as string} className="bg-stone-900/40">
+                  <td className="px-5 py-2.5 text-stone-300">{feature as string}</td>
+                  <td className="px-5 py-2.5 text-center">
+                    {free ? <span className="text-stone-500">✓</span> : <span className="text-stone-700">—</span>}
+                  </td>
+                  <td className="px-5 py-2.5 text-center">
+                    {pro ? <span className="text-amber-400">✓</span> : <span className="text-stone-700">—</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* B2B section */}
       <div className="mt-14">
         <div className="mb-6 text-center">
@@ -398,7 +449,71 @@ function UpgradeContent() {
             rating={5}
             personalityTag="INFJ · Enneagram 4"
           />
+          <TestimonialSnippet
+            firstName="Marcus"
+            quote="The AI coach knew exactly what questions to ask. Better than any self-help book I've tried."
+            rating={5}
+            personalityTag="ENFP · Enneagram 7"
+          />
+          <TestimonialSnippet
+            firstName="Sarah"
+            quote="Shared my profile with my partner — the compatibility insights sparked the best conversation we've had in months."
+            rating={5}
+            personalityTag="Life coach"
+          />
         </div>
+      </div>
+
+      {/* FAQ section */}
+      <div className="mt-14">
+        <p className="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-stone-500">
+          Common questions
+        </p>
+        <h2 className="mb-6 text-center font-serif text-2xl text-stone-100">
+          Pricing FAQ
+        </h2>
+        <div className="mx-auto max-w-2xl divide-y divide-stone-800 rounded-2xl border border-stone-800 bg-stone-900/40">
+          {[
+            {
+              q: 'Is the free trial really free?',
+              a: 'Yes. You get full access to every Pro feature for 7 days. No charge until day 8 — cancel anytime before then and you pay nothing.',
+            },
+            {
+              q: 'What happens when my trial ends?',
+              a: 'Your subscription begins automatically at the plan price you chose (monthly or annual). You can cancel or switch plans from your billing portal at any time.',
+            },
+            {
+              q: 'Can I cancel anytime?',
+              a: 'Absolutely. There are no contracts or cancellation fees. Cancel from the billing portal and you keep access until the end of your current billing period.',
+            },
+            {
+              q: 'What payment methods do you accept?',
+              a: 'We accept all major credit and debit cards (Visa, Mastercard, Amex) through Stripe. We never see or store your card details.',
+            },
+            {
+              q: "What's included in Pro that isn't in Free?",
+              a: 'Pro unlocks five additional assessment frameworks (Values, Attachment, Enneagram, Archetypes, Light/Dark Triad), the full AI-synthesised portrait, unlimited AI coaching, adaptive deep-dive, compatibility mapping, journaling, PDF exports, and weekly digest emails.',
+            },
+            {
+              q: 'Do you offer refunds?',
+              a: "If you're not satisfied within the first 14 days of a paid subscription, contact us at support@innermind.app and we'll issue a full refund — no questions asked.",
+            },
+          ].map(({ q, a }) => (
+            <details key={q} className="group">
+              <summary className="flex cursor-pointer items-center justify-between px-5 py-4 text-sm font-semibold text-stone-200 hover:text-stone-100">
+                {q}
+                <svg className="ml-2 h-4 w-4 shrink-0 text-stone-600 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </summary>
+              <p className="px-5 pb-4 text-sm text-stone-400 leading-relaxed">{a}</p>
+            </details>
+          ))}
+        </div>
+        <p className="mt-4 text-center text-xs text-stone-600">
+          More questions? See our full{' '}
+          <Link href="/faq" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">FAQ page</Link>
+          {' '}or email{' '}
+          <a href="mailto:support@innermind.app" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">support@innermind.app</a>
+        </p>
       </div>
 
       {/* Trust signals */}

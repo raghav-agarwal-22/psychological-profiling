@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type Dimension = 'D' | 'I' | 'S' | 'C'
 
@@ -426,6 +427,8 @@ export default function DISCQuiz() {
               'Full 7-framework AI portrait with coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="disc" />
 
           <button
             onClick={handleRetake}

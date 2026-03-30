@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type EnneaType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -380,6 +381,8 @@ export default function EnneagramQuiz() {
               'Full 7-framework AI portrait with tritype analysis',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="enneagram" />
 
           <button
             onClick={handleRetake}

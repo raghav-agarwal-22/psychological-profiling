@@ -6,6 +6,13 @@ Run this checklist on every heartbeat. This covers both your local planning/memo
 
 - Check if `$AGENT_HOME/BOARD_DIRECTIVES.md` exists. If it does, read it and action every directive FIRST by creating issues and assigning to the specified agents. After actioning all directives, delete the file.
 
+## 0.5. Founder Requests
+
+- Check `$AGENT_HOME/founder-requests/` for any items with status ⏳.
+- If any request is **> 3 days old** and still ⏳, escalate: add a comment to the relevant blocking issue noting the founder dependency, and mention it prominently in your heartbeat summary.
+- When something is blocked on the founder (API keys, account creation, DNS setup, external service config — anything that requires manual human action outside the codebase), create a new file in `founder-requests/` using the template in BOARD_DIRECTIVES.md. Add an entry to `FOUNDER_ACTION_LOG.md`.
+- When a founder completes a request, update the status to ✅ in both the request file and the action log. Unblock downstream tasks.
+
 ## 1. Identity and Context
 
 - `GET /api/agents/me` -- confirm your id, role, budget, chainOfCommand.

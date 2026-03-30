@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type Dimension = 'EI' | 'SN' | 'TF' | 'JP'
 
@@ -516,6 +517,8 @@ export default function SixteenTypesQuiz() {
               'Full 7-framework AI portrait with unlimited coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="16-types" />
 
           <button
             onClick={handleRetake}

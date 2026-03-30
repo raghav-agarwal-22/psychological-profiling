@@ -8553,6 +8553,453 @@ This integrated portrait is far more informative than any single test result.
 Start your journey: [Take the Big Five test](/quiz/big-five), then work through the other frameworks to build your complete psychological portrait.
 `,
   },
+  {
+    slug: 'what-is-your-love-language-quiz',
+    title: 'What Is Your Love Language? Take the Free Quiz',
+    description:
+      'Discover your primary love language with our free quiz. Based on Dr. Gary Chapman\'s 5 Love Languages framework — understand how you give and receive love.',
+    publishedAt: '2026-03-27',
+    readingTime: 8,
+    category: 'Relationships',
+    keywords: ['love language quiz', 'five love languages', 'love language test free', 'what is my love language', 'gary chapman love languages'],
+    content: `
+## What Is Your Love Language?
+
+Your love language is the way you most naturally express and experience love. It's the emotional dialect that makes you feel genuinely valued — and the one you instinctively speak when you care about someone.
+
+The concept comes from Dr. Gary Chapman's *The 5 Love Languages*, published in 1992 and based on decades of marriage counseling. Chapman observed that couples kept having the same fight: "I show you I love you, but you don't feel loved." The problem wasn't effort — it was translation. Partners were expressing love in their own language, not their partner's.
+
+The framework identifies five distinct love languages. Everyone speaks all five to some degree, but most people have one or two primary languages that matter far more than the rest.
+
+## The 5 Love Languages Explained
+
+### Words of Affirmation
+
+If this is your language, verbal expressions of love hit different. Compliments, "I love you," written notes, specific praise — these aren't nice extras, they're emotional necessities. You feel most loved when someone articulates what they appreciate about you.
+
+**What fills your tank:** sincere compliments, love letters, verbal encouragement during hard times, specific praise ("The way you handled that meeting was impressive"), texts that say "thinking of you."
+
+**What drains it:** harsh criticism, silence during conflict, forgetting to acknowledge your efforts, sarcasm disguised as humor.
+
+### Acts of Service
+
+Actions speak louder than words — literally, for you. When someone does something practical to lighten your load, that's love in its purest form. It's not about grand gestures; it's about someone noticing what needs doing and doing it without being asked.
+
+**What fills your tank:** cooking dinner when you're exhausted, handling an errand you've been dreading, fixing something that's been broken, taking a task off your plate during a stressful week.
+
+**What drains it:** laziness, broken promises to help, creating more work for you, "I'll do it later" that never comes.
+
+### Receiving Gifts
+
+This isn't materialism. Gift-giving as a love language is about the thought, effort, and symbolism behind the gift. A handwritten card can mean more than an expensive watch. What matters is that someone was thinking about you, understood what would delight you, and acted on it.
+
+**What fills your tank:** thoughtful surprises, gifts that show someone listened to a passing comment you made, physical symbols of occasions, "I saw this and thought of you."
+
+**What drains it:** forgotten birthdays, generic last-minute gifts, dismissing gift-giving as shallow, missing milestones.
+
+### Quality Time
+
+Undivided attention is your currency. Not watching TV in the same room — actual, present, focused togetherness. Deep conversation, shared activities, eye contact, phones put away. You feel loved when someone gives you their most valuable resource: time and attention.
+
+**What fills your tank:** uninterrupted conversations, shared hobbies, date nights with no distractions, active listening, being fully present.
+
+**What drains it:** distraction during conversations, postponed plans, phone-scrolling during together time, feeling like an afterthought in someone's schedule.
+
+### Physical Touch
+
+Physical affection is your primary emotional connection point. Hugs, holding hands, a hand on the shoulder, cuddling — these physical expressions of love make you feel secure and connected. It's not primarily sexual; it's about the comfort and closeness of physical presence.
+
+**What fills your tank:** hugs, holding hands, sitting close, physical comfort during stress, playful touch, back rubs.
+
+**What drains it:** physical neglect, long periods without affection, pulling away from touch, physical distance during emotional conversations.
+
+## Why Love Languages Matter
+
+Understanding your love language — and your partner's — solves one of the most common relationship problems: feeling unloved despite your partner's genuine effort.
+
+Consider this: you speak Acts of Service. Your partner speaks Words of Affirmation. They tell you how amazing you are every day (their language), but rarely help around the house. Meanwhile, you silently do everything for them (your language), but rarely verbalize your feelings. Both of you are pouring love out — and neither feels it coming in.
+
+This isn't a compatibility problem. It's a translation problem. And it's solvable once you know the languages.
+
+## Love Languages Beyond Romance
+
+Chapman's framework extends well beyond romantic relationships:
+
+- **Parenting:** Children have love languages too. A child whose language is Quality Time won't feel loved through gifts alone.
+- **Friendships:** Understanding why some friendships feel effortless (matched languages) and others require more work.
+- **Work relationships:** Managers who know their team's "appreciation languages" retain people longer.
+
+## How Love Languages Connect to Your Psychological Profile
+
+Your love language doesn't exist in isolation. It's shaped by — and shapes — your broader psychological makeup:
+
+- **Attachment style** influences which love languages feel safest. Anxiously attached people often gravitate toward Words of Affirmation (reassurance) and Physical Touch (closeness). Avoidantly attached people may prefer Acts of Service (love without vulnerability).
+- **Big Five traits** correlate with language preferences. High Agreeableness often pairs with Acts of Service. High Extraversion correlates with Words of Affirmation and Quality Time.
+- **Enneagram type** adds another layer. Type 2s (The Helper) often speak Acts of Service. Type 4s (The Individualist) often value Words of Affirmation that recognize their uniqueness.
+
+This is why a single-framework test never tells the whole story. At Innermind, we synthesize multiple validated frameworks — including attachment style, Big Five, and Enneagram — to give you a portrait that explains not just *what* your love language is, but *why*.
+
+## Take the Free Love Language Quiz
+
+Ready to discover your primary love language? [Take our free Love Language quiz](/quiz/love-language) — 25 questions, about 5 minutes, instant results.
+
+Then go deeper: [Take Innermind's full psychological assessment](/assessment) to understand how your love language connects to your attachment style, personality traits, values, and archetypal patterns.
+`,
+  },
+  {
+    slug: 'five-love-languages-explained',
+    title: 'The 5 Love Languages Explained: How to Improve Your Relationships',
+    description:
+      'A deep dive into the 5 Love Languages — understand each one, identify yours and your partner\'s, resolve conflicts between different languages, and build stronger connections.',
+    publishedAt: '2026-03-27',
+    readingTime: 9,
+    category: 'Relationships',
+    keywords: ['five love languages', 'love languages explained', 'love language types', 'words of affirmation', 'acts of service', 'quality time'],
+    content: `
+## Why the 5 Love Languages Framework Works
+
+Most relationship advice focuses on *what* to do: communicate better, spend more time together, be more affectionate. The 5 Love Languages framework asks a more fundamental question: *what does love actually feel like to this specific person?*
+
+Dr. Gary Chapman developed this framework after years of marriage counseling sessions where he noticed a pattern. Couples weren't failing because they didn't love each other. They were failing because they were expressing love in a language their partner couldn't hear.
+
+The framework doesn't claim to be a comprehensive theory of relationships. It does something more useful: it gives couples a shared vocabulary for a conversation most of them have never had — "here's what makes me feel loved, and here's what doesn't."
+
+## The Five Languages in Depth
+
+### Words of Affirmation: The Power of Verbal Love
+
+People who speak this language process love through words. Not just "I love you" — though that matters — but specific, genuine verbal recognition. "I noticed how patient you were with the kids today." "That presentation you gave was genuinely impressive." "I feel safe with you."
+
+**In practice:**
+- Leave a note in their lunch bag
+- Text something specific you appreciate about them — not generic, specific
+- During an argument, lead with affirmation before addressing the issue
+- Publicly acknowledge them in front of people who matter to them
+
+**Common misunderstandings:** This isn't about flattery or constant praise. People who speak Words of Affirmation can actually detect insincerity faster than most. The words have to be real. One specific, honest compliment outweighs ten vague ones.
+
+### Acts of Service: Love Through Action
+
+For Acts of Service speakers, talk is cheap. What moves them is someone *doing* something — especially something they didn't ask for. It's the roommate who notices the dishes and does them. The partner who fills your gas tank. The friend who shows up to help you move without being asked.
+
+**In practice:**
+- Pay attention to what stresses them out and handle it before they ask
+- Follow through on promises — broken commitments are devastating to this language
+- Take initiative on shared responsibilities without keeping score
+- During hard times, do more than say "let me know if you need anything" — just do something
+
+**Common misunderstandings:** This isn't about being a servant. It's about voluntary acts of love. The key word is *voluntary*. Doing things resentfully or keeping score defeats the purpose entirely.
+
+### Receiving Gifts: Symbols of Thoughtfulness
+
+This is the most misunderstood love language. People assume it's materialistic. It's not. A person whose love language is Receiving Gifts is moved by the *symbolism* of the gift — the fact that someone saw something, thought of them, and acted on that thought.
+
+**In practice:**
+- Keep a running note of things they mention wanting in passing
+- Mark occasions — birthdays, anniversaries, milestones — and never miss them
+- Bring back small things from trips ("I saw this and thought of you")
+- Handmade gifts often mean more than expensive ones
+
+**Common misunderstandings:** Price is almost irrelevant. A $5 book they've been wanting to read can mean more than a $500 gadget. What matters is the evidence that you were thinking about them.
+
+### Quality Time: The Gift of Presence
+
+Quality Time speakers need focused, undistracted attention. Not parallel play (though that can count sometimes) — real engagement. Eye contact. Active listening. Shared experience. The defining feature is *undivided attention*.
+
+**In practice:**
+- Put your phone in another room during dinner
+- Schedule regular one-on-one time that doesn't get cancelled
+- During conversations, reflect back what they said before responding
+- Find activities you genuinely enjoy doing together
+
+**Common misunderstandings:** Quality Time doesn't require expensive dates or elaborate plans. Walking together, cooking together, or having a real conversation over coffee counts. The quality is in the attention, not the activity.
+
+### Physical Touch: Connection Through Contact
+
+Physical Touch speakers feel most connected through physical affection. This isn't just about sex — in fact, non-sexual touch is often more important. It's holding hands, a hug when you walk in the door, a hand on their back in a crowded room.
+
+**In practice:**
+- Greet them with physical affection when you see them
+- Sit close during movies, reach for their hand during walks
+- During emotional moments, lead with physical comfort (a hug) before words
+- Learn what types of touch they prefer — everyone's specific preferences differ
+
+**Common misunderstandings:** This love language is often oversexualized. For Physical Touch speakers, non-sexual affection is usually the foundation. A spontaneous hug can be more meaningful than anything else.
+
+## When Love Languages Clash
+
+The most common relationship conflict pattern looks like this:
+
+**Partner A** (Words of Affirmation) keeps telling Partner B how much they love them. Partner B (Acts of Service) doesn't feel loved because the dishes are still in the sink. Partner A feels rejected because their verbal love isn't appreciated. Partner B feels unheard because words without action feel empty.
+
+Both are loving. Neither feels loved.
+
+**The fix isn't compromise — it's bilingualism.** You don't stop speaking your own language. You learn to also speak your partner's. This requires three things:
+
+1. **Identify your own language** — [take the quiz](/quiz/love-language) if you're not sure
+2. **Have the explicit conversation** — share your results with your partner
+3. **Practice deliberately** — speaking a language that isn't natural to you takes conscious effort, especially at first
+
+## Love Languages Change Over Time
+
+Your primary love language isn't permanently fixed. Life circumstances, personal growth, and relationship dynamics can shift your needs:
+
+- **New parents** often shift toward Acts of Service (because they're overwhelmed and help feels like love)
+- **Long-distance couples** often shift toward Words of Affirmation and Quality Time (the only options available)
+- **After loss or trauma**, Physical Touch often becomes more important (the need for comfort and safety)
+- **As relationships mature**, Quality Time often rises in importance
+
+This is why periodic check-ins matter. The language that felt most important five years ago might not be the one that matters most today.
+
+## Going Deeper Than Love Languages
+
+The 5 Love Languages framework is powerful but simple. It tells you *what* you need — but not always *why*.
+
+That's where deeper psychological frameworks add value:
+
+- Your [attachment style](/quiz/attachment-style) explains whether you seek closeness or independence — and how that shapes which love languages feel safe
+- Your [Big Five personality profile](/quiz/big-five) reveals the trait patterns that underlie your language preferences
+- Your [Enneagram type](/quiz/enneagram) explains the core motivation behind your need for a specific kind of love
+
+[Take the free Love Language quiz](/quiz/love-language) to discover your primary language. Then explore [Innermind's full psychological assessment](/assessment) to understand the deeper patterns that make you who you are.
+`,
+  },
+  {
+    slug: 'disc-personality-assessment-guide',
+    title: 'DISC Personality Assessment: What Your Profile Reveals About You',
+    description:
+      'The DISC personality model measures Dominance, Influence, Steadiness, and Conscientiousness. Learn what your DISC profile means for your career, communication, and relationships.',
+    publishedAt: '2026-03-27',
+    readingTime: 9,
+    category: 'Personality Science',
+    keywords: ['disc personality test', 'disc assessment', 'disc personality types', 'dominance influence steadiness conscientiousness', 'disc profile'],
+    content: `
+## What Is the DISC Personality Assessment?
+
+DISC is a behavioral assessment that measures four primary personality dimensions: **Dominance**, **Influence**, **Steadiness**, and **Conscientiousness**. Unlike trait-based models that measure what you're *like*, DISC focuses on what you *do* — your observable behavioral patterns in different situations.
+
+The model originated from psychologist William Moulton Marston's 1928 book *Emotions of Normal People*. Marston proposed that human behavior could be understood along two axes: whether a person perceives their environment as favorable or unfavorable, and whether they respond actively or passively. The four quadrants of these axes became D, I, S, and C.
+
+DISC is one of the most widely used workplace assessments in the world, with an estimated 50+ million people having taken some version of it. Its strength is practical — it gives people a shared language for communication styles, conflict patterns, and work preferences.
+
+## The Four DISC Dimensions
+
+### Dominance (D)
+
+**Core drive:** Results. Control. Challenge.
+
+High-D people are direct, decisive, and competitive. They focus on the bottom line, move fast, and aren't afraid of confrontation. They want to solve the problem, make the decision, and move on.
+
+**Strengths:** Decisive leadership, willingness to take risks, ability to drive results under pressure, directness that cuts through ambiguity.
+
+**Blind spots:** Can steamroll quieter team members, impatience with process and detail, may prioritize speed over thoroughness, can come across as blunt or aggressive.
+
+**At work:** Gravitates toward leadership roles, thrives with autonomy, wants authority over their domain, frustrated by bureaucracy and micromanagement.
+
+**Under stress:** Becomes more demanding, controlling, and impatient. May override others' input to "just get it done."
+
+### Influence (I)
+
+**Core drive:** People. Recognition. Collaboration.
+
+High-I people are enthusiastic, optimistic, and socially oriented. They energize groups, sell ideas with charisma, and build relationships naturally. They want to be liked, involved, and recognized.
+
+**Strengths:** Natural networkers, persuasive communicators, bring energy and enthusiasm to teams, excellent at rallying people around a vision.
+
+**Blind spots:** May overcommit, can prioritize popularity over tough decisions, tends to gloss over details, may struggle with follow-through on less exciting tasks.
+
+**At work:** Thrives in collaborative, social environments. Gravitates toward sales, marketing, and people-facing roles. Needs variety and recognition.
+
+**Under stress:** Becomes disorganized, overly talkative, and may make impulsive decisions to maintain positive energy.
+
+### Steadiness (S)
+
+**Core drive:** Stability. Harmony. Support.
+
+High-S people are patient, reliable, and team-oriented. They value consistency, don't rush decisions, and prioritize maintaining harmony in relationships. They're the steady hand in a crisis and the person everyone leans on.
+
+**Strengths:** Exceptional listener, loyal and dependable, creates stability in chaotic environments, strong follow-through on commitments, mediates conflicts naturally.
+
+**Blind spots:** Resists change even when necessary, difficulty saying no, may avoid confrontation to an unhealthy degree, can be passive-aggressive when frustrated.
+
+**At work:** Thrives with clear expectations and predictable routines. Values team cohesion over individual recognition. Needs time to process change.
+
+**Under stress:** Becomes passive, withdraws, or quietly resents changes that were imposed without consultation.
+
+### Conscientiousness (C)
+
+**Core drive:** Quality. Accuracy. Expertise.
+
+High-C people are analytical, systematic, and detail-oriented. They value precision, want to understand the data before deciding, and hold themselves and others to high standards. They're the person who reads the fine print.
+
+**Strengths:** Exceptional quality control, thorough analysis, systematic problem-solving, high standards that elevate the team's work.
+
+**Blind spots:** Analysis paralysis, difficulty making decisions without complete information, can be perceived as cold or critical, may overthink at the expense of action.
+
+**At work:** Gravitates toward technical, analytical, and specialist roles. Needs time to think, clear quality standards, and logical reasoning behind decisions.
+
+**Under stress:** Becomes overly critical, withdrawn, and paralyzed by the fear of making a mistake.
+
+## Understanding Your DISC Profile
+
+Nobody is purely one dimension. Your DISC profile is a blend of all four, with one or two dimensions typically dominant. The most informative part of your results isn't your highest dimension — it's the *combination*.
+
+Common DISC profile types:
+
+- **DI (The Driver):** Results-focused but persuasive. Leads through vision and force of personality.
+- **DC (The Architect):** Results-focused and analytical. Makes tough decisions backed by data.
+- **ID (The Motivator):** People-oriented with a competitive edge. Inspires and challenges simultaneously.
+- **IS (The Counselor):** Warm, supportive, and socially skilled. Builds deep relationships.
+- **SC (The Specialist):** Reliable, detail-oriented, and process-focused. The backbone of any team.
+- **CS (The Analyst):** Methodical and steady. Excels in roles requiring precision and consistency.
+- **SI (The Supporter):** Patient, warm, and encouraging. Creates inclusive environments.
+- **CD (The Challenger):** Analytical but direct. Questions assumptions and demands evidence.
+
+## DISC vs. Other Personality Models
+
+DISC is behavioral — it measures what you *do*. The [Big Five](/quiz/big-five) is trait-based — it measures what you're *like*. They're complementary, not competing.
+
+| Model | Measures | Best for | Scientific rigor |
+|-------|----------|----------|-----------------|
+| DISC | Behavior | Workplace communication | Moderate |
+| Big Five | Traits | Research, self-understanding | Very high |
+| MBTI | Cognitive preferences | Type identification | Low-moderate |
+| Enneagram | Core motivations | Personal growth | Moderate |
+
+DISC's strength is its simplicity and practical applicability in teams. Its limitation is that it doesn't capture the full complexity of personality — it deliberately simplifies to make behavior patterns actionable in workplace settings.
+
+## DISC in Teams and Leadership
+
+One of DISC's most powerful applications is team dynamics. When everyone on a team knows their DISC profiles:
+
+- **D-types** learn to slow down and listen to S and C perspectives before deciding
+- **I-types** learn that S-types' quietness isn't disengagement — it's processing
+- **S-types** learn that D-types' directness isn't personal — it's their pace
+- **C-types** learn that I-types' enthusiasm isn't recklessness — it's how they think out loud
+
+The most effective teams aren't composed of one dominant style. They have a blend — and they've learned to value what each style contributes.
+
+## Take the Free DISC Assessment
+
+Curious about your DISC profile? [Take our free DISC assessment](/quiz/disc) — 28 questions, about 5 minutes, instant results with your full profile breakdown.
+
+Want the complete picture? Your DISC behavioral style is one lens. Combine it with your [Big Five traits](/quiz/big-five), [attachment style](/quiz/attachment-style), and [Enneagram type](/quiz/enneagram) — or get all of it synthesized in [Innermind's AI-powered psychological assessment](/assessment).
+`,
+  },
+  {
+    slug: 'innermind-vs-16personalities',
+    title: 'Innermind vs 16Personalities: Why AI-Powered Profiling Is More Accurate',
+    description:
+      'How does Innermind compare to 16Personalities? We break down the science, methodology, and depth of each approach — and why multi-framework AI synthesis produces better results.',
+    publishedAt: '2026-03-27',
+    readingTime: 8,
+    category: 'Personality Science',
+    keywords: ['innermind vs 16personalities', 'best personality test', 'ai personality test', 'free personality test accurate', 'personality test comparison'],
+    content: `
+## The Problem With Single-Framework Personality Tests
+
+16Personalities is the world's most popular personality test. Over 100 million people have taken it. It's accessible, well-designed, and gives you a four-letter type (like INTJ or ENFP) that feels revelatory the first time you read it.
+
+But there's a fundamental problem with any single-framework approach: humans are too complex to be captured by one model.
+
+16Personalities uses a modified version of the MBTI (Myers-Briggs Type Indicator), which categorizes people into 16 types based on four binary dimensions: Introversion/Extraversion, Sensing/Intuition, Thinking/Feeling, Judging/Perceiving. It adds a fifth dimension (Assertive/Turbulent) that isn't part of the original MBTI.
+
+This approach has known scientific limitations — limitations that Innermind was designed to solve.
+
+## Scientific Validity: Where 16Personalities Falls Short
+
+### The Reliability Problem
+
+The MBTI framework that underlies 16Personalities has a well-documented test-retest reliability problem. Studies show that 50% of people get a different type when they retake the test five weeks later. That's because the four dimensions are continuous spectrums forced into binary categories. If you score 51% Thinking, you're labeled a "Thinker." If you score 49%, you're a "Feeler." One question's difference, completely different type.
+
+### The Binary Problem
+
+Real personality traits aren't binary. You're not either introverted or extraverted — you're somewhere on a spectrum, and that position matters. Someone who's slightly introverted has almost nothing in common with someone who's extremely introverted, yet the MBTI labels them the same way.
+
+The [Big Five model](/quiz/big-five), used in academic research worldwide, solves this by measuring traits as continuous scores. You get a precise position on each spectrum, not a forced category.
+
+### The Coverage Problem
+
+16 types can't capture the full dimensionality of human psychology. The MBTI doesn't measure:
+- **Emotional stability** (the Big Five's Neuroticism dimension — arguably the most important trait for mental health)
+- **Attachment style** (how you bond in relationships, rooted in developmental psychology)
+- **Core motivations** (what the Enneagram captures — *why* you do what you do, not just *what*)
+- **Value systems** (Schwartz's theory of basic human values — what you prioritize in life)
+- **Archetypal patterns** (Jung's deeper work on the collective unconscious, far beyond the surface-level types MBTI borrowed from Jung)
+
+A four-letter type tells you something. But it leaves out most of the picture.
+
+## How Innermind Is Different
+
+### Multi-Framework Synthesis
+
+Innermind doesn't use one model. It integrates five validated psychological frameworks:
+
+1. **Big Five (OCEAN)** — the gold standard of personality science, measuring Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism on continuous scales
+2. **Schwartz Values** — your core value priorities across 10 universal value dimensions (Power, Achievement, Hedonism, Stimulation, Self-Direction, Universalism, Benevolence, Tradition, Conformity, Security)
+3. **Attachment Style** — your relational patterns (Secure, Anxious, Avoidant, Disorganized), rooted in developmental psychology and validated through decades of research
+4. **Enneagram** — your core motivation and defense patterns, the "why" behind your behavior
+5. **Jungian Archetypes** — the narrative patterns that shape how you see yourself and your role in the world
+
+Each framework captures a different dimension of who you are. Together, they create a portrait that no single test can match.
+
+### AI-Powered Synthesis
+
+Here's where Innermind does something no traditional test can do: it uses AI to find the patterns *between* frameworks.
+
+A human psychologist with expertise in all five frameworks might notice that your Big Five profile, attachment style, and Enneagram type tell a coherent story — or reveal interesting tensions. But that synthesis takes expertise and time.
+
+Innermind's AI performs this synthesis automatically, identifying:
+- How your traits interact with your values (e.g., high Openness + high Self-Direction = strong independent creative drive)
+- How your attachment style shapes your personality expression (e.g., anxious attachment + high Agreeableness = people-pleasing pattern)
+- Where your frameworks align (reinforcing patterns) and where they create tension (growth edges)
+- Specific, actionable insights that emerge from the *combination* of your results
+
+### Continuous Scores, Not Categories
+
+Every dimension in Innermind is measured as a continuous score. You don't get forced into a box. You get a nuanced profile that captures the complexity of who you actually are — including the contradictions.
+
+## Head-to-Head Comparison
+
+| Feature | Innermind | 16Personalities |
+|---------|-----------|-----------------|
+| Frameworks used | 5 (Big Five, Schwartz Values, Attachment, Enneagram, Archetypes) | 1 (modified MBTI) |
+| Scoring method | Continuous scales | Binary categories |
+| Scientific validity | High (based on Big Five + validated frameworks) | Low-moderate (MBTI reliability issues) |
+| Emotional stability measured | Yes (Neuroticism dimension) | Partially (Turbulent/Assertive) |
+| Attachment style | Yes | No |
+| Value system analysis | Yes | No |
+| AI synthesis | Yes — cross-framework pattern recognition | No |
+| Depth of results | Multi-page psychological portrait | Single type description |
+| Free tier | Yes — free quizzes for individual frameworks | Yes — full type result |
+| Price for full profile | Pro subscription | Free (ad-supported) |
+
+## When 16Personalities Is Enough
+
+Let's be fair: 16Personalities serves a purpose. If you've never taken a personality test and want a quick, accessible introduction to the idea that people think differently — it's a great starting point. The type descriptions are well-written and relatable.
+
+But if you're past the "which Harry Potter house am I" stage and want actual psychological depth — the kind that helps you understand your relationship patterns, career fit, communication blind spots, and growth trajectory — a four-letter type isn't enough.
+
+## When to Choose Innermind
+
+Choose Innermind when you want:
+- **Scientific rigor** — continuous scores based on the Big Five, not binary MBTI categories
+- **Relational insight** — attachment style analysis that explains your patterns in love and friendship
+- **Motivational depth** — Enneagram integration that reveals *why* you do what you do
+- **Value clarity** — understanding what you actually prioritize, not just how you behave
+- **AI synthesis** — a portrait that connects the dots between frameworks in ways a single test never can
+
+## See the Difference Yourself
+
+Try both. Take 16Personalities if you haven't already — it's a fine introduction.
+
+Then [take Innermind's free quizzes](/quiz/big-five) to experience the difference: [Big Five](/quiz/big-five), [Attachment Style](/quiz/attachment-style), [Enneagram](/quiz/enneagram), [Dark Triad](/quiz/dark-triad), [16 Types](/quiz/16-types), [Love Language](/quiz/love-language), and [DISC](/quiz/disc).
+
+Or go straight to the [full AI-powered assessment](/assessment) and see what multi-framework synthesis reveals about you.
+
+For a detailed feature comparison, visit our [Innermind vs 16Personalities](/compare/innermind-vs-16personalities) comparison page.
+`,
+  },
 ]
 
 export function getPost(slug: string): BlogPost | undefined {

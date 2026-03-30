@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type Trait = 'narcissism' | 'machiavellianism' | 'psychopathy'
 
@@ -404,6 +405,8 @@ export default function DarkTriadQuiz() {
               'Full 7-framework AI portrait with coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="dark-triad" />
 
           <button
             onClick={handleRetake}

@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Suspense } from 'react'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { posthog } from '@/lib/posthog'

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type Trait = 'openness' | 'conscientiousness' | 'extraversion' | 'agreeableness' | 'neuroticism'
 
@@ -333,6 +334,8 @@ export default function BigFiveQuiz() {
               'AI portrait written in your own psychological language',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="big-five" />
 
           <button
             onClick={handleRetake}

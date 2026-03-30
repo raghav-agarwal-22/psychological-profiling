@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type AttachmentType = 'secure' | 'anxious' | 'avoidant' | 'disorganized'
 
@@ -318,6 +319,8 @@ export default function AttachmentStyleQuiz() {
               'Full 7-framework AI portrait with unlimited coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="attachment-style" />
 
           <button
             onClick={() => {

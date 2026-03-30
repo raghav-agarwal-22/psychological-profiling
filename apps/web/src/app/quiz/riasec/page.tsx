@@ -66,7 +66,7 @@ const SCALE = [
 
 const TYPE_INFO: Record<
   RIASECType,
-  { label: string; full: string; color: string; bar: string; bg: string; tagline: string; emoji: string }
+  { label: string; full: string; color: string; bar: string; bg: string; tagline: string }
 > = {
   R: {
     label: 'R',
@@ -75,7 +75,6 @@ const TYPE_INFO: Record<
     bar: 'bg-orange-500',
     bg: 'bg-orange-500/10 border-orange-500/30',
     tagline: 'Practical, hands-on, and technically skilled',
-    emoji: '🔧',
   },
   I: {
     label: 'I',
@@ -84,7 +83,6 @@ const TYPE_INFO: Record<
     bar: 'bg-sky-500',
     bg: 'bg-sky-500/10 border-sky-500/30',
     tagline: 'Analytical, curious, and research-driven',
-    emoji: '🔬',
   },
   A: {
     label: 'A',
@@ -93,7 +91,6 @@ const TYPE_INFO: Record<
     bar: 'bg-pink-500',
     bg: 'bg-pink-500/10 border-pink-500/30',
     tagline: 'Creative, expressive, and original',
-    emoji: '🎨',
   },
   S: {
     label: 'S',
@@ -102,7 +99,6 @@ const TYPE_INFO: Record<
     bar: 'bg-emerald-500',
     bg: 'bg-emerald-500/10 border-emerald-500/30',
     tagline: 'Helpful, empathetic, and people-focused',
-    emoji: '🤝',
   },
   E: {
     label: 'E',
@@ -111,7 +107,6 @@ const TYPE_INFO: Record<
     bar: 'bg-amber-500',
     bg: 'bg-amber-500/10 border-amber-500/30',
     tagline: 'Ambitious, persuasive, and leadership-oriented',
-    emoji: '🚀',
   },
   C: {
     label: 'C',
@@ -120,7 +115,6 @@ const TYPE_INFO: Record<
     bar: 'bg-violet-500',
     bg: 'bg-violet-500/10 border-violet-500/30',
     tagline: 'Organised, detail-oriented, and structured',
-    emoji: '📊',
   },
 }
 

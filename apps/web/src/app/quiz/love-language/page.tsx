@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
+import { RelatedQuizzes } from '@/components/RelatedQuizzes'
 
 type LoveLanguage = 'words' | 'acts' | 'gifts' | 'time' | 'touch'
 
@@ -357,6 +358,8 @@ export default function LoveLanguageQuiz() {
               'Full 7-framework AI portrait with unlimited coach access',
             ]}
           />
+
+          <RelatedQuizzes currentQuiz="love-language" />
 
           <button
             onClick={handleRetake}
