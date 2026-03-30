@@ -429,6 +429,48 @@ Innermind's adaptive assessment gathers data from your actual responses to behav
 
 const compareSlugs = Object.keys(comparisons)
 
+interface QuizLink {
+  name: string
+  slug: string
+  tagline: string
+}
+
+const compareQuizLinks: Record<string, QuizLink[]> = {
+  'innermind-vs-16personalities': [
+    { name: 'Free 16 Types Test', slug: '16-types', tagline: 'Find your MBTI-style type — INTJ, ENFP, INFJ, and 13 more' },
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'The scientifically validated alternative to MBTI' },
+  ],
+  'innermind-vs-crystal-knows': [
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'Self-assessment: the gold standard of personality science' },
+    { name: 'Free DISC Test', slug: 'disc', tagline: 'Behavioral style — Dominance, Influence, Steadiness, Compliance' },
+  ],
+  'innermind-vs-truity': [
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'The scientifically validated OCEAN model' },
+    { name: 'Free Enneagram Test', slug: 'enneagram', tagline: 'Core motivations and growth direction' },
+    { name: 'Free 16 Types Test', slug: '16-types', tagline: 'Cognitive function stack and type preferences' },
+  ],
+  'innermind-vs-human-design': [
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'Peer-reviewed personality science — not astrology' },
+    { name: 'Free Enneagram Test', slug: 'enneagram', tagline: 'Motivations and growth path backed by research' },
+  ],
+  'innermind-vs-humandesign': [
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'Peer-reviewed personality science — not astrology' },
+    { name: 'Free Enneagram Test', slug: 'enneagram', tagline: 'Motivations and growth path backed by research' },
+  ],
+  'innermind-vs-enneagraminstitute': [
+    { name: 'Free Enneagram Test', slug: 'enneagram', tagline: 'Discover your type, wing, and growth path — free' },
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'How your Enneagram type connects to OCEAN traits' },
+  ],
+  'innermind-vs-bigfivetest': [
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'Take the OCEAN model test — instant results' },
+    { name: 'Free Enneagram Test', slug: 'enneagram', tagline: 'Go deeper: motivations behind your Big Five scores' },
+  ],
+  'innermind-vs-personalitydb': [
+    { name: 'Free 16 Types Test', slug: '16-types', tagline: 'Find your type with a scored adaptive quiz' },
+    { name: 'Free Big Five Test', slug: 'big-five', tagline: 'The science-backed foundation beneath 16 types' },
+  ],
+}
+
 export function generateStaticParams() {
   return compareSlugs.map((slug) => ({ slug }))
 }
@@ -603,6 +645,26 @@ export default function CompareSlugPage({ params }: { params: { slug: string } }
         </Link>
         <p className="mt-3 text-xs text-stone-600">Free forever · No credit card required</p>
       </div>
+
+      {/* Try the tools */}
+      {compareQuizLinks[params.slug] && (
+        <section className="mt-12 rounded-2xl border border-stone-800 bg-stone-900/30 p-6">
+          <h2 className="mb-1 font-serif text-lg text-stone-100">Try these free tests</h2>
+          <p className="mb-4 text-sm text-stone-500">See for yourself — no signup required.</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            {compareQuizLinks[params.slug]!.map((q) => (
+              <Link
+                key={q.slug}
+                href={`/quiz/${q.slug}`}
+                className="flex-1 rounded-xl border border-stone-700 bg-stone-900/60 px-4 py-3 transition-colors hover:border-amber-500/40 hover:bg-stone-900"
+              >
+                <p className="text-sm font-semibold text-stone-100">{q.name}</p>
+                <p className="mt-0.5 text-xs text-stone-500">{q.tagline}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Other comparisons */}
       <nav className="mt-12 border-t border-stone-800 pt-8">
