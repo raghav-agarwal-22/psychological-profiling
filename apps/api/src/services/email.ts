@@ -19,6 +19,7 @@ import { Day30ReAssessmentEmail } from '../emails/Day30ReAssessmentEmail.js'
 import { MilestoneJournalEmail } from '../emails/MilestoneJournalEmail.js'
 import { MilestoneShareEmail } from '../emails/MilestoneShareEmail.js'
 import { WaitlistLaunchEmail } from '../emails/WaitlistLaunchEmail.js'
+import { PaymentFailedEmail } from '../emails/PaymentFailedEmail.js'
 import { ProWelcomeEmail } from '../emails/ProWelcomeEmail.js'
 import { ProDeepDiveEmail } from '../emails/ProDeepDiveEmail.js'
 import { ProSocialProofEmail } from '../emails/ProSocialProofEmail.js'
@@ -825,6 +826,40 @@ export async function sendProReEngagementEmail(
     subject: `Your profile evolves — it's time for a check-in`,
     html,
     text: `Hi${userName ? ` ${userName}` : ''},\n\nTwo weeks in, your psychology has likely shifted. Retake the Big Five to see what changed — and ask your AI coach what it means.\n\nRetake now: ${WEB_URL}/assessment\n\n— The ${PRODUCT_NAME} team`,
+  })
+}
+
+// ─── Payment Failed (Dunning) ─────────────────────────────────────────────────
+
+export async function sendPaymentFailedEmail(
+  email: string,
+  userName: string | null,
+  attemptCount: number,
+): Promise<void> {
+  if (process.env.SKIP_EMAIL === 'true') {
+    console.info(`[email] SKIP_EMAIL=true — payment_failed (attempt ${attemptCount}) for ${email}`)
+    return
+  }
+
+  const html = await render(
+    React.createElement(PaymentFailedEmail, {
+      userName,
+      billingUrl: `${WEB_URL}/dashboard/billing`,
+      attemptCount,
+    }),
+  )
+
+  const subject =
+    attemptCount <= 1
+      ? `Action required: update your payment method`
+      : `Payment attempt ${attemptCount} failed — please update your card`
+
+  await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: email,
+    subject,
+    html,
+    text: `Hi${userName ? ` ${userName}` : ''},\n\nWe weren't able to process your Innermind Pro payment (attempt ${attemptCount}). Please update your payment method to keep your access.\n\nUpdate now: ${WEB_URL}/dashboard/billing\n\n— The ${PRODUCT_NAME} team`,
   })
 }
 

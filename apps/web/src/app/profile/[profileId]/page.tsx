@@ -3,15 +3,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
 import { archetypeNameToSlug } from '@/lib/archetypes'
 import { posthog } from '@/lib/posthog'
+import { track } from '@/lib/analytics'
 import { initABTest, getABVariant, type ABVariant } from '@/lib/ab-test'
+import dynamic from 'next/dynamic'
 import { BlurredPreviewGate } from '@/components/BlurredPreviewGate'
 import { WaitlistCapture } from '@/components/WaitlistCapture'
-import { GrowthChart } from '@/components/GrowthChart'
 import { DimensionsProgress, type DimensionProgressData } from '@/components/DimensionsProgress'
+
+const GrowthChart = dynamic(() => import('@/components/GrowthChart').then(m => m.GrowthChart), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse rounded-lg bg-stone-800" />,
+})
 import { LockedDimensionSection } from '@/components/LockedDimensionSection'
 import { DimensionUnlockCelebration } from '@/components/DimensionUnlockCelebration'
 
@@ -70,7 +77,7 @@ interface RawOutput {
     foundationNarratives?: Record<string, string>
     moralProfile?: string
     coreVirtues?: string[]
-    integrationGuidance?: string
+    moralIntegrationGuidance?: string
   }
 }
 
@@ -384,7 +391,7 @@ export default function ProfilePage() {
               .catch(() => {})
           }
         }
-        posthog.capture('profile_viewed', { profileId: d.profile?.id })
+        track('profile_viewed', { profile_id: d.profile?.id, is_anonymous: false })
       })
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load profile'))
       .finally(() => setLoading(false))
@@ -562,10 +569,30 @@ export default function ProfilePage() {
   const handleShare = async () => {
     const token = getToken()
     if (!token || !profile) return
-    // If share link was pre-generated (e.g. on ?new=1 arrival), show modal immediately
-    if (shareUrl) {
+    const archetype = profile.archetypes?.[0] ?? 'Psychological Profile'
+
+    const doShare = async (url: string) => {
+      // On mobile, use native share sheet
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        try {
+          await navigator.share({
+            title: `${archetype} — My Psychological Profile`,
+            text: `I just discovered my psychological profile on Innermind — I'm a ${archetype}. What are you?`,
+            url,
+          })
+          posthog.capture('share_native', { profileId: profile.id, archetype })
+          return
+        } catch {
+          // User cancelled or share failed — fall through to modal
+        }
+      }
       setShowShareModal(true)
-      posthog.capture('share_modal_opened', { profileId: profile.id, archetype: profile.archetypes?.[0] })
+      posthog.capture('share_modal_opened', { profileId: profile.id, archetype })
+    }
+
+    // If share link was pre-generated (e.g. on ?new=1 arrival), share immediately
+    if (shareUrl) {
+      await doShare(shareUrl)
       return
     }
     setSharing(true)
@@ -577,8 +604,7 @@ export default function ProfilePage() {
       )
       setShareUrl(data.profile.shareUrl)
       setShareToken(data.profile.shareToken)
-      setShowShareModal(true)
-      posthog.capture('share_modal_opened', { profileId: profile?.id, archetype: profile?.archetypes?.[0] })
+      await doShare(data.profile.shareUrl)
     } finally {
       setSharing(false)
     }
@@ -1666,12 +1692,13 @@ export default function ProfilePage() {
               const token = shareUrl.split('/p/')[1]
               return token ? (
                 <div className="mb-4 overflow-hidden rounded-xl border border-stone-700">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={`/p/${token}/opengraph-image`}
                     alt="Share card preview"
+                    width={1200}
+                    height={630}
                     className="w-full"
-                    style={{ aspectRatio: '1200/630' }}
+                    unoptimized
                   />
                   <div className="bg-stone-800/60 px-3 py-1.5">
                     <p className="text-xs text-stone-500">This card appears when you share the link</p>

@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button'
 import { getToken } from '@/lib/auth'
 
 const NAV_LINKS = [
+  { label: 'Free Quizzes', href: '/quizzes' },
   { label: 'About', href: '/about' },
-  { label: 'For Professionals', href: '/for-professionals' },
   { label: 'Compare', href: '/compare' },
-  { label: 'Journal', href: '/journal' },
-  { label: 'Insights', href: '/insights' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Pricing', href: '/upgrade' },
 ]
 
 export function Header() {

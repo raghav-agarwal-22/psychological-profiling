@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "tsx src/scripts/test-stripe-e2e.ts",
     "db:generate": "pnpm --filter @innermind/db db:generate",
     "db:migrate": "pnpm --filter @innermind/db db:migrate",
     "db:push": "pnpm --filter @innermind/db db:push"

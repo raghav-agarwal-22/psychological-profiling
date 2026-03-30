@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { api } from '@/lib/api'
@@ -276,7 +276,7 @@ async function downloadProfilePDF(profileId: string, token: string, archetypes: 
   URL.revokeObjectURL(url)
 }
 
-export default function DashboardPage() {
+function DashboardInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [sessions, setSessions] = useState<SessionSummary[]>([])
@@ -317,6 +317,14 @@ export default function DashboardPage() {
     setShowWelcome(false)
   }
 
+  // Referral invite banner
+  const [showInviteBanner, setShowInviteBanner] = useState(false)
+
+  function dismissInviteBanner() {
+    localStorage.setItem('innermind_invite_banner_dismissed', '1')
+    setShowInviteBanner(false)
+  }
+
   // Context tags state: which session has the tag picker open
   const [tagPickerOpenFor, setTagPickerOpenFor] = useState<string | null>(null)
   const [sessionTags, setSessionTags] = useState<Record<string, string[]>>({})
@@ -325,6 +333,15 @@ export default function DashboardPage() {
   useEffect(() => {
     if (searchParams.get('upgraded') === '1') {
       track('upgrade_completed')
+      track('payment_success', { tier: 'pro' })
+      const referredByCode = localStorage.getItem('innermind_was_referred')
+      if (referredByCode) {
+        track('referral_converted', { code: referredByCode })
+        localStorage.removeItem('innermind_was_referred')
+      }
+      if (!localStorage.getItem('innermind_invite_banner_dismissed')) {
+        setShowInviteBanner(true)
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -520,6 +537,24 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
+      {/* Referral invite banner — shown after upgrade */}
+      {showInviteBanner && (
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4">
+          <p className="text-sm text-stone-200">
+            🎁 You&apos;re on Pro! Share with friends and earn 1 month free for each signup →{' '}
+            <Link href="/invite" className="font-semibold text-amber-400 underline underline-offset-2 hover:text-amber-300">
+              Invite friends
+            </Link>
+          </p>
+          <button
+            onClick={dismissInviteBanner}
+            className="shrink-0 text-stone-500 hover:text-stone-300 transition-colors"
+            aria-label="Dismiss banner"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       {/* Onboarding welcome modal */}
       {showWelcome && (
         <div
@@ -1207,5 +1242,13 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-[60vh] items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-2 border-stone-600 border-t-amber-500" /></div>}>
+      <DashboardInner />
+    </Suspense>
   )
 }

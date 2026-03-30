@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && pnpm --filter @innermind/db build && pnpm --filter @innermind/web build",
+  "buildCommand": "cd ../.. && pnpm --filter @innermind/db db:generate && pnpm --filter @innermind/db build && pnpm --filter @innermind/web build",
   "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "framework": "nextjs"

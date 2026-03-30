@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Pricing — Innermind',
-  description: 'Free, Essential ($9/mo), and Pro ($19/mo) plans. Unlock your full psychological profile.',
+  description: 'Free and Pro ($19/mo or $12/mo annual) plans. Six psychology assessments, AI-synthesised portrait, coaching, and growth tracking.',
 }
 
 export default function PricingPage() {

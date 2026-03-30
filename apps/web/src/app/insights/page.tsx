@@ -3,9 +3,14 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { api } from '@/lib/api'
 import { getToken } from '@/lib/auth'
-import { GrowthChart } from '@/components/GrowthChart'
+
+const GrowthChart = dynamic(() => import('@/components/GrowthChart').then(m => m.GrowthChart), {
+  ssr: false,
+  loading: () => <div className="h-64 animate-pulse rounded-lg bg-stone-800" />,
+})
 
 interface DimensionScore {
   normalized: number

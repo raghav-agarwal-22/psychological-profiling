@@ -1,9 +1,8 @@
 [build]
-builder = "NIXPACKS"
-buildCommand = "cd ../.. && pnpm install --frozen-lockfile && pnpm --filter @innermind/db build && pnpm --filter @innermind/api build"
+builder = "DOCKERFILE"
+dockerfilePath = "../../Dockerfile"
 
 [deploy]
-startCommand = "pnpm --filter @innermind/db migrate:deploy && node apps/api/dist/index.js"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"

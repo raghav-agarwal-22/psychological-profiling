@@ -65,7 +65,7 @@ export async function assessmentRoutes(server: FastifyInstance) {
     }
 
     // Essential+ assessment types (Values, Attachment, Enneagram, Light & Dark Triad, Moral Foundations)
-    const ESSENTIAL_TYPES: AssessmentType[] = [
+    const ESSENTIAL_TYPES: Array<(typeof AssessmentType)[keyof typeof AssessmentType]> = [
       AssessmentType.VALUES_INVENTORY,
       AssessmentType.ATTACHMENT_STYLE,
       AssessmentType.ENNEAGRAM,

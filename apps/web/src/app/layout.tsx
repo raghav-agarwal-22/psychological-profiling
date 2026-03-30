@@ -8,7 +8,12 @@ import { PWAInit } from '@/components/pwa/PWAInit'
 import { PostHogPageview } from '@/components/PostHogProvider'
 import { GoogleTagManagerHead, GoogleTagManagerBody } from '@/components/GoogleTagManager'
 import { MetaPixelScript } from '@/components/MetaPixel'
+import dynamic from 'next/dynamic'
 import { ConversionTracking } from '@/components/ConversionTracking'
+
+const ExitIntentModal = dynamic(() => import('@/components/ExitIntentModal').then(m => m.ExitIntentModal), {
+  ssr: false,
+})
 
 const inter = Inter({
   subsets: ['latin'],
@@ -125,6 +130,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ExitIntentModal />
       </body>
     </html>
   )

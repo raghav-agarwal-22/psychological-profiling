@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllSlugs, getPost, getRelatedPosts } from '../posts'
+import { EmailCaptureBlock } from '@/components/EmailCaptureBlock'
 
 // Blog posts are statically generated at build time; revalidate daily for new posts
 export const revalidate = 86400
@@ -85,31 +86,31 @@ interface RelatedAssessment {
 
 const relatedAssessments: Record<string, RelatedAssessment> = {
   'what-is-big-five-personality-test': {
-    label: 'Take the assessment',
+    label: 'Take the free Big Five test',
     title: 'Measure your Big Five personality',
-    description: 'Get your OCEAN scores across all five dimensions in 10–15 minutes.',
-    href: '/assessment',
+    description: 'Get your OCEAN scores across all five dimensions in 10–15 minutes. Free, instant results.',
+    href: '/quiz/big-five',
     icon: '◎',
   },
   'big-five-vs-mbti': {
-    label: 'Take the assessment',
+    label: 'Take the free Big Five test',
     title: 'Try the science-backed alternative',
-    description: 'Take the Big Five — the gold standard of personality science — and see how it compares.',
-    href: '/assessment',
+    description: 'Take the Big Five — the gold standard of personality science — and see how it compares to MBTI.',
+    href: '/quiz/big-five',
     icon: '◎',
   },
   'attachment-styles-explained': {
-    label: 'Take the assessment',
+    label: 'Take the free attachment test',
     title: 'Discover your attachment style',
-    description: 'Understand your relational blueprint in just 3–5 minutes.',
-    href: '/assessment',
+    description: 'Are you secure, anxious, avoidant, or disorganized? Find out in 5 minutes — free, instant results.',
+    href: '/quiz/attachment-style',
     icon: '◉',
   },
   'enneagram-vs-big-five': {
-    label: 'Take both assessments',
+    label: 'Take both free tests',
     title: 'Get your Enneagram type and Big Five scores',
-    description: 'Innermind gives you both — and synthesizes them into one coherent portrait.',
-    href: '/assessment',
+    description: 'Innermind gives you both free — and synthesizes them into one coherent portrait.',
+    href: '/quiz/enneagram',
     icon: '◑',
   },
   'the-12-jungian-archetypes': {
@@ -127,38 +128,38 @@ const relatedAssessments: Record<string, RelatedAssessment> = {
     icon: '◈',
   },
   'enneagram-attachment-style': {
-    label: 'Take both assessments',
+    label: 'Take both free tests',
     title: 'Get your Enneagram type and attachment style',
-    description: 'See how your core type and relational patterns interact — synthesized by AI.',
-    href: '/assessment',
+    description: 'Take the free Enneagram quiz and attachment style test — then see how they interact.',
+    href: '/quiz/enneagram',
     icon: '◑',
   },
   'dark-triad-personality-traits': {
-    label: 'Take your free assessment',
-    title: 'Understand your full personality profile',
-    description: 'Get your Big Five scores (including Agreeableness facets) alongside values, attachment style, and Jungian archetypes — synthesized by AI.',
-    href: '/assessment',
+    label: 'Take the free Dark Triad test',
+    title: 'Measure your Dark Triad traits',
+    description: 'Get your narcissism, Machiavellianism, and psychopathy scores — science-based, free assessment.',
+    href: '/quiz/dark-triad',
     icon: '◎',
   },
   'introvert-vs-extrovert': {
-    label: 'Take your free assessment',
+    label: 'Take the free Big Five test',
     title: 'Get your full Extraversion profile',
-    description: 'Discover where you fall on all six Extraversion facets — alongside four other validated frameworks.',
-    href: '/assessment',
+    description: 'Discover exactly where you fall on the introvert–extrovert spectrum with your OCEAN scores.',
+    href: '/quiz/big-five',
     icon: '◎',
   },
   'shadow-work-jung': {
     label: 'Discover your archetypes',
     title: 'Explore your Jungian archetype profile',
-    description: 'Your psychological portrait includes Jungian archetypes alongside Big Five, values, attachment style, and Enneagram — pointing toward the patterns most worth examining.',
+    description: 'Your psychological portrait includes Jungian archetypes alongside Big Five, values, attachment style, and Enneagram.',
     href: '/assessment',
     icon: '◈',
   },
   'personality-and-career': {
-    label: 'Take your free assessment',
-    title: 'Map your personality to your career strengths',
-    description: 'Get your Big Five traits, Schwartz values, and attachment style — with an AI synthesis that identifies your natural career orientations.',
-    href: '/assessment',
+    label: 'Take the free DISC test',
+    title: 'Map your behavioral style to career strengths',
+    description: 'Get your DISC profile — Dominance, Influence, Steadiness, Compliance — and see how it shapes your work style.',
+    href: '/quiz/disc',
     icon: '◎',
   },
   'neuroscience-of-personality': {
@@ -166,6 +167,76 @@ const relatedAssessments: Record<string, RelatedAssessment> = {
     title: 'Discover your biological personality substrate',
     description: 'Five validated frameworks synthesized into one portrait — your starting point for understanding who you are.',
     href: '/assessment',
+    icon: '◎',
+  },
+  'free-big-five-personality-test-online': {
+    label: 'Take the free Big Five test',
+    title: 'Get your OCEAN scores in 10 minutes',
+    description: 'Measure your Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — free, instant results.',
+    href: '/quiz/big-five',
+    icon: '◎',
+  },
+  'free-enneagram-test-with-results': {
+    label: 'Take the free Enneagram test',
+    title: 'Find your Enneagram type instantly',
+    description: 'Discover your core type, wing, and growth direction — no email required.',
+    href: '/quiz/enneagram',
+    icon: '◑',
+  },
+  'free-16-personality-types-test': {
+    label: 'Take the free 16 types test',
+    title: 'Discover your MBTI-style type',
+    description: 'Find out if you are INTJ, ENFP, INFJ, or one of the other 13 types — free with instant results.',
+    href: '/quiz/16-types',
+    icon: '◎',
+  },
+  'free-dark-triad-test-online': {
+    label: 'Take the free Dark Triad test',
+    title: 'Measure your Dark Triad traits',
+    description: 'Get your narcissism, Machiavellianism, and psychopathy scores — science-based, free assessment.',
+    href: '/quiz/dark-triad',
+    icon: '◈',
+  },
+  'free-attachment-style-test-online': {
+    label: 'Take the free attachment test',
+    title: 'Discover your attachment style',
+    description: 'Are you secure, anxious, avoidant, or disorganized? Find out in 5 minutes — free, instant results.',
+    href: '/quiz/attachment-style',
+    icon: '◉',
+  },
+  'which-personality-test-is-most-accurate': {
+    label: 'Start with the most accurate test',
+    title: 'Take the Big Five — the gold standard',
+    description: 'The most scientifically validated personality test. Get your scores across five dimensions in 10 minutes.',
+    href: '/quiz/big-five',
+    icon: '◎',
+  },
+  'personality-test-for-self-discovery': {
+    label: 'Begin your self-discovery',
+    title: 'Take five assessments, get one portrait',
+    description: 'Big Five, Enneagram, attachment style, 16 types, and values — synthesized by AI into one psychological portrait.',
+    href: '/assessment',
+    icon: '◎',
+  },
+  'enneagram-vs-16-personalities': {
+    label: 'Take both tests',
+    title: 'Get your Enneagram type and 16 types result',
+    description: 'See how your motivations (Enneagram) and cognitive preferences (16 types) interact.',
+    href: '/quiz/enneagram',
+    icon: '◑',
+  },
+  'best-free-personality-tests-2026': {
+    label: 'Take the #1 ranked test',
+    title: 'Start with the Big Five personality test',
+    description: 'Ranked #1 for scientific accuracy — get your OCEAN scores free in 10 minutes.',
+    href: '/quiz/big-five',
+    icon: '◎',
+  },
+  'how-to-find-your-personality-type': {
+    label: 'Start finding your type',
+    title: 'Take the Big Five as your first step',
+    description: 'The recommended starting point — measure your five fundamental personality dimensions, then build from there.',
+    href: '/quiz/big-five',
     icon: '◎',
   },
 }
@@ -251,6 +322,9 @@ export default function BlogPostPage({ params }: Props) {
         className="prose-invert"
         dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
       />
+
+      {/* Email capture */}
+      <EmailCaptureBlock variant="blog" />
 
       {/* Related assessment CTA */}
       {related && (

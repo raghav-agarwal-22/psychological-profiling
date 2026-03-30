@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import Stripe from 'stripe'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
-import { sendTrialEndingSoonEmail } from '../services/email.js'
+import { sendTrialEndingSoonEmail, sendPaymentFailedEmail } from '../services/email.js'
 import { logAffiliateCommission } from './affiliates.js'
 import { suppressDripSequence } from '../lib/drip-sequence.js'
 import { sendAndRecordProWelcome } from '../lib/pro-onboarding.js'
@@ -33,7 +33,7 @@ function tierFromPriceId(priceId: string): { tier: 'pro'; interval: 'monthly' | 
   return null
 }
 
-const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
+const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com'
@@ -305,7 +305,7 @@ export async function billingRoutes(server: FastifyInstance) {
       const attemptCount = (invoice as unknown as Record<string, unknown>)['attempt_count'] as number | undefined
       const user = await prisma.user.findUnique({
         where: { stripeCustomerId: customerId },
-        select: { id: true },
+        select: { id: true, email: true, name: true },
       })
       if (user) {
         await capturePosthogEvent(user.id, 'payment_failed', {
@@ -313,6 +313,10 @@ export async function billingRoutes(server: FastifyInstance) {
           attempt_count: attemptCount ?? null,
           customer_id: customerId,
         })
+        // Send dunning email — notify user their payment failed and prompt card update
+        sendPaymentFailedEmail(user.email, user.name, attemptCount ?? 1).catch((err) =>
+          server.log.warn({ err }, '[billing] Failed to send payment_failed dunning email'),
+        )
       }
     }
 

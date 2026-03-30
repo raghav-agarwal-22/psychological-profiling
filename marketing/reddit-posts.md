@@ -384,3 +384,241 @@ What's the current consensus here on Conscientiousness malleability? Curious whe
 
 Post Wave 2 starting 7 days after Wave 1 launches.
 
+---
+
+## Wave 3 Posts
+
+*Posts 8–10: poll format, career angle, myth-busting. Run 14 days after Wave 1.*
+
+---
+
+### POST 8: r/personalitytypes — POLL: Which framework gave you the most useful self-insight?
+
+**Target:** r/personalitytypes
+**Format:** Poll + discussion starter — drives high comment volume
+**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=personalitytypes-poll`
+**Best time to post:** Thursday or Friday, 7–9pm EST
+**Flair:** Poll / Discussion
+
+---
+
+**Title:** [POLL] Which personality framework gave you the most genuinely useful self-insight?
+
+**Body:**
+
+Curious what this community actually finds useful vs. just interesting.
+
+**Poll options:**
+- MBTI / Jungian functions
+- Big Five (OCEAN)
+- Enneagram
+- Attachment Style
+- Schwartz Values / motivational theory
+- None of them — it's all pseudoscience
+- All of them equally
+
+I'll share my answer in comments.
+
+My hypothesis going in: MBTI wins for community engagement (it's the vocabulary most people share here) but Attachment Style wins for actually changing behavior. People can recite their four letters for a decade without changing anything; understanding anxious attachment tends to surface patterns you can't unsee.
+
+What's your experience?
+
+---
+
+*[I built Innermind, which runs all five validated frameworks together and generates an AI synthesis. Genuine disclosure — curious what this community has found, independent of that.]*
+
+---
+
+### POST 9: r/selfimprovement — "Your personality type predicts your career ceiling. Here's the research."
+
+**Target:** r/selfimprovement
+**Format:** Career + personality — high-traffic angle
+**UTM link:** `https://innermind.app/blog/big-five-personality-career-success?utm_source=reddit&utm_medium=community&utm_campaign=selfimp-career`
+**Best time to post:** Monday, 8–10am EST
+**Flair:** Career / Psychology
+
+---
+
+**Title:** Your Big Five scores predict your career trajectory better than your resume. Here's what the research says.
+
+**Body:**
+
+This isn't motivational poster stuff — the correlation data is real.
+
+**What predicts career outcomes (meta-analytic summary):**
+
+**Conscientiousness (r ≈ 0.22–0.28 with job performance):** The most consistent predictor across every job type studied. High-C people show up, follow through, and accumulate advantages through reliability. The compounding effect over 10 years is significant.
+
+**Emotional Stability (low Neuroticism):** Predicts staying power under pressure. High-N individuals perform more variably — excellent in low-stress conditions, significantly worse under threat. Roles with high stakes + low support tend to filter them out.
+
+**Extraversion:** Specifically predicts success in sales, management, and influence roles (r ≈ 0.18). Not correlated with technical roles. Introversion is genuinely advantageous in analytical, research, and deep-work contexts.
+
+**Openness:** Predicts performance in creative roles, learning speed in training programs, and entrepreneurial behavior. Does NOT correlate with job performance in conventional roles — can actually predict dissatisfaction and turnover.
+
+**The career application:**
+
+Stop trying to optimize for imaginary strengths. If you're high-N and in a high-stakes role with no support structure, the data says you're burning faster than your peers. You're not broken — you're in the wrong environment.
+
+If you're high-C and low-O, you're most likely to thrive in roles with clear structure, mastery tracks, and consistent process. Startup chaos isn't for you — and that's information, not failure.
+
+**The piece nobody tells you:**
+
+Your Conscientiousness score is partially developable. It's not fixed at birth — it rises with age on average, and rises faster with intentional behavioral systems. Atomic Habits is essentially a Conscientiousness training manual, whether James Clear frames it that way or not.
+
+Know your actual profile and build your career around it. Stop building a career based on who you think you should be.
+
+What's your Big Five rough profile and how does it match your career situation?
+
+---
+
+*[I run Innermind, a free multi-framework psychological profiling tool. The Big Five career research stands independently of that — I've linked to the Innermind blog writeup if you want citations. Disclosing affiliation.]*
+
+---
+
+### POST 10: r/mbti — "Myth-busting: 5 things the MBTI community gets wrong"
+
+**Target:** r/mbti
+**Format:** Myth-busting — high engagement, naturally generates replies
+**UTM link:** `https://innermind.app/blog/mbti-myths?utm_source=reddit&utm_medium=community&utm_campaign=mbti-myths`
+**Best time to post:** Tuesday or Wednesday, 7–9pm EST
+**Flair:** Discussion / Meta
+
+---
+
+**Title:** 5 things the MBTI community commonly gets wrong (and one thing it gets very right)
+
+**Body:**
+
+Not a "MBTI is fake" post — I find the framework genuinely useful. But there are a few persistent myths that make it less useful than it could be.
+
+**Myth 1: Your type is fixed forever.**
+
+Your *cognitive preferences* are relatively stable. Your *development* is not. A well-developed INTJ in their 40s engages Introverted Feeling in ways that would be unrecognizable to their 22-year-old self. Saying "I'm INTJ therefore I don't understand emotions" is using type as an excuse to stop developing, not as a description of reality.
+
+**Myth 2: Type explains relationship compatibility.**
+
+MBTI predicts communication style. It does not predict whether you'll feel safe with someone. Attachment Style is the better predictor of relationship success. An ENFP with anxious attachment will be exhausting to partner with regardless of MBTI compatibility. An ISTJ with secure attachment will be more reliably present than the "compatible" type who's avoidant.
+
+**Myth 3: The cognitive function stack is the official MBTI model.**
+
+The official MBTI instrument does not use the cognitive function hierarchy (Ni-Te-Fi-Se for INTJ, etc.). The function stacks come from Isabel Myers' own theoretical extrapolation of Jung — they're widely used in the community but are not validated in the same way the MBTI preference scales are. Using them is fine, but they're fan theory at the level of empirical rigor, not canonical.
+
+**Myth 4: "I tested as INTJ but don't relate to the description" = mistyped.**
+
+Or: the description is wrong for you. MBTI type descriptions are averages and stereotypes. If you score INTJ but your Big Five shows low Conscientiousness and high Agreeableness, the canonical "ruthlessly efficient INTJ" description won't fit. That's not mistyping — it's that type descriptions flatten real variation.
+
+**Myth 5: Knowing your type is the goal.**
+
+The goal is building a predictive model of your own behavior. The type is the entry point. The useful work is: understanding what *specifically* triggers your inferior function, what *specifically* your shadow behavior looks like, what *specifically* you do under stress that you don't recognize in yourself. The four letters are the beginning of the inquiry, not the answer.
+
+**What MBTI gets very right:**
+
+It gives millions of people a vocabulary for cognitive difference that they'd otherwise have no language for. The relief of "I'm not broken, I'm just Introverted" is real and worth something. The community that's built up around it has done more to normalize psychological diversity than almost any other lay framework.
+
+What would you add to the myth-busting list?
+
+---
+
+*[For what it's worth — I run Innermind, which synthesizes MBTI/Jungian archetypes with four other frameworks. The multi-framework context is part of why I care about these distinctions. Disclosing affiliation.]*
+
+---
+
+## Complete 14-Day Posting Schedule (Phase 21 Track A)
+
+| Day | Post | Subreddit | Time (EST) | Priority |
+|-----|------|-----------|------------|----------|
+| Day 1 (Mon) | POST 4: Personality test treadmill | r/selfimprovement | 8am | Wave 1 |
+| Day 2 (Tue) | POST 1: INFJ + 4 frameworks | r/mbti | 8pm | Wave 1 |
+| Day 3 (Wed) | POST 2: Multi-framework research | r/psychology | 10am | Wave 1 |
+| Day 4 (Thu) | POST 3: Enneagram + Attachment | r/enneagram | 8pm | Wave 1 |
+| Day 5 (Fri) | Comment seeding only | All | All day | Engagement |
+| Day 7 (Sun) | — | — | — | Rest |
+| Day 8 (Mon) | POST 9: Big Five + Career | r/selfimprovement | 8am | Wave 2 |
+| Day 9 (Tue) | POST 6: INTJ vs INTP | r/mbti | 8pm | Wave 2 |
+| Day 10 (Wed) | POST 7: Conscientiousness | r/psychology | 10am | Wave 2 |
+| Day 11 (Thu) | POST 5: Relationship patterns | r/selfimprovement | 9am | Wave 2 |
+| Day 12 (Fri) | Comment seeding only | All | All day | Engagement |
+| Day 13 (Sat) | POST 8: Poll — best framework | r/personalitytypes | 7pm | Wave 3 |
+| Day 14 (Sun) | POST 10: MBTI myth-busting | r/mbti | 7pm | Wave 3 |
+
+**Rule:** Never post twice on the same subreddit within 48 hours.
+
+---
+
+## Comment Engagement Guide
+
+### Before Posting (Day -1 to 0)
+- Spend 30–45 min seeding comments in existing threads in the target subreddit
+- Goal: 3–5 thoughtful comments to warm up visibility and establish credibility
+- Use the comment templates in `reddit-community-seeding-inn260.md`
+
+### After Posting (First 2 Hours — Critical Window)
+- **0–15 min:** Add your own clarifying comment below the post (adds context, signals you're engaged)
+- **15–60 min:** Reply to every comment, even if brief ("Great point — the X/Y distinction you're drawing is exactly right")
+- **60–120 min:** Add any clarifying edits to the post body if questions reveal ambiguity
+- **Goal:** 10+ comment replies from OP in the first 2 hours drives Reddit ranking algorithm
+
+### Day 2 Check-In
+- Reply to any new comments that came in overnight
+- If post has 50+ upvotes: cross-post the Reddit link (not full content) to the Personality Database Discord
+
+### Comment Tone Rules
+- Never get defensive if someone challenges the Innermind affiliation
+- If challenged: "Fair — here's the disclosure upfront, and the point stands regardless of the tool"
+- Never argue about whether MBTI is valid — acknowledge both sides, stay curious
+- If a comment is hostile, don't engage — let upvotes and other users handle it
+
+---
+
+## CTA Strategy
+
+### Core Principle
+**Never lead with the product. Lead with the insight. The CTA is a footnote.**
+
+### CTA Placement Rules
+
+1. **Homepage links** — only in the disclosure line at the end, never in-body
+2. **Blog post links** — acceptable mid-post when a specific article adds genuine value (e.g., linking to the INTJ vs INTP blog post in a thread about those types)
+3. **Never link to signup/pricing pages** — always link to the homepage or a blog post
+4. **UTM tracking on all links** — so we know which post drove signups
+
+### Disclosure Wording (use one of these)
+- *"Disclosure: I'm affiliated with Innermind, but the assessments are free."*
+- *"Full disclosure: I run Innermind. The insight above stands independently."*
+- *"[Affiliated with Innermind — disclosing upfront]"*
+
+### When to Add a CTA vs. No CTA
+| Post Type | CTA? | Format |
+|-----------|------|--------|
+| Educational explainer | Soft link | Blog post URL in final paragraph |
+| Personal story | Disclosure line only | Homepage URL |
+| Poll/discussion | No CTA | Just disclosure in first reply comment |
+| Myth-busting | Soft link | Blog post if relevant, else homepage |
+
+### What Makes a Reddit CTA Work
+- It's honest (disclosed)
+- It adds value (links to content, not just signup)
+- It's brief (1 sentence, not a pitch)
+- It's at the end (content first, product last)
+
+---
+
+## Performance Tracker
+
+| Post | Subreddit | Posted Date | Upvotes (24h) | Upvotes (72h) | Comments | UTM Clicks | Signups |
+|------|-----------|-------------|---------------|---------------|----------|------------|---------|
+| POST 1: INFJ + 4 frameworks | r/mbti | — | — | — | — | — | — |
+| POST 2: Multi-framework research | r/psychology | — | — | — | — | — | — |
+| POST 3: Enneagram + Attachment | r/enneagram | — | — | — | — | — | — |
+| POST 4: Personality treadmill | r/selfimprovement | — | — | — | — | — | — |
+| POST 5: Relationship patterns | r/selfimprovement | — | — | — | — | — | — |
+| POST 6: INTJ vs INTP | r/mbti | — | — | — | — | — | — |
+| POST 7: Conscientiousness | r/psychology | — | — | — | — | — | — |
+| POST 8: Poll — best framework | r/personalitytypes | — | — | — | — | — | — |
+| POST 9: Big Five + Career | r/selfimprovement | — | — | — | — | — | — |
+| POST 10: MBTI myth-busting | r/mbti | — | — | — | — | — | — |
+
+**PostHog filter:** `utm_source=reddit AND utm_medium=community`
+**Review cadence:** 24h and 72h after each post
+**Target:** 500 combined upvotes, 100 signups
+
