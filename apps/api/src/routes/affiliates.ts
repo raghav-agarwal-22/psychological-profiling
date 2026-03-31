@@ -5,7 +5,7 @@ import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
-const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 
 const COMMISSION_RATE = 0.20 // 20%
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'

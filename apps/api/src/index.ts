@@ -49,7 +49,7 @@ const server = Fastify({
 await server.register(cors, {
   origin:
     process.env.NODE_ENV === 'production'
-      ? [process.env.WEB_URL ?? 'https://innermind.app']
+      ? [process.env.WEB_URL ?? 'https://innermindhealing.com']
       : true,
   credentials: true,
 })
