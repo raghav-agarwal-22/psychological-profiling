@@ -243,15 +243,12 @@ export default async function HomePage() {
           </p>
           <div className="grid gap-10 sm:grid-cols-3">
             {HOW_IT_WORKS.map((step, i) => (
-              <div key={step.title} className="relative text-center">
+              <div key={step.title} className="relative">
                 {i < HOW_IT_WORKS.length - 1 && (
-                  <div className="absolute top-6 left-[calc(50%+2.5rem)] hidden h-px w-[calc(100%-5rem)] bg-stone-800 sm:block" />
+                  <div className="absolute top-5 left-[calc(50%+2.5rem)] hidden h-px w-[calc(100%-5rem)] bg-stone-800 sm:block" />
                 )}
-                <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-stone-700 bg-stone-900 text-xl text-stone-300">
-                  {step.icon}
-                </div>
-                <p className="mb-1 text-[10px] uppercase tracking-widest text-amber-500/70">
-                  Step {i + 1}
+                <p className="mb-3 font-serif text-5xl font-light text-stone-800 leading-none">
+                  {String(i + 1).padStart(2, '0')}
                 </p>
                 <h3 className="mb-2 font-serif text-lg text-stone-100">{step.title}</h3>
                 <p className="text-sm text-stone-500 leading-relaxed">{step.description}</p>
