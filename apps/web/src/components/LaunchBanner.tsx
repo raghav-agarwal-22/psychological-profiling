@@ -63,7 +63,7 @@ export function LaunchBanner() {
       <button
         onClick={() => setDismissed(true)}
         aria-label="Dismiss banner"
-        className="shrink-0 text-stone-500 hover:text-stone-300"
+        className="shrink-0 flex items-center justify-center w-8 h-8 -mr-1 rounded-lg text-stone-500 hover:text-stone-300 hover:bg-stone-800/60 transition-colors"
       >
         ✕
       </button>
