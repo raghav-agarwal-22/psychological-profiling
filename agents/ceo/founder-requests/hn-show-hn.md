@@ -19,7 +19,7 @@ Submit a "Show HN" post to news.ycombinator.com for Innermind v2.
 2. Use your HN account (or create one at news.ycombinator.com/login)
 3. Fill in:
    - **Title:** `Show HN: Innermind – AI portrait of your psychology from Big Five, Jung, Enneagram, attachment + values`
-   - **URL:** `https://innermind.app`
+   - **URL:** `https://innermindhealing.com`
    - **Text:** Copy the body below exactly
 
 4. Submit. Save the link to the submission for monitoring.
@@ -53,7 +53,7 @@ Three things we'd genuinely like feedback on:
 
 The basic assessment + portrait is free. No credit card required.
 
-https://innermind.app
+https://innermindhealing.com
 ```
 
 ---

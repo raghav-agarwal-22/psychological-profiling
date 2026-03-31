@@ -496,7 +496,7 @@ function UpgradeContent() {
             },
             {
               q: 'Do you offer refunds?',
-              a: "If you're not satisfied within the first 14 days of a paid subscription, contact us at support@innermind.app and we'll issue a full refund — no questions asked.",
+              a: "If you're not satisfied within the first 14 days of a paid subscription, contact us at support@innermindhealing.com and we'll issue a full refund — no questions asked.",
             },
           ].map(({ q, a }) => (
             <details key={q} className="group">
@@ -512,7 +512,7 @@ function UpgradeContent() {
           More questions? See our full{' '}
           <Link href="/faq" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">FAQ page</Link>
           {' '}or email{' '}
-          <a href="mailto:support@innermind.app" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">support@innermind.app</a>
+          <a href="mailto:support@innermindhealing.com" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">support@innermindhealing.com</a>
         </p>
       </div>
 
@@ -556,7 +556,7 @@ const productSchema = {
   '@type': 'Product',
   name: 'Innermind Pro',
   description: 'All 6 psychological assessment frameworks synthesized by AI into one coherent portrait. Big Five, Jungian Archetypes, Attachment Style, Enneagram, Values Inventory, and Light/Dark Triad.',
-  url: 'https://innermind.app/upgrade',
+  url: 'https://innermindhealing.com/upgrade',
   brand: { '@type': 'Brand', name: 'Innermind' },
   offers: [
     {
@@ -565,7 +565,7 @@ const productSchema = {
       price: '19.00',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
-      url: 'https://innermind.app/upgrade',
+      url: 'https://innermindhealing.com/upgrade',
       priceValidUntil: '2027-01-01',
     },
     {
@@ -574,7 +574,7 @@ const productSchema = {
       price: '149.00',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
-      url: 'https://innermind.app/upgrade',
+      url: 'https://innermindhealing.com/upgrade',
       priceValidUntil: '2027-01-01',
     },
   ],

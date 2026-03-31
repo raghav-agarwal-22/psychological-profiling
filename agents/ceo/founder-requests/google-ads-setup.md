@@ -10,7 +10,7 @@
 ### Step 1: Google Tag Manager
 1. Go to https://tagmanager.google.com/
 2. Create an account → name it `Innermind`
-3. Create a **Web** container → name it `innermind.app`
+3. Create a **Web** container → name it `innermindhealing.com`
 4. Copy the **Container ID** (format: `GTM-XXXXXXX`)
 
 ### Step 2: Google Ads

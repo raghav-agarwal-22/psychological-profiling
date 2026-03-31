@@ -103,7 +103,7 @@ export default function ForCoachesPage() {
             The only ask: use it with 3+ clients and tell us what you think.
           </p>
           <a
-            href="mailto:professionals@innermind.app?subject=Early Advocate Application&body=Hi Rishi,%0A%0AMy name is [name] and I work as a [coach/therapist].%0A%0AA bit about my practice: [description]%0A%0AI%27d love to try Innermind with my clients.%0A%0AThanks"
+            href="mailto:professionals@innermindhealing.com?subject=Early Advocate Application&body=Hi Rishi,%0A%0AMy name is [name] and I work as a [coach/therapist].%0A%0AA bit about my practice: [description]%0A%0AI%27d love to try Innermind with my clients.%0A%0AThanks"
             className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-base font-semibold text-stone-950 hover:bg-amber-400"
           >
             Apply for free access →
@@ -227,7 +227,7 @@ export default function ForCoachesPage() {
           </div>
           <p className="mt-8 text-center text-sm text-stone-500">
             Not sure if you qualify?{' '}
-            <a href="mailto:professionals@innermind.app" className="text-amber-500 hover:underline">
+            <a href="mailto:professionals@innermindhealing.com" className="text-amber-500 hover:underline">
               Email us and ask.
             </a>
           </p>
@@ -250,7 +250,7 @@ export default function ForCoachesPage() {
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
-              href="mailto:professionals@innermind.app?subject=Early Advocate Application&body=Hi Rishi,%0A%0AMy name is [name] and I work as a [coach/therapist].%0A%0AA bit about my practice: [description]%0A%0AI%27d love to try Innermind with my clients.%0A%0AThanks"
+              href="mailto:professionals@innermindhealing.com?subject=Early Advocate Application&body=Hi Rishi,%0A%0AMy name is [name] and I work as a [coach/therapist].%0A%0AA bit about my practice: [description]%0A%0AI%27d love to try Innermind with my clients.%0A%0AThanks"
               className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-10 py-4 text-base font-semibold text-stone-950 hover:bg-amber-400"
             >
               Apply for free access →
@@ -264,8 +264,8 @@ export default function ForCoachesPage() {
           </div>
           <p className="mt-6 text-[11px] text-stone-600">
             Questions? Email{' '}
-            <a href="mailto:professionals@innermind.app" className="text-amber-500 hover:underline">
-              professionals@innermind.app
+            <a href="mailto:professionals@innermindhealing.com" className="text-amber-500 hover:underline">
+              professionals@innermindhealing.com
             </a>
           </p>
         </div>

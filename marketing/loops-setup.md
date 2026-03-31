@@ -2,7 +2,7 @@
 
 **Status:** Spec complete — requires founder account creation + Growth Engineer API integration
 **Platform choice:** Loops (over ConvertKit) — SaaS-native, behavior-triggered, Resend-compatible DX
-**Sending domain:** innermind.app (verify in Loops dashboard after account creation)
+**Sending domain:** innermindhealing.com (verify in Loops dashboard after account creation)
 
 ---
 
@@ -20,9 +20,9 @@
 
 ## Step 1: Founder Account Setup (Human required)
 
-1. Go to [loops.so](https://loops.so) → Create account with `team@innermind.app`
+1. Go to [loops.so](https://loops.so) → Create account with `team@innermindhealing.com`
 2. **Add sending domain:**
-   - Settings → Sending Domain → Add `innermind.app`
+   - Settings → Sending Domain → Add `innermindhealing.com`
    - Add the 3 DNS records to your domain registrar (DKIM, DMARC, SPF)
    - Click "Verify" — takes 5–30 min to propagate
 3. **Create API key:** Settings → API → Create key → copy to `.env` as `LOOPS_API_KEY`
@@ -284,7 +284,7 @@ LOOPS_API_KEY=loops_xxxxxxxxxxxxxxxx
 | Who | Task |
 |-----|------|
 | **Founder** | Create Loops account at loops.so |
-| **Founder** | Add `innermind.app` sending domain + DNS records |
+| **Founder** | Add `innermindhealing.com` sending domain + DNS records |
 | **Founder** | Create API key → share with Growth Engineer |
 | **Founder** | Build the 5 sequences in Loops UI (templates in this doc) |
 | **Growth Engineer** | Create `apps/api/src/lib/loops.ts` (spec above) |

@@ -12,8 +12,8 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Innermind',
-  url: 'https://innermind.app',
-  logo: 'https://innermind.app/icon.png',
+  url: 'https://innermindhealing.com',
+  logo: 'https://innermindhealing.com/icon.png',
   description: 'Psychological profiling platform — Big Five, Jungian Archetypes, Attachment Style, Enneagram, Values Inventory, and Light/Dark Triad synthesized by AI into one psychological portrait.',
   sameAs: [],
 }
@@ -22,7 +22,7 @@ const webApplicationSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Innermind',
-  url: 'https://innermind.app',
+  url: 'https://innermindhealing.com',
   description: 'AI-powered psychological profiling — six validated frameworks synthesized into one personal portrait. Take free personality assessments and receive an AI-written analysis of who you are.',
   applicationCategory: 'HealthApplication',
   operatingSystem: 'All',
@@ -49,10 +49,10 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Innermind',
-  url: 'https://innermind.app',
+  url: 'https://innermindhealing.com',
   potentialAction: {
     '@type': 'SearchAction',
-    target: 'https://innermind.app/blog?q={search_term_string}',
+    target: 'https://innermindhealing.com/blog?q={search_term_string}',
     'query-input': 'required name=search_term_string',
   },
 }

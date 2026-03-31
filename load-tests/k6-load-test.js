@@ -3,7 +3,7 @@
  *
  * Usage:
  *   k6 run load-tests/k6-load-test.js
- *   k6 run --env BASE_URL=https://api.innermind.app load-tests/k6-load-test.js
+ *   k6 run --env BASE_URL=https://api.innermindhealing.com load-tests/k6-load-test.js
  *
  * Install k6: brew install k6
  *

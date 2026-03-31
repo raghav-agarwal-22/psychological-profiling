@@ -136,7 +136,7 @@ export default function ForProfessionalsPage() {
               Get started →
             </Link>
             <a
-              href="mailto:professionals@innermind.app"
+              href="mailto:professionals@innermindhealing.com"
               className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-8 py-3.5 text-sm font-medium text-stone-300 hover:border-stone-500 hover:text-stone-100"
             >
               Book a walkthrough
@@ -322,7 +322,7 @@ export default function ForProfessionalsPage() {
           </div>
           <p className="mt-6 text-center text-xs text-stone-600">
             Need a custom plan for a large practice or training program?{' '}
-            <a href="mailto:professionals@innermind.app" className="text-amber-500 hover:underline">
+            <a href="mailto:professionals@innermindhealing.com" className="text-amber-500 hover:underline">
               Contact us
             </a>
           </p>

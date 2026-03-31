@@ -12,9 +12,9 @@ export const metadata: Metadata = {
     title: 'Innermind Reviews — Real Users, Real Insights',
     description:
       "Discover what people are saying about Innermind's AI-synthesized psychological portraits.",
-    url: 'https://innermind.app/reviews',
+    url: 'https://innermindhealing.com/reviews',
   },
-  alternates: { canonical: 'https://innermind.app/reviews' },
+  alternates: { canonical: 'https://innermindhealing.com/reviews' },
 }
 
 async function fetchApprovedTestimonials(): Promise<TestimonialItem[]> {
@@ -98,7 +98,7 @@ export default async function ReviewsPage() {
     name: 'Innermind',
     description:
       'AI-synthesized psychological profiling platform combining Big Five, Enneagram, Jungian Archetypes, Attachment Style, and Values assessments.',
-    url: 'https://innermind.app',
+    url: 'https://innermindhealing.com',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: avgRating,

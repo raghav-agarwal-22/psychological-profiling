@@ -16,7 +16,7 @@
    - **Gallery images/screenshots**: Already prepared in INN-83
    - **Demo GIF**: Already prepared in INN-83
    - **Maker comment**: Already written in INN-145
-   - **Website URL**: Your production URL (e.g. https://innermind.app or your actual domain)
+   - **Website URL**: Your production URL (e.g. https://innermindhealing.com or your actual domain)
 
 4. **Schedule the launch** for a Tuesday or Wednesday at 12:01am PT (when the most hunters are active)
 

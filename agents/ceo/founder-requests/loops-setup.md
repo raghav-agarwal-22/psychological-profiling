@@ -6,8 +6,8 @@
 **Date requested**: 2026-03-21
 
 ## What the founder needs to do
-1. Go to https://loops.so/ and create an account with `team@innermind.app`
-2. Go to **Settings** → **Sending Domain** → add `innermind.app`
+1. Go to https://loops.so/ and create an account with `team@innermindhealing.com`
+2. Go to **Settings** → **Sending Domain** → add `innermindhealing.com`
 3. Add the DNS records Loops provides (DKIM, SPF, return-path) — similar to Resend setup
 4. Go to **Settings** → **API** → create an API key
 5. Copy the key

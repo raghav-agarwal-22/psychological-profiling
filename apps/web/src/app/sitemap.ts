@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllSlugs, posts } from './blog/posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermindhealing.com'
 
   const archetypeSlugs = [
     'the-sage', 'the-explorer', 'the-creator', 'the-hero', 'the-caregiver',

@@ -147,7 +147,7 @@ Free to start. Takes 15 minutes.
 
 You get your full portrait — traits, values, fears, archetypes, attachment patterns — woven into one picture.
 
-→ innermind.app
+→ innermindhealing.com
 
 What's your archetype? Drop it in replies ↓
 ```
@@ -206,7 +206,7 @@ The AI synthesis said: "You've built your identity around being needed. This is 
 
 That's what 5 frameworks together can see that none of them can alone.
 
-Free portrait → innermind.app
+Free portrait → innermindhealing.com
 ```
 
 ### Saturday — Shareable
@@ -226,7 +226,7 @@ The 12 Jungian Archetypes and what they tell you about yourself:
 🌊 Creator — driven by vision, fears inauthenticity
 💪 Everyman — driven by belonging, fears exclusion
 
-Which one are you? Take the free assessment → innermind.app
+Which one are you? Take the free assessment → innermindhealing.com
 ```
 
 ### Sunday — Reflection
@@ -321,11 +321,11 @@ And that's where change begins.
 Track weekly:
 - Follower count (target: +17/week = 500 in 30 days)
 - Profile visits
-- Link clicks to innermind.app
+- Link clicks to innermindhealing.com
 - Assessment starts attributed to Twitter/X (PostHog UTM: `?utm_source=twitter`)
 - Top-performing post format (thread vs standalone vs poll)
 
 UTM links to use in all posts:
 ```
-innermind.app/?utm_source=twitter&utm_medium=organic&utm_campaign=growth
+innermindhealing.com/?utm_source=twitter&utm_medium=organic&utm_campaign=growth
 ```

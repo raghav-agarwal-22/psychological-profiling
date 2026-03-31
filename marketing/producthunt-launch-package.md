@@ -52,7 +52,7 @@ Order matters — each image should build desire and reduce friction.
 
 ### Image 5 — Social / Sharing
 **Title:** "Share your archetype card"
-**What to show:** Beautiful shareable archetype card — "The Sage" or "The Explorer" — with a quote, top traits, and innermind.app watermark. Designed to look like something you'd actually post on Instagram.
+**What to show:** Beautiful shareable archetype card — "The Sage" or "The Explorer" — with a quote, top traits, and innermindhealing.com watermark. Designed to look like something you'd actually post on Instagram.
 **Mood:** Sharable, identity-affirming, social-native
 
 ---
@@ -246,13 +246,13 @@ Prepare these in advance so anyone on the team can respond quickly and consisten
 > The full five-assessment battery takes 8–15 minutes. You can also take assessments one at a time and return for others later.
 
 **Q: Is it free?**
-> Free to start — you can take all five assessments and see your basic profile. The AI-synthesized portrait, growth tracking, AI coach, and reflection journal are on our Pro tier ($9/mo or $79/yr). Coaches and therapists interested in using it with clients should check out innermind.app/for-coaches.
+> Free to start — you can take all five assessments and see your basic profile. The AI-synthesized portrait, growth tracking, AI coach, and reflection journal are on our Pro tier ($9/mo or $79/yr). Coaches and therapists interested in using it with clients should check out innermindhealing.com/for-coaches.
 
 **Q: What frameworks do you use and why these five?**
 > Big Five (personality dimensions), Schwartz Values (what motivates you), Attachment Style (how you connect), Enneagram (core fear/desire), and Jungian Archetypes (unconscious identity). We chose these because they have the strongest empirical support, they're non-redundant (each measures something different), and together they give a 360° view of personality.
 
 **Q: Can I use this with my therapy clients?**
-> Yes — we specifically designed the platform for practitioners. Check out our early advocate program at innermind.app/for-coaches. We offer discounted group access and a shared dashboard (in beta).
+> Yes — we specifically designed the platform for practitioners. Check out our early advocate program at innermindhealing.com/for-coaches. We offer discounted group access and a shared dashboard (in beta).
 
 **Q: Will you add more frameworks?**
 > We're considering IQ-adjacent cognitive assessments and attachment-to-work instruments. We'd rather do five frameworks deeply than ten frameworks shallowly.

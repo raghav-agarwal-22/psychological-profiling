@@ -19,7 +19,7 @@
 > It's different in a way that's hard to explain until you see your own profile.
 
 **Tweet 3 (CTA):**
-> Try the free assessment → [innermind.app]
+> Try the free assessment → [innermindhealing.com]
 >
 > If you want the full picture — all 5 frameworks, AI coach, growth tracking, journal — Pro is $19/mo.
 >
@@ -43,7 +43,7 @@ That kind of synthesis. Free tier shows your Big Five + partial profile. Pro ($1
 
 Would genuinely love r/mbti feedback — what would make this more useful for people who care about this stuff?
 
-[Link: innermind.app]
+[Link: innermindhealing.com]
 
 ---
 
@@ -57,7 +57,7 @@ Innermind is a psychological profiling tool that goes beyond single-framework pe
 
 The approach is grounded in Big Five (most empirically validated), supplemented by attachment theory, cognitive patterns, and qualitative frameworks (MBTI, Enneagram) that have strong self-insight value even if their scientific footing is debated.
 
-Curious what this community thinks about the multi-framework synthesis approach. Free assessment at innermind.app.
+Curious what this community thinks about the multi-framework synthesis approach. Free assessment at innermindhealing.com.
 
 Happy to discuss the methodology — especially the tension between scientific validity and practical self-insight utility.
 
@@ -74,7 +74,7 @@ Innermind synthesizes results across 5 personality frameworks (Big Five, MBTI, E
 Free tier: Big Five + partial profile
 Pro ($19/mo): all 5 frameworks + AI coach + growth tracking + journal
 
-Free assessment at innermind.app. Would love to hear what people in this community think — especially if you've been frustrated by tests that only show you one dimension.
+Free assessment at innermindhealing.com. Would love to hear what people in this community think — especially if you've been frustrated by tests that only show you one dimension.
 
 ---
 
@@ -99,7 +99,7 @@ Pro ($19/mo) unlocks:
 - Growth tracking over time
 - Reflective journal with personalized prompts
 
-**Your assessment is waiting:** [innermind.app/assessment]
+**Your assessment is waiting:** [innermindhealing.com/assessment]
 
 This is a solo founder project and I read every reply. If you try it and have thoughts, hit reply.
 

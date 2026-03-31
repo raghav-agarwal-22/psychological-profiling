@@ -1,5 +1,5 @@
 # Innermind B2B Landing Page Copy
-**URL:** innermind.app/for-professionals
+**URL:** innermindhealing.com/for-professionals
 **Target:** Coaches, therapists, HR managers, OD consultants
 
 ---
@@ -25,7 +25,7 @@ from session one.
 Innermind gives your clients validated psychological depth reports before you ever meet. Five frameworks synthesized by AI — so you spend less time on intake and more time on transformation.
 
 **Primary CTA:** Get started →  (→ /professional)
-**Secondary CTA:** Book a walkthrough  (→ mailto:professionals@innermind.app)
+**Secondary CTA:** Book a walkthrough  (→ mailto:professionals@innermindhealing.com)
 
 **Trust line:** Free to try · No credit card required · Bulk invite links included
 
@@ -116,7 +116,7 @@ For group practices, HR teams, and OD consultants. 50 client seats.
 **CTA:** Get started → /professional
 
 *Annual billing available (save 17%)*
-*Need a custom plan for a large practice or training program? Contact us: professionals@innermind.app*
+*Need a custom plan for a large practice or training program? Contact us: professionals@innermindhealing.com*
 
 ---
 

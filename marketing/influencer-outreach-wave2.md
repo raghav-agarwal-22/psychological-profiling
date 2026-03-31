@@ -57,7 +57,7 @@
 >
 > Want me to send you a link to try it out?
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -76,7 +76,7 @@
 >
 > Worth a conversation?
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -95,7 +95,7 @@
 >
 > Let me know if you'd like to take a look.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -114,7 +114,7 @@
 >
 > Interested?
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -131,7 +131,7 @@
 >
 > I think your audience would find it a useful comparative lens. Happy to offer a **free Pro account** + **30% recurring affiliate commission** if you'd like to explore it.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -150,7 +150,7 @@
 >
 > Want to try it out?
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -170,7 +170,7 @@
 > Happy to set up a quick call to walk you through it — or I can just send you the link.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -189,7 +189,7 @@
 >
 > Let me know what you think!
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -206,7 +206,7 @@
 >
 > I think your audience — the serious students — would find it genuinely interesting. Happy to offer a **free Pro account** + **30% affiliate commission** if you'd like to explore it.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -226,7 +226,7 @@
 > Would you be open to trying it out?
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -243,7 +243,7 @@
 >
 > I'd love to offer a **free Pro account** + **30% recurring affiliate commission**. No pitch, just thought it would resonate.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -263,7 +263,7 @@
 > Happy to send you the link if you're curious.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -286,7 +286,7 @@
 > Would you be open to a 20-minute call to explore?
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -304,7 +304,7 @@
 > I'd love to offer you a **free Pro account** to experience it + **30% recurring affiliate commission** on referrals. And if you ever want to explore an episode on multi-framework personality science, I'd be honored.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -321,7 +321,7 @@
 >
 > I think it would resonate with your listeners as a tool, not just a concept. Happy to offer a **free Pro account** + **30% affiliate commission** if you'd like to explore it.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -339,7 +339,7 @@
 > I'd love to offer a **free Pro account** + **30% recurring affiliate commission** on referrals. Even a show notes mention would reach the right people.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -357,7 +357,7 @@
 > I'd love to explore a partnership: **free Pro account** + **30% recurring affiliate commission**. Happy to discuss a sponsored episode format if there's fit.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -374,7 +374,7 @@
 >
 > Your listeners are exactly who this is built for: people who want self-understanding with intellectual rigor. Happy to offer a **free Pro account** + **30% recurring affiliate commission**.
 >
-> — [Founder Name], innermind.app
+> — [Founder Name], innermindhealing.com
 
 ---
 
@@ -392,7 +392,7 @@
 > I'd love to explore a partnership: **free Pro account** + **30% recurring affiliate commission** on referrals. Happy to discuss further if there's interest.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -410,7 +410,7 @@
 > I'd love to offer a **free lifetime Pro account** to explore, plus **30% recurring affiliate commission** on any referrals. Happy to ensure the platform reflects the diversity and depth your community expects.
 >
 > Best,
-> [Founder Name], innermind.app
+> [Founder Name], innermindhealing.com
 
 ---
 
@@ -450,7 +450,7 @@
 
 - **Affiliate payment setup:** Confirm payout method (Stripe, PayPal, bank transfer) before sending to creators who ask
 - **Sponsored content budget:** If Jay Shetty, Dan Harris, or Brené Brown teams respond with rate cards, these will require a paid sponsorship decision — flag to founder for approval
-- **Innermind.app URL:** Confirm the live URL before sending (currently `innermind.app` — verify this redirects correctly)
+- **Innermind.app URL:** Confirm the live URL before sending (currently `innermindhealing.com` — verify this redirects correctly)
 - **Founder name:** Replace [Founder Name] placeholder throughout before sending
 
 ---

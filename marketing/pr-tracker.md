@@ -40,7 +40,7 @@
 **Before sending — complete these steps:**
 1. Replace `[Founder name]` in all pitches with actual name
 2. Add real user/revenue metrics to TechCrunch pitch (#8) — format: "X users, $Y MRR, Z% MoM growth"
-3. Check innermind.app is live and assessment works end-to-end
+3. Check innermindhealing.com is live and assessment works end-to-end
 
 **Priority send order (highest ROI first):**
 1. **Ben's Bites** — Ben reads personally, responds fast, AI audience, short pitch

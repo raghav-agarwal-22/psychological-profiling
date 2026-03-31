@@ -22,7 +22,7 @@ Happy to set up a call if you'd like to explore further, or I can just send you 
 
 Best,
 [Founder Name]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
 ---
 
@@ -83,7 +83,7 @@ Innermind is the only platform that synthesizes five validated psychology framew
 
 ### Try it free
 
-→ **innermind.app** — take the free assessment in 20 minutes
+→ **innermindhealing.com** — take the free assessment in 20 minutes
 
 Questions? Reply to this email or DM [@innermindapp].
 
@@ -103,4 +103,4 @@ Questions? Reply to this email or DM [@innermindapp].
 
 ## DM Version (Instagram/Twitter, <280 chars)
 
-> Hey [Name], huge fan of your [channel/podcast]. I built Innermind — 5 psychology frameworks synthesized by AI into one portrait. Think you'd love it. Free Pro account + 30% affiliate if you want to check it out? 🧠 innermind.app
+> Hey [Name], huge fan of your [channel/podcast]. I built Innermind — 5 psychology frameworks synthesized by AI into one portrait. Think you'd love it. Free Pro account + 30% affiliate if you want to check it out? 🧠 innermindhealing.com

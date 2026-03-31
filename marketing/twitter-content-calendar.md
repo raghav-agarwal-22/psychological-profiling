@@ -131,7 +131,7 @@
 >
 > It's in the tensions between them.
 >
-> [innermind.app]
+> [innermindhealing.com]
 >
 > #psychology #personalitytypes
 
@@ -354,7 +354,7 @@
 >
 > This is the part that actually makes people stop scrolling.
 >
-> [innermind.app]
+> [innermindhealing.com]
 >
 > #psychology #personalitytypes
 
@@ -469,7 +469,7 @@
 >
 > Growth tracking for your actual psychology — not your productivity.
 >
-> [innermind.app]
+> [innermindhealing.com]
 >
 > #psychology #growth #selfawareness
 
@@ -526,7 +526,7 @@
 > → Growth tracking to see score changes over time
 > → AI coach grounded in your actual profile
 >
-> Free to try before we launch: innermind.app
+> Free to try before we launch: innermindhealing.com
 >
 > #ProductHunt #psychology #launch
 

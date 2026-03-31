@@ -82,7 +82,7 @@
 
 > We're live on Product Hunt today — if this resonates, an upvote goes a long way.
 >
-> Try the free assessment: https://innermind.app?utm_source=twitter&utm_medium=launch&utm_campaign=ph-launch-day
+> Try the free assessment: https://innermindhealing.com?utm_source=twitter&utm_medium=launch&utm_campaign=ph-launch-day
 >
 > [Link to Product Hunt listing]
 >
@@ -172,7 +172,7 @@ Running them together and synthesizing with AI gives you something none of them 
 - Converting free users to Pro ($19/mo) is the main challenge right now
 
 Live today on Product Hunt: [Link]
-Free assessment: https://innermind.app?utm_source=reddit&utm_medium=launch&utm_campaign=sideproject-ph-launch
+Free assessment: https://innermindhealing.com?utm_source=reddit&utm_medium=launch&utm_campaign=sideproject-ph-launch
 
 Happy to answer questions about the tech or the product — been heads down on this for a while.
 
@@ -221,7 +221,7 @@ The basic assessment is free. Pro is $19/month for the full picture.
 
 If this is useful for you, your team, or your clients — I'd genuinely welcome the feedback. And an upvote on Product Hunt if you believe in what we're building: [Product Hunt link]
 
-https://innermind.app?utm_source=linkedin&utm_medium=launch&utm_campaign=ph-launch-day
+https://innermindhealing.com?utm_source=linkedin&utm_medium=launch&utm_campaign=ph-launch-day
 
 ---
 
@@ -239,7 +239,7 @@ https://innermind.app?utm_source=linkedin&utm_medium=launch&utm_campaign=ph-laun
 
 Hey — launching Innermind on Product Hunt today. It synthesizes Big Five, Enneagram, Jungian Archetypes, Attachment Style, and Schwartz Values into a unified AI portrait. The multi-framework synthesis is what we've been most focused on — finding convergence and tension across frameworks rather than just running five separate tests.
 
-Free assessment if you want to try it: https://innermind.app?utm_source=discord&utm_medium=pdb&utm_campaign=ph-launch-day
+Free assessment if you want to try it: https://innermindhealing.com?utm_source=discord&utm_medium=pdb&utm_campaign=ph-launch-day
 
 PH link: [Product Hunt link] — upvotes appreciated if it resonates.
 
@@ -255,7 +255,7 @@ For anyone in this community curious about multi-framework profiling — launche
 
 The synthesis specifically looks for where MBTI function stack predictions match or conflict with Big Five trait data — that cross-framework tension is usually the most useful insight.
 
-Free to try: https://innermind.app?utm_source=discord&utm_medium=mbti-discord&utm_campaign=ph-launch-day
+Free to try: https://innermindhealing.com?utm_source=discord&utm_medium=mbti-discord&utm_campaign=ph-launch-day
 
 ---
 
@@ -269,7 +269,7 @@ Sharing this for anyone interested in psychological frameworks — we just launc
 
 The goal is multi-framework convergence — if three frameworks agree on something, that's more reliable than any one test. Disclosure: I'm affiliated with the project.
 
-Free assessment: https://innermind.app?utm_source=discord&utm_medium=psych-discord&utm_campaign=ph-launch-day
+Free assessment: https://innermindhealing.com?utm_source=discord&utm_medium=psych-discord&utm_campaign=ph-launch-day
 
 ---
 
@@ -283,7 +283,7 @@ Hey GROW — launching on Product Hunt today. Innermind synthesizes five psychol
 
 For self-improvement purposes: the most useful output isn't the type — it's where frameworks conflict. If you score high Big Five Conscientiousness but Enneagram 7, that tension is the exact thing to work on.
 
-Free: https://innermind.app?utm_source=slack&utm_medium=grow&utm_campaign=ph-launch-day
+Free: https://innermindhealing.com?utm_source=slack&utm_medium=grow&utm_campaign=ph-launch-day
 
 ---
 

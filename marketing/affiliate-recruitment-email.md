@@ -33,7 +33,7 @@ Innermind synthesizes five validated frameworks (Big Five, Attachment Style, Enn
 Want me to set up your free account today?
 
 [YOUR NAME]
-Innermind — innermind.app/affiliates
+Innermind — innermindhealing.com/affiliates
 
 ---
 
@@ -49,7 +49,7 @@ Offering creators: free Pro account + 30% recurring commission on referrals (90-
 
 Want a free account to try?
 
-→ innermind.app/affiliates
+→ innermindhealing.com/affiliates
 
 ---
 
@@ -73,7 +73,7 @@ If 100 followers subscribe, that's $570/month in recurring income from a single 
 Want me to set up your free Pro account now?
 
 [YOUR NAME]
-Innermind — innermind.app/affiliates
+Innermind — innermindhealing.com/affiliates
 
 ---
 

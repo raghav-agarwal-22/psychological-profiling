@@ -10,7 +10,7 @@
 - Sharing 2–3 sentences of written feedback after 30 days
 - Recommending Innermind in their community/network when it fits
 
-Landing page: `innermind.app/for-coaches`
+Landing page: `innermindhealing.com/for-coaches`
 
 ---
 
@@ -28,7 +28,7 @@ Before your first session, clients complete five validated assessments (Big Five
 
 We're offering **free lifetime Pro access** to 20 coaches who want to test it with their clients early. No strings attached beyond trying it with 3+ clients and telling us what you think.
 
-If this sounds useful, grab a free account at innermind.app/for-coaches — I've set up a special signup that flags you as an early advocate.
+If this sounds useful, grab a free account at innermindhealing.com/for-coaches — I've set up a special signup that flags you as an early advocate.
 
 Would love to hear how it fits your practice.
 
@@ -49,7 +49,7 @@ Innermind lets clients complete five peer-reviewed psychological assessments bef
 
 We're offering **free lifetime Pro access** to 20 therapists who want to try it with their clients. The only ask: use it with 3+ clients and give us honest feedback.
 
-Claim it at innermind.app/for-coaches.
+Claim it at innermindhealing.com/for-coaches.
 
 Rishi
 Innermind
@@ -66,7 +66,7 @@ I'm building Innermind, a psychological profiling platform. Clients take five va
 
 We're giving free lifetime Pro access to 20 early practitioners who try it with clients. No obligation beyond using it honestly and sharing feedback.
 
-Worth a look? innermind.app/for-coaches
+Worth a look? innermindhealing.com/for-coaches
 
 ---
 
@@ -76,13 +76,13 @@ Worth a look? innermind.app/for-coaches
 
 Hi [Name], I came across your profile and noticed your work in [coaching niche]. I'm building Innermind — clients take five validated psychological assessments before their first session, and we synthesize them into a depth portrait for their practitioner.
 
-We're offering free lifetime Pro access to 20 early advocates. If you're interested in trying it with a few clients, I'd love to have you: innermind.app/for-coaches
+We're offering free lifetime Pro access to 20 early advocates. If you're interested in trying it with a few clients, I'd love to have you: innermindhealing.com/for-coaches
 
 ---
 
 ### Twitter/X DM Template
 
-Hey [Name], love your content on [topic]. I'm building Innermind — gives coaches an AI-synthesized psychological portrait of clients before session one. Free lifetime Pro access for 20 early advocates. innermind.app/for-coaches — worth a try?
+Hey [Name], love your content on [topic]. I'm building Innermind — gives coaches an AI-synthesized psychological portrait of clients before session one. Free lifetime Pro access for 20 early advocates. innermindhealing.com/for-coaches — worth a try?
 
 ---
 
@@ -94,7 +94,7 @@ Hi [Name],
 
 Just following up on my note last week about Innermind. We still have a few early advocate spots open if you'd like to try it with clients. Happy to answer any questions — just reply here.
 
-innermind.app/for-coaches
+innermindhealing.com/for-coaches
 
 Rishi
 
@@ -167,7 +167,7 @@ Search 5: `"career coach" AND "assessments"` → already assessment-friendly
 
 ## Early Advocate Onboarding Process
 
-1. **They sign up at innermind.app/for-coaches** → marked as "advocate" in system
+1. **They sign up at innermindhealing.com/for-coaches** → marked as "advocate" in system
 2. **Welcome email** → sent automatically, includes:
    - How to invite clients (unique invite link)
    - Quick start guide (share 3 screenshots or a Loom)

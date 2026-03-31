@@ -24,7 +24,7 @@ A few coaches and therapists have started using it to:
 
 It's free to try — you send clients an invite link, they complete assessments in 15 minutes, and you get shared access to their portrait.
 
-If you're curious, here's a 2-minute overview: [https://innermind.app/for-professionals]
+If you're curious, here's a 2-minute overview: [https://innermindhealing.com/for-professionals]
 
 Happy to walk you through it over a quick call if you want to see the coach view.
 
@@ -39,7 +39,7 @@ Hi [Name] — love your thread on [attachment patterns / shadow work / Enneagram
 
 Building something that might be useful: Innermind gives clients five validated psych assessments + an AI portrait before their first session with you. Coaches use it to cut intake time and track growth visually.
 
-Free to try → innermind.app/for-professionals
+Free to try → innermindhealing.com/for-professionals
 
 Would love your feedback if you check it out.
 
@@ -47,7 +47,7 @@ Would love your feedback if you check it out.
 
 ## LinkedIn Connection Message (300 chars)
 
-Hi [Name], your posts on [personality/psychology] are genuinely useful. I'm building a tool that gives coaches and therapists deep psychological profiles on clients before session one — 5 frameworks synthesized by AI. Worth a quick look? innermind.app/for-professionals
+Hi [Name], your posts on [personality/psychology] are genuinely useful. I'm building a tool that gives coaches and therapists deep psychological profiles on clients before session one — 5 frameworks synthesized by AI. Worth a quick look? innermindhealing.com/for-professionals
 
 ---
 
@@ -65,7 +65,7 @@ It's not "trust me, you've grown" — it's "look, your Neuroticism score dropped
 
 Still free to try with your first client. No setup required.
 
-[https://innermind.app/for-professionals]
+[https://innermindhealing.com/for-professionals]
 
 ---
 
@@ -76,7 +76,7 @@ Still free to try with your first client. No setup required.
 **Title:** We built a psychological profiling tool for coaches — free to try with clients
 
 **Body:**
-I'm one of the builders of Innermind (innermind.app). We built it initially for individual self-discovery but coaches and therapists started using it to replace intake sessions.
+I'm one of the builders of Innermind (innermindhealing.com). We built it initially for individual self-discovery but coaches and therapists started using it to replace intake sessions.
 
 The product: clients take 5 validated assessments (Big Five, Schwartz Values, Attachment, Enneagram, Jungian Archetypes) and get an AI-synthesized portrait. You get shared access to their results.
 
@@ -90,7 +90,7 @@ It's free to try — looking for feedback from professionals who do psychologica
 
 Hey everyone — I wanted to share something we built that some coaches have found useful.
 
-Innermind (innermind.app/for-professionals) gives your clients five validated psychological assessments before your first session: Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes — synthesized into a single AI portrait.
+Innermind (innermindhealing.com/for-professionals) gives your clients five validated psychological assessments before your first session: Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes — synthesized into a single AI portrait.
 
 I've been talking to coaches who use it to cut out most of their intake process. Curious if anyone here has tried layering assessment tools like this into their practice and what's worked?
 
@@ -150,5 +150,5 @@ All five are synthesized by AI into a readable portrait — not a wall of charts
 
 **Built on:** Big Five (OCEAN), Schwartz Values Theory, Hazan & Shaver Attachment, Enneagram, Jungian Archetypes
 
-**Learn more:** innermind.app/for-professionals
-**Contact:** professionals@innermind.app
+**Learn more:** innermindhealing.com/for-professionals
+**Contact:** professionals@innermindhealing.com

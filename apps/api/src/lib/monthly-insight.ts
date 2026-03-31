@@ -17,7 +17,7 @@ import { prisma } from '@innermind/db'
 import { MonthlyInsightEmail } from '../emails/MonthlyInsightEmail.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
-const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL ?? 'http://localhost:3000'
 
 const BATCH_SIZE = 10

@@ -9,7 +9,7 @@
 ## THREAD 1: INFJ vs INFP
 *Repurposing: `/blog/infj-vs-infp`*
 
-**UTM:** `https://innermind.app/blog/infj-vs-infp?utm_source=twitter&utm_medium=thread&utm_campaign=infj-infp`
+**UTM:** `https://innermindhealing.com/blog/infj-vs-infp?utm_source=twitter&utm_medium=thread&utm_campaign=infj-infp`
 
 ---
 
@@ -61,17 +61,17 @@ Do you suppress your own emotional state for the sake of others' comfort? → IN
 Do your own feelings feel more real than the group's, even when they're hard to articulate? → INFP
 
 **Tweet 8:**
-Full breakdown (with the cognitive function explanation): innermind.app/blog/infj-vs-infp
+Full breakdown (with the cognitive function explanation): innermindhealing.com/blog/infj-vs-infp
 
 And if you want to actually know which you are + how it connects to your Big Five, attachment style, and values:
-→ innermind.app (free)
+→ innermindhealing.com (free)
 
 ---
 
 ## THREAD 2: Conscientiousness Career Research
 *Repurposing: `/blog/big-five-conscientiousness-career`*
 
-**UTM:** `https://innermind.app/blog/big-five-conscientiousness-career?utm_source=twitter&utm_medium=thread&utm_campaign=conscientiousness`
+**UTM:** `https://innermindhealing.com/blog/big-five-conscientiousness-career?utm_source=twitter&utm_medium=thread&utm_campaign=conscientiousness`
 
 ---
 
@@ -118,17 +118,17 @@ Your Conscientiousness score predicts your career trajectory better than your IQ
 Understanding where you score — and what's driving it — is more useful than most career advice.
 
 **Tweet 7:**
-Full breakdown with the research sources: innermind.app/blog/big-five-conscientiousness-career
+Full breakdown with the research sources: innermindhealing.com/blog/big-five-conscientiousness-career
 
 Know your actual Big Five score (including Conscientiousness):
-→ innermind.app — free assessment + AI-synthesized portrait
+→ innermindhealing.com — free assessment + AI-synthesized portrait
 
 ---
 
 ## THREAD 3: Can Personality Change?
 *Repurposing: `/blog/personality-change-research`*
 
-**UTM:** `https://innermind.app/blog/personality-change-research?utm_source=twitter&utm_medium=thread&utm_campaign=personality-change`
+**UTM:** `https://innermindhealing.com/blog/personality-change-research?utm_source=twitter&utm_medium=thread&utm_campaign=personality-change`
 
 ---
 
@@ -175,16 +175,16 @@ The most underrated growth tool: tracking your scores over time.
 
 Most people underestimate their own personality change because they have no baseline. Longitudinal assessment makes change visible.
 
-Full research breakdown: innermind.app/blog/personality-change-research
+Full research breakdown: innermindhealing.com/blog/personality-change-research
 
-Take the assessment + retake over time to track your actual changes: innermind.app
+Take the assessment + retake over time to track your actual changes: innermindhealing.com
 
 ---
 
 ## THREAD 4: Attachment Style + Personality Type
 *Repurposing: `/blog/attachment-style-and-personality-type`*
 
-**UTM:** `https://innermind.app/blog/attachment-style-and-personality-type?utm_source=twitter&utm_medium=thread&utm_campaign=attachment-personality`
+**UTM:** `https://innermindhealing.com/blog/attachment-style-and-personality-type?utm_source=twitter&utm_medium=thread&utm_campaign=attachment-personality`
 
 ---
 
@@ -233,16 +233,16 @@ The most important distinction:
 **Tweet 7:**
 So: focus on developing secure attachment behaviors while understanding your personality-driven tendencies as context, not constraints.
 
-Full breakdown: innermind.app/blog/attachment-style-and-personality-type
+Full breakdown: innermindhealing.com/blog/attachment-style-and-personality-type
 
-Innermind assesses both together and synthesizes how they interact in your specific profile: innermind.app
+Innermind assesses both together and synthesizes how they interact in your specific profile: innermindhealing.com
 
 ---
 
 ## THREAD 5: Enneagram Stress Disintegration
 *Repurposing: `/blog/enneagram-stress-response`*
 
-**UTM:** `https://innermind.app/blog/enneagram-stress-response?utm_source=twitter&utm_medium=thread&utm_campaign=enneagram-stress`
+**UTM:** `https://innermindhealing.com/blog/enneagram-stress-response?utm_source=twitter&utm_medium=thread&utm_campaign=enneagram-stress`
 
 ---
 
@@ -293,9 +293,9 @@ When you recognize your disintegration pattern in yourself:
 2. Slow the trigger behavior
 3. Seek your *integration* direction — the healthy version of where you grow
 
-Full breakdown of all 9 + integration paths: innermind.app/blog/enneagram-stress-response
+Full breakdown of all 9 + integration paths: innermindhealing.com/blog/enneagram-stress-response
 
-Know your type: innermind.app
+Know your type: innermindhealing.com
 
 ---
 

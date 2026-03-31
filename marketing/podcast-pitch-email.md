@@ -16,7 +16,7 @@
 
 Hi [HOST NAME],
 
-I'm the founder of [Innermind](https://innermind.app) — a tool that runs five validated psychological assessments (Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes) and then uses AI to synthesize the results into a single coherent portrait.
+I'm the founder of [Innermind](https://innermindhealing.com) — a tool that runs five validated psychological assessments (Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes) and then uses AI to synthesize the results into a single coherent portrait.
 
 Not a type. Not a label. A portrait — the kind you actually recognize yourself in.
 
@@ -28,7 +28,7 @@ Suggested angle: *[EPISODE TITLE OPTION]*
 
 Best,
 [YOUR NAME]
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -41,7 +41,7 @@ innermind.app
 
 Hi [HOST NAME],
 
-Long-time listener. I built [Innermind](https://innermind.app) because I kept running into the same problem: people know their MBTI type but still can't explain why they behave so differently from others with the same type.
+Long-time listener. I built [Innermind](https://innermindhealing.com) because I kept running into the same problem: people know their MBTI type but still can't explain why they behave so differently from others with the same type.
 
 Innermind stacks five validated frameworks — Big Five traits, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes — and uses AI to synthesize them into a single psychological portrait. The Jungian layer maps directly to the cognitive function world your audience lives in. But when you cross it against Schwartz Values, the same type expresses in completely different ways depending on whether someone leads with security values vs. self-direction values.
 
@@ -52,7 +52,7 @@ Could we do a 20-minute call to explore it? Happy to run the assessment live on 
 Suggested episode: *[EPISODE TITLE OPTION]*
 
 [YOUR NAME]
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -65,7 +65,7 @@ innermind.app
 
 Hi [HOST NAME],
 
-I'm a founder, not a researcher — but I built [Innermind](https://innermind.app) on a research question: can AI meaningfully synthesize outputs from five psychometrically validated instruments into a coherent portrait of a person?
+I'm a founder, not a researcher — but I built [Innermind](https://innermindhealing.com) on a research question: can AI meaningfully synthesize outputs from five psychometrically validated instruments into a coherent portrait of a person?
 
 The five instruments: NEO PI-R (Big Five), Schwartz Portrait Values Questionnaire, ECR-R (Experiences in Close Relationships — Revised), Enneagram, and Jungian Archetypes. Each framework was developed independently to answer a different question about human psychology. Together, they sometimes produce contradictory pictures of the same person.
 
@@ -76,7 +76,7 @@ I'd love a 20-minute call to explore whether there's a conversation worth having
 Suggested episode: *[EPISODE TITLE OPTION]*
 
 [YOUR NAME]
-innermind.app
+innermindhealing.com
 
 ---
 

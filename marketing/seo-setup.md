@@ -20,7 +20,7 @@
 
 ### Verification method (recommended: DNS TXT record)
 
-1. Click "Add property" → Domain → enter `innermind.app`
+1. Click "Add property" → Domain → enter `innermindhealing.com`
 2. Google gives you a TXT record like:
    ```
    google-site-verification=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -34,7 +34,7 @@
 ### Alternative: HTML file verification
 1. Download the provided `googleXXXXXX.html` file
 2. Place in `apps/web/public/googleXXXXXX.html`
-3. Verify at `https://innermind.app/googleXXXXXX.html`
+3. Verify at `https://innermindhealing.com/googleXXXXXX.html`
 
 ---
 
@@ -42,7 +42,7 @@
 
 After site is verified:
 1. In GSC left nav → Sitemaps
-2. Enter: `https://innermind.app/sitemap.xml`
+2. Enter: `https://innermindhealing.com/sitemap.xml`
 3. Click Submit
 4. Wait 24–48 hours for Google to crawl and index
 

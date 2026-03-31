@@ -19,7 +19,7 @@
 📋 INFORMATION
   #welcome          — server intro + rules + how to get started
   #announcements    — product updates, new features (admin only)
-  #assessment-link  — pinned link to innermind.app
+  #assessment-link  — pinned link to innermindhealing.com
 
 🧠 PSYCHOLOGY
   #share-your-type          — post your full Innermind portrait summary
@@ -55,7 +55,7 @@ frameworks — Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungi
 Archetypes — into one coherent portrait of who you are.
 
 **Get started:**
-1. Take the free assessment → innermind.app
+1. Take the free assessment → innermindhealing.com
 2. Share your portrait summary in #share-your-type
 3. Introduce yourself in #introductions
 4. Grab your MBTI/type role in #roles
@@ -79,7 +79,7 @@ Welcome to Innermind! Drop a quick intro in #introductions:
 • Your MBTI or Enneagram type (if you know it)
 • One thing you're working on in your own self-development
 
-And if you haven't taken the full 5-framework assessment yet → innermind.app (free)
+And if you haven't taken the full 5-framework assessment yet → innermindhealing.com (free)
 ```
 
 ### Server Growth — First 500 Members

@@ -7,8 +7,8 @@
 **Contact:**
 [Founder Name]
 Innermind
-Email: [founder@innermind.app]
-Website: https://innermind.app
+Email: [founder@innermindhealing.com]
+Website: https://innermindhealing.com
 
 ---
 
@@ -45,19 +45,19 @@ The global personality assessment market is valued at over $2.5 billion and grow
 
 Innermind targets this gap by combining the scientific rigor of validated assessment instruments with the synthesis and conversational capabilities of modern AI.
 
-The platform is currently available direct-to-consumer at innermind.app, with plans for B2B offerings for executive coaches, HR teams, and corporate learning and development programs.
+The platform is currently available direct-to-consumer at innermindhealing.com, with plans for B2B offerings for executive coaches, HR teams, and corporate learning and development programs.
 
 ---
 
 ## Pricing and Availability
 
-Innermind is available at innermind.app with a free tier that includes access to all five assessments and a basic psychological portrait. Premium plans unlock full AI synthesis, unlimited growth tracking, the reflection journal, and AI coaching access.
+Innermind is available at innermindhealing.com with a free tier that includes access to all five assessments and a basic psychological portrait. Premium plans unlock full AI synthesis, unlimited growth tracking, the reflection journal, and AI coaching access.
 
 ---
 
 ## About Innermind
 
-Innermind is a psychological profiling platform that synthesizes five validated assessment frameworks — Big Five, Schwartz Values Theory, Attachment Style, Enneagram, and Jungian Archetypes — into a single AI-generated portrait. The platform is designed to give individuals, coaches, and teams a more complete and actionable picture of psychological makeup than any single-framework assessment can provide. Innermind is headquartered in San Francisco and available at innermind.app.
+Innermind is a psychological profiling platform that synthesizes five validated assessment frameworks — Big Five, Schwartz Values Theory, Attachment Style, Enneagram, and Jungian Archetypes — into a single AI-generated portrait. The platform is designed to give individuals, coaches, and teams a more complete and actionable picture of psychological makeup than any single-framework assessment can provide. Innermind is headquartered in San Francisco and available at innermindhealing.com.
 
 ---
 
@@ -78,4 +78,4 @@ Innermind is a psychological profiling platform that synthesizes five validated 
 
 *###*
 
-*Note: This press release is ready for distribution. Fill in [Founder Name] and [founder@innermind.app] placeholders before sending. For TechCrunch/Fast Company, consider adding a data hook (number of assessments taken, waitlist size, etc.) to strengthen the lead paragraph.*
+*Note: This press release is ready for distribution. Fill in [Founder Name] and [founder@innermindhealing.com] placeholders before sending. For TechCrunch/Fast Company, consider adding a data hook (number of assessments taken, waitlist size, etc.) to strengthen the lead paragraph.*

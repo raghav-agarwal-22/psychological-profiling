@@ -277,13 +277,13 @@ export default function EQQuiz() {
       name: 'Free Emotional Intelligence (EQ) Test',
       description:
         'A free 30-question Emotional Intelligence test based on Daniel Goleman\'s EQ model. Measure your Self-Awareness, Self-Regulation, Motivation, Empathy, and Social Skills with instant results. No signup required.',
-      url: 'https://innermind.app/quiz/eq',
+      url: 'https://innermindhealing.com/quiz/eq',
       educationalLevel: 'beginner',
       timeRequired: 'PT4M',
       numberOfQuestions: 30,
       about: { '@type': 'Thing', name: 'Emotional Intelligence (EQ) — Goleman Model' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (

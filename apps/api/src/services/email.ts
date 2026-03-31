@@ -34,7 +34,7 @@ function getResend(): Resend {
   return _resend
 }
 
-const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 const PRODUCT_NAME = 'Innermind'
 const TAGLINE = 'Understand yourself deeply.'
 

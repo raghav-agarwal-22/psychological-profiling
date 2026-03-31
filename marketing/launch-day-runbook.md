@@ -29,7 +29,7 @@ Once keys are set, **restart the Railway service** and wait for it to show "Heal
 Run these checks **before going public**. Do not launch until all pass.
 
 ### 1.1 — AI Synthesis Check
-- [ ] Go to `https://innermind.app` (your production URL)
+- [ ] Go to `https://innermindhealing.com` (your production URL)
 - [ ] Click **Start Free Assessment**
 - [ ] Complete the Big Five assessment (30 questions)
 - [ ] Confirm the profile page loads with an AI-generated portrait (not a fallback template)
@@ -56,7 +56,7 @@ Run these checks **before going public**. Do not launch until all pass.
 - [ ] **Pass criteria:** Email delivered, login works
 
 ### 1.4 — Mobile Check (iPhone Safari)
-- [ ] Open `https://innermind.app` on iPhone Safari
+- [ ] Open `https://innermindhealing.com` on iPhone Safari
 - [ ] Confirm homepage renders correctly (no horizontal scroll, no broken layout)
 - [ ] Tap **Start Free Assessment** — confirm assessment loads and is tappable
 - [ ] Complete at least 5 questions — confirm progress bar works
@@ -81,7 +81,7 @@ Execute in this exact order. Work top-to-bottom.
 - [ ] Fill in form using `agents/ceo/founder-requests/product-hunt-submit.md`:
   - **Name:** Innermind
   - **Tagline:** Know yourself completely — 5 validated psych frameworks, one AI-synthesized portrait
-  - **Website URL:** https://innermind.app
+  - **Website URL:** https://innermindhealing.com
   - Gallery screenshots + demo GIF already prepared (see product-hunt-submit.md for assets)
 - [ ] **Set launch time to NOW** (or earliest available slot — midnight PT is best if early morning)
 - [ ] Click **Launch**
@@ -92,7 +92,7 @@ Execute in this exact order. Work top-to-bottom.
 
 - [ ] Open [news.ycombinator.com/submit](https://news.ycombinator.com/submit)
 - [ ] **Title:** `Show HN: Innermind – AI portrait of your psychology from Big Five, Jung, Enneagram, attachment + values`
-- [ ] **URL:** https://innermind.app
+- [ ] **URL:** https://innermindhealing.com
 - [ ] **Text body:** Copy from `marketing/hn-show-hn-v2.md` → "Submission Body" section
 - [ ] Click **Submit**
 - [ ] Copy the HN thread URL and save it here: `___________________________`
@@ -123,7 +123,7 @@ Two years ago I couldn't explain myself clearly — not to therapists, not to pa
 
 I built this because I wanted one honest, complete picture of my psychology. Not a type. Not a category. An actual portrait.
 
-It's free to start. Try it here: https://innermind.app
+It's free to start. Try it here: https://innermindhealing.com
 
 [link to Product Hunt post]
 ```
@@ -138,7 +138,7 @@ Post the top 3 posts from `marketing/reddit-posts.md`:
 - [ ] **Post 1** → r/mbti
   Title: _"I've identified as INFJ for 10 years. Then I added 4 other frameworks. Here's what I actually learned."_
   Best time: Tuesday–Thursday 8–10pm EST. If it's daytime: post anyway, pin for evening re-engagement.
-  UTM link: `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1`
+  UTM link: `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1`
 
 - [ ] **Post 2** → r/enneagram
   Use the post from `marketing/reddit-posts.md` targeting Enneagram community

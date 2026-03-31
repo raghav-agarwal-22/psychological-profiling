@@ -128,7 +128,7 @@ Three-email sequence for waitlist subscribers. Set up as an automated flow in Lo
 
 ### Contact properties required
 
-- `startUrl` — personalized assessment entry URL (should be set on waitlist signup, e.g. `https://innermind.app/start`)
+- `startUrl` — personalized assessment entry URL (should be set on waitlist signup, e.g. `https://innermindhealing.com/start`)
 - `foundingPriceDeadline` — optional string, e.g. `"April 5th"`. Falls back to `"the window closes soon"` if blank.
 
 ### Flow logic in Loops

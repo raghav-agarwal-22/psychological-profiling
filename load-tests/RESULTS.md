@@ -121,7 +121,7 @@ const prompts = await reflectionPromptsPromise                   // usually alre
 3. **Run the k6 script against staging** before launch:
    ```bash
    brew install k6
-   k6 run --env BASE_URL=https://api.innermind.app load-tests/k6-load-test.js
+   k6 run --env BASE_URL=https://api.innermindhealing.com load-tests/k6-load-test.js
    ```
    This simulates 1,000 concurrent anonymous users ramping up over 2 minutes.
 

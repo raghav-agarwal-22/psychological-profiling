@@ -236,7 +236,7 @@ export async function GET(
           }}
         >
           <span style={{ fontSize: '14px', fontFamily: 'sans-serif', color: '#44403c' }}>
-            innermind.app
+            innermindhealing.com
           </span>
           <span style={{ fontSize: '14px', fontFamily: 'sans-serif', color: '#44403c' }}>
             Science-backed psychological assessments

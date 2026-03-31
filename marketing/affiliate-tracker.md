@@ -112,5 +112,5 @@ Track implementation progress for required affiliate infrastructure:
 - Full outreach pipeline detail: `marketing/influencer-pipeline.md`
 - Affiliate program terms + email copy: `marketing/affiliate-program.md`
 - Affiliate landing page: `apps/web/src/app/affiliates/page.tsx`
-- Apply link: `https://innermind.app/affiliates/apply`
+- Apply link: `https://innermindhealing.com/affiliates/apply`
 - Related issues: [INN-191](/INN/issues/INN-191), [INN-161](/INN/issues/INN-161)

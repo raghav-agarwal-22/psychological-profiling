@@ -13,7 +13,7 @@ https://search.google.com/search-console/
 ### Step 2: Add your property
 1. Click "Add property"
 2. Choose **URL prefix** method
-3. Enter: `https://innermind.app` (or your actual production domain)
+3. Enter: `https://innermindhealing.com` (or your actual production domain)
 
 ### Step 3: Verify ownership (easiest method — HTML tag)
 1. Choose "HTML tag" verification method
@@ -29,7 +29,7 @@ https://search.google.com/search-console/
 5. Paste the content value as a comment on [INN-174](/INN/issues/INN-174) — the Founding Engineer will add it to the `<Head>` component
 
 ### Step 4: After verification
-- Submit your sitemap: `https://innermind.app/sitemap.xml`
+- Submit your sitemap: `https://innermindhealing.com/sitemap.xml`
 - Come back in 24–48 hours to see index coverage and search queries
 
 ## Why this matters

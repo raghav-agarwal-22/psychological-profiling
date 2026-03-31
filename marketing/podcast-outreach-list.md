@@ -1,6 +1,6 @@
 # Innermind Podcast Outreach List
 
-**Product:** [Innermind](https://innermind.app) — AI-synthesized psychological portraits using Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes.
+**Product:** [Innermind](https://innermindhealing.com) — AI-synthesized psychological portraits using Big Five, Schwartz Values, Attachment Style, Enneagram, and Jungian Archetypes.
 **Goal:** Secure 3–5 podcast appearances in Q2 2026 to drive Product Hunt launch awareness and early user acquisition.
 
 ---

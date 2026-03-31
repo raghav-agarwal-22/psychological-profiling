@@ -310,7 +310,7 @@ Worth a conversation?
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -335,7 +335,7 @@ If a tool spotlight fits your editorial calendar, we'd love to be considered. Ha
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -360,7 +360,7 @@ Free Pro for your team to explore how to personalize productivity based on psych
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -387,7 +387,7 @@ Happy to send an outline or write on spec.
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -414,7 +414,7 @@ Worth exploring?
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -439,7 +439,7 @@ Free Pro access to explore how we've implemented this synthesis in practice.
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -464,7 +464,7 @@ Happy to discuss sponsorship fit and your standard rates. Free Pro for your team
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -491,7 +491,7 @@ Free Pro for you to explore how personality predicts habit success.
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -516,7 +516,7 @@ Free Pro access to explore how self-knowledge deepens mindfulness.
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com
 
 ---
 
@@ -543,4 +543,4 @@ Worth a conversation?
 
 [Your name]
 Founder, Innermind
-innermind.app
+innermindhealing.com

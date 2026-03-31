@@ -62,7 +62,7 @@ async function sendProfessionalInviteEmail(
 ): Promise<void> {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
-  const from = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+  const from = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 
   await resend.emails.send({
     from,
@@ -83,7 +83,7 @@ async function sendProfessionalInviteEmail(
 async function sendTrialWelcomeEmail(to: string, practitionerName: string, workspaceId: string): Promise<void> {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
-  const from = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+  const from = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 
   await resend.emails.send({
     from,
@@ -105,7 +105,7 @@ async function sendTrialWelcomeEmail(to: string, practitionerName: string, works
 async function sendDemoConfirmationEmail(to: string, fullName: string, practiceSize: string): Promise<void> {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY ?? 'dev-placeholder')
-  const from = process.env.EMAIL_FROM ?? 'noreply@innermind.app'
+  const from = process.env.EMAIL_FROM ?? 'noreply@innermindhealing.com'
 
   const includeCalendly = ['6–20 practitioners', '20+ practitioners'].includes(practiceSize)
 
@@ -543,7 +543,7 @@ export async function professionalRoutes(server: FastifyInstance) {
       // Footer
       const footerY = doc.page.height - 60
       doc.moveTo(50, footerY).lineTo(545, footerY).strokeColor('#e7e5e0').stroke()
-      doc.fontSize(8).fillColor('#a8a29e').text('Confidential — prepared for practitioner use only. innermind.app', 50, footerY + 10, { align: 'center' })
+      doc.fontSize(8).fillColor('#a8a29e').text('Confidential — prepared for practitioner use only. innermindhealing.com', 50, footerY + 10, { align: 'center' })
 
       doc.end()
     })

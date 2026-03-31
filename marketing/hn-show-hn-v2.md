@@ -52,7 +52,7 @@ Three things we'd genuinely like feedback on:
 
 The basic assessment + portrait is free. No credit card required.
 
-https://innermind.app
+https://innermindhealing.com
 ```
 
 ---

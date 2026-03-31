@@ -38,7 +38,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermindhealing.com'),
   title: {
     default: 'Innermind — Know Yourself Deeply',
     template: '%s | Innermind',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     title: 'Innermind — Know Yourself Deeply',
     description:
       "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights.",
-    url: process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app',
+    url: process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermindhealing.com',
   },
   twitter: {
     card: 'summary_large_image',
@@ -110,7 +110,7 @@ export default function RootLayout({
               name: 'Innermind',
               description:
                 "The world's most thoughtful platform for self-understanding. Science-backed psychological assessments with AI-powered insights.",
-              url: 'https://innermind.app',
+              url: 'https://innermindhealing.com',
               applicationCategory: 'LifestyleApplication',
               offers: {
                 '@type': 'Offer',

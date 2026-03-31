@@ -82,13 +82,13 @@ Hi [Name],
 
 I noticed your [page title] page at [URL] links to several personality assessment resources including [competitor].
 
-We recently built Innermind (innermind.app) — a free psychological profiling platform that combines five validated frameworks (Big Five, Enneagram, Attachment Style, Schwartz Values, Jungian Archetypes) into a single AI-synthesized portrait.
+We recently built Innermind (innermindhealing.com) — a free psychological profiling platform that combines five validated frameworks (Big Five, Enneagram, Attachment Style, Schwartz Values, Jungian Archetypes) into a single AI-synthesized portrait.
 
 It's the most comprehensive free assessment available — would you consider adding it to your resources page? Happy to share it for review first.
 
 Thanks,
 [Founder name]
-innermind.app
+innermindhealing.com
 ```
 
 ### Template B: Resource Page (Attachment Focus)
@@ -102,7 +102,7 @@ Your readers clearly care about relationships and self-understanding — I see y
 
 We built Innermind, a free psychological profiling platform with a research-backed attachment style assessment. Our post on [anxious/avoidant/disorganized] attachment style goes deeper than most — it covers the neuroscience, childhood formation, and practical change pathways.
 
-Post: innermind.app/blog/[attachment-slug]
+Post: innermindhealing.com/blog/[attachment-slug]
 
 Would you consider linking to it alongside your existing resources? No reciprocal link needed — just think your audience would find it genuinely useful.
 
@@ -131,7 +131,7 @@ Happy to share an outline or draft. Would this be a fit?
 
 Best,
 [Founder name]
-innermind.app
+innermindhealing.com
 ```
 
 ---

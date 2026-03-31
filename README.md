@@ -80,4 +80,4 @@ pnpm db:generate
 
 ## Roadmap
 
-See the [full roadmap](https://innermind.app) for Phase 0–4 delivery plan.
+See the [full roadmap](https://innermindhealing.com) for Phase 0–4 delivery plan.

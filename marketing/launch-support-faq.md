@@ -44,7 +44,7 @@ A: Yes — if you're not satisfied within 7 days of your first charge, email us 
 A: Yes — annual Pro is available at a discounted rate (equivalent to ~2 months free). You can select it on the upgrade page.
 
 **Q: I was charged but my account still shows Free tier.**
-A: This is usually a webhook delay. Wait 2-3 minutes and refresh. If it's still not updated after 5 minutes, email us at support@innermind.app with your email address and we'll fix it immediately.
+A: This is usually a webhook delay. Wait 2-3 minutes and refresh. If it's still not updated after 5 minutes, email us at support@innermindhealing.com with your email address and we'll fix it immediately.
 
 **Q: Can I get a student or hardship discount?**
 A: We don't have a formal program yet, but email us. We'll work something out for students or people in financial hardship.
@@ -57,13 +57,13 @@ A: We don't have a formal program yet, but email us. We'll work something out fo
 A: Check your spam folder first. If it's not there, try requesting a new magic link. If email delivery is having issues, our app also displays a one-time code directly on screen — check the login page for an "OTP" option.
 
 **Q: I lost access to my email. Can I recover my account?**
-A: Email us at support@innermind.app with your original email address and any info about your account. We'll help you recover it.
+A: Email us at support@innermindhealing.com with your original email address and any info about your account. We'll help you recover it.
 
 **Q: Can I change my email address?**
 A: Not yet — contact support and we'll do it manually.
 
 **Q: Can I delete my account?**
-A: Yes. Email support@innermind.app and we'll delete your account and all associated data within 48 hours.
+A: Yes. Email support@innermindhealing.com and we'll delete your account and all associated data within 48 hours.
 
 ---
 
@@ -108,7 +108,7 @@ A: Yes. Email support@innermind.app and we'll delete your account and all associ
 > Hi [Name],
 >
 > Sorry about that! A few things to try:
-> 1. Check your spam/promotions folder for an email from noreply@innermind.app
+> 1. Check your spam/promotions folder for an email from noreply@innermindhealing.com
 > 2. Try requesting a new link — they expire after 15 minutes
 > 3. On the login page, look for a "Use code instead" option — we show a one-time code directly on screen as a backup
 >
@@ -156,7 +156,7 @@ A: Yes. Email support@innermind.app and we'll delete your account and all associ
 ## Part 3: Support Escalation Path
 
 1. **Self-serve:** User reads FAQ on /help page (to be built)
-2. **Email support:** support@innermind.app — founder handles for now
+2. **Email support:** support@innermindhealing.com — founder handles for now
 3. **Billing issues (urgent):** Check Stripe Dashboard directly, fix manually if needed
 4. **Bug reports:** Log in Paperclip, assign to CTO agent
 5. **Refund disputes:** Always issue refund immediately to avoid chargebacks

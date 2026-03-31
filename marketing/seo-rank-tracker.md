@@ -36,19 +36,19 @@ Posts chosen by combining three signals:
 ### Free Methods (no paid tool needed)
 
 **Option A: Google Search Console (recommended)**
-1. Founder enables GSC for `innermind.app` (requires DNS verification)
+1. Founder enables GSC for `innermindhealing.com` (requires DNS verification)
 2. Search Console → Performance → Queries
 3. Filter by each target keyword — shows impressions, clicks, avg position
 
 **Option B: Manual SERP check (incognito + VPN off)**
 1. Open incognito window
 2. Search each target keyword in Google
-3. Note page number + position of `innermind.app/blog/[slug]`
+3. Note page number + position of `innermindhealing.com/blog/[slug]`
 4. Record in the table above
 
 **Option C: Free rank checker**
 - Use `https://www.serprobot.com` or `https://www.rankchecker.com` (free tier)
-- Enter domain `innermind.app` and each target keyword
+- Enter domain `innermindhealing.com` and each target keyword
 
 ---
 
@@ -64,7 +64,7 @@ Posts chosen by combining three signals:
 
 ## Priority Actions to Accelerate Ranking
 
-1. **Submit sitemap** to Google Search Console: `innermind.app/sitemap.xml`
+1. **Submit sitemap** to Google Search Console: `innermindhealing.com/sitemap.xml`
 2. **Internal linking**: each top-10 post should link to at least 2 others
 3. **Backlinks**: see `link-building-targets.md` for outreach plan
 4. **Schema markup**: add `Article` and `FAQPage` JSON-LD to each post

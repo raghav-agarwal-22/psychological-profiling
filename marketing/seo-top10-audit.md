@@ -192,9 +192,9 @@ Founder has been asked to set up GSC (tracked in `agents/ceo/FOUNDER_ACTION_LOG.
 
 **GSC Setup Checklist (for founder):**
 1. Go to search.google.com/search-console
-2. Add property: `https://innermind.app` (or wherever the domain is)
+2. Add property: `https://innermindhealing.com` (or wherever the domain is)
 3. Verify via DNS TXT record (fastest method)
-4. Submit sitemap: `https://innermind.app/sitemap.xml`
+4. Submit sitemap: `https://innermindhealing.com/sitemap.xml`
 5. Share access with: [engineer email]
 
 **Estimated time to first meaningful data:** 7–14 days after setup.

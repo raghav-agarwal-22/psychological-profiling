@@ -166,7 +166,7 @@ That's not a label. That's a map.
 
 We're building Innermind because we believe psychological self-knowledge should be this specific and this actionable.
 
-Try it free at innermind.app
+Try it free at innermindhealing.com
 
 #PersonalDevelopment #AI #PsychologyTech #SelfAwareness #Leadership
 
@@ -341,7 +341,7 @@ That's a different conversation.
 
 We built this because generic coaching doesn't stick. Coaching grounded in your own psychology does.
 
-Try the AI coach free at innermind.app
+Try the AI coach free at innermindhealing.com
 
 #AICoach #PersonalDevelopment #Psychology #FutureOfCoaching #SelfAwareness
 
@@ -379,5 +379,5 @@ If you're in HR, L&D, or executive coaching — I'd love to talk about how this 
 - **Frequency:** 1 post/day for 14 days
 - **Best times:** Tuesday–Thursday, 8–10am or 12–1pm in your audience's timezone
 - **Engagement response:** Reply to every comment in first 60 minutes to boost algorithmic reach
-- **Profile link:** Add innermind.app to LinkedIn bio before launch
+- **Profile link:** Add innermindhealing.com to LinkedIn bio before launch
 - **Hashtag strategy:** Mix broad (#Leadership, #HR) with niche (#AttachmentTheory, #BigFive) — 3-5 per post max

@@ -64,7 +64,7 @@ If you've ever wanted to understand yourself at a deeper level — your patterns
 
 Free to start. Takes ~25 minutes.
 
-Try it: innermind.app
+Try it: innermindhealing.com
 
 (reply with your portrait when you're done — I read every one)
 ```
@@ -219,7 +219,7 @@ Then an AI synthesizes the results into a unified psychological portrait — not
 
 I'd genuinely love feedback from people with psychology backgrounds on: (1) whether the framework selection makes sense, (2) whether the synthesis approach is sound, (3) what you'd add or remove.
 
-You can try it at innermind.app — free, takes about 25 minutes.
+You can try it at innermindhealing.com — free, takes about 25 minutes.
 
 Disclosure: I'm the founder. Happy to answer any questions about methodology.
 
@@ -241,7 +241,7 @@ What surprised me building it:
 - People's results change more than expected over time (we built a growth tracking feature because of this)
 - The most useful feature ended up being the AI coach — having a conversational partner who actually knows your full profile is different from generic advice
 
-If you're into self-knowledge and haven't hit the ceiling of single-framework tests, worth trying: innermind.app
+If you're into self-knowledge and haven't hit the ceiling of single-framework tests, worth trying: innermindhealing.com
 
 Happy to answer questions. What frameworks have you found most useful for self-understanding?
 
@@ -260,7 +260,7 @@ For people who've been into MBTI: do you find the Big Five addresses the limitat
 
 I'm curious because a lot of Innermind users come from MBTI and have interesting "translation" intuitions — like how INFJ often maps to high Openness + high Agreeableness + Type 4 or Type 1 Enneagram. But the correlation is messier than people expect.
 
-(Plug: if you want to see how your MBTI correlates with Big Five, Innermind shows you all of it together at innermind.app)
+(Plug: if you want to see how your MBTI correlates with Big Five, Innermind shows you all of it together at innermindhealing.com)
 
 ---
 
@@ -283,7 +283,7 @@ Some patterns I've found genuinely surprising:
 
 Has anyone else noticed these correlations? I'm curious whether they match your self-understanding.
 
-If you want to see how your own Enneagram type maps against attachment and the other frameworks: innermind.app
+If you want to see how your own Enneagram type maps against attachment and the other frameworks: innermindhealing.com
 
 ---
 
@@ -325,7 +325,7 @@ Still very early. Launched to a small beta. Retention has been better than expec
 2. Validated instruments matter. We spent weeks getting the assessment questions right. Users notice when they feel "off".
 3. The coach is the stickiest feature. Everything else drives acquisition; the coach drives retention.
 
-Try it at innermind.app. Happy to answer questions — especially from anyone who's built in the self-knowledge/psychology space.
+Try it at innermindhealing.com. Happy to answer questions — especially from anyone who's built in the self-knowledge/psychology space.
 
 ---
 
@@ -358,7 +358,7 @@ Other features: growth tracking (retake and see score changes), adaptive follow-
 
 **Why this?** I got frustrated that every personality tool gives you one lens. These frameworks were designed to describe different dimensions of the same person. The synthesis is where the real insight lives.
 
-Try it: innermind.app
+Try it: innermindhealing.com
 
 Happy to answer questions about the framework selection, the AI synthesis approach, or anything technical.
 

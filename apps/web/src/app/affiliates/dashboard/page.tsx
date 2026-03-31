@@ -137,7 +137,7 @@ export default function AffiliateDashboardPage() {
     return (
       <div className="mx-auto max-w-md px-6 py-24 text-center">
         <h1 className="mb-3 font-serif text-2xl text-stone-100">Application not approved</h1>
-        <p className="mb-6 text-stone-400">Your application wasn't approved at this time. Questions? Email us at hello@innermind.app.</p>
+        <p className="mb-6 text-stone-400">Your application wasn't approved at this time. Questions? Email us at hello@innermindhealing.com.</p>
         <Link href="/" className="rounded-xl bg-stone-800 px-6 py-2.5 text-sm font-semibold text-stone-200 hover:bg-stone-700">
           Back to Innermind
         </Link>

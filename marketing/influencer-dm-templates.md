@@ -27,7 +27,7 @@ Your audience are exactly the kind of thoughtful people this is built for.
 
 Happy to just send you a link if you want to try it. No strings.
 
-— [Founder Name], Innermind (innermind.app)
+— [Founder Name], Innermind (innermindhealing.com)
 
 ---
 
@@ -59,7 +59,7 @@ Not looking for a formal ad deal — just wanted you to know it exists because y
 If it's ever worth a mention, or you'd want to geek out about the frameworks on a future episode, I'm around.
 
 — [Founder Name]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
 ---
 

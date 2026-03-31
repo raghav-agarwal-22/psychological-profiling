@@ -35,9 +35,9 @@ Want me to set up your free Pro account so you can explore first?
 
 Best,
 [YOUR NAME]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
-P.S. If you'd rather go straight to the form: innermind.app/affiliates
+P.S. If you'd rather go straight to the form: innermindhealing.com/affiliates
 
 ---
 
@@ -90,7 +90,7 @@ I'll start by sending you both free lifetime Pro accounts so you can actually ex
 Worth a conversation?
 
 [YOUR NAME]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
 ---
 
@@ -111,7 +111,7 @@ I'm building Innermind, a psychological profiling platform that synthesizes Big 
 
 Partnership offer: free lifetime Pro account + 30% recurring affiliate commission. Would love to explore a collaboration — even a reaction video to your own Innermind results could be a great format.
 
-Open to it? → innermind.app/affiliates or reply here.
+Open to it? → innermindhealing.com/affiliates or reply here.
 
 [YOUR NAME], Innermind
 
@@ -136,7 +136,7 @@ I'm the founder of Innermind — a multi-framework personality platform (Big Fiv
 Would you be interested in taking it for a spin?
 
 [YOUR NAME]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
 ---
 
@@ -154,7 +154,7 @@ Innermind synthesizes five frameworks into one AI portrait (Big Five, Schwartz V
 
 Affiliate partnership: free Pro account + 30% recurring commission. Worth exploring?
 
-[YOUR NAME], Innermind — innermind.app/affiliates
+[YOUR NAME], Innermind — innermindhealing.com/affiliates
 
 ---
 

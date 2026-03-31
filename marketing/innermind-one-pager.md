@@ -94,7 +94,7 @@ At Month 3 run rate: **$100k ARR.**
 
 **For investment:** [investor contact placeholder — email or Calendly]
 
-**Try it:** [innermind.app URL]
+**Try it:** [innermindhealing.com URL]
 
 ---
 

@@ -14,7 +14,7 @@
 
 **Target:** r/psychology
 **Post Idea:** "Big Five vs MBTI — why researchers prefer one but practitioners use the other"
-**UTM:** `https://innermind.app/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psych-bigfive-mbti`
+**UTM:** `https://innermindhealing.com/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psych-bigfive-mbti`
 **Best Time:** Tuesday, 9–11am EST
 **Flair:** Research / Discussion
 
@@ -60,7 +60,7 @@ I've been exploring multi-framework approaches where you use all of them as a sy
 
 **Target:** r/enneagram
 **Post Idea:** "What your Enneagram wing reveals that your main type doesn't"
-**UTM:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-wing`
+**UTM:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-wing`
 **Best Time:** Thursday, 8–10pm EST
 **Flair:** Discussion / Growth
 
@@ -98,7 +98,7 @@ What's your type/wing combo, and does this activation-under-stress framing match
 
 **Target:** r/selfimprovement
 **Post Idea:** "The Dark Triad: how to spot it in yourself before it becomes a problem"
-**UTM:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimp-dark-triad`
+**UTM:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=selfimp-dark-triad`
 **Best Time:** Wednesday, 8–10am EST
 **Flair:** Self-Improvement / Psychology
 
@@ -144,7 +144,7 @@ What's your honest read on which of the three you have the most of? (I'll go fir
 
 **Target:** r/mbti
 **Post Idea:** "Why attachment style explains 80% of your relationship patterns"
-**UTM:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=mbti-attachment`
+**UTM:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=mbti-attachment`
 **Best Time:** Tuesday, 7–10pm EST
 **Flair:** Discussion / Relationships
 
@@ -195,7 +195,7 @@ What's your MBTI + Attachment combo? I'm curious whether there are patterns here
 
 **Target:** r/personalitytypes
 **Post Idea:** "Jungian archetypes vs MBTI — same framework, different lens"
-**UTM:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=personalitytypes-jung`
+**UTM:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=personalitytypes-jung`
 **Best Time:** Wednesday or Thursday, 7–9pm EST
 **Flair:** Discussion / Frameworks
 

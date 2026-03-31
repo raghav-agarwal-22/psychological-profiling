@@ -9,7 +9,7 @@
 
 ### Step 1: Create Reddit Ads Account
 1. Go to https://ads.reddit.com/
-2. Sign in with your Reddit account (or create a new one with `founders@innermind.app`)
+2. Sign in with your Reddit account (or create a new one with `founders@innermindhealing.com`)
 3. Click "New Ad Account"
 4. Business name: **Innermind**
 5. Add billing: credit card for $50/day spend
@@ -46,7 +46,7 @@
 - Call to action: **Learn More**
 - Destination URL:
   ```
-  https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=quiz-hook
+  https://innermindhealing.com/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=quiz-hook
   ```
 
 **Ad 2 (Insight Hook) — for psychology communities:**
@@ -56,7 +56,7 @@
 - Call to action: **Sign Up**
 - Destination URL:
   ```
-  https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=insight-hook
+  https://innermindhealing.com/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=insight-hook
   ```
 
 ### Step 5: Verify tracking

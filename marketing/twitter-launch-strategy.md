@@ -125,7 +125,7 @@ Free to try.
 If you've ever wanted to understand yourself through more than one lens — this is it.
 
 → [Product Hunt link]
-→ [innermind.app]
+→ [innermindhealing.com]
 
 Would mean everything if you hunted us. 🙏
 ```
@@ -176,7 +176,7 @@ If you're curious about your psychological portrait — this is the freest it'll
 
 ### Launch Day Engagement
 - Reply to every comment on your PH page within 15 minutes during launch hours
-- Retweet anyone who posts about Innermind on X (search `innermind` + `innermind.app`)
+- Retweet anyone who posts about Innermind on X (search `innermind` + `innermindhealing.com`)
 - DM the 10–15 most engaged followers to ask for an honest PH review (not an upvote ask — a genuine "would love your feedback")
 
 ---
@@ -188,7 +188,7 @@ Before Day 1 of the content calendar:
 - [ ] Profile photo: founder photo or Innermind logo (founder performs better pre-1k)
 - [ ] Bio: "Building @innermindapp — psychological profiling with 5 frameworks. Understanding yourself > any four-letter type."
 - [ ] Pinned tweet: Thread 1 (Day 1) or the product link
-- [ ] Link in bio: `innermind.app?utm_source=twitter&utm_medium=bio`
+- [ ] Link in bio: `innermindhealing.com?utm_source=twitter&utm_medium=bio`
 - [ ] Connected to PostHog UTM tracking
 
 ---

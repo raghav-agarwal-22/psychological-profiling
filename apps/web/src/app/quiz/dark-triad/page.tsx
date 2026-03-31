@@ -210,13 +210,13 @@ export default function DarkTriadQuiz() {
       '@type': 'Quiz',
       name: 'Dark Triad Personality Test',
       description: 'A free 21-question Dark Triad test measuring Narcissism, Machiavellianism, and Psychopathy. Based on subclinical research (Paulhus & Williams, 2002). Non-judgmental and research-based. No signup required.',
-      url: 'https://innermind.app/quiz/dark-triad',
+      url: 'https://innermindhealing.com/quiz/dark-triad',
       educationalLevel: 'beginner',
       timeRequired: 'PT3M',
       numberOfQuestions: 21,
       about: { '@type': 'Thing', name: 'Dark Triad (Narcissism, Machiavellianism, Psychopathy)' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (

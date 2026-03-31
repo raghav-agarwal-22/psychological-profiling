@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'FAQ — Innermind',
     description:
       'Answers to the most common questions about Innermind — our psychological assessments, AI features, pricing, privacy practices, and professional plans.',
-    url: 'https://innermind.app/faq',
+    url: 'https://innermindhealing.com/faq',
     siteName: 'Innermind',
     type: 'website',
   },
@@ -199,7 +199,7 @@ const faqSchema = {
       name: 'What is your refund policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'If you are unsatisfied with Innermind Pro within the first 7 days after your trial ends, contact us at support@innermind.app and we will issue a full refund. For annual plans, we offer a 14-day refund window from the first charge.',
+        text: 'If you are unsatisfied with Innermind Pro within the first 7 days after your trial ends, contact us at support@innermindhealing.com and we will issue a full refund. For annual plans, we offer a 14-day refund window from the first charge.',
       },
     },
     {
@@ -215,7 +215,7 @@ const faqSchema = {
       name: 'Can I delete my account and data?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. You can request full account deletion at any time by emailing privacy@innermind.app. We will permanently delete all your personal data within 30 days.',
+        text: 'Yes. You can request full account deletion at any time by emailing privacy@innermindhealing.com. We will permanently delete all your personal data within 30 days.',
       },
     },
     {
@@ -610,10 +610,10 @@ const FAQ_SECTIONS: FaqSection[] = [
             If you are unsatisfied with Innermind Pro within the first 7 days after your trial ends
             (i.e., within 7 days of your first charge), contact us at{' '}
             <a
-              href="mailto:support@innermind.app"
+              href="mailto:support@innermindhealing.com"
               className="text-amber-400 underline underline-offset-2 hover:text-amber-300"
             >
-              support@innermind.app
+              support@innermindhealing.com
             </a>{' '}
             and we will issue a full refund. For annual plans, we offer a 14-day refund window from
             the date of the first charge.
@@ -645,10 +645,10 @@ const FAQ_SECTIONS: FaqSection[] = [
           <>
             Yes. You can request full account deletion at any time by emailing{' '}
             <a
-              href="mailto:privacy@innermind.app"
+              href="mailto:privacy@innermindhealing.com"
               className="text-amber-400 underline underline-offset-2 hover:text-amber-300"
             >
-              privacy@innermind.app
+              privacy@innermindhealing.com
             </a>
             . We will permanently delete all your personal data — assessment responses, profiles,
             journal entries, and account information — within 30 days. Billing records are retained
@@ -682,10 +682,10 @@ const FAQ_SECTIONS: FaqSection[] = [
             sub-processors (Anthropic, Stripe, Resend, PostHog) are bound by data processing
             agreements consistent with GDPR requirements. To exercise your rights, email{' '}
             <a
-              href="mailto:privacy@innermind.app"
+              href="mailto:privacy@innermindhealing.com"
               className="text-amber-400 underline underline-offset-2 hover:text-amber-300"
             >
-              privacy@innermind.app
+              privacy@innermindhealing.com
             </a>
             .
           </>
@@ -748,10 +748,10 @@ const FAQ_SECTIONS: FaqSection[] = [
             and group-level insight summaries. Ideal for group practices, HR teams, organizational
             development consultants, and leadership programs. For custom plans, email{' '}
             <a
-              href="mailto:professionals@innermind.app"
+              href="mailto:professionals@innermindhealing.com"
               className="text-amber-400 underline underline-offset-2 hover:text-amber-300"
             >
-              professionals@innermind.app
+              professionals@innermindhealing.com
             </a>
             .
           </>
@@ -854,15 +854,15 @@ export default function FaqPage() {
           <p className="mb-6 text-sm leading-relaxed text-stone-400">
             Our team reads every message. Reach us at{' '}
             <a
-              href="mailto:hello@innermind.app"
+              href="mailto:hello@innermindhealing.com"
               className="text-amber-400 underline underline-offset-2 hover:text-amber-300"
             >
-              hello@innermind.app
+              hello@innermindhealing.com
             </a>{' '}
             and we will get back to you within one business day.
           </p>
           <a
-            href="mailto:hello@innermind.app"
+            href="mailto:hello@innermindhealing.com"
             className="inline-flex items-center justify-center rounded-xl border border-stone-700 px-6 py-2.5 text-sm font-semibold text-stone-300 transition-colors hover:border-stone-500 hover:text-stone-100"
           >
             Email us

@@ -125,7 +125,7 @@ Big Five + MBTI + Enneagram + Attachment + Values.
 
 $19/mo or $190/yr.
 
-[link to innermind.app]
+[link to innermindhealing.com]
 ```
 
 **Reddit** (r/psychology, r/mbti, r/selfimprovement):

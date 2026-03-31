@@ -1,7 +1,7 @@
 # Innermind Podcast Talking Points
 
 **For:** Founder interview preparation, show notes, one-pager distribution
-**Product:** [innermind.app](https://innermind.app)
+**Product:** [innermindhealing.com](https://innermindhealing.com)
 **Frameworks:** Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes
 
 ---
@@ -103,7 +103,7 @@ Innermind is a psychological profiling app that runs five validated assessments 
 
 The result is not a type or a label. It is a narrative: a 600–900 word portrait written in second person that integrates the patterns across all five dimensions into something you actually recognize as yourself.
 
-**Website:** [innermind.app](https://innermind.app)
+**Website:** [innermindhealing.com](https://innermindhealing.com)
 **Status:** Pre-launch / Product Hunt launch imminent
 
 ---

@@ -7,7 +7,7 @@
  *
  * Usage:
  *   node scripts/generate-revenue-dashboard.mjs
- *   API_URL=https://api.innermind.app ADMIN_SECRET=xxx node scripts/generate-revenue-dashboard.mjs
+ *   API_URL=https://api.innermindhealing.com ADMIN_SECRET=xxx node scripts/generate-revenue-dashboard.mjs
  *
  * Designed to run as a daily cron on Railway:
  *   node scripts/generate-revenue-dashboard.mjs && git commit -am "chore: daily revenue dashboard update"

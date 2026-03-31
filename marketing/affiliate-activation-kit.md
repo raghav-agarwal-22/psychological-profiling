@@ -14,8 +14,8 @@ Welcome to the Innermind affiliate program. Your application is approved.
 
 Here's everything in one place:
 
-**Your referral link:** `https://innermind.app/?ref=[YOUR_CODE]`
-**Your affiliate dashboard:** https://innermind.app/affiliates/dashboard
+**Your referral link:** `https://innermindhealing.com/?ref=[YOUR_CODE]`
+**Your affiliate dashboard:** https://innermindhealing.com/affiliates/dashboard
 **Commission:** 30% recurring — every month, for as long as each subscriber is active
 **Cookie window:** 90 days
 
@@ -25,7 +25,7 @@ Below is your complete promotional kit. Use what fits your format — or reach o
 
 Best,
 [Founder name]
-Innermind — innermind.app
+Innermind — innermindhealing.com
 
 ---
 
@@ -79,7 +79,7 @@ What sets Innermind apart from a standard personality quiz:
 
 There's a free tier — you can take all the assessments and get your basic results without paying anything. The Pro upgrade adds the AI coach, reflection journal, and growth tracking.
 
-If you're into self-knowledge and haven't tried it: → [Try Innermind here](https://innermind.app/?ref=[YOUR_CODE])
+If you're into self-knowledge and haven't tried it: → [Try Innermind here](https://innermindhealing.com/?ref=[YOUR_CODE])
 
 *Disclosure: I'm an affiliate, which means I earn a commission if you sign up for Pro through my link. I only recommend things I've actually used.*
 
@@ -92,7 +92,7 @@ I just got my Innermind profile back.
 
 They run you through 5 validated frameworks — Big Five, Enneagram, Attachment Style, Jungian Archetypes, Schwartz Values — and synthesize it all into one portrait.
 
-It's the most complete personality read I've gotten. Free to start: innermind.app/?ref=[YOUR_CODE]
+It's the most complete personality read I've gotten. Free to start: innermindhealing.com/?ref=[YOUR_CODE]
 
 ---
 
@@ -107,7 +107,7 @@ What made it useful: the AI coach asks you follow-ups based on YOUR results, not
 
 Free tier available. No credit card. 20 minutes.
 
-→ innermind.app/?ref=[YOUR_CODE]
+→ innermindhealing.com/?ref=[YOUR_CODE]
 
 ---
 
@@ -124,7 +124,7 @@ The AI coach at the end asks follow-up questions based on your actual results. I
 
 There's a free tier. No credit card required to start.
 
-→ [link in bio] / innermind.app/?ref=[YOUR_CODE]
+→ [link in bio] / innermindhealing.com/?ref=[YOUR_CODE]
 
 ---
 
@@ -142,7 +142,7 @@ I took it, and [one honest personal reaction — what surprised you, what resona
 
 The assessment takes about 20 minutes. There's a free tier — no credit card required — and if you want the full AI coaching and growth tracking, Pro is $19/month.
 
-Try it at innermind.app with my link in the description.
+Try it at innermindhealing.com with my link in the description.
 
 ---
 
@@ -159,7 +159,7 @@ Try it at innermind.app with my link in the description.
 
 ### 50-Word Blurb
 
-Quick recommendation for anyone into personality psychology: **Innermind** synthesizes five validated frameworks (Big Five, Enneagram, Attachment Style, Jungian Archetypes, Schwartz Values) into a single AI portrait. About 20 minutes. Free to start. The AI coach at the end is genuinely insightful. → [innermind.app/?ref=[YOUR_CODE]]
+Quick recommendation for anyone into personality psychology: **Innermind** synthesizes five validated frameworks (Big Five, Enneagram, Attachment Style, Jungian Archetypes, Schwartz Values) into a single AI portrait. About 20 minutes. Free to start. The AI coach at the end is genuinely insightful. → [innermindhealing.com/?ref=[YOUR_CODE]]
 
 ---
 
@@ -173,7 +173,7 @@ The AI coach at the end asks follow-ups based on your actual results. Worth 20 m
 
 Free tier available, no credit card required.
 
-→ [Try it here](https://innermind.app/?ref=[YOUR_CODE])
+→ [Try it here](https://innermindhealing.com/?ref=[YOUR_CODE])
 
 ---
 
@@ -189,7 +189,7 @@ There's also a reflection journal and an AI coach that asks follow-up questions 
 
 Free tier available. No credit card required to start. Pro is $19/month.
 
-→ [Try Innermind here](https://innermind.app/?ref=[YOUR_CODE])
+→ [Try Innermind here](https://innermindhealing.com/?ref=[YOUR_CODE])
 
 ---
 
@@ -223,9 +223,9 @@ Even one piece of content — a tweet, a newsletter mention, an Instagram story 
 
 ## Assets Reference
 
-- **Affiliate dashboard**: https://innermind.app/affiliates/dashboard
-- **Program page**: https://innermind.app/affiliates
-- **Innermind landing page**: https://innermind.app
+- **Affiliate dashboard**: https://innermindhealing.com/affiliates/dashboard
+- **Program page**: https://innermindhealing.com/affiliates
+- **Innermind landing page**: https://innermindhealing.com
 - **Contact for custom assets**: [founder email]
 
 ---

@@ -213,13 +213,13 @@ export default function EnneagramQuiz() {
       '@type': 'Quiz',
       name: 'Free Enneagram Personality Test',
       description: 'A free 36-question Enneagram test. Find your Enneagram type and wing from the 9-type model. Instant results with full type descriptions. No signup required.',
-      url: 'https://innermind.app/quiz/enneagram',
+      url: 'https://innermindhealing.com/quiz/enneagram',
       educationalLevel: 'beginner',
       timeRequired: 'PT5M',
       numberOfQuestions: 36,
       about: { '@type': 'Thing', name: 'Enneagram' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (

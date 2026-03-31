@@ -36,14 +36,14 @@ NEXT_PUBLIC_META_PIXEL_ID=XXXXXXXXXXXXXXX
 1. Go to [ads.google.com](https://ads.google.com) → "New campaign"
 2. Account email: use the Innermind founder email
 3. Business name: **Innermind**
-4. Website: `https://innermind.app`
+4. Website: `https://innermindhealing.com`
 5. Skip campaign creation for now ("Expert mode" → "Create account without campaign")
 6. Note the **Customer ID** (format: `XXX-XXX-XXXX`)
 
 ### Create Google Tag Manager Container
 
 1. Go to [tagmanager.google.com](https://tagmanager.google.com)
-2. Create account → **Innermind**, Container: `innermind.app`, Web
+2. Create account → **Innermind**, Container: `innermindhealing.com`, Web
 3. Copy the **Container ID** (`GTM-XXXXXXX`)
 4. Set `NEXT_PUBLIC_GTM_ID` in Vercel
 5. In GTM, connect to Google Ads:
@@ -71,7 +71,7 @@ Copy each conversion label into the env vars above.
 
 1. Business Manager → Events Manager → Connect Data Sources → Web → Meta Pixel
 2. Pixel name: **Innermind Web**
-3. Website URL: `https://innermind.app`
+3. Website URL: `https://innermindhealing.com`
 4. Choose "Install code manually" (pixel is already in the codebase)
 5. Copy the **Pixel ID** (15-digit number)
 6. Set `NEXT_PUBLIC_META_PIXEL_ID` in Vercel
@@ -79,7 +79,7 @@ Copy each conversion label into the env vars above.
 ### Verify Meta Pixel
 
 1. Install Meta Pixel Helper Chrome extension
-2. Visit `https://innermind.app` — should show PageView event
+2. Visit `https://innermindhealing.com` — should show PageView event
 3. Sign up for a test account → should show CompleteRegistration event
 4. Upgrade to Pro → should show Purchase event
 
@@ -143,7 +143,7 @@ Ad Group 4: Self-Understanding / Growth
 > **Headline 2:** Free Psychological Assessment
 > **Headline 3:** AI-Synthesized Personal Portrait
 > **Description:** Take 5 science-backed assessments. Get one AI-generated portrait of who you really are. Track your growth over time.
-> **URL:** innermind.app
+> **URL:** innermindhealing.com
 
 **Landing page:** `/` (homepage) with UTM `utm_source=google&utm_medium=cpc&utm_campaign=search-personality`
 
@@ -224,12 +224,12 @@ Reddit Ads are the **first** channel to activate — lowest setup friction, high
 **Ad 1 (Quiz Hook):**
 > **Headline:** Most MBTI tests get you wrong. Here's why.
 > **Body:** 4-letter codes miss 90% of your psychology. Innermind combines Big Five, Jungian archetypes, attachment styles, Enneagram, and Schwartz values into one free profile.
-> **URL:** `https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=quiz-hook`
+> **URL:** `https://innermindhealing.com/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=quiz-hook`
 
 **Ad 2 (Insight Hook):**
 > **Headline:** Discover your actual cognitive patterns — not just a letter code
 > **Body:** Full psychological profile across 5 science-backed dimensions. Takes 20 minutes. Free. AI-synthesized portrait that actually explains your behavior.
-> **URL:** `https://innermind.app/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=insight-hook`
+> **URL:** `https://innermindhealing.com/?utm_source=reddit&utm_medium=paid&utm_campaign=mbti-test&utm_content=insight-hook`
 
 ### Tracking (No pixel needed)
 

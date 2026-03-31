@@ -3,7 +3,7 @@
 **Goal:** 10 paying B2B workspaces in 30 days
 **Targets:** Therapists, life/executive coaches, HR managers, OD consultants
 **Plans:** Pro Business $99/mo (10 seats) · Team $299/mo (50 seats)
-**Landing page:** innermind.app/for-professionals
+**Landing page:** innermindhealing.com/for-professionals
 
 ---
 
@@ -23,7 +23,7 @@ Most coaches I've talked to say it cuts 1–2 sessions of intake work and opens 
 
 Pro Business is $99/mo for 10 client seats. Happy to walk you through it if it looks relevant.
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 Best,
 [Name]
@@ -44,7 +44,7 @@ The attachment style layer tends to be the one therapists find most directly use
 
 Pro Business is $99/mo for up to 10 clients. If you want to try it before committing, I'm happy to set you up.
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 [Name]
 Innermind
@@ -63,7 +63,7 @@ For people ops at [Company], this could be useful for team design, communication
 
 The Team plan is $299/mo for 50 seats. Happy to walk you through a demo.
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 Best,
 [Name]
@@ -83,7 +83,7 @@ Each team member takes five assessments, you get individual profiles plus cohort
 
 The Team plan ($299/mo, 50 seats) is typically how consultants use it. Happy to walk you through it.
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 [Name]
 
@@ -119,7 +119,7 @@ Before a first session, clients complete five peer-reviewed assessments (Big Fiv
 
 I'd love to explore being mentioned in your newsletter or listed in your resource directory for members. I'm happy to offer a complimentary 3-month Pro Business access for any ICF staff or board members who want to experience it firsthand.
 
-Website: innermind.app/for-professionals
+Website: innermindhealing.com/for-professionals
 Pricing: $99/mo for 10 client seats
 
 Happy to connect over a call or send more detail.
@@ -141,7 +141,7 @@ I'm founder of Innermind, a psychological profiling platform designed for therap
 
 We'd be happy to be listed as a therapist resource or to contribute a piece on multi-framework psychological profiling for your practitioner audience.
 
-innermind.app/for-professionals
+innermindhealing.com/for-professionals
 
 Best,
 [Name]
@@ -163,7 +163,7 @@ We built this into a tool called Innermind (disclosure: I'm involved in the proj
 
 Curious what assessment tools others in this community use for intake? Is a multi-framework approach useful or do you prefer one framework and know it deeply?
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 ---
 
@@ -180,7 +180,7 @@ The tool I'm using is Innermind (disclosure: I helped build it). $99/mo for 10 c
 
 What do others use? CliftonStrengths? DISC? Or just free frameworks?
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 ---
 
@@ -192,7 +192,7 @@ What do others use? CliftonStrengths? DISC? Or just free frameworks?
 Question for the group: how do you handle client intake assessments? I've been experimenting with sending a multi-framework psychological battery before the first session and getting a synthesized portrait to review. Curious what tools others use.
 
 **Version B (tool share):**
-Sharing a tool that's helped me reduce intake time: Innermind (disclosure: I built it). Clients take 5 validated assessments before your first session, you get a synthesized AI portrait to review. $99/mo for 10 client seats. innermind.app/for-professionals — happy to give anyone in this group a free trial month.
+Sharing a tool that's helped me reduce intake time: Innermind (disclosure: I built it). Clients take 5 validated assessments before your first session, you get a synthesized AI portrait to review. $99/mo for 10 client seats. innermindhealing.com/for-professionals — happy to give anyone in this group a free trial month.
 
 ---
 
@@ -283,7 +283,7 @@ Hi [Name],
 
 Following up on my note last week about Innermind. Happy to answer any questions, set up a free trial, or just send over a demo walkthrough if you'd prefer to explore asynchronously.
 
-→ innermind.app/for-professionals
+→ innermindhealing.com/for-professionals
 
 [Name]
 
@@ -291,7 +291,7 @@ Following up on my note last week about Innermind. Happy to answer any questions
 
 Hi [Name],
 
-Last note from me. If the timing isn't right, totally understand — feel free to explore at innermind.app/for-professionals whenever you're ready.
+Last note from me. If the timing isn't right, totally understand — feel free to explore at innermindhealing.com/for-professionals whenever you're ready.
 
 [Name]
 

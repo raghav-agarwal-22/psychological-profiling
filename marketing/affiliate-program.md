@@ -44,7 +44,7 @@ Here's how it works:
 
 If you have a newsletter, a course, or even just regularly recommend tools to clients in your intake process, this could add up quickly without any extra work.
 
-**Apply here:** https://innermind.app/affiliates
+**Apply here:** https://innermindhealing.com/affiliates
 
 It takes about 2 minutes. We review applications within 24 hours and send your link immediately after approval.
 
@@ -86,9 +86,9 @@ Want me to set up your free account so you can explore before deciding?
 Best,
 [Founder name]
 Innermind
-innermind.app
+innermindhealing.com
 
-P.S. You can apply directly at innermind.app/affiliates if you'd prefer to go straight to the form.
+P.S. You can apply directly at innermindhealing.com/affiliates if you'd prefer to go straight to the form.
 
 ---
 
@@ -128,7 +128,7 @@ We just launched an affiliate program for coaches, therapists, and psychology cr
 
 30% recurring commission. 90-day cookie. No cap.
 
-If your audience cares about self-knowledge and inner work → innermind.app/affiliates
+If your audience cares about self-knowledge and inner work → innermindhealing.com/affiliates
 
 ### LinkedIn Post
 
@@ -146,7 +146,7 @@ Innermind synthesizes five validated frameworks (Big Five, Schwartz Values, Atta
 
 If your audience is in the psychology, coaching, or inner work space, they're already a natural fit.
 
-Apply at innermind.app/affiliates — reviewed within 24 hours.
+Apply at innermindhealing.com/affiliates — reviewed within 24 hours.
 
 ---
 
@@ -156,7 +156,7 @@ Apply at innermind.app/affiliates — reviewed within 24 hours.
 
 ---
 
-**This week's recommendation:** [Innermind](https://innermind.app/?ref=YOURCODE)
+**This week's recommendation:** [Innermind](https://innermindhealing.com/?ref=YOURCODE)
 
 I've been recommending Innermind to [clients / my audience / my students] and wanted to share it here too.
 
@@ -164,7 +164,7 @@ It's a psychological profiling platform that takes you through five validated fr
 
 There's a free tier. No credit card required. Worth an afternoon.
 
-→ [Try Innermind](https://innermind.app/?ref=YOURCODE)
+→ [Try Innermind](https://innermindhealing.com/?ref=YOURCODE)
 
 ---
 

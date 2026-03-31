@@ -36,7 +36,7 @@
 
 **Target:** r/mbti
 **Format:** Personal story + insight + genuine value
-**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1`
+**UTM link:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1`
 **Best time to post:** Tuesday or Wednesday, 8–10pm EST
 **Flair:** Discussion / Meta
 
@@ -75,7 +75,7 @@ Anyone else here uses multiple frameworks? Curious what combinations you've foun
 
 ---
 
-*[If you want to try the five-framework approach yourself, I used [Innermind](https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1) — it runs all five assessments and generates an AI synthesis. Full disclosure: I'm affiliated with the project, but the tests themselves are free.]*
+*[If you want to try the five-framework approach yourself, I used [Innermind](https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post1) — it runs all five assessments and generates an AI synthesis. Full disclosure: I'm affiliated with the project, but the tests themselves are free.]*
 
 > **Note:** Always add the disclosure line. Reddit respects transparency and the community will downvote undisclosed promotion. The disclosure actually increases credibility.
 
@@ -85,7 +85,7 @@ Anyone else here uses multiple frameworks? Curious what combinations you've foun
 
 **Target:** r/psychology
 **Format:** Science explainer — educational, cites research
-**UTM link:** `https://innermind.app/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post1`
+**UTM link:** `https://innermindhealing.com/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post1`
 **Best time to post:** Tuesday morning, 9–11am EST
 **Flair:** Research / Discussion
 
@@ -113,7 +113,7 @@ Here's the actual research picture:
 
 Someone high in Big Five Openness (curious, creative) but with a strong Schwartz "Security" value and Anxious Attachment will behave very differently from someone with the same Openness score but high "Self-Direction" values and Secure Attachment — even though they'd look identical on a standard OCEAN report.
 
-I've been experimenting with this approach using [Innermind](https://innermind.app/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post1) (disclosure: I'm involved with the project), which runs all five validated assessments and attempts an AI synthesis. I'm not claiming it's a clinical tool — but for research-curious people who want more than one lens, it's worth the experiment.
+I've been experimenting with this approach using [Innermind](https://innermindhealing.com/blog/what-is-big-five-personality-test?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post1) (disclosure: I'm involved with the project), which runs all five validated assessments and attempts an AI synthesis. I'm not claiming it's a clinical tool — but for research-curious people who want more than one lens, it's worth the experiment.
 
 Happy to discuss the methodology — genuinely interested in what this community thinks about multi-framework convergence as an approach.
 
@@ -128,7 +128,7 @@ Happy to discuss the methodology — genuinely interested in what this community
 
 **Target:** r/enneagram
 **Format:** Cross-framework insight — feeds the community's love of synthesis
-**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-post1`
+**UTM link:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-post1`
 **Best time to post:** Wednesday or Thursday, 8–10pm EST
 **Flair:** Discussion / Growth
 
@@ -164,7 +164,7 @@ The same framework applies to any type:
 
 Most Enneagram growth work focuses on the type itself — "as a 4, practice equanimity." But if you're a 4 with anxious attachment, you need *attachment repair work* first. The Enneagram path opens up when the attachment patterns are more stable.
 
-I got really into this when I started looking at all my assessments together — there's a tool called [Innermind](https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-post1) that synthesizes five frameworks including Enneagram + Attachment. Full disclosure: I'm involved with the project. The cross-framework synthesis is what got me thinking about these combinations.
+I got really into this when I started looking at all my assessments together — there's a tool called [Innermind](https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=enneagram-post1) that synthesizes five frameworks including Enneagram + Attachment. Full disclosure: I'm involved with the project. The cross-framework synthesis is what got me thinking about these combinations.
 
 Curious what types + attachment combos others here have and how they interact. Drop yours below — would love to build a picture of the patterns.
 
@@ -174,7 +174,7 @@ Curious what types + attachment combos others here have and how they interact. D
 
 **Target:** r/selfimprovement
 **Format:** Problem/solution — practical
-**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post1`
+**UTM link:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post1`
 **Best time to post:** Monday or Wednesday, 8–10am EST
 **Flair:** Self-Improvement / Discussion
 
@@ -223,7 +223,7 @@ When three frameworks converge on something you've been denying, it's time to st
 
 I now treat my psychological profile as a *working model*, not an identity. I track quarterly — not to see if I changed type (I won't), but to see how sub-scores shift as I work on specific things. High neuroticism that drops 10 points over a year of therapy is real, measurable progress.
 
-If you want to try this approach, [Innermind](https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post1) runs all five validated frameworks and synthesizes them. Disclosure: I'm affiliated. But the testing approach itself — multi-framework + growth tracking — is the real recommendation regardless of what tool you use.
+If you want to try this approach, [Innermind](https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post1) runs all five validated frameworks and synthesizes them. Disclosure: I'm affiliated. But the testing approach itself — multi-framework + growth tracking — is the real recommendation regardless of what tool you use.
 
 What frameworks have you found actually move the needle for self-improvement work?
 
@@ -278,7 +278,7 @@ Format for Discord: "Posted this on Reddit, curious what this community thinks: 
 
 **Target:** r/selfimprovement
 **Format:** Personal insight → actionable framework
-**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2`
+**UTM link:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2`
 **Best time:** Monday or Wednesday, 8–10am EST
 
 ---
@@ -297,7 +297,7 @@ Understanding this changed how I approached relationships more than any dating a
 
 The most useful exercise I've done: map your attachment style against your core values. I'm high in "Self-Direction" values (independence, freedom) — which means my avoidant attachment isn't random, it's actually coherent with something I genuinely prioritize. The growth wasn't to become less independent; it was to differentiate "I value independence" from "I'm scared of real closeness."
 
-If you want to do this yourself, [Innermind](https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2) runs a free attachment style assessment plus a values inventory. The combo is more useful than either alone. (Disclosure: I'm affiliated with the project, but the assessments are genuinely free.)
+If you want to do this yourself, [Innermind](https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=selfimprovement-post2) runs a free attachment style assessment plus a values inventory. The combo is more useful than either alone. (Disclosure: I'm affiliated with the project, but the assessments are genuinely free.)
 
 What patterns have you noticed in yourself that took multiple repetitions to see?
 
@@ -307,7 +307,7 @@ What patterns have you noticed in yourself that took multiple repetitions to see
 
 **Target:** r/mbti
 **Format:** Type analysis / discussion starter
-**UTM link:** `https://innermind.app/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2`
+**UTM link:** `https://innermindhealing.com/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2`
 **Best time:** Tuesday or Thursday, 7–9pm EST
 
 ---
@@ -332,7 +332,7 @@ This is also why INTJ-INTP relationships have a specific friction point — the 
 
 What's your experience telling INTJ and INTP apart in real people?
 
-*(I wrote a longer version of this on the Innermind blog: [INTJ vs INTP](https://innermind.app/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2) — linked in case it's useful, no signup required)*
+*(I wrote a longer version of this on the Innermind blog: [INTJ vs INTP](https://innermindhealing.com/blog/intj-vs-intp?utm_source=reddit&utm_medium=community&utm_campaign=mbti-post2) — linked in case it's useful, no signup required)*
 
 ---
 
@@ -340,7 +340,7 @@ What's your experience telling INTJ and INTP apart in real people?
 
 **Target:** r/psychology
 **Format:** Evidence-based discussion
-**UTM link:** `https://innermind.app/blog/big-five-conscientiousness-career?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post2`
+**UTM link:** `https://innermindhealing.com/blog/big-five-conscientiousness-career?utm_source=reddit&utm_medium=community&utm_campaign=psychology-post2`
 **Best time:** Wednesday morning, 9–11am EST
 
 ---
@@ -396,7 +396,7 @@ Post Wave 2 starting 7 days after Wave 1 launches.
 
 **Target:** r/personalitytypes
 **Format:** Poll + discussion starter — drives high comment volume
-**UTM link:** `https://innermind.app?utm_source=reddit&utm_medium=community&utm_campaign=personalitytypes-poll`
+**UTM link:** `https://innermindhealing.com?utm_source=reddit&utm_medium=community&utm_campaign=personalitytypes-poll`
 **Best time to post:** Thursday or Friday, 7–9pm EST
 **Flair:** Poll / Discussion
 
@@ -433,7 +433,7 @@ What's your experience?
 
 **Target:** r/selfimprovement
 **Format:** Career + personality — high-traffic angle
-**UTM link:** `https://innermind.app/blog/big-five-personality-career-success?utm_source=reddit&utm_medium=community&utm_campaign=selfimp-career`
+**UTM link:** `https://innermindhealing.com/blog/big-five-personality-career-success?utm_source=reddit&utm_medium=community&utm_campaign=selfimp-career`
 **Best time to post:** Monday, 8–10am EST
 **Flair:** Career / Psychology
 
@@ -479,7 +479,7 @@ What's your Big Five rough profile and how does it match your career situation?
 
 **Target:** r/mbti
 **Format:** Myth-busting — high engagement, naturally generates replies
-**UTM link:** `https://innermind.app/blog/mbti-myths?utm_source=reddit&utm_medium=community&utm_campaign=mbti-myths`
+**UTM link:** `https://innermindhealing.com/blog/mbti-myths?utm_source=reddit&utm_medium=community&utm_campaign=mbti-myths`
 **Best time to post:** Tuesday or Wednesday, 7–9pm EST
 **Flair:** Discussion / Meta
 

@@ -127,13 +127,13 @@
 
 Hi Dan,
 
-Quick submission for your AI section: **Innermind** (innermind.app) — an AI that synthesizes five validated psychology frameworks (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) into a single psychological portrait.
+Quick submission for your AI section: **Innermind** (innermindhealing.com) — an AI that synthesizes five validated psychology frameworks (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) into a single psychological portrait.
 
 The technical angle: we're using Claude (Anthropic) to cross-reference assessment results across frameworks in real time, then generate adaptive follow-up questions unique to each user's specific pattern of results. Users can track psychological shifts over time as they retake assessments.
 
 Unlike MBTI or 16Personalities, these are the frameworks clinicians actually use. We're building the self-knowledge tool that psychologists would build.
 
-Live at innermind.app — happy to share access if useful.
+Live at innermindhealing.com — happy to share access if useful.
 
 — [Founder name]
 
@@ -145,7 +145,7 @@ Live at innermind.app — happy to share access if useful.
 
 Hey Ben,
 
-Innermind (innermind.app) might be interesting for your readers: it takes 5 validated psychology assessments (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) and uses Claude to synthesize them into a personalized psychological portrait.
+Innermind (innermindhealing.com) might be interesting for your readers: it takes 5 validated psychology assessments (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) and uses Claude to synthesize them into a personalized psychological portrait.
 
 What makes it different: most personality apps stop at one framework. Ours synthesizes across all five, tracks changes over time, and asks follow-up questions tailored to your specific results.
 
@@ -165,7 +165,7 @@ Sharing an interesting Claude API application: **Innermind** uses Anthropic's AP
 
 The LLM layer isn't just generating text — it's identifying patterns across frameworks (e.g., how an anxious attachment style interacts with collectivist Schwartz values and a specific Big Five profile), then generating personalized follow-up questions to go deeper.
 
-We think this is a genuinely novel application of LLMs to self-knowledge. Live at innermind.app.
+We think this is a genuinely novel application of LLMs to self-knowledge. Live at innermindhealing.com.
 
 — [Founder name]
 
@@ -258,7 +258,7 @@ I built Innermind to change that. Happy to go deeper on the data, business angle
 
 Hi,
 
-Pitching Innermind (innermind.app) — an AI psychological profiling platform that synthesizes five validated frameworks (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) into a personalized portrait.
+Pitching Innermind (innermindhealing.com) — an AI psychological profiling platform that synthesizes five validated frameworks (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes) into a personalized portrait.
 
 Key differentiators:
 - **Not MBTI:** uses clinically validated frameworks, not pop-psych
@@ -296,7 +296,7 @@ Follow-up posts:
 
 Hi,
 
-Quick pitch: **Innermind** (innermind.app) — we use Claude to synthesize results from five validated psychology assessments into a single psychological portrait.
+Quick pitch: **Innermind** (innermindhealing.com) — we use Claude to synthesize results from five validated psychology assessments into a single psychological portrait.
 
 The novel part: most AI tools in this space use one framework. We cross-reference across five (Big Five, Schwartz Values, Attachment Style, Enneagram, Jungian Archetypes), generate adaptive follow-up questions based on each user's specific pattern, and track psychological changes over time.
 

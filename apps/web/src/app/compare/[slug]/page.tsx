@@ -466,16 +466,16 @@ export default function CompareSlugPage({ params }: { params: { slug: string } }
     '@type': 'WebPage',
     name: data.metaTitle,
     description: data.metaDescription,
-    url: `https://innermind.app/compare/${data.slug}`,
+    url: `https://innermindhealing.com/compare/${data.slug}`,
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://innermind.app' },
-        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://innermind.app/compare' },
-        { '@type': 'ListItem', position: 3, name: `Innermind vs ${data.competitor}`, item: `https://innermind.app/compare/${data.slug}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://innermindhealing.com' },
+        { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://innermindhealing.com/compare' },
+        { '@type': 'ListItem', position: 3, name: `Innermind vs ${data.competitor}`, item: `https://innermindhealing.com/compare/${data.slug}` },
       ],
     },
-    publisher: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+    publisher: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
   }
 
   const faqSchema = {

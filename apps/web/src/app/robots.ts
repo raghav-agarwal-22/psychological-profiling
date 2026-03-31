@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermindhealing.com'
   return {
     rules: [
       {
