@@ -64,12 +64,12 @@ export function EmailCaptureBlock({ variant = 'blog' }: EmailCaptureBlockProps) 
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email address..."
               required
-              className="flex-1 rounded-xl border border-stone-700 bg-stone-900 px-4 py-2.5 text-sm text-stone-200 placeholder-stone-600 focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+              className="flex-1 rounded-xl border border-stone-700 bg-stone-900 px-4 py-2.5 min-h-[44px] text-sm text-stone-200 placeholder-stone-600 focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
             />
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="rounded-xl bg-amber-500 px-6 py-2.5 text-sm font-semibold text-stone-950 hover:bg-amber-400 disabled:opacity-60 transition-colors"
+              className="rounded-xl bg-amber-500 px-6 py-2.5 min-h-[44px] text-sm font-semibold text-stone-950 hover:bg-amber-400 disabled:opacity-60 transition-colors"
             >
               {status === 'loading' ? 'Subscribing…' : 'Subscribe →'}
             </button>
