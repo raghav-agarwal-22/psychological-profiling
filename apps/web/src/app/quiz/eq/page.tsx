@@ -318,7 +318,7 @@ export default function EQQuiz() {
 
           <button
             onClick={() => setStarted(true)}
-            className="w-full bg-teal-600 hover:bg-teal-500 transition-colors text-white font-semibold py-4 rounded-xl text-lg"
+            className="w-full bg-amber-500 hover:bg-amber-400 transition-colors text-stone-950 font-semibold py-4 rounded-xl text-lg"
           >
             Start the Test &rarr;
           </button>
@@ -465,7 +465,7 @@ export default function EQQuiz() {
                 <button
                   type="submit"
                   disabled={emailLoading || !email}
-                  className="w-full bg-teal-600 hover:bg-teal-500 disabled:opacity-50 transition-colors text-white font-semibold py-3 rounded-lg"
+                  className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 transition-colors text-stone-950 font-semibold py-3 rounded-lg"
                 >
                   {emailLoading ? 'Saving...' : 'Email me my results'}
                 </button>
