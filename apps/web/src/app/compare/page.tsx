@@ -106,13 +106,24 @@ export default async function ComparePage({ searchParams }: Props) {
 
   if (!a || !b) {
     return (
-      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <p className="text-stone-400">
-          Share a comparison link to see two profiles side-by-side.
+      <div className="mx-auto max-w-xl px-6 py-24 text-center">
+        <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-stone-700 bg-stone-900 text-2xl">
+          ⇌
+        </div>
+        <h1 className="mb-3 font-serif text-3xl text-stone-100">Compatibility Map</h1>
+        <p className="mb-2 text-stone-400 leading-relaxed">
+          See how two psychological profiles align across personality, values, and attachment dimensions.
         </p>
-        <Link href="/dashboard" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
-          Go to dashboard →
+        <p className="mb-8 text-sm text-stone-500">
+          Complete your assessment, then share your profile link — recipients can generate a comparison view.
+        </p>
+        <Link
+          href="/assessment"
+          className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-8 py-3 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+        >
+          Start your assessment →
         </Link>
+        <p className="mt-4 text-xs text-stone-600">Already have a profile? <Link href="/dashboard" className="text-amber-500 hover:text-amber-400">Go to dashboard →</Link></p>
       </div>
     )
   }
