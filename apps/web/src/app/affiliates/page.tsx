@@ -350,8 +350,8 @@ export default function AffiliatePage() {
           </div>
           <p className="mt-4 text-[11px] text-stone-600">
             Questions? Email us at&nbsp;
-            <a href="mailto:affiliates@innermind.app" className="text-stone-500 hover:text-stone-400">
-              affiliates@innermind.app
+            <a href="mailto:affiliates@innermindhealing.com" className="text-stone-500 hover:text-stone-400">
+              affiliates@innermindhealing.com
             </a>
           </p>
         </div>

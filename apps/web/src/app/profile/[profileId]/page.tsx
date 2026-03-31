@@ -656,7 +656,7 @@ export default function ProfilePage() {
   const handleShareWhatsApp = () => {
     if (!shareUrl || !profile) return
     const archetype = profile.archetypes?.[0] ?? 'my archetype'
-    const text = `I am a "${archetype}". Discover your psychological archetype at innermind.app → ${shareUrl}`
+    const text = `I am a "${archetype}". Discover your psychological archetype at innermindhealing.com → ${shareUrl}`
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
     posthog.capture('share_whatsapp', { profileId: profile.id, archetype })
   }

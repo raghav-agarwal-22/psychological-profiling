@@ -182,13 +182,13 @@ export default function BigFiveQuiz() {
       '@type': 'Quiz',
       name: 'Free Big Five Personality Test (OCEAN)',
       description: 'A free 20-question Big Five (OCEAN) personality test. Measure your Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism with instant results. No signup required.',
-      url: 'https://innermind.app/quiz/big-five',
+      url: 'https://innermindhealing.com/quiz/big-five',
       educationalLevel: 'beginner',
       timeRequired: 'PT3M',
       numberOfQuestions: 20,
       about: { '@type': 'Thing', name: 'Big Five Personality Traits (OCEAN)' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (

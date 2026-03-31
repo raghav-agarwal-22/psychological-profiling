@@ -194,13 +194,13 @@ export default function AttachmentStyleQuiz() {
       '@type': 'Quiz',
       name: 'Free Attachment Style Test',
       description: 'A free 10-question attachment style quiz. Discover whether you are Secure, Anxious-Preoccupied, Dismissive-Avoidant, or Disorganized. Instant results, no signup required.',
-      url: 'https://innermind.app/quiz/attachment-style',
+      url: 'https://innermindhealing.com/quiz/attachment-style',
       educationalLevel: 'beginner',
       timeRequired: 'PT2M',
       numberOfQuestions: 10,
       about: { '@type': 'Thing', name: 'Attachment Theory' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (

@@ -113,12 +113,12 @@ export default function QuizzesPage() {
     '@type': 'CollectionPage',
     name: 'Free Personality Quizzes — Innermind',
     description: 'Free, science-backed personality quizzes with instant results.',
-    url: 'https://innermind.app/quizzes',
+    url: 'https://innermindhealing.com/quizzes',
     hasPart: quizzes.map((q) => ({
       '@type': 'Quiz',
       name: q.name,
       description: q.description,
-      url: `https://innermind.app/quiz/${q.slug}`,
+      url: `https://innermindhealing.com/quiz/${q.slug}`,
       numberOfQuestions: q.questions,
     })),
   }

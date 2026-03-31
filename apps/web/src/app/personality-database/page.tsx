@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Personality Database — Famous Characters & Celebrities',
     description:
       'Browse MBTI and Enneagram types for 48 fictional characters and real-world celebrities. Movies, TV, books, music, and business icons.',
-    url: 'https://innermind.app/personality-database',
+    url: 'https://innermindhealing.com/personality-database',
   },
   twitter: {
     card: 'summary_large_image',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       'Browse MBTI and Enneagram types for 48 fictional characters and celebrities.',
   },
   alternates: {
-    canonical: 'https://innermind.app/personality-database',
+    canonical: 'https://innermindhealing.com/personality-database',
   },
 }
 
@@ -43,14 +43,14 @@ const itemListSchema = {
   name: 'Personality Database — Famous Characters & Celebrities',
   description:
     'MBTI and Enneagram personality types for 48 fictional characters and celebrities across movies, TV, books, music, and business.',
-  url: 'https://innermind.app/personality-database',
+  url: 'https://innermindhealing.com/personality-database',
   numberOfItems: CHARACTERS.length,
   itemListElement: CHARACTERS.map((c, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: c.name,
     description: `${c.name} (${c.source}) — MBTI: ${c.mbti}, Enneagram: ${c.enneagram}. ${c.description}`,
-    url: `https://innermind.app/personality-database#${c.id}`,
+    url: `https://innermindhealing.com/personality-database#${c.id}`,
   })),
 }
 

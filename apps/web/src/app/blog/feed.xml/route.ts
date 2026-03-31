@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { posts } from '../posts'
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermind.app'
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL ?? 'https://innermindhealing.com'
 
   const sorted = [...posts].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()

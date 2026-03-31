@@ -195,7 +195,7 @@ export default async function Image({ params }: { params: { shareCode: string } 
             justifyContent: 'space-between',
           }}
         >
-          <span style={{ fontSize: '13px', fontFamily: 'sans-serif', color: '#44403c' }}>innermind.app</span>
+          <span style={{ fontSize: '13px', fontFamily: 'sans-serif', color: '#44403c' }}>innermindhealing.com</span>
           <span style={{ fontSize: '13px', fontFamily: 'sans-serif', color: '#44403c' }}>
             Science-backed psychological assessments
           </span>

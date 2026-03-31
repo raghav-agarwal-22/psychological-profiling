@@ -264,7 +264,7 @@ export default async function Image({ params }: { params: { shareToken: string }
               color: '#44403c',
             }}
           >
-            innermind.app
+            innermindhealing.com
           </span>
           <span
             style={{

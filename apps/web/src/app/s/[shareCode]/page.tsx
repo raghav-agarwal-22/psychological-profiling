@@ -186,7 +186,7 @@ export default async function ShareLandingPage({ params }: Props) {
       <footer className="border-t border-stone-800/50 px-6 py-8 text-center">
         <p className="text-sm text-stone-700">
           <Link href="/" className="text-stone-500 hover:text-stone-400">
-            innermind.app
+            innermindhealing.com
           </Link>{' '}
           — Science-backed psychological assessments
         </p>

@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       type: 'article',
       publishedTime: post.publishedAt,
-      url: `https://innermind.app/blog/${post.slug}`,
+      url: `https://innermindhealing.com/blog/${post.slug}`,
       siteName: 'Innermind',
       images: [
         {
-          url: 'https://innermind.app/og-image.png',
+          url: 'https://innermindhealing.com/og-image.png',
           width: 1200,
           height: 630,
           alt: post.title,
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['https://innermind.app/og-image.png'],
+      images: ['https://innermindhealing.com/og-image.png'],
     },
   }
 }
@@ -249,7 +249,7 @@ function formatDate(iso: string) {
   })
 }
 
-const WEB_URL = 'https://innermind.app'
+const WEB_URL = 'https://innermindhealing.com'
 
 export default function BlogPostPage({ params }: Props) {
   const post = getPost(params.slug)

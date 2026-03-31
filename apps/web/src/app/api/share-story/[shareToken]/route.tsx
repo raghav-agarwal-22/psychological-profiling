@@ -268,7 +268,7 @@ export async function GET(
             justifyContent: 'space-between',
           }}
         >
-          <span style={{ fontSize: '18px', fontFamily: 'sans-serif', color: '#44403c' }}>innermind.app</span>
+          <span style={{ fontSize: '18px', fontFamily: 'sans-serif', color: '#44403c' }}>innermindhealing.com</span>
           <span style={{ fontSize: '16px', fontFamily: 'sans-serif', color: '#44403c' }}>
             Discover your archetype
           </span>

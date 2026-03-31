@@ -340,13 +340,13 @@ export default function SixteenTypesQuiz() {
       '@type': 'Quiz',
       name: 'Free 16 Personality Types Test',
       description: 'A free 16-question personality type test based on Jungian cognitive functions. Discover your type from INFJ to ESTP with instant results and detailed descriptions. No signup required.',
-      url: 'https://innermind.app/quiz/16-types',
+      url: 'https://innermindhealing.com/quiz/16-types',
       educationalLevel: 'beginner',
       timeRequired: 'PT3M',
       numberOfQuestions: 16,
       about: { '@type': 'Thing', name: '16 Personality Types (Jungian Typology)' },
-      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
-      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermind.app' },
+      author: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
+      provider: { '@type': 'Organization', name: 'Innermind', url: 'https://innermindhealing.com' },
     }
 
     return (
