@@ -78,8 +78,8 @@ export default function TermsPage() {
             <li className="flex items-start gap-3">
               <span className="mt-0.5 shrink-0 text-amber-500">✦</span>
               You must notify us immediately at{' '}
-              <a href="mailto:privacy@innermind.app" className="text-amber-400 underline hover:text-amber-300">
-                privacy@innermind.app
+              <a href="mailto:privacy@innermindhealing.com" className="text-amber-400 underline hover:text-amber-300">
+                privacy@innermindhealing.com
               </a>{' '}
               if you suspect unauthorised access to your account.
             </li>
@@ -266,8 +266,8 @@ export default function TermsPage() {
           </p>
           <p className="text-sm">
             <strong className="text-stone-300">Email:</strong>{' '}
-            <a href="mailto:privacy@innermind.app" className="text-amber-400 underline hover:text-amber-300">
-              privacy@innermind.app
+            <a href="mailto:privacy@innermindhealing.com" className="text-amber-400 underline hover:text-amber-300">
+              privacy@innermindhealing.com
             </a>
           </p>
           <p className="mt-1 text-sm">

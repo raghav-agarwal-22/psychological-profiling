@@ -216,7 +216,7 @@ export default function PrivacyPage() {
               {
                 right: 'Right to deletion',
                 description:
-                  'You can request that we permanently delete your account and all associated data. Submit a deletion request to privacy@innermind.app.',
+                  'You can request that we permanently delete your account and all associated data. Submit a deletion request to privacy@innermindhealing.com.',
               },
               {
                 right: 'Right to portability',
@@ -250,8 +250,8 @@ export default function PrivacyPage() {
           </div>
           <p className="mt-4 text-sm leading-relaxed">
             To exercise any of these rights, email us at{' '}
-            <a href="mailto:privacy@innermind.app" className="text-amber-400 underline hover:text-amber-300">
-              privacy@innermind.app
+            <a href="mailto:privacy@innermindhealing.com" className="text-amber-400 underline hover:text-amber-300">
+              privacy@innermindhealing.com
             </a>
             . We will respond within 30 days. If you believe we have violated your rights,
             you have the right to lodge a complaint with your local data protection authority.
@@ -301,8 +301,8 @@ export default function PrivacyPage() {
           </p>
           <p className="text-sm">
             <strong className="text-stone-300">Email:</strong>{' '}
-            <a href="mailto:privacy@innermind.app" className="text-amber-400 underline hover:text-amber-300">
-              privacy@innermind.app
+            <a href="mailto:privacy@innermindhealing.com" className="text-amber-400 underline hover:text-amber-300">
+              privacy@innermindhealing.com
             </a>
           </p>
           <p className="mt-1 text-sm">
