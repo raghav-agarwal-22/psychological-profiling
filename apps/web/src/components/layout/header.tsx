@@ -9,7 +9,6 @@ import { getToken } from '@/lib/auth'
 const NAV_LINKS = [
   { label: 'Free Quizzes', href: '/quizzes' },
   { label: 'About', href: '/about' },
-  { label: 'Compare', href: '/compare' },
   { label: 'Blog', href: '/blog' },
   { label: 'Pricing', href: '/upgrade' },
 ]

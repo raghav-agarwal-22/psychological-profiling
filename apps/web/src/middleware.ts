@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// Gate /professional/* routes behind env var
 // Capture ?ref=CODE and set a 90-day affiliate attribution cookie
 export function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/professional')) {
+    if (process.env.ENABLE_PROFESSIONAL_TIER !== 'true') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
   const ref = request.nextUrl.searchParams.get('ref')
   const response = NextResponse.next()
 

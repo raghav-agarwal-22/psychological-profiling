@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
-import { LaunchBanner } from '@/components/LaunchBanner'
 import { LandingAnalytics } from '@/components/LandingAnalytics'
 import { TestimonialGrid, type TestimonialItem } from '@/components/TestimonialGrid'
 import { EmailCaptureBlock } from '@/components/EmailCaptureBlock'
@@ -138,7 +137,6 @@ export default async function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Suspense fallback={null}><LandingAnalytics /></Suspense>
-      <LaunchBanner />
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden px-6 py-32 text-center">

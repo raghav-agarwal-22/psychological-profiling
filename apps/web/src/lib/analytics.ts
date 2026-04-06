@@ -28,6 +28,10 @@ export type FunnelEvent =
   | 'exit_intent_cta_clicked'
   | 'annual_auto_flip'
   | 'annual_nudge_clicked'
+  | 'quiz_started'
+  | 'quiz_completed'
+  | 'quiz_email_captured'
+  | 'bridge_cta_clicked'
 
 interface EventProperties {
   landing_page_viewed: {
@@ -59,6 +63,10 @@ interface EventProperties {
   exit_intent_cta_clicked: Record<string, never>
   annual_auto_flip: Record<string, never>
   annual_nudge_clicked: Record<string, never>
+  quiz_started: { quiz_type: string }
+  quiz_completed: { quiz_type: string; scores?: Record<string, number> }
+  quiz_email_captured: { quiz_type: string }
+  bridge_cta_clicked: { quiz_type: string; source?: string }
 }
 
 export function track<E extends FunnelEvent>(

@@ -46,7 +46,7 @@ function UpgradeContent() {
   const searchParams = useSearchParams()
   const cancelled = searchParams.get('cancelled') === '1'
 
-  const [interval, setInterval] = useState<Interval>('monthly')
+  const [interval, setInterval] = useState<Interval>('annual')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hasTrial, setHasTrial] = useState(true)
@@ -54,8 +54,6 @@ function UpgradeContent() {
   const [countdown, setCountdown] = useState(15 * 60) // 15 minutes in seconds
   const countdownRef = useRef<number | null>(null)
   const [annualNudgeDismissed, setAnnualNudgeDismissed] = useState(false)
-  const autoFlippedRef = useRef(false)
-  const monthlyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const ctaVariant = posthog.getFeatureFlag('upgrade-cta-copy')
@@ -98,26 +96,6 @@ function UpgradeContent() {
     if (cancelled) setError('Payment was cancelled. You can try again whenever you are ready.')
   }, [cancelled])
 
-  // Auto-flip to annual after 10s on monthly view
-  useEffect(() => {
-    if (interval === 'monthly' && !autoFlippedRef.current) {
-      monthlyTimerRef.current = setTimeout(() => {
-        if (!autoFlippedRef.current) {
-          autoFlippedRef.current = true
-          setInterval('annual')
-          track('annual_auto_flip', {})
-        }
-      }, 10_000)
-    } else {
-      if (monthlyTimerRef.current) {
-        clearTimeout(monthlyTimerRef.current)
-        monthlyTimerRef.current = null
-      }
-    }
-    return () => {
-      if (monthlyTimerRef.current) clearTimeout(monthlyTimerRef.current)
-    }
-  }, [interval])
 
   async function handleUpgrade() {
     setLoading(true)
@@ -192,7 +170,7 @@ function UpgradeContent() {
             Monthly
           </button>
           <button
-            onClick={() => { setInterval('annual'); autoFlippedRef.current = true }}
+            onClick={() => setInterval('annual')}
             className={`relative rounded-lg px-5 py-2 text-sm font-semibold transition-colors ${
               interval === 'annual'
                 ? 'bg-stone-700 text-stone-100'
@@ -207,7 +185,24 @@ function UpgradeContent() {
         </div>
       </div>
 
-      {/* Annual nudge sticky banner — shown when monthly is selected */}
+      {/* Annual reinforcement banner — shown when annual is selected */}
+      {interval === 'annual' && !annualNudgeDismissed && (
+        <div className="sticky top-4 z-10 mb-8 flex items-center justify-between rounded-xl border border-emerald-500/30 bg-emerald-500/8 px-5 py-3 shadow-lg shadow-emerald-900/20 transition-all">
+          <div>
+            <p className="text-sm font-semibold text-emerald-300">You&apos;re on the annual plan — saving $84/year</p>
+            <p className="mt-0.5 text-xs text-stone-400">83% of serious users choose annual</p>
+          </div>
+          <button
+            onClick={() => setAnnualNudgeDismissed(true)}
+            className="ml-4 shrink-0 text-stone-600 hover:text-stone-400 transition-colors text-xs"
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* Monthly nudge banner — shown when monthly is selected */}
       {interval === 'monthly' && !annualNudgeDismissed && (
         <div className="sticky top-4 z-10 mb-8 flex items-center justify-between rounded-xl border border-emerald-500/30 bg-emerald-500/8 px-5 py-3 shadow-lg shadow-emerald-900/20 transition-all">
           <div>
@@ -216,7 +211,7 @@ function UpgradeContent() {
           </div>
           <div className="ml-4 flex shrink-0 items-center gap-3">
             <button
-              onClick={() => { setInterval('annual'); autoFlippedRef.current = true; track('annual_nudge_clicked', {}) }}
+              onClick={() => { setInterval('annual'); track('annual_nudge_clicked', {}) }}
               className="rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-stone-950 transition-colors hover:bg-emerald-400"
             >
               Switch
@@ -341,12 +336,14 @@ function UpgradeContent() {
             {loading
               ? 'Redirecting…'
               : hasTrial
-              ? 'Start free trial →'
+              ? 'Start free trial — $0 today →'
               : 'Upgrade to Pro →'}
           </button>
 
           <p className="mt-3 text-center text-xs text-stone-600">
-            {hasTrial ? 'No charge until day 8 · ' : ''}Secure payment via Stripe
+            {hasTrial
+              ? 'Card required. Cancel anytime before day 7. No charge until then.'
+              : 'Secure payment via Stripe'}
           </p>
         </div>
       </div>
@@ -402,8 +399,8 @@ function UpgradeContent() {
         </div>
       </div>
 
-      {/* B2B section */}
-      <div className="mt-14">
+      {/* B2B section — hidden when ENABLE_PROFESSIONAL_TIER is not set */}
+      {process.env.NEXT_PUBLIC_ENABLE_PROFESSIONAL_TIER === 'true' && <div className="mt-14">
         <div className="mb-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">For professionals</p>
           <h2 className="mt-2 font-serif text-2xl text-stone-100">Innermind for Practitioners</h2>
@@ -429,7 +426,7 @@ function UpgradeContent() {
             </Link>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* Social proof — testimonials near CTA */}
       <div className="mt-14">

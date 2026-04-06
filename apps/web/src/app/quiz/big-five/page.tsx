@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 import { RelatedQuizzes } from '@/components/RelatedQuizzes'
+import { QuizEmailCapture } from '@/components/QuizEmailCapture'
+import { track } from '@/lib/analytics'
 
 type Trait = 'openness' | 'conscientiousness' | 'extraversion' | 'agreeableness' | 'neuroticism'
 
@@ -128,9 +130,7 @@ export default function BigFiveQuiz() {
     neuroticism: 0,
   })
   const [done, setDone] = useState(false)
-  const [email, setEmail] = useState('')
-  const [emailSubmitted, setEmailSubmitted] = useState(false)
-  const [emailLoading, setEmailLoading] = useState(false)
+  const [showBridge, setShowBridge] = useState(true)
 
   function handleAnswer(value: number) {
     const trait = QUESTIONS[currentQ].trait
@@ -142,26 +142,8 @@ export default function BigFiveQuiz() {
     if (currentQ < QUESTIONS.length - 1) {
       setCurrentQ(currentQ + 1)
     } else {
+      track('quiz_completed', { quiz_type: 'big-five' })
       setDone(true)
-    }
-  }
-
-  async function handleEmailSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email) return
-    setEmailLoading(true)
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
-      await fetch(`${apiUrl}/api/auth/waitlist`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      setEmailSubmitted(true)
-    } catch {
-      setEmailSubmitted(true)
-    } finally {
-      setEmailLoading(false)
     }
   }
 
@@ -171,8 +153,7 @@ export default function BigFiveQuiz() {
     setScores({ openness: 0, conscientiousness: 0, extraversion: 0, agreeableness: 0, neuroticism: 0 })
     setCounts({ openness: 0, conscientiousness: 0, extraversion: 0, agreeableness: 0, neuroticism: 0 })
     setDone(false)
-    setEmail('')
-    setEmailSubmitted(false)
+    setShowBridge(true)
   }
 
   // Landing screen
@@ -216,7 +197,7 @@ export default function BigFiveQuiz() {
           </div>
 
           <button
-            onClick={() => setStarted(true)}
+            onClick={() => { track('quiz_started', { quiz_type: 'big-five' }); setStarted(true) }}
             className="w-full bg-violet-600 hover:bg-violet-500 transition-colors text-white font-semibold py-4 rounded-xl text-lg"
           >
             Start the Test &rarr;
@@ -230,17 +211,121 @@ export default function BigFiveQuiz() {
     )
   }
 
+  // Compute scores once for bridge + results
+  const traitOrder: Trait[] = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
+  const percentages = traitOrder.map((t) => ({
+    trait: t,
+    pct: getTraitScore(scores[t], counts[t]),
+  }))
+
+  // Bridge screen — shows one revealed trait + locked others
+  if (done && showBridge) {
+    const revealed = percentages[0] // Openness
+    const revealedTrait = TRAITS[revealed.trait]
+    const level = revealed.pct >= 60 ? 'High' : revealed.pct <= 40 ? 'Low' : 'Moderate'
+    const interp = revealed.pct >= 60
+      ? "You're drawn to new ideas, art, and unconventional thinking."
+      : revealed.pct <= 40
+      ? 'You tend to be practical, grounded, and preferring the familiar.'
+      : 'You balance curiosity with practicality — open but grounded.'
+
+    return (
+      <div className="min-h-screen bg-stone-950 text-white flex flex-col items-center justify-center px-4 py-16">
+        <div className="max-w-xl w-full space-y-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-serif font-bold text-stone-100">Your Big Five Profile</h1>
+          </div>
+
+          {/* Revealed trait */}
+          <div className="rounded-xl border border-stone-800 bg-stone-900/80 p-5">
+            <div className="flex justify-between items-baseline mb-2">
+              <span className="font-semibold text-sm text-violet-400">{revealedTrait.label}</span>
+              <span className="text-xl font-bold text-violet-400">{revealed.pct}</span>
+            </div>
+            <div className="w-full bg-stone-800 rounded-full h-2.5 mb-3">
+              <div
+                className="bg-violet-500 h-2.5 rounded-full transition-all duration-700"
+                style={{ width: `${revealed.pct}%` }}
+              />
+            </div>
+            <p className="text-xs font-semibold text-violet-400 mb-1">{level} {revealedTrait.label}</p>
+            <p className="text-stone-300 text-sm">{interp}</p>
+          </div>
+
+          {/* Locked traits */}
+          {traitOrder.slice(1).map((trait) => {
+            const t = TRAITS[trait]
+            return (
+              <div key={trait} className="rounded-xl border border-stone-800 bg-stone-900/80 p-5 relative overflow-hidden">
+                <div className="flex justify-between items-baseline mb-2">
+                  <span className="font-semibold text-sm text-stone-500">{t.label}</span>
+                  <span className="text-stone-500" aria-label="Locked — start free trial to reveal">🔒</span>
+                </div>
+                <div className="w-full bg-stone-800 rounded-full h-2.5 mb-3">
+                  <div className="bg-stone-700/50 h-2.5 rounded-full w-3/5" />
+                </div>
+                <div className="absolute inset-0 bg-stone-700/50 backdrop-blur-sm rounded-xl" style={{ top: '0' }} />
+              </div>
+            )
+          })}
+
+          {/* Testimonial */}
+          <p className="text-stone-400 italic text-sm text-center">
+            &ldquo;The most accurate thing I&apos;ve ever read about myself.&rdquo;
+          </p>
+
+          {/* Bridge copy */}
+          <div className="space-y-4 text-center">
+            <p className="text-stone-300 text-sm leading-relaxed">
+              Your Openness score tells one story. But combined with your likely attachment
+              patterns and core values, a different picture emerges — one most people say is the
+              most accurate thing they&apos;ve ever read about themselves.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="space-y-3 text-center">
+            <Link
+              href="/upgrade?source=quiz_big_five"
+              onClick={() => track('bridge_cta_clicked', { quiz_type: 'big-five', source: 'quiz_big_five' })}
+              className="block w-full rounded-xl bg-amber-500 py-3 text-center text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+            >
+              See My Full Portrait — $0 Today
+            </Link>
+            <p className="text-stone-500 text-xs">
+              7-day free trial. Card required. Cancel anytime before day 7.
+            </p>
+          </div>
+
+          {/* Escape hatch */}
+          <button
+            onClick={() => setShowBridge(false)}
+            className="block w-full text-center text-stone-400 underline text-sm py-2 hover:text-stone-300 transition-colors min-h-[44px]"
+          >
+            View basic results only &darr;
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   // Results screen
   if (done) {
-    const traitOrder: Trait[] = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
-    const percentages = traitOrder.map((t) => ({
-      trait: t,
-      pct: getTraitScore(scores[t], counts[t]),
-    }))
 
     return (
       <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col items-center justify-center px-4 py-16">
         <div className="max-w-xl w-full space-y-8">
+          {/* Persistent upsell banner for users who skipped the bridge */}
+          {!showBridge && (
+            <Link
+              href="/upgrade?source=quiz_big_five"
+              className="block w-full rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-center transition-colors hover:bg-amber-500/20"
+            >
+              <p className="text-amber-400 text-sm font-semibold">Your full portrait is waiting</p>
+              <p className="text-stone-400 text-xs mt-0.5">See what your Big Five means alongside 6 other frameworks &rarr;</p>
+            </Link>
+          )}
+
           <div className="text-center space-y-2">
             <p className="text-white/40 text-sm uppercase tracking-widest">Your Big Five Results</p>
             <h1 className="text-3xl font-bold">Your Personality Profile</h1>
@@ -278,30 +363,7 @@ export default function BigFiveQuiz() {
               Your full profile includes an AI synthesis connecting all 5 traits, plus Enneagram type, attachment style, Jungian archetypes, and core values.
             </p>
 
-            {!emailSubmitted ? (
-              <form onSubmit={handleEmailSubmit} className="space-y-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email me my full results"
-                  autoComplete="email"
-                  inputMode="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
-                />
-                <button
-                  type="submit"
-                  disabled={emailLoading || !email}
-                  className="w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-50 transition-colors text-white font-semibold py-3 rounded-lg"
-                >
-                  {emailLoading ? 'Saving...' : 'Email me my results'}
-                </button>
-              </form>
-            ) : (
-              <p className="text-emerald-400 text-sm font-medium">
-                We&apos;ll send you your full profile when Innermind launches.
-              </p>
-            )}
+            <QuizEmailCapture quizType="big-five" />
 
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/10" />

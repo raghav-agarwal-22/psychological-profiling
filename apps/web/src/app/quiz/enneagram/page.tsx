@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { QuizUpgradeCard } from '@/components/QuizUpgradeCard'
 import { RelatedQuizzes } from '@/components/RelatedQuizzes'
+import { QuizEmailCapture } from '@/components/QuizEmailCapture'
+import { track } from '@/lib/analytics'
 
 type EnneaType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -162,9 +164,6 @@ export default function EnneagramQuiz() {
     1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0,
   })
   const [done, setDone] = useState(false)
-  const [email, setEmail] = useState('')
-  const [emailSubmitted, setEmailSubmitted] = useState(false)
-  const [emailLoading, setEmailLoading] = useState(false)
 
   function handleAnswer(value: number) {
     const type = QUESTIONS[currentQ].type
@@ -174,26 +173,8 @@ export default function EnneagramQuiz() {
     if (currentQ < QUESTIONS.length - 1) {
       setCurrentQ(currentQ + 1)
     } else {
+      track('quiz_completed', { quiz_type: 'enneagram' })
       setDone(true)
-    }
-  }
-
-  async function handleEmailSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email) return
-    setEmailLoading(true)
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
-      await fetch(`${apiUrl}/api/auth/waitlist`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      setEmailSubmitted(true)
-    } catch {
-      setEmailSubmitted(true)
-    } finally {
-      setEmailLoading(false)
     }
   }
 
@@ -202,8 +183,6 @@ export default function EnneagramQuiz() {
     setCurrentQ(0)
     setScores({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 })
     setDone(false)
-    setEmail('')
-    setEmailSubmitted(false)
   }
 
   // Landing screen
@@ -248,7 +227,7 @@ export default function EnneagramQuiz() {
           </div>
 
           <button
-            onClick={() => setStarted(true)}
+            onClick={() => { track('quiz_started', { quiz_type: 'enneagram' }); setStarted(true) }}
             className="w-full bg-violet-600 hover:bg-violet-500 transition-colors text-white font-semibold py-4 rounded-xl text-lg"
           >
             Start the Test &rarr;
@@ -325,30 +304,7 @@ export default function EnneagramQuiz() {
               Your Enneagram type is just one layer of your psychology. Discover how it connects to your Big Five, attachment style, archetypes and values in your full profile.
             </p>
 
-            {!emailSubmitted ? (
-              <form onSubmit={handleEmailSubmit} className="space-y-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email me my full results"
-                  autoComplete="email"
-                  inputMode="email"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-violet-500 min-h-[44px]"
-                />
-                <button
-                  type="submit"
-                  disabled={emailLoading || !email}
-                  className="w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-50 transition-colors text-white font-semibold py-3 rounded-lg"
-                >
-                  {emailLoading ? 'Saving...' : 'Email me my results'}
-                </button>
-              </form>
-            ) : (
-              <p className="text-emerald-400 text-sm font-medium">
-                We&apos;ll send you your full profile when Innermind launches.
-              </p>
-            )}
+            <QuizEmailCapture quizType="enneagram" />
 
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/10" />

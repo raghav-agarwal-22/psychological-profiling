@@ -115,7 +115,15 @@ export async function billingRoutes(server: FastifyInstance) {
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
-      subscription_data: trialEligible ? { trial_period_days: 7 } : undefined,
+      payment_method_collection: 'always',
+      subscription_data: trialEligible
+        ? {
+            trial_period_days: 7,
+            trial_settings: {
+              end_behavior: { missing_payment_method: 'cancel' },
+            },
+          }
+        : undefined,
       success_url: `${WEB_URL}/dashboard?upgraded=1`,
       cancel_url: `${WEB_URL}/upgrade?cancelled=1`,
       metadata: {
