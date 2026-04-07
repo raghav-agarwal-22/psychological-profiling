@@ -7,7 +7,20 @@ import { logAffiliateCommission } from './affiliates.js'
 import { suppressDripSequence } from '../lib/drip-sequence.js'
 import { sendAndRecordProWelcome } from '../lib/pro-onboarding.js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
+const isProduction = process.env.NODE_ENV === 'production'
+
+function requireEnv(name: string, fallback: string): string {
+  const value = process.env[name]
+  if (!value || value === fallback) {
+    if (isProduction) {
+      throw new Error(`[billing] Missing required environment variable: ${name}`)
+    }
+    return fallback
+  }
+  return value
+}
+
+const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY', 'sk_test_placeholder'), {
   apiVersion: '2026-02-25.clover',
 })
 
@@ -18,8 +31,11 @@ function getSubPeriodEnd(sub: Stripe.Subscription): number {
 }
 
 const PRICE_IDS = {
-  pro_monthly: process.env.STRIPE_PRO_MONTHLY_PRICE_ID ?? (process.env.STRIPE_PRO_PRICE_ID ?? 'price_pro_monthly_placeholder'),
-  pro_annual: process.env.STRIPE_PRO_ANNUAL_PRICE_ID ?? 'price_pro_annual_placeholder',
+  pro_monthly: requireEnv(
+    'STRIPE_PRO_MONTHLY_PRICE_ID',
+    process.env.STRIPE_PRO_PRICE_ID ?? 'price_pro_monthly_placeholder',
+  ),
+  pro_annual: requireEnv('STRIPE_PRO_ANNUAL_PRICE_ID', 'price_pro_annual_placeholder'),
 } as const
 
 // Reverse-lookup: price ID → { tier, interval }
@@ -34,7 +50,7 @@ function tierFromPriceId(priceId: string): { tier: 'pro'; interval: 'monthly' | 
 }
 
 const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_placeholder'
+const WEBHOOK_SECRET = requireEnv('STRIPE_WEBHOOK_SECRET', 'whsec_placeholder')
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ''
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com'
 

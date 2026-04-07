@@ -6,17 +6,30 @@ import PDFDocument from 'pdfkit'
 import { prisma } from '@innermind/db'
 import { requireAuth } from '../lib/auth.js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? 'sk_test_placeholder', {
+const isProduction = process.env.NODE_ENV === 'production'
+
+function requireEnv(name: string, fallback: string): string {
+  const value = process.env[name]
+  if (!value || value === fallback) {
+    if (isProduction) {
+      throw new Error(`[professional] Missing required environment variable: ${name}`)
+    }
+    return fallback
+  }
+  return value
+}
+
+const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY', 'sk_test_placeholder'), {
   apiVersion: '2026-02-25.clover',
 })
 
 const WEB_URL = process.env.WEB_URL ?? 'http://localhost:3000'
 
 const PROFESSIONAL_PRICE_IDS = {
-  starter_monthly: process.env.STRIPE_PROFESSIONAL_STARTER_MONTHLY ?? 'price_professional_starter_monthly_placeholder',
-  starter_annual: process.env.STRIPE_PROFESSIONAL_STARTER_ANNUAL ?? 'price_professional_starter_annual_placeholder',
-  unlimited_monthly: process.env.STRIPE_PROFESSIONAL_UNLIMITED_MONTHLY ?? 'price_professional_unlimited_monthly_placeholder',
-  unlimited_annual: process.env.STRIPE_PROFESSIONAL_UNLIMITED_ANNUAL ?? 'price_professional_unlimited_annual_placeholder',
+  starter_monthly: requireEnv('STRIPE_PROFESSIONAL_STARTER_MONTHLY', 'price_professional_starter_monthly_placeholder'),
+  starter_annual: requireEnv('STRIPE_PROFESSIONAL_STARTER_ANNUAL', 'price_professional_starter_annual_placeholder'),
+  unlimited_monthly: requireEnv('STRIPE_PROFESSIONAL_UNLIMITED_MONTHLY', 'price_professional_unlimited_monthly_placeholder'),
+  unlimited_annual: requireEnv('STRIPE_PROFESSIONAL_UNLIMITED_ANNUAL', 'price_professional_unlimited_annual_placeholder'),
 } as const
 
 const SEAT_LIMITS: Record<string, number> = {
